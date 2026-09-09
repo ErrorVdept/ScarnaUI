@@ -1,0 +1,29 @@
+@*
+    Корень-портал для всех "плавающих" поверхностей: Select/Autocomplete-выпадашки,
+    Menu, Tooltip, DatePicker/TimePicker/ColorPicker. Кладётся один раз в layout
+    приложения, оборачивая всё содержимое (как MudPopoverProvider в MudBlazor):
+
+        <NorthPopoverProvider>
+            @Body
+        </NorthPopoverProvider>
+
+    Как это работает:
+      1. Компонент каскадирует сам себя — любой NorthPopover в дереве находит его через
+         [CascadingParameter] и регистрирует свой RenderFragment по уникальному Guid.
+      2. Провайдер рендерит все зарегistrированные фрагменты в СВОЁМ собственном месте
+         разметки — физически в конце документа, поверх остального контента. Так как
+         фрагмент "переезжает" в другую часть дерева компонентов, но остаётся тем же
+         C#-объектом (замыканием), Blazor корректно переиспользует его состояние и @ref.
+*@
+@namespace NorthUI.Components.Overlays
+
+<CascadingValue Value="this" IsFixed="true">
+    @ChildContent
+</CascadingValue>
+
+<div class="north-popover-root fixed inset-0 z-[1000] pointer-events-none">
+    @foreach (var pair in _surfaces)
+    {
+        @pair.Value
+    }
+</div>

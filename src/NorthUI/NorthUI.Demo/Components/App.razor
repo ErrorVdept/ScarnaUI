@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <!--
+        Синхронный анти-FOUC скрипт: без него страница на первом кадре всегда рисуется
+        светлой (variables.css по умолчанию задаёт :root в светлой теме), и только
+        ПОСЛЕ подключения circuit'а Blazor Server и первого OnAfterRenderAsync у
+        NorthThemeProvider (JS round-trip) тёмная тема применяется по-настоящему —
+        отсюда заметная вспышка светлым перед переключением в тёмную. Этот блок
+        выполняется синхронно ДО первой отрисовки и сразу проставляет data-theme —
+        тот же ключ localStorage ("north-theme-mode"), что использует theme.js,
+        поэтому дальнейшее переключение NorthThemeProvider просто подтверждает то же
+        значение, а не меняет его. Копируйте в App.razor любого проекта-потребителя.
+    -->
+    <script>
+        (function () {
+            try {
+                var stored = localStorage.getItem("north-theme-mode");
+                var isDark = stored === "dark"
+                    || (stored !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+                document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+                document.documentElement.style.colorScheme = isDark ? "dark" : "light";
+            } catch (e) {
+                // localStorage недоступен (приватный режим и т.п.) — остаёмся на светлой теме по умолчанию
+            }
+        })();
+    </script>
+    <ResourcePreloader />
+    <link rel="stylesheet" href="_content/NorthUI/css/north/north.css" />
+    <link rel="stylesheet" href="@Assets["app.css"]" />
+    <link rel="stylesheet" href="@Assets["NorthUI.Demo.styles.css"]" />
+    <ImportMap />
+    <HeadOutlet @rendermode="InteractiveServer" />
+</head>
+
+<body>
+    <Routes @rendermode="InteractiveServer" />
+    <ReconnectModal />
+    <script src="@Assets["_framework/blazor.web.js"]"></script>
+</body>
+
+</html>

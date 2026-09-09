@@ -358,6 +358,10 @@ paket-files/
 #tools/**
 #!tools/packages.config
 
+# NorthUI: скачанный standalone-бинарник Tailwind CSS CLI (не коммитим ~100 МБ exe,
+# см. src/NorthUI/NorthUI/tools/README.md — как скачать самому)
+src/NorthUI/NorthUI/tools/*.exe
+
 # Tabs Studio
 *.tss
 

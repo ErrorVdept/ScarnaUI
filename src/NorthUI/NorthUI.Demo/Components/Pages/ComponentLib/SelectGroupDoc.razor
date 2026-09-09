@@ -1,0 +1,85 @@
+@page "/componentlib/select-group"
+
+<DocPage Title="NorthSelectGroup" Lead="Одиночный выбор без выпадающего списка — все варианты видны сразу, pill-индикатор плавно едет между кнопками."
+         Files="@(new[] { "Components/Forms/NorthSelectGroup.razor", "Components/Forms/NorthSelectGroupItem.razor" })">
+
+    <DocSection Title="Интерактивный пример" Code="@InteractiveCode" Row="false">
+        <NorthSelectGroup Label="Период" @bind-Value="_period">
+            <NorthSelectGroupItem Value="@("day")" Text="День" />
+            <NorthSelectGroupItem Value="@("week")" Text="Неделя" />
+            <NorthSelectGroupItem Value="@("month")" Text="Месяц" />
+        </NorthSelectGroup>
+        <span class="text-sm text-foreground/60">Значение: @_period</span>
+    </DocSection>
+
+    <DocSection Title="FullWidth" Code="@FullWidthCode" Row="false">
+        <NorthSelectGroup Label="Период (FullWidth)" Value="@("week")" FullWidth="true">
+            <NorthSelectGroupItem Value="@("day")" Text="День" />
+            <NorthSelectGroupItem Value="@("week")" Text="Неделя" />
+            <NorthSelectGroupItem Value="@("month")" Text="Месяц" />
+        </NorthSelectGroup>
+    </DocSection>
+
+    <DocSection Title="Justify" Description='Заметно только при FullWidth="false".' Code="@JustifyCode" Row="false">
+        <NorthSelectGroup Label="Justify.Center" Value="@("week")" Justify="NorthJustify.Center">
+            <NorthSelectGroupItem Value="@("day")" Text="День" />
+            <NorthSelectGroupItem Value="@("week")" Text="Неделя" />
+            <NorthSelectGroupItem Value="@("month")" Text="Месяц" />
+        </NorthSelectGroup>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+    <DocApiTable Title="NorthSelectGroupItem" Rows="@_itemRows" />
+
+</DocPage>
+
+@code {
+    private string? _period = "week";
+
+    private const string InteractiveCode =
+        """
+        <NorthSelectGroup Label="Период" @bind-Value="_period">
+            <NorthSelectGroupItem Value="@("day")" Text="День" />
+            <NorthSelectGroupItem Value="@("week")" Text="Неделя" />
+            <NorthSelectGroupItem Value="@("month")" Text="Месяц" />
+        </NorthSelectGroup>
+        <span class="text-sm text-foreground/60">Значение: @_period</span>
+
+        @code {
+            private string? _period = "week";
+        }
+        """;
+
+    private const string FullWidthCode =
+        """
+        <NorthSelectGroup Label="Период (FullWidth)" @bind-Value="_period" FullWidth="true">
+            <NorthSelectGroupItem Value="@("day")" Text="День" />
+            <NorthSelectGroupItem Value="@("week")" Text="Неделя" />
+            <NorthSelectGroupItem Value="@("month")" Text="Месяц" />
+        </NorthSelectGroup>
+        """;
+
+    private const string JustifyCode =
+        """
+        <NorthSelectGroup Label="Justify.Center" @bind-Value="_period" Justify="NorthJustify.Center">
+            <NorthSelectGroupItem Value="@("day")" Text="День" />
+            <NorthSelectGroupItem Value="@("week")" Text="Неделя" />
+            <NorthSelectGroupItem Value="@("month")" Text="Месяц" />
+        </NorthSelectGroup>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Value / ValueChanged / ValueExpression", "TValue?", "—", "Механика @bind-Value"),
+        new("Label", "string?", "—", "Подпись над группой"),
+        new("Justify", "NorthJustify", "Start", "К какому краю прижимать кнопки (заметно, только если FullWidth=\"false\")"),
+        new("FullWidth", "bool", "false", "Растянуть кнопки на всю ширину родителя поровну"),
+        new("ChildContent", "RenderFragment?", "—", "Набор NorthSelectGroupItem"),
+    };
+
+    private readonly List<DocApiRow> _itemRows = new()
+    {
+        new("Value", "TValue", "—", "Обязательный. Значение пункта"),
+        new("Text", "string", "—", "Обязательный. Текст на кнопке"),
+    };
+}

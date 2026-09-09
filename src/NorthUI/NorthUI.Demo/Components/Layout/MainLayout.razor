@@ -1,0 +1,30 @@
+@inherits LayoutComponentBase
+
+<NorthThemeProvider>
+    <NorthPopoverProvider>
+        <div class="min-h-screen bg-background text-foreground">
+            <NorthNavBar>
+                <a href="/" class="text-lg font-semibold text-foreground">North<span class="text-primary">UI</span></a>
+                <NorthStack Row="true" Spacing="6" Align="NorthAlign.Center">
+                    <NavLink href="/" Match="NavLinkMatch.All" class="text-sm text-foreground/70 hover:text-foreground">Обзор</NavLink>
+                    <NavLink href="/components" class="text-sm text-foreground/70 hover:text-foreground">Компоненты</NavLink>
+                    <NavLink href="/componentlib" class="text-sm text-foreground/70 hover:text-foreground">Документация</NavLink>
+                    <NorthThemeSwitch />
+                </NorthStack>
+            </NorthNavBar>
+
+            <main class="py-8">
+                @Body
+            </main>
+        </div>
+    </NorthPopoverProvider>
+
+    <NorthDialogProvider />
+    <NorthSnackbarProvider />
+</NorthThemeProvider>
+
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>

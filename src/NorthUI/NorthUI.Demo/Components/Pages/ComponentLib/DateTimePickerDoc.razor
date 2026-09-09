@@ -1,0 +1,62 @@
+@page "/componentlib/datetime-picker"
+
+<DocPage Title="NorthDateTimePicker" Lead="Поле выбора даты и времени на основе нативного input type=datetime-local."
+         Files="@(new[] { "Components/Forms/NorthDateTimePicker.razor" })">
+
+    <DocSection Title="Интерактивный пример" Code="@InteractiveCode">
+        <NorthDateTimePicker Label="Дата и время встречи" @bind-Value="_meetingAt" />
+        <span class="text-sm text-foreground/60">Значение: @_meetingAt</span>
+    </DocSection>
+
+    <DocSection Title="Min / Max" Description="Границы диапазона проверяются нативной валидацией браузера." Code="@MinMaxCode">
+        <NorthDateTimePicker Label="Срок" Min="DateTime.Today" Class="w-64" />
+    </DocSection>
+
+    <DocSection Title="Состояния" Code="@StatesCode">
+        <NorthDateTimePicker Label="Отключено" Disabled="true" Class="w-64" />
+        <NorthDateTimePicker Label="Только чтение" ReadOnly="true" Class="w-64" />
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private DateTime? _meetingAt = DateTime.Today.AddHours(14);
+
+    private const string InteractiveCode =
+        """
+        <NorthDateTimePicker Label="Дата и время встречи" @bind-Value="_meetingAt" />
+        <span class="text-sm text-foreground/60">Значение: @_meetingAt</span>
+
+        @code {
+            private DateTime? _meetingAt = DateTime.Today.AddHours(14);
+        }
+        """;
+
+    private const string MinMaxCode =
+        """
+        <NorthDateTimePicker Label="Срок" Min="DateTime.Today" />
+        """;
+
+    private const string StatesCode =
+        """
+        <NorthDateTimePicker Label="Отключено" Disabled="true" />
+        <NorthDateTimePicker Label="Только чтение" ReadOnly="true" />
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Value / ValueChanged / ValueExpression", "DateTime?", "—", "Механика @bind-Value"),
+        new("Label", "string?", "—", "Подпись над полем"),
+        new("HelperText / ErrorText / Error", "—", "—", "Подсказка/ошибка под полем"),
+        new("Min / Max", "DateTime?", "—", "Границы диапазона (нативная валидация браузера)"),
+        new("Disabled", "bool", "false", "—"),
+        new("ReadOnly", "bool", "false", "—"),
+        new("Variant", "NorthVariant", "Bordered", "Bordered/Flat"),
+        new("Bordered", "bool", "true", "Показывать ли контур поля"),
+        new("Size", "NorthSize", "Medium", "Small/Medium/Large"),
+        new("Density", "NorthDensity", "Normal", "Dense — компактное поле"),
+        new("Radius", "NorthRadius", "Medium", "Радиус поля"),
+    };
+}

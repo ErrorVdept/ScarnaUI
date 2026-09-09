@@ -1,0 +1,49 @@
+@page "/componentlib/image"
+
+<DocPage Title="NorthImage" Lead="Обёртка над &lt;img&gt; со скруглением, обводкой и запасным содержимым при ошибке загрузки."
+         Files="@(new[] { "Components/DataDisplay/NorthImage.razor" })">
+
+    <DocSection Title="Базовое использование" Code="@BasicCode">
+        <NorthImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Alt="Пейзаж" Class="h-40 w-64" />
+    </DocSection>
+
+    <DocSection Title="Radius и Bordered" Code="@VariantsCode">
+        <NorthImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Radius="NorthRadius.Small" Class="h-32 w-48" />
+        <NorthImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Radius="NorthRadius.Full" Bordered="true" Class="h-32 w-32" />
+    </DocSection>
+
+    <DocSection Title="Fallback при ошибке загрузки" Description="Битый URL — показывается заглушка (или своя через Fallback)." Code="@FallbackCode">
+        <NorthImage Src="https://broken.invalid/no-such-image.jpg" Alt="Не загрузится" Class="h-32 w-48" />
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string BasicCode =
+        """
+        <NorthImage Src="/img/cover.jpg" Alt="Обложка" Class="h-40 w-64" />
+        """;
+
+    private const string VariantsCode =
+        """
+        <NorthImage Src="/img/cover.jpg" Radius="NorthRadius.Small" Class="h-32 w-48" />
+        <NorthImage Src="/img/cover.jpg" Radius="NorthRadius.Full" Bordered="true" Class="h-32 w-32" />
+        """;
+
+    private const string FallbackCode =
+        """
+        <NorthImage Src="https://broken.invalid/no-such-image.jpg" Alt="Не загрузится" Class="h-32 w-48" />
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Src", "string", "—", "Обязательный. URL изображения"),
+        new("Alt", "string?", "—", "—"),
+        new("Radius", "NorthRadius", "Large", "Радиус скругления"),
+        new("Bordered", "bool", "false", "Обводка"),
+        new("Lazy", "bool", "true", "Отложенная загрузка (loading=\"lazy\")"),
+        new("Fallback", "RenderFragment?", "—", "Что показать вместо изображения, если оно не загрузилось (по умолчанию — иконка-заглушка)"),
+    };
+}

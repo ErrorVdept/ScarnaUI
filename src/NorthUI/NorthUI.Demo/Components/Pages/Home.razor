@@ -1,0 +1,55 @@
+@page "/"
+
+<PageTitle>NorthUI</PageTitle>
+
+<NorthContainer>
+    <NorthStack Spacing="4" Class="py-16 text-center items-center">
+        <NorthChip Color="NorthColor.Primary" Variant="NorthVariant.Flat">Blazor · Tailwind CSS</NorthChip>
+        <h1 class="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+            North<span class="text-primary">UI</span>
+        </h1>
+        <p class="max-w-xl text-foreground/60">
+            Библиотека Blazor-компонентов: DX как у MudBlazor (@@bind-Value, императивные сервисы,
+            Class/Style на каждом компоненте) и дизайн-система, вдохновлённая HeroUI —
+            своя разметка, настраиваемая в рантайме тема.
+        </p>
+        <NorthStack Row="true" Spacing="3" Class="pt-2">
+            <NorthButton Color="NorthColor.Primary" Href="/components">Смотреть компоненты</NorthButton>
+            <NorthButton Variant="NorthVariant.Bordered">Документация в docmd/</NorthButton>
+        </NorthStack>
+    </NorthStack>
+
+    <NorthDivider Class="my-4" />
+
+    <NorthGrid Spacing="6" Class="py-12">
+        <NorthItem Xs="12" Md="4">
+            <NorthCard>
+                <p class="mb-2 font-semibold text-foreground">Тема в рантайме</p>
+                <p class="text-sm text-foreground/70">
+                    Цвета и радиусы — CSS-переменные. NorthThemeProvider меняет их через JS без
+                    пересборки CSS: смените Primary-цвет из кода приложения, и все компоненты
+                    перекрасятся мгновенно.
+                </p>
+            </NorthCard>
+        </NorthItem>
+        <NorthItem Xs="12" Md="4">
+            <NorthCard>
+                <p class="mb-2 font-semibold text-foreground">Своя разметка</p>
+                <p class="text-sm text-foreground/70">
+                    Каждый компонент — собственный Razor-файл, без чужого DOM под капотом.
+                    Значит, дизайн-эффекты (например, pill-фон под активной вкладкой) не упираются
+                    в чужую структуру.
+                </p>
+            </NorthCard>
+        </NorthItem>
+        <NorthItem Xs="12" Md="4">
+            <NorthCard>
+                <p class="mb-2 font-semibold text-foreground">Императивные сервисы</p>
+                <p class="text-sm text-foreground/70">
+                    INorthDialogService.ShowAsync&lt;T&gt;() и IToastManager.Add(...) — как
+                    IDialogService/ISnackbar в MudBlazor, без ручного управления bool-флагами.
+                </p>
+            </NorthCard>
+        </NorthItem>
+    </NorthGrid>
+</NorthContainer>

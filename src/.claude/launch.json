@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "northui-demo",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "NorthUI/NorthUI.Demo/NorthUI.Demo.csproj", "--launch-profile", "http"],
+      "port": 5074,
+      "url": "http://northui-demo.dev.localhost:5074"
+    }
+  ]
+}

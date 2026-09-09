@@ -1,0 +1,64 @@
+@page "/componentlib/menu"
+
+<DocPage Title="NorthMenu" Lead="Выпадающее контекстное меню, построенное на NorthPopover. Клик по пункту сам закрывает меню."
+         Files="@(new[] { "Components/Navigation/NorthMenu.razor", "Components/Navigation/NorthMenuItem.razor" })">
+
+    <DocSection Title="Пример" Description="NorthPopoverProvider уже есть в MainLayout, отдельно подключать не нужно." Code="@ExampleCode">
+        <NorthMenu>
+            <Trigger>
+                <NorthButton Variant="NorthVariant.Bordered">Действия ▾</NorthButton>
+            </Trigger>
+            <MenuContent>
+                <NorthMenuItem OnClick="Edit">Редактировать</NorthMenuItem>
+                <NorthMenuItem OnClick="Duplicate">Дублировать</NorthMenuItem>
+                <NorthDivider Class="my-1" />
+                <NorthMenuItem Color="NorthColor.Danger" OnClick="Delete">Удалить</NorthMenuItem>
+            </MenuContent>
+        </NorthMenu>
+        <span class="text-sm text-foreground/60">Последнее действие: @(_lastAction ?? "—")</span>
+    </DocSection>
+
+    <DocApiTable Title="Параметры NorthMenu" Rows="@_menuRows" />
+    <DocApiTable Title="Параметры NorthMenuItem" Rows="@_itemRows" />
+
+</DocPage>
+
+@code {
+    private string? _lastAction;
+
+    private void Edit() => _lastAction = "Редактировать";
+    private void Duplicate() => _lastAction = "Дублировать";
+    private void Delete() => _lastAction = "Удалить";
+
+    private const string ExampleCode =
+        """
+        <NorthMenu>
+            <Trigger>
+                <NorthButton Variant="NorthVariant.Bordered">Действия</NorthButton>
+            </Trigger>
+            <MenuContent>
+                <NorthMenuItem OnClick="Edit">Редактировать</NorthMenuItem>
+                <NorthMenuItem OnClick="Duplicate">Дублировать</NorthMenuItem>
+                <NorthDivider Class="my-1" />
+                <NorthMenuItem Color="NorthColor.Danger" OnClick="Delete">Удалить</NorthMenuItem>
+            </MenuContent>
+        </NorthMenu>
+        """;
+
+    private readonly List<DocApiRow> _menuRows = new()
+    {
+        new("Trigger", "RenderFragment?", "—", "Элемент, открывающий меню по клику (обычно кнопка)"),
+        new("MenuContent", "RenderFragment?", "—", "Набор NorthMenuItem/NorthDivider"),
+        new("Position", "NorthPosition", "BottomStart", "Позиция меню относительно триггера"),
+        new("IsParentFullSize", "bool", "false", "Растянуть меню на ширину триггера"),
+    };
+
+    private readonly List<DocApiRow> _itemRows = new()
+    {
+        new("Color", "NorthColor", "Default", "Danger — для деструктивных действий (удаление и т.п.)"),
+        new("Disabled", "bool", "false", "—"),
+        new("StartContent", "RenderFragment?", "—", "Иконка перед текстом"),
+        new("ChildContent", "RenderFragment?", "—", "Текст пункта"),
+        new("OnClick", "EventCallback", "—", "Обработчик выбора пункта (меню закроется автоматически после)"),
+    };
+}

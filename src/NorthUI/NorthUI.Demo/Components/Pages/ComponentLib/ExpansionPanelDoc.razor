@@ -1,0 +1,59 @@
+@page "/componentlib/expansion-panel"
+
+<DocPage Title="NorthExpansionPanel" Lead="Сворачиваемая панель (аккордеон-секция). Каждая панель независима."
+         Files="@(new[] { "Components/DataDisplay/NorthExpansionPanel.razor" })">
+
+    <DocSection Title="Базовое использование" Row="false" Code="@BasicCode">
+        <NorthStack Spacing="2">
+            <NorthExpansionPanel Title="Доставка" @bind-Expanded="_panel1">
+                Бесплатно при заказе от 3000 ₽, курьером 1-2 дня.
+            </NorthExpansionPanel>
+            <NorthExpansionPanel Title="Оплата" @bind-Expanded="_panel2">
+                Картой онлайн или наличными при получении.
+            </NorthExpansionPanel>
+            <NorthExpansionPanel Title="Возврат">
+                Возврат возможен в течение 14 дней с момента получения.
+            </NorthExpansionPanel>
+        </NorthStack>
+    </DocSection>
+
+    <DocSection Title="Bordered = false" Row="false" Code="@BorderedCode">
+        <NorthExpansionPanel Title="Без обводки" Bordered="false">
+            Панель без рамки вокруг заголовка и содержимого.
+        </NorthExpansionPanel>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private bool _panel1 = true;
+    private bool _panel2;
+
+    private const string BasicCode =
+        """
+        <NorthExpansionPanel Title="Доставка" @bind-Expanded="_panel1">
+            Бесплатно при заказе от 3000 ₽, курьером 1-2 дня.
+        </NorthExpansionPanel>
+        <NorthExpansionPanel Title="Оплата" @bind-Expanded="_panel2">
+            Картой онлайн или наличными при получении.
+        </NorthExpansionPanel>
+        """;
+
+    private const string BorderedCode =
+        """
+        <NorthExpansionPanel Title="Без обводки" Bordered="false">
+            Панель без рамки вокруг заголовка и содержимого.
+        </NorthExpansionPanel>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Title", "string?", "—", "Текстовый заголовок"),
+        new("TitleContent", "RenderFragment?", "—", "Заголовок сложной разметкой (вместо Title)"),
+        new("Expanded", "bool", "false", "Развёрнута ли панель. Поддерживает @bind-Expanded"),
+        new("Bordered", "bool", "true", "Обводка панели"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое панели"),
+    };
+}

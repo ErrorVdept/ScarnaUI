@@ -1,0 +1,28 @@
+@page "/componentlib/theme-switch"
+
+<DocPage Title="NorthThemeSwitch" Lead="Готовая кнопка переключения светлой/тёмной темы — сама читает и меняет тему через каскадный NorthThemeContext."
+         Files="@(new[] { "Components/Theme/NorthThemeSwitch.razor" })">
+
+    <DocSection Title="Пример" Description="MainLayout уже содержит один NorthThemeSwitch в навбаре — второй экземпляр здесь просто переключает ту же общую тему." Code="@ExampleCode">
+        <NorthThemeSwitch />
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string ExampleCode =
+        """
+        <NorthThemeProvider>
+            <header>
+                <NorthThemeSwitch />
+            </header>
+            @Body
+        </NorthThemeProvider>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+    };
+}

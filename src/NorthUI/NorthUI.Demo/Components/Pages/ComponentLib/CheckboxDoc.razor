@@ -1,0 +1,69 @@
+@page "/componentlib/checkbox"
+
+<DocPage Title="NorthCheckbox" Lead="Чекбокс с поддержкой @@bind-Value и подписью рядом."
+         Files="@(new[] { "Components/Forms/NorthCheckbox.razor" })">
+
+    <DocSection Title="Интерактивный пример" Code="@InteractiveCode">
+        <NorthCheckbox @bind-Value="_agree" Color="NorthColor.Success">Согласен с условиями использования</NorthCheckbox>
+        <span class="text-sm text-foreground/60">Значение: @_agree</span>
+    </DocSection>
+
+    <DocSection Title="Цвета" Code="@ColorsCode">
+        <NorthCheckbox Value="true" Color="NorthColor.Default">Default</NorthCheckbox>
+        <NorthCheckbox Value="true" Color="NorthColor.Primary">Primary</NorthCheckbox>
+        <NorthCheckbox Value="true" Color="NorthColor.Secondary">Secondary</NorthCheckbox>
+        <NorthCheckbox Value="true" Color="NorthColor.Success">Success</NorthCheckbox>
+        <NorthCheckbox Value="true" Color="NorthColor.Warning">Warning</NorthCheckbox>
+        <NorthCheckbox Value="true" Color="NorthColor.Danger">Danger</NorthCheckbox>
+    </DocSection>
+
+    <DocSection Title="Плотность и состояния" Code="@StatesCode">
+        <NorthCheckbox Density="NorthDensity.Dense" Value="true">Dense чекбокс</NorthCheckbox>
+        <NorthCheckbox Value="true" ReadOnly="true">ReadOnly чекбокс</NorthCheckbox>
+        <NorthCheckbox Value="true" Disabled="true">Disabled чекбокс</NorthCheckbox>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private bool _agree;
+
+    private const string InteractiveCode =
+        """
+        <NorthCheckbox @bind-Value="_agree" Color="NorthColor.Success">Согласен с условиями использования</NorthCheckbox>
+        <span class="text-sm text-foreground/60">Значение: @_agree</span>
+
+        @code {
+            private bool _agree;
+        }
+        """;
+
+    private const string ColorsCode =
+        """
+        <NorthCheckbox Value="true" Color="NorthColor.Default">Default</NorthCheckbox>
+        <NorthCheckbox Value="true" Color="NorthColor.Primary">Primary</NorthCheckbox>
+        <NorthCheckbox Value="true" Color="NorthColor.Secondary">Secondary</NorthCheckbox>
+        <NorthCheckbox Value="true" Color="NorthColor.Success">Success</NorthCheckbox>
+        <NorthCheckbox Value="true" Color="NorthColor.Warning">Warning</NorthCheckbox>
+        <NorthCheckbox Value="true" Color="NorthColor.Danger">Danger</NorthCheckbox>
+        """;
+
+    private const string StatesCode =
+        """
+        <NorthCheckbox Density="NorthDensity.Dense" Value="true">Dense чекбокс</NorthCheckbox>
+        <NorthCheckbox Value="true" ReadOnly="true">ReadOnly чекбокс</NorthCheckbox>
+        <NorthCheckbox Value="true" Disabled="true">Disabled чекбокс</NorthCheckbox>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Value / ValueChanged / ValueExpression", "bool", "—", "Механика @bind-Value"),
+        new("Disabled", "bool", "false", "—"),
+        new("ReadOnly", "bool", "false", "Запрещает переключение, но не тускнеет (в отличие от Disabled)"),
+        new("Color", "NorthColor", "Primary", "Цвет заливки в отмеченном состоянии"),
+        new("Density", "NorthDensity", "Normal", "Dense — уменьшенный квадрат для плотных списков"),
+        new("ChildContent", "RenderFragment?", "—", "Подпись рядом с чекбоксом"),
+    };
+}

@@ -1,0 +1,56 @@
+@*
+    Небольшая цветная "пилюля" с текстом/меткой — тег, статус, значение фильтра.
+
+    <NorthChip Color="NorthColor.Success" Variant="NorthVariant.Flat">Активен</NorthChip>
+    <NorthChip OnClose="Remove">Удаляемый тег</NorthChip>
+*@
+@namespace NorthUI.Components.DataDisplay
+@inherits NorthComponentBase
+
+<span class="@Classes" style="@Style" @attributes="UserAttributes">
+    @StartContent
+    <span class="truncate">@ChildContent</span>
+    @if (OnClose.HasDelegate)
+    {
+        <button type="button" class="north-chip__close -mr-1 shrink-0 rounded-full p-0.5 transition-colors hover:bg-black/10" @onclick="() => OnClose.InvokeAsync()" aria-label="Убрать">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+        </button>
+    }
+</span>
+
+@code {
+    [Parameter] public NorthColor Color { get; set; } = NorthColor.Default;
+
+    [Parameter] public NorthVariant Variant { get; set; } = NorthVariant.Flat;
+
+    [Parameter] public NorthSize Size { get; set; } = NorthSize.Medium;
+
+    /// <summary>Принудительно добавляет обводку в цвет Color поверх выбранного Variant (для Variant.Bordered ничего не меняет — обводка там уже есть).</summary>
+    [Parameter] public bool Bordered { get; set; }
+
+    /// <summary>Содержимое перед текстом (иконка, точка-индикатор).</summary>
+    [Parameter] public RenderFragment? StartContent { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Если задан — справа появляется крестик закрытия, вызывающий этот коллбэк.</summary>
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private string Classes => CssBuilder.Default("north-chip inline-flex items-center gap-1.5 font-medium whitespace-nowrap transition-colors")
+        .AddClass(SizeClass)
+        .AddClass(NorthColorVariantClasses.Get(Color, Variant))
+        .AddClass(NorthColorVariantClasses.Radius(NorthRadius.Full))
+        .AddClass("border border-current/40", Bordered && Variant != NorthVariant.Bordered)
+        .AddClass(Class)
+        .ToString();
+
+    private string SizeClass => Size switch
+    {
+        NorthSize.Small => "h-6 px-2 text-xs",
+        NorthSize.Large => "h-9 px-4 text-sm",
+        _ => "h-7 px-3 text-xs",
+    };
+}

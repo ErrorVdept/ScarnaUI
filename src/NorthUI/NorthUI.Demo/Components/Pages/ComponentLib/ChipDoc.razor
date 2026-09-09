@@ -1,0 +1,89 @@
+@page "/componentlib/chip"
+
+<DocPage Title="NorthChip" Lead="Небольшая цветная «пилюля» с текстом — тег, статус, значение фильтра."
+         Files="@(new[] { "Components/DataDisplay/NorthChip.razor" })">
+
+    <DocSection Title="Цвета" Code="@ColorsCode">
+        <NorthChip Color="NorthColor.Default">Default</NorthChip>
+        <NorthChip Color="NorthColor.Primary">Primary</NorthChip>
+        <NorthChip Color="NorthColor.Secondary">Secondary</NorthChip>
+        <NorthChip Color="NorthColor.Success">Success</NorthChip>
+        <NorthChip Color="NorthColor.Warning">Warning</NorthChip>
+        <NorthChip Color="NorthColor.Danger">Danger</NorthChip>
+    </DocSection>
+
+    <DocSection Title="Варианты и размеры" Code="@VariantsCode">
+        <NorthChip Color="NorthColor.Primary" Variant="NorthVariant.Solid">Solid</NorthChip>
+        <NorthChip Color="NorthColor.Primary" Variant="NorthVariant.Bordered">Bordered</NorthChip>
+        <NorthChip Color="NorthColor.Primary" Variant="NorthVariant.Faded">Faded</NorthChip>
+        <NorthChip Color="NorthColor.Primary" Size="NorthSize.Small">Small</NorthChip>
+        <NorthChip Color="NorthColor.Primary" Size="NorthSize.Large">Large</NorthChip>
+    </DocSection>
+
+    <DocSection Title="Закрываемый чип" Description="OnClose показывает крестик справа." Code="@CloseCode">
+        @if (_visible)
+        {
+            <NorthChip Color="NorthColor.Danger" Variant="NorthVariant.Faded" OnClose="HandleClose">Удаляемый тег</NorthChip>
+        }
+        else
+        {
+            <NorthButton Size="NorthSize.Small" Variant="NorthVariant.Light" OnClick="() => _visible = true">Вернуть тег</NorthButton>
+        }
+        <span class="text-sm text-foreground/60">Закрытий: @_closeCount</span>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private bool _visible = true;
+    private int _closeCount;
+
+    private void HandleClose()
+    {
+        _visible = false;
+        _closeCount++;
+    }
+
+    private const string ColorsCode =
+        """
+        <NorthChip Color="NorthColor.Default">Default</NorthChip>
+        <NorthChip Color="NorthColor.Primary">Primary</NorthChip>
+        <NorthChip Color="NorthColor.Secondary">Secondary</NorthChip>
+        <NorthChip Color="NorthColor.Success">Success</NorthChip>
+        <NorthChip Color="NorthColor.Warning">Warning</NorthChip>
+        <NorthChip Color="NorthColor.Danger">Danger</NorthChip>
+        """;
+
+    private const string VariantsCode =
+        """
+        <NorthChip Color="NorthColor.Primary" Variant="NorthVariant.Solid">Solid</NorthChip>
+        <NorthChip Color="NorthColor.Primary" Variant="NorthVariant.Bordered">Bordered</NorthChip>
+        <NorthChip Color="NorthColor.Primary" Variant="NorthVariant.Faded">Faded</NorthChip>
+        <NorthChip Color="NorthColor.Primary" Size="NorthSize.Small">Small</NorthChip>
+        <NorthChip Color="NorthColor.Primary" Size="NorthSize.Large">Large</NorthChip>
+        """;
+
+    private const string CloseCode =
+        """
+        <NorthChip Color="NorthColor.Danger" Variant="NorthVariant.Faded" OnClose="() => Remove(tag)">
+            Удаляемый тег
+        </NorthChip>
+
+        @code {
+            private void Remove(Tag tag) { ... }
+        }
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Color", "NorthColor", "Default", "См. theme-provider.md"),
+        new("Variant", "NorthVariant", "Flat", "Solid/Flat/Bordered/Light/Faded/Shadow"),
+        new("Size", "NorthSize", "Medium", "Small/Medium/Large"),
+        new("Bordered", "bool", "false", "Доп. обводка поверх Variant (для Variant.Bordered ничего не меняет)"),
+        new("StartContent", "RenderFragment?", "—", "Иконка/точка перед текстом"),
+        new("ChildContent", "RenderFragment?", "—", "Текст метки"),
+        new("OnClose", "EventCallback", "—", "Если задан — справа появляется крестик, вызывающий этот коллбэк"),
+    };
+}

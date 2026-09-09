@@ -1,0 +1,78 @@
+@*
+    Выезжающая панель (боковое меню, панель фильтров). В отличие от NorthDialog —
+    не сервис, а обычный декларативный компонент: кладётся в разметку (обычно в layout)
+    и управляется через @bind-Open, как MudDrawer.
+
+    <NorthDrawer @bind-Open="_menuOpen" Anchor="NorthDrawerAnchor.Left">
+        <NorthNavLinks />
+    </NorthDrawer>
+    <NorthButton OnClick="() => _menuOpen = true">Меню</NorthButton>
+*@
+@namespace NorthUI.Components.Layout
+@inherits NorthComponentBase
+
+@if (Open)
+{
+    <div class="fixed inset-0 z-[1050] bg-overlay/50 animate-north-fade-in" @onclick="HandleBackdropClick"></div>
+}
+<aside class="@Classes" style="@CombinedStyle" @attributes="UserAttributes">
+    @ChildContent
+</aside>
+
+@code {
+    /// <summary>Открыта ли панель. Поддерживает @bind-Open.</summary>
+    [Parameter] public bool Open { get; set; }
+
+    [Parameter] public EventCallback<bool> OpenChanged { get; set; }
+
+    [Parameter] public NorthDrawerAnchor Anchor { get; set; } = NorthDrawerAnchor.Left;
+
+    /// <summary>Ширина панели (для Left/Right) — любое CSS-значение, например "280px".</summary>
+    [Parameter] public string Width { get; set; } = "280px";
+
+    /// <summary>Высота панели (для Top/Bottom) — любое CSS-значение.</summary>
+    [Parameter] public string Height { get; set; } = "280px";
+
+    [Parameter] public bool CloseOnBackdropClick { get; set; } = true;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private async Task HandleBackdropClick()
+    {
+        if (!CloseOnBackdropClick)
+        {
+            return;
+        }
+
+        Open = false;
+
+        if (OpenChanged.HasDelegate)
+        {
+            await OpenChanged.InvokeAsync(false);
+        }
+    }
+
+    private string Classes => CssBuilder.Default("north-drawer fixed z-[1060] overflow-y-auto bg-content1 shadow-xl transition-transform duration-200 ease-out")
+        .AddClass(AnchorClass)
+        .AddClass(Class)
+        .ToString();
+
+    private string AnchorClass => Anchor switch
+    {
+        NorthDrawerAnchor.Right => $"top-0 right-0 bottom-0 {(Open ? "translate-x-0" : "translate-x-full")}",
+        NorthDrawerAnchor.Top => $"top-0 left-0 right-0 {(Open ? "translate-y-0" : "-translate-y-full")}",
+        NorthDrawerAnchor.Bottom => $"bottom-0 left-0 right-0 {(Open ? "translate-y-0" : "translate-y-full")}",
+        _ => $"top-0 left-0 bottom-0 {(Open ? "translate-x-0" : "-translate-x-full")}",
+    };
+
+    private string CombinedStyle
+    {
+        get
+        {
+            var size = Anchor is NorthDrawerAnchor.Top or NorthDrawerAnchor.Bottom
+                ? $"height: {Height};"
+                : $"width: {Width};";
+            return string.IsNullOrWhiteSpace(Style) ? size : $"{size} {Style}";
+        }
+    }
+}

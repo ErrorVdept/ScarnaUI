@@ -1,0 +1,36 @@
+@page "/componentlib/separator"
+
+<DocPage Title="NorthSeparator" Lead="Без содержимого — то же самое, что NorthDivider. С ChildContent — линия-подпись-линия."
+         Files="@(new[] { "Components/DataDisplay/NorthSeparator.razor" })">
+
+    <DocSection Title="Без подписи" Row="false" Code="@PlainCode">
+        <NorthSeparator />
+    </DocSection>
+
+    <DocSection Title="С подписью" Row="false" Code="@LabeledCode">
+        <NorthSeparator>или</NorthSeparator>
+        <NorthSeparator>3 сентября</NorthSeparator>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string PlainCode =
+        """
+        <NorthSeparator />
+        """;
+
+    private const string LabeledCode =
+        """
+        <NorthSeparator>или</NorthSeparator>
+        <NorthSeparator>3 сентября</NorthSeparator>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Vertical", "bool", "false", "Вертикальная линия вместо горизонтальной. Игнорируется, если задан ChildContent"),
+        new("ChildContent", "RenderFragment?", "—", "Подпись посередине линии"),
+    };
+}

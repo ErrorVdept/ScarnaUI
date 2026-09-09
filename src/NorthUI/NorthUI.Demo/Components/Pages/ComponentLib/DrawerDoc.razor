@@ -1,0 +1,77 @@
+@page "/componentlib/drawer"
+
+<DocPage Title="NorthDrawer" Lead="Выезжающая панель (боковое меню, панель фильтров) — декларативный компонент, управляемый через @@bind-Open."
+         Files="@(new[] { "Components/Layout/NorthDrawer.razor" })">
+
+    <DocSection Title="Anchor=Left" Description="Открывается кнопкой, закрывается по клику на подложку или крестик." Code="@LeftCode" Row="false">
+        <NorthButton Variant="NorthVariant.Bordered" OnClick="() => _leftOpen = true">Открыть слева</NorthButton>
+        <NorthDrawer @bind-Open="_leftOpen" Anchor="NorthDrawerAnchor.Left">
+            <div class="flex items-center justify-between border-b border-divider px-4 py-3">
+                <span class="font-semibold">Меню</span>
+                <NorthButton Size="NorthSize.Small" Variant="NorthVariant.Light" OnClick="() => _leftOpen = false">✕</NorthButton>
+            </div>
+            <NorthList TValue="string" SelectionMode="NorthListSelectionMode.None" Class="p-3">
+                <NorthListItem Value="@("home")">Главная</NorthListItem>
+                <NorthListItem Value="@("orders")">Заказы</NorthListItem>
+                <NorthListItem Value="@("settings")">Настройки</NorthListItem>
+            </NorthList>
+        </NorthDrawer>
+    </DocSection>
+
+    <DocSection Title="Anchor=Bottom" Description="Height задаёт высоту панели для Top/Bottom." Code="@BottomCode" Row="false">
+        <NorthButton Variant="NorthVariant.Bordered" OnClick="() => _bottomOpen = true">Открыть снизу</NorthButton>
+        <NorthDrawer @bind-Open="_bottomOpen" Anchor="NorthDrawerAnchor.Bottom" Height="200px">
+            <div class="flex items-center justify-between border-b border-divider px-4 py-3">
+                <span class="font-semibold">Панель снизу</span>
+                <NorthButton Size="NorthSize.Small" Variant="NorthVariant.Light" OnClick="() => _bottomOpen = false">✕</NorthButton>
+            </div>
+            <p class="p-4 text-sm text-foreground/70">Произвольное содержимое.</p>
+        </NorthDrawer>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private bool _leftOpen;
+    private bool _bottomOpen;
+
+    private const string LeftCode =
+        """
+        <NorthButton OnClick="() => _open = true">Открыть слева</NorthButton>
+
+        <NorthDrawer @bind-Open="_open" Anchor="NorthDrawerAnchor.Left">
+            <div class="flex items-center justify-between border-b border-divider px-4 py-3">
+                <span class="font-semibold">Меню</span>
+                <NorthButton Size="NorthSize.Small" Variant="NorthVariant.Light" OnClick="() => _open = false">✕</NorthButton>
+            </div>
+            <NorthList TValue="string" SelectionMode="NorthListSelectionMode.None" Class="p-3">
+                <NorthListItem Value="@("home")">Главная</NorthListItem>
+                <NorthListItem Value="@("orders")">Заказы</NorthListItem>
+                <NorthListItem Value="@("settings")">Настройки</NorthListItem>
+            </NorthList>
+        </NorthDrawer>
+
+        @code {
+            private bool _open;
+        }
+        """;
+
+    private const string BottomCode =
+        """
+        <NorthDrawer @bind-Open="_open" Anchor="NorthDrawerAnchor.Bottom" Height="200px">
+            <p class="p-4">Произвольное содержимое.</p>
+        </NorthDrawer>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Open", "bool", "false", "Открыта ли панель. Поддерживает @bind-Open"),
+        new("Anchor", "NorthDrawerAnchor", "Left", "Left/Right/Top/Bottom"),
+        new("Width", "string", "\"280px\"", "Ширина панели (для Left/Right) — любое CSS-значение"),
+        new("Height", "string", "\"280px\"", "Высота панели (для Top/Bottom)"),
+        new("CloseOnBackdropClick", "bool", "true", "Закрывать по клику на подложку"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое панели"),
+    };
+}

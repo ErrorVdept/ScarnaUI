@@ -1,0 +1,78 @@
+@page "/componentlib/text"
+
+<DocPage Title="NorthText" Lead="Типографический текст — аналог MudText. HTML-тег зависит от Typo (h1-h6, p, span) или явного As."
+         Files="@(new[] { "Components/DataDisplay/NorthText.cs", "Components/DataDisplay/NorthTextEnums.cs" })">
+
+    <DocSection Title="Все варианты Typo" Row="false" Code="@TypoCode">
+        <NorthText Typo="NorthTypo.H1" GutterBottom="true">H1 Заголовок</NorthText>
+        <NorthText Typo="NorthTypo.H2" GutterBottom="true">H2 Заголовок</NorthText>
+        <NorthText Typo="NorthTypo.H3" GutterBottom="true">H3 Заголовок</NorthText>
+        <NorthText Typo="NorthTypo.H4" GutterBottom="true">H4 Заголовок</NorthText>
+        <NorthText Typo="NorthTypo.H5" GutterBottom="true">H5 Заголовок</NorthText>
+        <NorthText Typo="NorthTypo.H6" GutterBottom="true">H6 Заголовок</NorthText>
+        <NorthText Typo="NorthTypo.Subtitle1" GutterBottom="true">Subtitle1 подзаголовок</NorthText>
+        <NorthText Typo="NorthTypo.Subtitle2" GutterBottom="true">Subtitle2 подзаголовок</NorthText>
+        <NorthText Typo="NorthTypo.Body1" GutterBottom="true">Body1 — обычный текст абзаца.</NorthText>
+        <NorthText Typo="NorthTypo.Body2" GutterBottom="true">Body2 — текст поменьше.</NorthText>
+        <NorthText Typo="NorthTypo.Caption" GutterBottom="true">Caption — приглушённая подпись</NorthText>
+        <NorthText Typo="NorthTypo.Overline" GutterBottom="true">OVERLINE НАДПИСЬ</NorthText>
+        <NorthText Typo="NorthTypo.Button">BUTTON TEXT</NorthText>
+    </DocSection>
+
+    <DocSection Title="Color и Align" Row="false" Code="@ColorAlignCode">
+        <NorthText Typo="NorthTypo.Body1" Color="NorthColor.Danger" GutterBottom="true">Body1 с Color="Danger"</NorthText>
+        <NorthText Typo="NorthTypo.Body1" Color="NorthColor.Success" GutterBottom="true">Body1 с Color="Success"</NorthText>
+        <NorthText Typo="NorthTypo.Body1" Align="NorthTextAlign.Center">Текст по центру (Align.Center)</NorthText>
+    </DocSection>
+
+    <DocSection Title="Truncate и As" Description="Truncate — обрезка в одну строку. As переопределяет HTML-тег." Row="false" Code="@TruncateCode">
+        <div class="w-48">
+            <NorthText Typo="NorthTypo.Body1" Truncate="true">Очень длинный текст, который не помещается в ширину и обрезается многоточием</NorthText>
+        </div>
+        <NorthText Typo="NorthTypo.H3" As="span">H3 визуально, но тег span</NorthText>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string TypoCode =
+        """
+        <NorthText Typo="NorthTypo.H2" GutterBottom="true">Заголовок раздела</NorthText>
+        <NorthText Typo="NorthTypo.Subtitle1" GutterBottom="true">Подзаголовок</NorthText>
+        <NorthText Typo="NorthTypo.Body1" GutterBottom="true">Обычный текст абзаца.</NorthText>
+        <NorthText Typo="NorthTypo.Body2">Текст поменьше.</NorthText>
+        <NorthText Typo="NorthTypo.Caption">Приглушённая подпись</NorthText>
+        <NorthText Typo="NorthTypo.Overline">OVERLINE НАДПИСЬ</NorthText>
+        """;
+
+    private const string ColorAlignCode =
+        """
+        <NorthText Typo="NorthTypo.Body1" Color="NorthColor.Danger">Ошибка сохранения</NorthText>
+        <NorthText Typo="NorthTypo.Body1" Align="NorthTextAlign.Center">Текст по центру</NorthText>
+        """;
+
+    private const string TruncateCode =
+        """
+        <div class="w-48">
+            <NorthText Typo="NorthTypo.Body1" Truncate="true">
+                Очень длинный текст, который обрезается многоточием
+            </NorthText>
+        </div>
+
+        @* Заголовок H3 визуально, но семантически <span> *@
+        <NorthText Typo="NorthTypo.H3" As="span">...</NorthText>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Typo", "NorthTypo", "Body1", "H1-H6, Subtitle1/Subtitle2, Body1/Body2, Caption, Overline, Button — определяет и тег, и размер/начертание шрифта"),
+        new("Color", "NorthColor?", "null", "Не задан — обычный text-foreground (у Caption/Overline по умолчанию приглушённый text-foreground/60)"),
+        new("Align", "NorthTextAlign", "Inherit", "Start/Center/End/Justify"),
+        new("GutterBottom", "bool", "false", "Отступ снизу — для последовательных абзацев"),
+        new("Truncate", "bool", "false", "Обрезать в одну строку с многоточием при переполнении"),
+        new("As", "string?", "—", "Переопределить HTML-тег по умолчанию для выбранного Typo"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое"),
+    };
+}

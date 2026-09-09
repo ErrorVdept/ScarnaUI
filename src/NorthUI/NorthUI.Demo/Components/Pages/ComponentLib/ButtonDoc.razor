@@ -1,0 +1,103 @@
+@page "/componentlib/button"
+
+<DocPage Title="NorthButton" Lead="Кнопка с цветами, вариантами заливки, размерами и анимацией нажатия."
+         Files="@(new[] { "Components/Actions/NorthButton.razor" })">
+
+    <DocSection Title="Цвета" Code="@ColorsCode">
+        <NorthButton Color="NorthColor.Default">Default</NorthButton>
+        <NorthButton Color="NorthColor.Primary">Primary</NorthButton>
+        <NorthButton Color="NorthColor.Secondary">Secondary</NorthButton>
+        <NorthButton Color="NorthColor.Success">Success</NorthButton>
+        <NorthButton Color="NorthColor.Warning">Warning</NorthButton>
+        <NorthButton Color="NorthColor.Danger">Danger</NorthButton>
+    </DocSection>
+
+    <DocSection Title="Варианты заливки" Code="@VariantsCode">
+        <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Solid">Solid</NorthButton>
+        <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Flat">Flat</NorthButton>
+        <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Bordered">Bordered</NorthButton>
+        <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Light">Light</NorthButton>
+        <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Faded">Faded</NorthButton>
+        <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Shadow">Shadow</NorthButton>
+    </DocSection>
+
+    <DocSection Title="Размеры, Loading, Disabled" Code="@StatesCode">
+        <NorthButton Size="NorthSize.Small">Small</NorthButton>
+        <NorthButton Size="NorthSize.Medium">Medium</NorthButton>
+        <NorthButton Size="NorthSize.Large">Large</NorthButton>
+        <NorthButton Loading="true">Loading</NorthButton>
+        <NorthButton Disabled="true">Disabled</NorthButton>
+    </DocSection>
+
+    <DocSection Title="Клик" Description="OnClick — обычный EventCallback." Code="@ClickCode">
+        <NorthButton Color="NorthColor.Success" OnClick="HandleClick">Нажми меня</NorthButton>
+        <span class="text-sm text-foreground/60">Кликов: @_clicks</span>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private int _clicks;
+
+    private void HandleClick() => _clicks++;
+
+    private const string ColorsCode =
+        """
+        <NorthButton Color="NorthColor.Default">Default</NorthButton>
+        <NorthButton Color="NorthColor.Primary">Primary</NorthButton>
+        <NorthButton Color="NorthColor.Secondary">Secondary</NorthButton>
+        <NorthButton Color="NorthColor.Success">Success</NorthButton>
+        <NorthButton Color="NorthColor.Warning">Warning</NorthButton>
+        <NorthButton Color="NorthColor.Danger">Danger</NorthButton>
+        """;
+
+    private const string VariantsCode =
+        """
+        <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Solid">Solid</NorthButton>
+        <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Flat">Flat</NorthButton>
+        <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Bordered">Bordered</NorthButton>
+        <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Light">Light</NorthButton>
+        <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Faded">Faded</NorthButton>
+        <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Shadow">Shadow</NorthButton>
+        """;
+
+    private const string StatesCode =
+        """
+        <NorthButton Size="NorthSize.Small">Small</NorthButton>
+        <NorthButton Size="NorthSize.Medium">Medium</NorthButton>
+        <NorthButton Size="NorthSize.Large">Large</NorthButton>
+        <NorthButton Loading="true">Loading</NorthButton>
+        <NorthButton Disabled="true">Disabled</NorthButton>
+        """;
+
+    private const string ClickCode =
+        """
+        <NorthButton Color="NorthColor.Success" OnClick="HandleClick">Нажми меня</NorthButton>
+
+        @code {
+            private int _clicks;
+            private void HandleClick() => _clicks++;
+        }
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Color", "NorthColor", "Default", "Семантический цвет заливки"),
+        new("Variant", "NorthVariant", "Solid", "Solid/Flat/Bordered/Light/Faded/Shadow"),
+        new("Size", "NorthSize", "Medium", "Small/Medium/Large"),
+        new("Radius", "NorthRadius", "Medium", "Радиус скругления"),
+        new("Bordered", "bool", "false", "Доп. обводка поверх выбранного Variant"),
+        new("Disabled", "bool", "false", "—"),
+        new("Loading", "bool", "false", "Показывает спиннер вместо содержимого, блокирует клики"),
+        new("FullWidth", "bool", "false", "Растянуть на 100% ширины родителя"),
+        new("Type", "string", "\"button\"", "HTML-атрибут type"),
+        new("Href", "string?", "—", "Если задан — рендерится как <a>, иначе как <button>"),
+        new("Target", "string?", "—", "target для ссылки (вместе с Href)"),
+        new("StartIcon", "RenderFragment?", "—", "Иконка перед текстом (скрывается, пока Loading)"),
+        new("EndIcon", "RenderFragment?", "—", "Иконка после текста"),
+        new("OnClick", "EventCallback<MouseEventArgs>", "—", "Обработчик клика"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое кнопки"),
+    };
+}

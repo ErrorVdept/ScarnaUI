@@ -1,0 +1,76 @@
+@*
+    Один пункт NorthList. TValue выводится автоматически от родителя.
+*@
+@namespace NorthUI.Components.DataDisplay
+@typeparam TValue
+
+<div class="@Classes" role="option" aria-selected="@IsSelected" @onclick="HandleClickAsync">
+    @if (Parent?.SelectionMode == NorthListSelectionMode.Multiple)
+    {
+        <span class="@CheckboxClasses" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                 class="@(IsSelected ? "opacity-100 scale-100" : "opacity-0 scale-50") transition-all duration-150">
+                <polyline points="20 6 9 17 4 12" />
+            </svg>
+        </span>
+    }
+    @StartContent
+    <span class="flex-1 truncate text-sm">@ChildContent</span>
+    @if (Parent?.SelectionMode == NorthListSelectionMode.Single && IsSelected)
+    {
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-primary">
+            <polyline points="20 6 9 17 4 12" />
+        </svg>
+    }
+</div>
+
+@code {
+    [CascadingParameter] private NorthList<TValue>? Parent { get; set; }
+
+    [Parameter, EditorRequired] public TValue Value { get; set; } = default!;
+
+    [Parameter] public RenderFragment? StartContent { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] public bool Disabled { get; set; }
+
+    /// <summary>Доп. обработчик клика — вызывается при любом SelectionMode, в т.ч. None (обычный кликабельный пункт).</summary>
+    [Parameter] public EventCallback OnClick { get; set; }
+
+    private bool IsSelected => Parent?.IsSelected(Value) == true;
+
+    private async Task HandleClickAsync()
+    {
+        if (Disabled || Parent is null)
+        {
+            return;
+        }
+
+        switch (Parent.SelectionMode)
+        {
+            case NorthListSelectionMode.Single:
+                await Parent.SelectSingleAsync(Value);
+                break;
+            case NorthListSelectionMode.Multiple:
+                await Parent.ToggleMultipleAsync(Value);
+                break;
+        }
+
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync();
+        }
+    }
+
+    private string Classes => CssBuilder.Default("flex items-center gap-2 rounded-north-sm px-3 py-2 cursor-pointer transition-colors")
+        .AddClass("bg-primary/10 text-primary", IsSelected)
+        .AddClass("text-foreground hover:bg-content2", !IsSelected)
+        .AddClass("pointer-events-none opacity-50", Disabled)
+        .ToString();
+
+    private string CheckboxClasses => CssBuilder.Default("flex items-center justify-center size-4 shrink-0 rounded border-2 text-white transition-colors")
+        .AddClass("bg-primary border-primary", IsSelected)
+        .AddClass("border-default", !IsSelected)
+        .ToString();
+}

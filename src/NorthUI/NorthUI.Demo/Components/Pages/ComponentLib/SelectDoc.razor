@@ -1,0 +1,99 @@
+@page "/componentlib/select"
+
+<DocPage Title="NorthSelect" Lead="Выпадающий список с одиночным выбором на базе NorthPopover, с поддержкой @@bind-Value."
+         Files="@(new[] { "Components/Forms/NorthSelect.razor", "Components/Forms/NorthSelectItem.razor" })">
+
+    <DocSection Title="Интерактивный пример" Code="@InteractiveCode">
+        <NorthSelect Label="Страна" @bind-Value="_country" Placeholder="Выберите страну">
+            <NorthSelectItem Value="@("ru")" Text="Россия" />
+            <NorthSelectItem Value="@("kz")" Text="Казахстан" />
+            <NorthSelectItem Value="@("by")" Text="Беларусь" />
+        </NorthSelect>
+        <span class="text-sm text-foreground/60">Значение: @_country</span>
+    </DocSection>
+
+    <DocSection Title="Варианты и размеры" Code="@VariantsCode">
+        <NorthSelect TValue="string" Label="Flat" Variant="NorthVariant.Flat" Placeholder="Период" Class="w-48">
+            <NorthSelectItem Value="@("day")" Text="День" />
+            <NorthSelectItem Value="@("week")" Text="Неделя" />
+            <NorthSelectItem Value="@("month")" Text="Месяц" />
+        </NorthSelect>
+        <NorthSelect TValue="string" Label="Small" Size="NorthSize.Small" Placeholder="Период" Class="w-40">
+            <NorthSelectItem Value="@("day")" Text="День" />
+            <NorthSelectItem Value="@("week")" Text="Неделя" />
+        </NorthSelect>
+    </DocSection>
+
+    <DocSection Title="Состояния" Code="@StatesCode">
+        <NorthSelect TValue="string" Label="Только чтение" ReadOnly="true" Placeholder="Период" Class="w-48">
+            <NorthSelectItem Value="@("day")" Text="День" />
+        </NorthSelect>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+    <DocApiTable Title="NorthSelectItem" Rows="@_itemRows" />
+
+</DocPage>
+
+@code {
+    private string? _country;
+
+    private const string InteractiveCode =
+        """
+        <NorthSelect Label="Страна" @bind-Value="_country" Placeholder="Выберите страну">
+            <NorthSelectItem Value="@("ru")" Text="Россия" />
+            <NorthSelectItem Value="@("kz")" Text="Казахстан" />
+            <NorthSelectItem Value="@("by")" Text="Беларусь" />
+        </NorthSelect>
+        <span class="text-sm text-foreground/60">Значение: @_country</span>
+
+        @code {
+            private string? _country;
+        }
+        """;
+
+    private const string VariantsCode =
+        """
+        <NorthSelect Label="Flat" Variant="NorthVariant.Flat" Placeholder="Период">
+            <NorthSelectItem Value="@("day")" Text="День" />
+            <NorthSelectItem Value="@("week")" Text="Неделя" />
+            <NorthSelectItem Value="@("month")" Text="Месяц" />
+        </NorthSelect>
+        <NorthSelect Label="Small" Size="NorthSize.Small" Placeholder="Период">
+            <NorthSelectItem Value="@("day")" Text="День" />
+            <NorthSelectItem Value="@("week")" Text="Неделя" />
+        </NorthSelect>
+        """;
+
+    private const string StatesCode =
+        """
+        <NorthSelect Label="Только чтение" ReadOnly="true" Placeholder="Период">
+            <NorthSelectItem Value="@("day")" Text="День" />
+        </NorthSelect>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Value / ValueChanged / ValueExpression", "TValue?", "—", "Механика @bind-Value"),
+        new("Label", "string?", "—", "Подпись над полем"),
+        new("Placeholder", "string?", "\"Выберите...\"", "Текст, пока ничего не выбрано"),
+        new("HelperText", "string?", "—", "Подсказка под полем"),
+        new("ErrorText / Error", "—", "—", "См. getting-started.md"),
+        new("ReadOnly", "bool", "false", "Запрещает открытие списка, но не тускнеет (в отличие от Disabled)"),
+        new("Variant", "NorthVariant", "Bordered", "Bordered/Flat"),
+        new("Bordered", "bool", "true", "Показывать ли контур поля"),
+        new("Size", "NorthSize", "Medium", "Small/Medium/Large"),
+        new("Density", "NorthDensity", "Normal", "Dense — компактное поле"),
+        new("Radius", "NorthRadius", "Medium", "Радиус поля"),
+        new("Position", "NorthPosition", "BottomStart", "Позиция выпадающего списка"),
+        new("IsParentFullSize", "bool", "true", "Растянуть список на ширину поля (не уже min-w-[220px])"),
+        new("ChildContent", "RenderFragment?", "—", "Набор NorthSelectItem"),
+    };
+
+    private readonly List<DocApiRow> _itemRows = new()
+    {
+        new("Value", "TValue", "—", "Обязательный. Значение пункта"),
+        new("Text", "string", "—", "Обязательный. Текст пункта — используется и в списке, и как подпись после выбора"),
+        new("ChildContent", "RenderFragment?", "—", "Кастомная разметка пункта вместо простого текста"),
+    };
+}

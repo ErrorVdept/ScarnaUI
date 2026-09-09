@@ -1,0 +1,61 @@
+@*
+    Выпадающее контекстное меню — построено на NorthPopover (см. docmd/popover.md).
+    Требует NorthPopoverProvider в дереве выше.
+
+    <NorthMenu>
+        <Trigger>
+            <NorthButton Variant="NorthVariant.Bordered">Действия</NorthButton>
+        </Trigger>
+        <MenuContent>
+            <NorthMenuItem OnClick="Edit">Редактировать</NorthMenuItem>
+            <NorthMenuItem OnClick="Duplicate">Дублировать</NorthMenuItem>
+            <NorthMenuDivider />
+            <NorthMenuItem OnClick="Delete" Color="NorthColor.Danger">Удалить</NorthMenuItem>
+        </MenuContent>
+    </NorthMenu>
+
+    Клик по пункту меню (NorthMenuItem) сам закрывает меню — отдельно это делать не нужно.
+*@
+@namespace NorthUI.Components.Navigation
+
+<span @ref="_anchor" @onclick="ToggleAsync" class="north-menu-trigger inline-flex cursor-pointer">
+    @Trigger
+</span>
+
+<NorthPopover Open="_open" Anchor="_anchor" Position="Position" IsParentFullSize="IsParentFullSize" OffsetPx="6" OnClose="CloseAsync">
+    <div class="north-menu min-w-[180px] rounded-north-md border border-divider bg-content1 p-1 shadow-lg" role="menu">
+        <CascadingValue Value="this" IsFixed="false">
+            @MenuContent
+        </CascadingValue>
+    </div>
+</NorthPopover>
+
+@code {
+    private ElementReference _anchor;
+    private bool _open;
+
+    /// <summary>Элемент-триггер, открывающий меню по клику (обычно кнопка).</summary>
+    [Parameter] public RenderFragment? Trigger { get; set; }
+
+    /// <summary>Набор `<NorthMenuItem>`/`<NorthMenuDivider>`.</summary>
+    [Parameter] public RenderFragment? MenuContent { get; set; }
+
+    /// <summary>Позиция меню относительно триггера.</summary>
+    [Parameter] public NorthPosition Position { get; set; } = NorthPosition.BottomStart;
+
+    /// <summary>Растянуть меню на ширину триггера (по умолчанию — нет, меню обычно уже/шире произвольной кнопки).</summary>
+    [Parameter] public bool IsParentFullSize { get; set; }
+
+    private Task ToggleAsync()
+    {
+        _open = !_open;
+        return Task.CompletedTask;
+    }
+
+    /// <summary>Вызывается NorthPopover (клик снаружи/Escape) и каждым NorthMenuItem после выбора.</summary>
+    internal Task CloseAsync()
+    {
+        _open = false;
+        return InvokeAsync(StateHasChanged);
+    }
+}

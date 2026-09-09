@@ -1,0 +1,37 @@
+@*
+    Один пункт NorthSelectGroup. TValue выводится автоматически от родителя.
+*@
+@namespace NorthUI.Components.Forms
+@typeparam TValue
+@implements IDisposable
+
+<button type="button" class="@Classes" data-tab-active="@(IsSelected ? "true" : "false")" @onclick="() => Parent!.SelectAsync(Value)">
+    @Text
+</button>
+
+@code {
+    [CascadingParameter] private NorthSelectGroup<TValue>? Parent { get; set; }
+
+    [Parameter, EditorRequired] public TValue Value { get; set; } = default!;
+
+    [Parameter, EditorRequired] public string Text { get; set; } = string.Empty;
+
+    private bool IsSelected => Parent is not null && Parent.IsSelected(this);
+
+    protected override void OnInitialized()
+    {
+        if (Parent is null)
+        {
+            throw new InvalidOperationException("NorthSelectGroupItem должен использоваться внутри NorthSelectGroup.");
+        }
+
+        Parent.Register(this);
+    }
+
+    private string Classes => CssBuilder.Default("relative z-10 whitespace-nowrap rounded-north-full px-4 py-1.5 text-sm font-medium transition-colors")
+        .AddClass("text-foreground", IsSelected)
+        .AddClass("text-foreground/60 hover:text-foreground", !IsSelected)
+        .ToString();
+
+    public void Dispose() => Parent?.Unregister(this);
+}

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RazorLangVersion>Latest</RazorLangVersion>
+
+    <!-- Метаданные NuGet-пакета -->
+    <PackageId>NorthUI</PackageId>
+    <Description>Библиотека Blazor-компонентов NorthUI: DX от MudBlazor, дизайн-система от HeroUI, стилизация на Tailwind CSS.</Description>
+    <Authors>NorthUI</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <!-- Исходники Tailwind (Styles/) не нужно копировать в выходной пакет — в wwwroot уже лежит собранный CSS -->
+  <ItemGroup>
+    <Content Remove="Styles/**" />
+    <None Include="Styles/**" />
+  </ItemGroup>
+
+</Project>

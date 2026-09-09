@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="NorthUI.Demo/NorthUI.Demo.csproj" />
+  <Project Path="NorthUI/NorthUI.csproj" />
+</Solution>

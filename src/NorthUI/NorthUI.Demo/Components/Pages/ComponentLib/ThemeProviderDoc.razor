@@ -1,0 +1,59 @@
+@page "/componentlib/theme-provider"
+
+<DocPage Title="NorthThemeProvider" Lead="Корневой провайдер темы — кладётся один раз в MainLayout, оборачивая всё приложение. Переносит токены темы в CSS-переменные на &lt;html&gt; через JS и запоминает выбор пользователя в localStorage."
+         Files="@(new[] { "Components/Theme/NorthThemeProvider.razor", "Components/Theme/NorthThemeProvider.razor.cs" })">
+
+    <DocSection Title="Использование" Description="Уже активен для всего приложения (см. MainLayout.razor) — повторно оборачивать вложенным NorthThemeProvider не нужно, это сломает каскад темы. Ниже — только код для справки." Code="@UsageCode" Row="false">
+        <p class="text-sm text-foreground/70">
+            NorthThemeProvider уже оборачивает всё приложение в <code class="text-xs">MainLayout.razor</code>.
+            Любой компонент ниже по дереву получает токены темы через
+            <code class="text-xs">[CascadingParameter] NorthThemeContext? ThemeContext</code>.
+            Эффект переключения темы можно увидеть на живом переключателе ниже —
+            он работает через тот же каскадный контекст, что описан здесь
+            (подробнее — <a class="text-primary hover:underline" href="/componentlib/theme-switch">NorthThemeSwitch</a>).
+        </p>
+        <NorthThemeSwitch />
+    </DocSection>
+
+    <DocApiTable Title="Параметры NorthThemeProvider" Rows="@_providerRows" />
+    <DocApiTable Title="Члены NorthThemeContext" Rows="@_contextRows" />
+
+</DocPage>
+
+@code {
+    private const string UsageCode =
+        """
+        @* MainLayout.razor *@
+        <NorthThemeProvider DefaultMode="NorthThemeMode.System">
+            <NorthPopoverProvider>
+                @Body
+            </NorthPopoverProvider>
+            <NorthDialogProvider />
+            <NorthSnackbarProvider />
+        </NorthThemeProvider>
+
+        @* Переключатель темы из кода приложения *@
+        @code {
+            [CascadingParameter] private NorthThemeContext? ThemeContext { get; set; }
+
+            private Task SetDark() => ThemeContext!.SetModeAsync(NorthThemeMode.Dark);
+        }
+        """;
+
+    private readonly List<DocApiRow> _providerRows = new()
+    {
+        new("ChildContent", "RenderFragment?", "—", "Дерево приложения"),
+        new("Theme", "NorthTheme", "палитра NorthUI по умолчанию", "Токены (цвета, радиусы, шрифт)"),
+        new("DefaultMode", "NorthThemeMode", "System", "Режим при первом запуске (если ещё нет сохранённого выбора)"),
+    };
+
+    private readonly List<DocApiRow> _contextRows = new()
+    {
+        new("Theme", "NorthTheme", "—", "Активные токены (тот самый объект NorthTheme)"),
+        new("ActivePalette", "NorthPalette", "—", "Light или Dark палитра — в зависимости от IsDarkMode"),
+        new("IsDarkMode", "bool", "—", "Сейчас показана тёмная тема (уже разрешённый System)"),
+        new("Mode", "NorthThemeMode", "—", "Выбранный пользователем режим"),
+        new("ToggleDarkModeAsync()", "Task", "—", "Переключить light ⇄ dark"),
+        new("SetModeAsync(mode)", "Task", "—", "Явно установить режим"),
+    };
+}

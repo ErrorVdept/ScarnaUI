@@ -1,0 +1,114 @@
+@*
+    Основная кнопка библиотеки. Флагманский компонент — на нём видна вся дизайн-система:
+    цвет (Color), вариант заливки (Variant), размер (Size), радиус (Radius).
+
+    <NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Solid" OnClick="Save">
+        Сохранить
+    </NorthButton>
+
+    Если задан Href — рендерится как <a>, иначе как <button>.
+*@
+@namespace NorthUI.Components.Actions
+@inherits NorthComponentBase
+
+@if (!string.IsNullOrEmpty(Href))
+{
+    <a href="@Href" target="@Target" class="@Classes" style="@Style" @attributes="UserAttributes">
+        @RenderInner()
+    </a>
+}
+else
+{
+    <button type="@Type" class="@Classes" style="@Style" disabled="@(Disabled || Loading)" @onclick="HandleClickAsync" @attributes="UserAttributes">
+        @RenderInner()
+    </button>
+}
+
+@code {
+    /// <summary>Семантический цвет кнопки.</summary>
+    [Parameter] public NorthColor Color { get; set; } = NorthColor.Default;
+
+    /// <summary>Вариант заливки: Solid/Flat/Bordered/Light/Faded/Shadow.</summary>
+    [Parameter] public NorthVariant Variant { get; set; } = NorthVariant.Solid;
+
+    /// <summary>Размер кнопки.</summary>
+    [Parameter] public NorthSize Size { get; set; } = NorthSize.Medium;
+
+    /// <summary>Радиус скругления углов.</summary>
+    [Parameter] public NorthRadius Radius { get; set; } = NorthRadius.Medium;
+
+    /// <summary>Дополнительная обводка в цвет Color поверх выбранного Variant (для Variant.Bordered ничего не меняет — обводка там уже есть).</summary>
+    [Parameter] public bool Bordered { get; set; }
+
+    /// <summary>HTML-атрибут type для &lt;button&gt; ("button", "submit", "reset").</summary>
+    [Parameter] public string Type { get; set; } = "button";
+
+    /// <summary>Если задан — кнопка рендерится как ссылка &lt;a href="..."&gt;.</summary>
+    [Parameter] public string? Href { get; set; }
+
+    /// <summary>target для ссылки (используется только вместе с Href).</summary>
+    [Parameter] public string? Target { get; set; }
+
+    [Parameter] public bool Disabled { get; set; }
+
+    /// <summary>Показать спиннер вместо StartIcon и заблокировать кнопку — состояние "выполняется запрос".</summary>
+    [Parameter] public bool Loading { get; set; }
+
+    /// <summary>Растянуть кнопку на всю ширину родителя.</summary>
+    [Parameter] public bool FullWidth { get; set; }
+
+    /// <summary>Иконка (произвольная разметка, например &lt;svg&gt;) перед текстом.</summary>
+    [Parameter] public RenderFragment? StartIcon { get; set; }
+
+    /// <summary>Иконка после текста.</summary>
+    [Parameter] public RenderFragment? EndIcon { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    private async Task HandleClickAsync(MouseEventArgs args)
+    {
+        if (Disabled || Loading)
+        {
+            return;
+        }
+
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync(args);
+        }
+    }
+
+    private RenderFragment RenderInner() => __builder =>
+    {
+        if (Loading)
+        {
+            <span class="north-btn__spinner size-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden="true"></span>
+        }
+        else if (StartIcon is not null)
+        {
+            @StartIcon
+        }
+
+        @ChildContent
+
+        @EndIcon
+    };
+
+    private string Classes => CssBuilder.Default("north-btn inline-flex items-center justify-center font-medium leading-none select-none transition-[background-color,border-color,color,box-shadow,transform] duration-150 active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none")
+        .AddClass(SizeClass)
+        .AddClass(NorthColorVariantClasses.Get(Color, Variant))
+        .AddClass(NorthColorVariantClasses.Radius(Radius))
+        .AddClass("border border-current/40", Bordered && Variant != NorthVariant.Bordered)
+        .AddClass("w-full", FullWidth)
+        .AddClass(Class)
+        .ToString();
+
+    private string SizeClass => Size switch
+    {
+        NorthSize.Small => "h-8 px-3 text-sm gap-1.5",
+        NorthSize.Large => "h-12 px-6 text-base gap-2.5",
+        _ => "h-10 px-4 text-sm gap-2",
+    };
+}

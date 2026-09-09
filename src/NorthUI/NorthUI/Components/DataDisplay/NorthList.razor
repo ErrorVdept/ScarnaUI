@@ -1,0 +1,86 @@
+@*
+    Список с опциональным выбором — как MudList: SelectionMode.None (просто кликабельные
+    пункты через NorthListItem.OnClick), .Single (@bind-Value) или .Multiple
+    (@bind-SelectedValues).
+
+    <NorthList SelectionMode="NorthListSelectionMode.Single" @bind-Value="_selected">
+        <NorthListItem Value="@("inbox")">Входящие</NorthListItem>
+        <NorthListItem Value="@("sent")">Отправленные</NorthListItem>
+    </NorthList>
+*@
+@namespace NorthUI.Components.DataDisplay
+@typeparam TValue
+@inherits NorthComponentBase
+@attribute [CascadingTypeParameter(nameof(TValue))]
+
+<div class="@Classes" style="@Style" @attributes="UserAttributes" role="listbox" aria-multiselectable="@(SelectionMode == NorthListSelectionMode.Multiple)">
+    <CascadingValue Value="this" IsFixed="false">
+        @ChildContent
+    </CascadingValue>
+</div>
+
+@code {
+    [Parameter] public NorthListSelectionMode SelectionMode { get; set; } = NorthListSelectionMode.None;
+
+    /// <summary>Выбранное значение при SelectionMode.Single. Поддерживает @bind-Value.</summary>
+    [Parameter] public TValue? Value { get; set; }
+
+    [Parameter] public EventCallback<TValue?> ValueChanged { get; set; }
+
+    /// <summary>Выбранные значения при SelectionMode.Multiple. Поддерживает @bind-SelectedValues.</summary>
+    [Parameter] public IReadOnlyCollection<TValue>? SelectedValues { get; set; }
+
+    [Parameter] public EventCallback<IReadOnlyCollection<TValue>> SelectedValuesChanged { get; set; }
+
+    [Parameter] public bool Bordered { get; set; }
+
+    [Parameter] public NorthDensity Density { get; set; } = NorthDensity.Normal;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    internal bool IsSelected(TValue value) => SelectionMode switch
+    {
+        NorthListSelectionMode.Single => EqualityComparer<TValue>.Default.Equals(Value, value),
+        NorthListSelectionMode.Multiple => SelectedValues?.Contains(value) == true,
+        _ => false,
+    };
+
+    internal async Task SelectSingleAsync(TValue value)
+    {
+        Value = value;
+
+        if (ValueChanged.HasDelegate)
+        {
+            await ValueChanged.InvokeAsync(value);
+        }
+
+        // Клик приходит из дочернего NorthListItem — без явного StateHasChanged
+        // соседние пункты (в т.ч. ранее выбранный, который нужно визуально снять)
+        // не перерисуются. См. такой же комментарий в NorthSelectGroup.SelectAsync.
+        await InvokeAsync(StateHasChanged);
+    }
+
+    internal async Task ToggleMultipleAsync(TValue value)
+    {
+        var current = SelectedValues?.ToList() ?? new List<TValue>();
+
+        if (!current.Remove(value))
+        {
+            current.Add(value);
+        }
+
+        SelectedValues = current;
+
+        if (SelectedValuesChanged.HasDelegate)
+        {
+            await SelectedValuesChanged.InvokeAsync(current);
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private string Classes => CssBuilder.Default("north-list flex flex-col gap-0.5 rounded-north-md bg-content1 p-1")
+        .AddClass("border border-divider", Bordered)
+        .AddClass(Class)
+        .ToString();
+}

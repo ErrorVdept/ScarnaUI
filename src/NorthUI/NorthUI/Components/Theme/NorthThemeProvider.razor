@@ -1,0 +1,18 @@
+@*
+    Корневой провайдер темы NorthUI. Кладётся один раз в layout приложения
+    (обычно в MainLayout.razor, оборачивая всё содержимое), аналогично MudThemeProvider.
+
+    Что делает:
+      1. Кладёт NorthTheme и текущий режим (light/dark/system) в каскад — любой потомок
+         может получить их через [CascadingParameter] NorthThemeContext? ThemeContext.
+      2. При первом рендере (и при каждой смене режима) переносит токены темы в виде
+         CSS-переменных на <html> через JS-модуль theme.js — именно это делает смену
+         темы мгновенной, без пересборки CSS.
+      3. Запоминает выбор пользователя (light/dark/system) в localStorage.
+*@
+@namespace NorthUI.Components.Theme
+@inject IJSRuntime JSRuntime
+
+<CascadingValue Value="_context" IsFixed="false">
+    @ChildContent
+</CascadingValue>

@@ -1,0 +1,57 @@
+@page "/componentlib/toggle-button"
+
+<DocPage Title="NorthToggleButton" Lead="Кнопка-переключатель — как чекбокс (bool), но выглядит как обычная кнопка в нажатом/ненажатом состоянии."
+         Files="@(new[] { "Components/Actions/NorthToggleButton.razor" })">
+
+    <DocSection Title="Группа переключателей" Description="Каждая кнопка держит своё bool-значение независимо — типичный сценарий: панель форматирования текста." Code="@GroupCode">
+        <NorthToggleButton @bind-Value="_bold">Ж</NorthToggleButton>
+        <NorthToggleButton @bind-Value="_italic">К</NorthToggleButton>
+        <NorthToggleButton @bind-Value="_underline">Ч</NorthToggleButton>
+    </DocSection>
+
+    <DocSection Title="Цвета и Disabled" Code="@ColorsCode">
+        <NorthToggleButton Value="true" Color="NorthColor.Success">Success</NorthToggleButton>
+        <NorthToggleButton Value="true" Color="NorthColor.Danger">Danger</NorthToggleButton>
+        <NorthToggleButton Value="true" Disabled="true">Disabled</NorthToggleButton>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private bool _bold = true;
+    private bool _italic;
+    private bool _underline;
+
+    private const string GroupCode =
+        """
+        <NorthToggleButton @bind-Value="_bold">Ж</NorthToggleButton>
+        <NorthToggleButton @bind-Value="_italic">К</NorthToggleButton>
+        <NorthToggleButton @bind-Value="_underline">Ч</NorthToggleButton>
+
+        @code {
+            private bool _bold = true;
+            private bool _italic;
+            private bool _underline;
+        }
+        """;
+
+    private const string ColorsCode =
+        """
+        <NorthToggleButton Value="true" Color="NorthColor.Success">Success</NorthToggleButton>
+        <NorthToggleButton Value="true" Color="NorthColor.Danger">Danger</NorthToggleButton>
+        <NorthToggleButton Value="true" Disabled="true">Disabled</NorthToggleButton>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Value / ValueChanged / ValueExpression", "bool / ...", "false", "Механика @bind-Value"),
+        new("Color", "NorthColor", "Primary", "Цвет заливки во включённом состоянии"),
+        new("Size", "NorthSize", "Medium", "Small/Medium/Large"),
+        new("Radius", "NorthRadius", "Medium", "Радиус скругления"),
+        new("Bordered", "bool", "true", "Обводка в невключённом состоянии"),
+        new("Disabled", "bool", "false", "—"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое кнопки"),
+    };
+}

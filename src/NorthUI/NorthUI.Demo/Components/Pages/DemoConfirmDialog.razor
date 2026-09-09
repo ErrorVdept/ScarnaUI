@@ -1,0 +1,19 @@
+@* Пример компонента-содержимого для INorthDialogService.ShowAsync<DemoConfirmDialog>(). *@
+
+<NorthDialog Title="Удалить элемент?">
+    <DialogContent>
+        Это действие необратимо. Элемент будет удалён без возможности восстановления.
+    </DialogContent>
+    <DialogActions>
+        <NorthButton Variant="NorthVariant.Light" OnClick="Cancel">Отмена</NorthButton>
+        <NorthButton Color="NorthColor.Danger" OnClick="Confirm">Удалить</NorthButton>
+    </DialogActions>
+</NorthDialog>
+
+@code {
+    [CascadingParameter] private NorthDialogReference DialogReference { get; set; } = default!;
+
+    private void Cancel() => DialogReference.Close(NorthDialogResult.Cancel());
+
+    private void Confirm() => DialogReference.Close(NorthDialogResult.Ok());
+}

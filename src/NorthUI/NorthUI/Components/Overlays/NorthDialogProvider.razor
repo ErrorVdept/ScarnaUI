@@ -1,0 +1,22 @@
+@*
+    Портал для модальных диалогов, открытых через INorthDialogService.ShowAsync(...).
+    Кладётся один раз в layout приложения — как NorthPopoverProvider, отдельно от него,
+    т.к. диалоги открываются императивно из C#, а не декларативно из разметки.
+*@
+@namespace NorthUI.Components.Overlays
+@using NorthUI.Services
+@inject NorthDialogService DialogService
+@implements IDisposable
+
+@foreach (var dialog in DialogService.Dialogs)
+{
+    <NorthDialogHost @key="dialog.Id" Reference="dialog" />
+}
+
+@code {
+    protected override void OnInitialized() => DialogService.OnChange += HandleChange;
+
+    private void HandleChange() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => DialogService.OnChange -= HandleChange;
+}

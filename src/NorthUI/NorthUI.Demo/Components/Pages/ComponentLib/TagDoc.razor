@@ -1,0 +1,51 @@
+@page "/componentlib/tag"
+
+<DocPage Title="NorthTag" Lead="Маленькая компактная метка — облегчённый NorthChip: меньше паддингов, один размер, без крестика."
+         Files="@(new[] { "Components/DataDisplay/NorthTag.razor" })">
+
+    <DocSection Title="Цвета" Code="@ColorsCode">
+        <NorthTag>новое</NorthTag>
+        <NorthTag Color="NorthColor.Primary">primary</NorthTag>
+        <NorthTag Color="NorthColor.Secondary">secondary</NorthTag>
+        <NorthTag Color="NorthColor.Success">активен</NorthTag>
+        <NorthTag Color="NorthColor.Warning">warning</NorthTag>
+        <NorthTag Color="NorthColor.Danger">danger</NorthTag>
+    </DocSection>
+
+    <DocSection Title="Варианты" Code="@VariantsCode">
+        <NorthTag Color="NorthColor.Primary" Variant="NorthVariant.Solid">Solid</NorthTag>
+        <NorthTag Color="NorthColor.Primary" Variant="NorthVariant.Flat">Flat</NorthTag>
+        <NorthTag Color="NorthColor.Primary" Variant="NorthVariant.Bordered">Bordered</NorthTag>
+        <NorthTag Color="NorthColor.Primary" Variant="NorthVariant.Faded">Faded</NorthTag>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string ColorsCode =
+        """
+        <NorthTag>новое</NorthTag>
+        <NorthTag Color="NorthColor.Primary">primary</NorthTag>
+        <NorthTag Color="NorthColor.Secondary">secondary</NorthTag>
+        <NorthTag Color="NorthColor.Success">активен</NorthTag>
+        <NorthTag Color="NorthColor.Warning">warning</NorthTag>
+        <NorthTag Color="NorthColor.Danger">danger</NorthTag>
+        """;
+
+    private const string VariantsCode =
+        """
+        <NorthTag Color="NorthColor.Primary" Variant="NorthVariant.Solid">Solid</NorthTag>
+        <NorthTag Color="NorthColor.Primary" Variant="NorthVariant.Flat">Flat</NorthTag>
+        <NorthTag Color="NorthColor.Primary" Variant="NorthVariant.Bordered">Bordered</NorthTag>
+        <NorthTag Color="NorthColor.Primary" Variant="NorthVariant.Faded">Faded</NorthTag>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Color", "NorthColor", "Default", "Цвет заливки"),
+        new("Variant", "NorthVariant", "Flat", "Вариант заливки"),
+        new("ChildContent", "RenderFragment?", "—", "Текст метки"),
+    };
+}

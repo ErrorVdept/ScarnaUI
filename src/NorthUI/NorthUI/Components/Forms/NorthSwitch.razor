@@ -1,0 +1,74 @@
+@*
+    Переключатель (toggle). Семантически то же, что чекбокс (bool), но с другим
+    визуальным метафорой "вкл/выкл" — как в HeroUI/iOS.
+
+    <NorthSwitch @bind-Value="model.NotificationsEnabled">Уведомления</NorthSwitch>
+*@
+@namespace NorthUI.Components.Forms
+@inherits NorthFormComponentBase<bool>
+
+<label class="@WrapperClasses" style="@Style" @attributes="UserAttributes">
+    <input type="checkbox" class="sr-only peer" checked="@Value" disabled="@Disabled" aria-readonly="@ReadOnly" @onclick:preventDefault="ReadOnly" @onchange="HandleChangeAsync" />
+    <span class="@TrackClasses" aria-hidden="true">
+        <span class="@ThumbClasses"></span>
+    </span>
+    @if (ChildContent is not null)
+    {
+        <span class="text-sm text-foreground select-none">@ChildContent</span>
+    }
+</label>
+
+@code {
+    [Parameter] public bool Disabled { get; set; }
+
+    /// <summary>Запрещает переключение (клик отменяется через @onclick:preventDefault), но, в отличие от Disabled, переключатель визуально не тускнеет.</summary>
+    [Parameter] public bool ReadOnly { get; set; }
+
+    /// <summary>Цвет дорожки во включённом состоянии.</summary>
+    [Parameter] public NorthColor Color { get; set; } = NorthColor.Primary;
+
+    /// <summary>Normal (по умолчанию) — обычный размер. Dense — уменьшенная дорожка, для плотных списков.</summary>
+    [Parameter] public NorthDensity Density { get; set; } = NorthDensity.Normal;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private async Task HandleChangeAsync(ChangeEventArgs e)
+    {
+        if (ReadOnly)
+        {
+            return;
+        }
+
+        await SetValueAsync((bool)(e.Value ?? false));
+    }
+
+    private bool IsDense => Density == NorthDensity.Dense;
+
+    private string WrapperClasses => CssBuilder.Default("north-switch inline-flex items-center cursor-pointer select-none")
+        .AddClass(IsDense ? "gap-1.5" : "gap-2")
+        .AddClass("opacity-50 cursor-not-allowed", Disabled)
+        .AddClass(Class)
+        .ToString();
+
+    private string TrackClasses => CssBuilder.Default("relative inline-flex shrink-0 items-center rounded-north-full transition-colors")
+        .AddClass(IsDense ? "h-5 w-9" : "h-6 w-11")
+        .AddClass(CheckedTrackClasses, Value)
+        .AddClass("bg-default", !Value)
+        .ToString();
+
+    private string ThumbClasses => CssBuilder.Default("inline-block transform rounded-full bg-white shadow transition-transform")
+        .AddClass(IsDense ? "size-3" : "size-4")
+        .AddClass(IsDense ? "translate-x-5" : "translate-x-6", Value)
+        .AddClass("translate-x-1", !Value)
+        .ToString();
+
+    private string CheckedTrackClasses => Color switch
+    {
+        NorthColor.Secondary => "bg-secondary",
+        NorthColor.Success => "bg-success",
+        NorthColor.Warning => "bg-warning",
+        NorthColor.Danger => "bg-danger",
+        NorthColor.Default => "bg-default",
+        _ => "bg-primary",
+    };
+}

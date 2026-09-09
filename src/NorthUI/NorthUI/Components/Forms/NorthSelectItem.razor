@@ -1,0 +1,58 @@
+@*
+    Один пункт NorthSelect. TValue выводится автоматически от родителя
+    (см. CascadingTypeParameter в NorthSelect.razor).
+*@
+@namespace NorthUI.Components.Forms
+@typeparam TValue
+@implements IDisposable
+
+<button type="button" class="@Classes" role="option" aria-selected="@IsSelected" @onclick="SelectAsync">
+    <span class="flex-1 truncate">
+        @if (ChildContent is not null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            @Text
+        }
+    </span>
+    @if (IsSelected)
+    {
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-primary">
+            <polyline points="20 6 9 17 4 12" />
+        </svg>
+    }
+</button>
+
+@code {
+    [CascadingParameter] private NorthSelect<TValue>? Parent { get; set; }
+
+    [Parameter, EditorRequired] public TValue Value { get; set; } = default!;
+
+    /// <summary>Текст пункта — используется и как содержимое по умолчанию, и как подпись в закрытом поле после выбора.</summary>
+    [Parameter, EditorRequired] public string Text { get; set; } = string.Empty;
+
+    /// <summary>Кастомная разметка пункта (иконка + текст и т.п.) — если не задана, рендерится Text.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private bool IsSelected => Parent is not null && EqualityComparer<TValue>.Default.Equals(Parent.Value, Value);
+
+    protected override void OnInitialized()
+    {
+        if (Parent is null)
+        {
+            throw new InvalidOperationException("NorthSelectItem должен использоваться внутри NorthSelect.");
+        }
+
+        Parent.Register(this);
+    }
+
+    private Task SelectAsync() => Parent!.SelectAsync(Value, Text);
+
+    private string Classes => CssBuilder.Default("flex w-full items-center gap-2 rounded-north-sm px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-content2")
+        .AddClass("bg-content2 font-medium", IsSelected)
+        .ToString();
+
+    public void Dispose() => Parent?.Unregister(this);
+}

@@ -1,0 +1,40 @@
+@page "/componentlib/toast"
+@inject IToastManager ToastManager
+
+<DocPage Title="Тосты (IToastManager)" Lead="Императивный сервис показа тостов (снэкбаров) — реализация полностью на C#, без единой строчки JS."
+         Files="@(new[] { "Components/Overlays/NorthSnackbarProvider.razor", "Services/IToastManager.cs", "Services/NorthToast.cs" })">
+
+    <DocSection Title="Пример" Description="NorthSnackbarProvider уже есть в MainLayout. Каждый тост сам удаляется из очереди через Duration (по умолчанию 4 секунды)." Code="@ExampleCode">
+        <NorthButton Color="NorthColor.Default" OnClick='() => ToastManager.Add("Информационное сообщение", NorthToastSeverity.Info)'>Info</NorthButton>
+        <NorthButton Color="NorthColor.Success" OnClick='() => ToastManager.Add("Изменения сохранены", NorthToastSeverity.Success)'>Success</NorthButton>
+        <NorthButton Color="NorthColor.Warning" OnClick='() => ToastManager.Add("Проверьте введённые данные", NorthToastSeverity.Warning)'>Warning</NorthButton>
+        <NorthButton Color="NorthColor.Danger" OnClick='() => ToastManager.Add("Не удалось сохранить", NorthToastSeverity.Error)'>Error</NorthButton>
+    </DocSection>
+
+    <DocApiTable Title="Члены IToastManager" Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string ExampleCode =
+        """
+        @inject IToastManager ToastManager
+
+        <NorthButton OnClick="Save">Сохранить</NorthButton>
+
+        @code {
+            private void Save()
+            {
+                ToastManager.Add("Изменения сохранены", NorthToastSeverity.Success);
+            }
+        }
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Toasts", "IReadOnlyList<NorthToast>", "—", "Текущая очередь показанных уведомлений"),
+        new("OnChange", "event", "—", "Событие при добавлении/удалении любого тоста"),
+        new("Add(message, severity, duration?)", "void", "—", "Добавить уведомление. severity по умолчанию Info"),
+        new("Remove(id)", "void", "—", "Убрать уведомление раньше срока"),
+    };
+}

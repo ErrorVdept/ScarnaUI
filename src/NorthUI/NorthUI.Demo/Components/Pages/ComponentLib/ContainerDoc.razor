@@ -1,0 +1,48 @@
+@page "/componentlib/container"
+
+<DocPage Title="NorthContainer" Lead="Центрирующий контейнер с максимальной шириной и боковыми отступами — типовая обёртка содержимого страницы."
+         Files="@(new[] { "Components/Layout/NorthContainer.razor" })">
+
+    <DocSection Title="MaxWidth" Description="Ограничивает ширину содержимого и центрирует его по горизонтали." Code="@MaxWidthCode" Row="false">
+        <NorthContainer MaxWidth="NorthContainerMaxWidth.Small" Class="border border-divider rounded-north-md p-3">
+            <p class="text-sm text-foreground/70">Small</p>
+        </NorthContainer>
+        <NorthContainer MaxWidth="NorthContainerMaxWidth.Medium" Class="border border-divider rounded-north-md p-3">
+            <p class="text-sm text-foreground/70">Medium</p>
+        </NorthContainer>
+        <NorthContainer MaxWidth="NorthContainerMaxWidth.Large" Class="border border-divider rounded-north-md p-3">
+            <p class="text-sm text-foreground/70">Large (по умолчанию)</p>
+        </NorthContainer>
+    </DocSection>
+
+    <DocSection Title="Fluid" Description="true — растянуть на всю ширину, игнорируя MaxWidth." Code="@FluidCode" Row="false">
+        <NorthContainer Fluid="true" Class="border border-divider rounded-north-md p-3">
+            <p class="text-sm text-foreground/70">Fluid="true" — занимает всю доступную ширину</p>
+        </NorthContainer>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string MaxWidthCode =
+        """
+        <NorthContainer MaxWidth="NorthContainerMaxWidth.Small">...</NorthContainer>
+        <NorthContainer MaxWidth="NorthContainerMaxWidth.Medium">...</NorthContainer>
+        <NorthContainer MaxWidth="NorthContainerMaxWidth.Large">...</NorthContainer>
+        """;
+
+    private const string FluidCode =
+        """
+        <NorthContainer Fluid="true">
+            ...
+        </NorthContainer>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("MaxWidth", "NorthContainerMaxWidth", "Large", "Small / Medium / Large / ExtraLarge"),
+        new("Fluid", "bool", "false", "true — растянуть на всю ширину, игнорируя MaxWidth"),
+    };
+}

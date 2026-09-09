@@ -1,0 +1,72 @@
+@page "/componentlib/grid"
+
+<DocPage Title="NorthGrid / NorthItem" Lead="Классическая 12-колоночная сетка на CSS Grid — NorthGrid — контейнер, NorthItem — ячейка, задающая ширину на каждой ширине экрана."
+         Files="@(new[] { "Components/Layout/NorthGrid.razor", "Components/Layout/NorthItem.razor" })">
+
+    <DocSection Title="Базовая сетка" Description="Xs — ширина по умолчанию, Md — от 768px." Code="@BasicCode" Row="false">
+        <NorthGrid Spacing="4">
+            <NorthItem Xs="12" Md="6">
+                <NorthCard>
+                    <p class="text-sm text-foreground/70">Xs=12 Md=6</p>
+                </NorthCard>
+            </NorthItem>
+            <NorthItem Xs="12" Md="6">
+                <NorthCard>
+                    <p class="text-sm text-foreground/70">Xs=12 Md=6</p>
+                </NorthCard>
+            </NorthItem>
+        </NorthGrid>
+    </DocSection>
+
+    <DocSection Title="Три колонки" Description="Sm/Md/Lg добавляют промежуточные брейкпоинты." Code="@ThreeColsCode" Row="false">
+        <NorthGrid Spacing="4">
+            <NorthItem Xs="12" Sm="6" Lg="4">
+                <NorthCard><p class="text-sm text-foreground/70">1</p></NorthCard>
+            </NorthItem>
+            <NorthItem Xs="12" Sm="6" Lg="4">
+                <NorthCard><p class="text-sm text-foreground/70">2</p></NorthCard>
+            </NorthItem>
+            <NorthItem Xs="12" Sm="6" Lg="4">
+                <NorthCard><p class="text-sm text-foreground/70">3</p></NorthCard>
+            </NorthItem>
+        </NorthGrid>
+    </DocSection>
+
+    <DocApiTable Title="Параметры NorthGrid" Rows="@_gridRows" />
+    <DocApiTable Title="Параметры NorthItem" Rows="@_itemRows" />
+
+</DocPage>
+
+@code {
+    private const string BasicCode =
+        """
+        <NorthGrid Spacing="4">
+            <NorthItem Xs="12" Md="6"><NorthCard>Левая колонка</NorthCard></NorthItem>
+            <NorthItem Xs="12" Md="6"><NorthCard>Правая колонка</NorthCard></NorthItem>
+        </NorthGrid>
+        """;
+
+    private const string ThreeColsCode =
+        """
+        <NorthGrid Spacing="4">
+            <NorthItem Xs="12" Sm="6" Lg="4"><NorthCard>1</NorthCard></NorthItem>
+            <NorthItem Xs="12" Sm="6" Lg="4"><NorthCard>2</NorthCard></NorthItem>
+            <NorthItem Xs="12" Sm="6" Lg="4"><NorthCard>3</NorthCard></NorthItem>
+        </NorthGrid>
+        """;
+
+    private readonly List<DocApiRow> _gridRows = new()
+    {
+        new("Spacing", "int", "4", "Отступ между ячейками в шагах по 0.25rem"),
+        new("Justify", "NorthJustify", "Start", "justify-content сетки (заметно, только если ячейки не заполняют всю ширину)"),
+        new("Align", "NorthAlign", "Stretch", "align-items — вертикальное выравнивание содержимого ячеек"),
+    };
+
+    private readonly List<DocApiRow> _itemRows = new()
+    {
+        new("Xs", "int (1-12)", "12", "Ширина по умолчанию (мобильные и выше)"),
+        new("Sm", "int?", "—", "Ширина от 640px"),
+        new("Md", "int?", "—", "Ширина от 768px"),
+        new("Lg", "int?", "—", "Ширина от 1024px"),
+    };
+}

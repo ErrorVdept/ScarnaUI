@@ -1,0 +1,118 @@
+@*
+    Поле выбора даты и времени. Под капотом — нативный <input type="datetime-local">
+    (браузерный календарь+time-picker бесплатно, без своей JS-хореографии, см. также
+    NorthTimeField рядом — тот же подход, только на дату отдельно). Value — DateTime?,
+    формат "yyyy-MM-ddTHH:mm", который ожидает атрибут value у input[type=datetime-local],
+    собирается/парсится здесь один раз.
+
+    <NorthDateTimePicker Label="Дата и время встречи" @bind-Value="model.MeetingAt" />
+*@
+@namespace NorthUI.Components.Forms
+@inherits NorthFormComponentBase<DateTime?>
+
+<div class="@WrapperOuterClasses" style="@Style" @attributes="UserAttributes">
+    @if (!string.IsNullOrEmpty(Label))
+    {
+        <label for="@_id" class="text-sm font-medium text-foreground/80">@Label</label>
+    }
+
+    <div class="@FieldWrapperClasses">
+        <input id="@_id"
+               type="datetime-local"
+               class="north-datetimepicker__field w-full flex-1 bg-transparent outline-none text-foreground disabled:cursor-not-allowed [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-60"
+               value="@FormattedValue"
+               min="@FormattedMin"
+               max="@FormattedMax"
+               disabled="@Disabled"
+               readonly="@ReadOnly"
+               @oninput="HandleInputAsync" />
+    </div>
+
+    @if (IsInvalid && !string.IsNullOrEmpty(ErrorText))
+    {
+        <span class="text-xs text-danger">@ErrorText</span>
+    }
+    else if (!string.IsNullOrEmpty(HelperText))
+    {
+        <span class="text-xs text-foreground/50">@HelperText</span>
+    }
+</div>
+
+@code {
+    private const string DateTimeFormat = "yyyy-MM-ddTHH:mm";
+    private readonly string _id = $"north-datetimepicker-{Guid.NewGuid():N}";
+
+    [Parameter] public string? Label { get; set; }
+
+    [Parameter] public string? HelperText { get; set; }
+
+    [Parameter] public DateTime? Min { get; set; }
+
+    [Parameter] public DateTime? Max { get; set; }
+
+    [Parameter] public bool Disabled { get; set; }
+
+    [Parameter] public bool ReadOnly { get; set; }
+
+    [Parameter] public NorthVariant Variant { get; set; } = NorthVariant.Bordered;
+
+    [Parameter] public bool Bordered { get; set; } = true;
+
+    [Parameter] public NorthSize Size { get; set; } = NorthSize.Medium;
+
+    [Parameter] public NorthDensity Density { get; set; } = NorthDensity.Normal;
+
+    [Parameter] public NorthRadius Radius { get; set; } = NorthRadius.Medium;
+
+    private static string? Format(DateTime? value) => value?.ToString(DateTimeFormat, System.Globalization.CultureInfo.InvariantCulture);
+
+    private string? FormattedValue => Format(Value);
+
+    private string? FormattedMin => Format(Min);
+
+    private string? FormattedMax => Format(Max);
+
+    private async Task HandleInputAsync(ChangeEventArgs e)
+    {
+        var raw = e.Value?.ToString();
+        if (string.IsNullOrEmpty(raw))
+        {
+            await SetValueAsync(null);
+            return;
+        }
+
+        if (DateTime.TryParseExact(raw, DateTimeFormat, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var parsed))
+        {
+            await SetValueAsync(parsed);
+        }
+    }
+
+    private string WrapperOuterClasses => CssBuilder.Default("north-datetimepicker-wrapper flex flex-col gap-1")
+        .AddClass(Class)
+        .ToString();
+
+    private string FieldWrapperClasses => CssBuilder.Default("north-datetimepicker flex items-center gap-2 transition-colors")
+        .AddClass(SizeClass)
+        .AddClass(NorthColorVariantClasses.Radius(Radius))
+        .AddClass(VariantClass)
+        .AddClass("ring-1 ring-danger", IsInvalid)
+        .ToString();
+
+    private string SizeClass => (Size, Density) switch
+    {
+        (NorthSize.Small, NorthDensity.Dense) => "h-7 px-2 text-sm",
+        (NorthSize.Small, _) => "h-8 px-3 text-sm",
+        (NorthSize.Large, NorthDensity.Dense) => "h-10 px-3 text-base",
+        (NorthSize.Large, _) => "h-12 px-4 text-base",
+        (_, NorthDensity.Dense) => "h-8 px-2.5 text-sm",
+        _ => "h-10 px-3 text-sm",
+    };
+
+    private string VariantClass => (Variant, Bordered) switch
+    {
+        (NorthVariant.Flat, true) => "bg-content2 border border-default focus-within:border-primary",
+        (NorthVariant.Flat, false) => "bg-content2 border border-transparent focus-within:bg-content3",
+        (_, true) => "bg-transparent border border-default focus-within:border-primary",
+        (_, false) => "bg-transparent border border-transparent",
+    };
+}

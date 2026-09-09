@@ -1,0 +1,46 @@
+@*
+    Индикатор загрузки — вращающееся кольцо (indeterminate). Для линейного прогресса
+    с конкретным значением см. NorthProgress.
+
+    <NorthSpinner />
+    <NorthSpinner Color="NorthColor.Success" Size="NorthSize.Large" />
+*@
+@namespace NorthUI.Components.DataDisplay
+@inherits NorthComponentBase
+
+<svg class="@Classes" style="@Style" viewBox="0 0 24 24" fill="none" role="status" aria-label="@Label" @attributes="UserAttributes">
+    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" class="opacity-20" />
+    <path d="M12 2 a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+</svg>
+
+@code {
+    [Parameter] public NorthColor Color { get; set; } = NorthColor.Primary;
+
+    [Parameter] public NorthSize Size { get; set; } = NorthSize.Medium;
+
+    /// <summary>Текст для скринридеров (визуально не отображается).</summary>
+    [Parameter] public string Label { get; set; } = "Загрузка";
+
+    private string Classes => CssBuilder.Default("north-spinner animate-spin")
+        .AddClass(SizeClass)
+        .AddClass(ColorClass)
+        .AddClass(Class)
+        .ToString();
+
+    private string SizeClass => Size switch
+    {
+        NorthSize.Small => "size-4",
+        NorthSize.Large => "size-8",
+        _ => "size-6",
+    };
+
+    private string ColorClass => Color switch
+    {
+        NorthColor.Secondary => "text-secondary",
+        NorthColor.Success => "text-success",
+        NorthColor.Warning => "text-warning",
+        NorthColor.Danger => "text-danger",
+        NorthColor.Default => "text-foreground/60",
+        _ => "text-primary",
+    };
+}

@@ -1,0 +1,47 @@
+@page "/componentlib/divider"
+
+<DocPage Title="NorthDivider" Lead="Тонкая разделительная линия цвета divider."
+         Files="@(new[] { "Components/DataDisplay/NorthDivider.razor" })">
+
+    <DocSection Title="Горизонтальная" Code="@HorizontalCode">
+        <div class="w-full">
+            <p class="text-sm text-foreground/70">Текст выше</p>
+            <NorthDivider Class="my-3" />
+            <p class="text-sm text-foreground/70">Текст ниже</p>
+        </div>
+    </DocSection>
+
+    <DocSection Title="Вертикальная" Description="Нужна явная высота через Class/Style." Code="@VerticalCode">
+        <NorthStack Row="true" Align="NorthAlign.Center">
+            <span>Профиль</span>
+            <NorthDivider Vertical="true" Class="h-6" />
+            <span>Настройки</span>
+        </NorthStack>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string HorizontalCode =
+        """
+        <p class="text-sm text-foreground/70">Текст выше</p>
+        <NorthDivider Class="my-3" />
+        <p class="text-sm text-foreground/70">Текст ниже</p>
+        """;
+
+    private const string VerticalCode =
+        """
+        <NorthStack Row="true" Align="NorthAlign.Center">
+            <span>Профиль</span>
+            <NorthDivider Vertical="true" Class="h-6" />
+            <span>Настройки</span>
+        </NorthStack>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Vertical", "bool", "false", "Вертикальная линия вместо горизонтальной (нужна явная высота через Class/Style, т.к. родитель обычно не задаёт высоту сам)"),
+    };
+}

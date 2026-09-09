@@ -1,0 +1,69 @@
+@page "/componentlib/textarea"
+
+<DocPage Title="NorthTextArea" Lead="Многострочное текстовое поле — то же самое, что NorthInput, но textarea вместо input."
+         Files="@(new[] { "Components/Forms/NorthTextArea.razor" })">
+
+    <DocSection Title="Интерактивный пример" Code="@InteractiveCode" Row="false">
+        <NorthTextArea Label="Комментарий" Placeholder="Расскажите подробнее..." @bind-Value="_comment" Rows="3" HelperText="Многострочное поле" />
+        <span class="text-sm text-foreground/60">Значение: @_comment</span>
+    </DocSection>
+
+    <DocSection Title="AutoResize" Description="Поле растёт по высоте вслед за содержимым (field-sizing: content)." Code="@AutoResizeCode" Row="false">
+        <NorthTextArea Label="Описание" Placeholder="Печатайте, поле подрастёт" AutoResize="true" @bind-Value="_description" />
+    </DocSection>
+
+    <DocSection Title="Варианты и состояния" Code="@StatesCode">
+        <NorthTextArea Placeholder="Flat" Variant="NorthVariant.Flat" Class="w-56" />
+        <NorthTextArea Value="Только чтение" ReadOnly="true" Class="w-56" />
+        <NorthTextArea Placeholder="Отключено" Disabled="true" Class="w-56" />
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private string? _comment;
+    private string? _description;
+
+    private const string InteractiveCode =
+        """
+        <NorthTextArea Label="Комментарий" Placeholder="Расскажите подробнее..." @bind-Value="_comment" Rows="3" HelperText="Многострочное поле" />
+        <span class="text-sm text-foreground/60">Значение: @_comment</span>
+
+        @code {
+            private string? _comment;
+        }
+        """;
+
+    private const string AutoResizeCode =
+        """
+        <NorthTextArea Label="Описание" Placeholder="Печатайте, поле подрастёт" AutoResize="true" @bind-Value="_description" />
+
+        @code {
+            private string? _description;
+        }
+        """;
+
+    private const string StatesCode =
+        """
+        <NorthTextArea Placeholder="Flat" Variant="NorthVariant.Flat" />
+        <NorthTextArea Value="Только чтение" ReadOnly="true" />
+        <NorthTextArea Placeholder="Отключено" Disabled="true" />
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Value / ValueChanged / ValueExpression", "string", "—", "Механика @bind-Value"),
+        new("Label", "string?", "—", "Подпись над полем"),
+        new("Placeholder", "string?", "—", "—"),
+        new("HelperText / ErrorText / Error", "—", "—", "Подсказка/ошибка под полем"),
+        new("Rows", "int", "3", "Количество видимых строк (влияет на высоту, только если AutoResize выключен)"),
+        new("AutoResize", "bool", "false", "Расти по высоте вслед за содержимым (field-sizing: content)"),
+        new("Disabled", "bool", "false", "—"),
+        new("ReadOnly", "bool", "false", "—"),
+        new("Variant", "NorthVariant", "Bordered", "Bordered/Flat"),
+        new("Bordered", "bool", "true", "Показывать ли контур поля"),
+        new("Radius", "NorthRadius", "Medium", "Радиус поля"),
+    };
+}

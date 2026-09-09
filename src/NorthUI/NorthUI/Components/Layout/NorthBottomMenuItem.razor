@@ -1,0 +1,60 @@
+@*
+    Один пункт NorthBottomMenu — иконка сверху, подпись снизу, как в мобильных tab bar.
+*@
+@namespace NorthUI.Components.Layout
+@implements IDisposable
+
+<button type="button" class="@Classes" @onclick="HandleClickAsync" aria-current="@(IsActive ? "page" : null)">
+    <span class="@IconClasses">@ChildContent</span>
+    @if (!string.IsNullOrEmpty(Text))
+    {
+        <span class="text-[11px] font-medium leading-none">@Text</span>
+    }
+</button>
+
+@code {
+    [CascadingParameter] private NorthBottomMenu? Parent { get; set; }
+
+    /// <summary>Подпись под иконкой.</summary>
+    [Parameter] public string? Text { get; set; }
+
+    /// <summary>Иконка (обычно svg 20-22px).</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Коллбэк клика — вызывается в дополнение к выбору пункта в родительском NorthBottomMenu.</summary>
+    [Parameter] public EventCallback OnClick { get; set; }
+
+    private bool IsActive => Parent?.IsSelected(this) ?? false;
+
+    protected override void OnInitialized()
+    {
+        if (Parent is null)
+        {
+            throw new InvalidOperationException("NorthBottomMenuItem должен использоваться внутри NorthBottomMenu.");
+        }
+
+        Parent.Register(this);
+    }
+
+    private async Task HandleClickAsync()
+    {
+        if (Parent is not null)
+        {
+            await Parent.SelectAsync(this);
+        }
+
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync();
+        }
+    }
+
+    private string Classes => CssBuilder.Default("north-bottom-menu-item flex flex-1 flex-col items-center justify-center gap-1 py-2 transition-colors")
+        .AddClass(IsActive ? "text-primary" : "text-foreground/50 hover:text-foreground/80")
+        .ToString();
+
+    private string IconClasses => CssBuilder.Default("flex items-center justify-center [&_svg]:size-5")
+        .ToString();
+
+    public void Dispose() => Parent?.Unregister(this);
+}

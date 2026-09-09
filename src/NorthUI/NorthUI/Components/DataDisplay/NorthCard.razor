@@ -1,0 +1,47 @@
+@*
+    Карточка — контейнер с фоном content1, скруглением и опциональными
+    заголовком/подвалом.
+
+    <NorthCard>
+        <HeaderContent>Заголовок</HeaderContent>
+        Основное содержимое
+        <FooterContent><NorthButton Size="NorthSize.Small">Подробнее</NorthButton></FooterContent>
+    </NorthCard>
+*@
+@namespace NorthUI.Components.DataDisplay
+@inherits NorthComponentBase
+
+<div class="@Classes" style="@Style" @attributes="UserAttributes">
+    @if (HeaderContent is not null)
+    {
+        <div class="north-card__header px-5 py-4 border-b border-divider">@HeaderContent</div>
+    }
+    <div class="north-card__body flex-1 px-5 py-4">@ChildContent</div>
+    @if (FooterContent is not null)
+    {
+        <div class="north-card__footer px-5 py-4 border-t border-divider">@FooterContent</div>
+    }
+</div>
+
+@code {
+    /// <summary>Рисовать ли тонкую рамку (в дополнение к тени).</summary>
+    [Parameter] public bool Bordered { get; set; }
+
+    /// <summary>Тень под карточкой.</summary>
+    [Parameter] public bool Shadow { get; set; } = true;
+
+    [Parameter] public NorthRadius Radius { get; set; } = NorthRadius.Large;
+
+    [Parameter] public RenderFragment? HeaderContent { get; set; }
+
+    [Parameter] public RenderFragment? FooterContent { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string Classes => CssBuilder.Default("north-card flex flex-col overflow-hidden bg-content1 text-foreground")
+        .AddClass(NorthColorVariantClasses.Radius(Radius))
+        .AddClass("border border-divider", Bordered)
+        .AddClass("shadow-md", Shadow)
+        .AddClass(Class)
+        .ToString();
+}

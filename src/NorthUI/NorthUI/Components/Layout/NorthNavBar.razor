@@ -1,0 +1,73 @@
+@*
+    Верхняя панель приложения (аналог MudAppBar/шапки сайта). Формализует то, что
+    в демо раньше собиралось вручную из <header>+NorthContainer+NorthStack —
+    задаёт высоту, подложку с блюром и границу снизу, содержимое — произвольное.
+
+    <NorthNavBar Density="NorthDensity.Dense" Justify="NorthJustify.SpaceBetween">
+        <a href="/" class="font-semibold">Logo</a>
+        <NorthStack Row="true" Spacing="4"><NavLink href="/">Главная</NavLink></NorthStack>
+    </NorthNavBar>
+*@
+@namespace NorthUI.Components.Layout
+@inherits NorthComponentBase
+
+<header class="@Classes" style="@Style" @attributes="UserAttributes">
+    <NorthContainer Fluid="Fluid">
+        <div class="@RowClasses">
+            @ChildContent
+        </div>
+    </NorthContainer>
+</header>
+
+@code {
+    /// <summary>Прилипает к верху при прокрутке (position: sticky).</summary>
+    [Parameter] public bool Sticky { get; set; } = true;
+
+    [Parameter] public bool Bordered { get; set; } = true;
+
+    /// <summary>Растянуть содержимое на всю ширину (без ограничения NorthContainer.MaxWidth).</summary>
+    [Parameter] public bool Fluid { get; set; } = true;
+
+    /// <summary>Normal (по умолчанию, 56px) — обычная высота. Dense — компактная (48px).</summary>
+    [Parameter] public NorthDensity Density { get; set; } = NorthDensity.Normal;
+
+    /// <summary>Цвет фона панели. Default (по умолчанию) — нейтральная подложка с блюром; любой другой — сплошная заливка цветом.</summary>
+    [Parameter] public NorthColor Color { get; set; } = NorthColor.Default;
+
+    /// <summary>Распределение содержимого по горизонтали — как AlignItems в MudBlazor (justify-content внутренней строки).</summary>
+    [Parameter] public NorthJustify Justify { get; set; } = NorthJustify.SpaceBetween;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string Classes => CssBuilder.Default("north-navbar z-30")
+        .AddClass(ColorClass)
+        .AddClass("sticky top-0", Sticky)
+        .AddClass("border-b border-divider", Bordered)
+        .AddClass(Class)
+        .ToString();
+
+    private string ColorClass => Color switch
+    {
+        NorthColor.Primary => "bg-primary text-primary-foreground",
+        NorthColor.Secondary => "bg-secondary text-secondary-foreground",
+        NorthColor.Success => "bg-success text-success-foreground",
+        NorthColor.Warning => "bg-warning text-warning-foreground",
+        NorthColor.Danger => "bg-danger text-danger-foreground",
+        _ => "bg-background/80 backdrop-blur text-foreground",
+    };
+
+    private string RowClasses => CssBuilder.Default("flex items-center gap-4")
+        .AddClass(Density == NorthDensity.Dense ? "h-12" : "h-14")
+        .AddClass(JustifyClass)
+        .ToString();
+
+    private string JustifyClass => Justify switch
+    {
+        NorthJustify.Start => "justify-start",
+        NorthJustify.End => "justify-end",
+        NorthJustify.Center => "justify-center",
+        NorthJustify.SpaceAround => "justify-around",
+        NorthJustify.SpaceEvenly => "justify-evenly",
+        _ => "justify-between",
+    };
+}

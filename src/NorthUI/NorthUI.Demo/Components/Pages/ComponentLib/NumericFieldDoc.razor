@@ -1,0 +1,74 @@
+@page "/componentlib/numeric-field"
+
+<DocPage Title="NorthNumericField" Lead="Числовое поле со ступенчатыми кнопками +/- по краям."
+         Files="@(new[] { "Components/Forms/NorthNumericField.razor" })">
+
+    <DocSection Title="Интерактивный пример" Code="@InteractiveCode">
+        <NorthNumericField Label="Количество" @bind-Value="_qty" Min="0" Max="99" Step="1" Format="NorthNumberFormat.Integer" />
+        <span class="text-sm text-foreground/60">Значение: @_qty</span>
+    </DocSection>
+
+    <DocSection Title="Decimal с шагом 0.5" Code="@DecimalCode">
+        <NorthNumericField Label="Цена" @bind-Value="_price" Step="0.5" Format="NorthNumberFormat.Decimal" />
+        <span class="text-sm text-foreground/60">Значение: @_price</span>
+    </DocSection>
+
+    <DocSection Title="Размеры и состояния" Code="@StatesCode">
+        <NorthNumericField Label="Small" Size="NorthSize.Small" Value="1" Class="w-32" />
+        <NorthNumericField Label="Large" Size="NorthSize.Large" Value="1" Class="w-32" />
+        <NorthNumericField Label="Отключено" Disabled="true" Value="5" Class="w-32" />
+        <NorthNumericField Label="Только чтение" ReadOnly="true" Value="5" Class="w-32" />
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private double _qty = 1;
+    private double _price = 9.5;
+
+    private const string InteractiveCode =
+        """
+        <NorthNumericField Label="Количество" @bind-Value="_qty" Min="0" Max="99" Step="1" Format="NorthNumberFormat.Integer" />
+        <span class="text-sm text-foreground/60">Значение: @_qty</span>
+
+        @code {
+            private double _qty = 1;
+        }
+        """;
+
+    private const string DecimalCode =
+        """
+        <NorthNumericField Label="Цена" @bind-Value="_price" Step="0.5" Format="NorthNumberFormat.Decimal" />
+
+        @code {
+            private double _price = 9.5;
+        }
+        """;
+
+    private const string StatesCode =
+        """
+        <NorthNumericField Label="Small" Size="NorthSize.Small" Value="1" />
+        <NorthNumericField Label="Large" Size="NorthSize.Large" Value="1" />
+        <NorthNumericField Label="Отключено" Disabled="true" Value="5" />
+        <NorthNumericField Label="Только чтение" ReadOnly="true" Value="5" />
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Value / ValueChanged / ValueExpression", "double", "—", "Механика @bind-Value"),
+        new("Label", "string?", "—", "Подпись над полем"),
+        new("HelperText / ErrorText / Error", "—", "—", "Подсказка/ошибка под полем"),
+        new("Min / Max", "double", "double.MinValue / MaxValue", "Диапазон (кнопки +/− блокируются на границах)"),
+        new("Step", "double", "1", "Шаг изменения"),
+        new("Format", "NorthNumberFormat", "Decimal", "Integer — округляет ввод/шаг до целого; Decimal — дробные значения разрешены"),
+        new("Disabled", "bool", "false", "—"),
+        new("ReadOnly", "bool", "false", "Поле и кнопки +/− не реагируют на ввод, но не тускнеют"),
+        new("Variant", "NorthVariant", "Bordered", "Bordered/Flat"),
+        new("Bordered", "bool", "true", "Показывать ли контур поля"),
+        new("Size", "NorthSize", "Medium", "Small/Medium/Large"),
+        new("Density", "NorthDensity", "Normal", "Dense — компактное поле"),
+        new("Radius", "NorthRadius", "Medium", "Радиус поля"),
+    };
+}

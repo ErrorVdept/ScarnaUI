@@ -1,0 +1,63 @@
+@page "/componentlib/card"
+
+<DocPage Title="NorthCard" Lead="Контейнер-карточка с фоном content1, скруглением и опциональными заголовком/подвалом."
+         Files="@(new[] { "Components/DataDisplay/NorthCard.razor" })">
+
+    <DocSection Title="Базовая карточка" Code="@BasicCode">
+        <NorthCard>
+            Товар: Кроссовки, размер 42. Статус: в пути.
+        </NorthCard>
+    </DocSection>
+
+    <DocSection Title="С заголовком и подвалом" Description="HeaderContent и FooterContent рисуются с разделителями." Code="@HeaderFooterCode">
+        <NorthCard>
+            <HeaderContent><span class="font-semibold">Заказ #1234</span></HeaderContent>
+            <ChildContent>Товар: Кроссовки, размер 42. Статус: в пути.</ChildContent>
+            <FooterContent><NorthButton Size="NorthSize.Small">Подробнее</NorthButton></FooterContent>
+        </NorthCard>
+    </DocSection>
+
+    <DocSection Title="Bordered / Shadow / Radius" Code="@VariantsCode">
+        <NorthCard Bordered="true" Shadow="false">Bordered, без тени</NorthCard>
+        <NorthCard Radius="NorthRadius.Small">Radius.Small</NorthCard>
+        <NorthCard Radius="NorthRadius.None">Radius.None</NorthCard>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string BasicCode =
+        """
+        <NorthCard>
+            Товар: Кроссовки, размер 42. Статус: в пути.
+        </NorthCard>
+        """;
+
+    private const string HeaderFooterCode =
+        """
+        <NorthCard>
+            <HeaderContent><span class="font-semibold">Заказ #1234</span></HeaderContent>
+            <ChildContent>Товар: Кроссовки, размер 42. Статус: в пути.</ChildContent>
+            <FooterContent><NorthButton Size="NorthSize.Small">Подробнее</NorthButton></FooterContent>
+        </NorthCard>
+        """;
+
+    private const string VariantsCode =
+        """
+        <NorthCard Bordered="true" Shadow="false">Bordered, без тени</NorthCard>
+        <NorthCard Radius="NorthRadius.Small">Radius.Small</NorthCard>
+        <NorthCard Radius="NorthRadius.None">Radius.None</NorthCard>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Bordered", "bool", "false", "Тонкая рамка в дополнение к тени"),
+        new("Shadow", "bool", "true", "Тень под карточкой"),
+        new("Radius", "NorthRadius", "Large", "Радиус скругления"),
+        new("HeaderContent", "RenderFragment?", "—", "Заголовок (с разделителем снизу)"),
+        new("FooterContent", "RenderFragment?", "—", "Подвал (с разделителем сверху)"),
+        new("ChildContent", "RenderFragment?", "—", "Основное содержимое"),
+    };
+}
