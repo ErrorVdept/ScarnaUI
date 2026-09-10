@@ -1,104 +1,35 @@
 @page "/componentlib"
 
-<NorthContainer>
-    <NorthStack Spacing="8" Class="pb-16">
-        <div>
-            <h1 class="text-2xl font-semibold">Библиотека компонентов</h1>
-            <p class="mt-2 max-w-2xl text-sm text-foreground/70">
-                Интерактивная документация NorthUI — как на mudblazor.com: живой пример на
-                каждый компонент, кнопка "Показать код" и таблица параметров.
-            </p>
-        </div>
+<NorthContainer MaxWidth="NorthContainerMaxWidth.ExtraLarge">
+    <div class="flex items-start gap-8 pb-16">
+        <ComponentLibSidebar />
 
-        @foreach (var group in _groups)
-        {
-            <section>
-                <h2 class="mb-3 text-lg font-semibold text-foreground/90">@group.Title</h2>
-                <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-                    @foreach (var item in group.Items)
-                    {
-                        <NavLink href="@item.Href" class="north-lib-card block rounded-north-md border border-divider bg-content1 p-4 transition-colors hover:border-primary hover:bg-content2">
-                            <span class="block font-medium text-foreground">@item.Name</span>
-                            <span class="mt-1 block text-xs text-foreground/50">@item.Description</span>
-                        </NavLink>
-                    }
+        <div class="min-w-0 flex-1">
+            <NorthStack Spacing="8">
+                <div>
+                    <h1 class="text-2xl font-semibold">Библиотека компонентов</h1>
+                    <p class="mt-2 max-w-2xl text-sm text-foreground/70">
+                        Интерактивная документация NorthUI — как на mudblazor.com: живой пример на
+                        каждый компонент, кнопка "Показать код" и таблица параметров.
+                    </p>
                 </div>
-            </section>
-        }
-    </NorthStack>
+
+                @foreach (var group in ComponentLibNav.Groups)
+                {
+                    <section>
+                        <h2 class="mb-3 text-lg font-semibold text-foreground/90">@group.Title</h2>
+                        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+                            @foreach (var item in group.Items)
+                            {
+                                <NavLink href="@item.Href" class="north-lib-card block rounded-north-md border border-divider bg-content1 p-4 transition-colors hover:border-primary hover:bg-content2">
+                                    <span class="block font-medium text-foreground">@item.Name</span>
+                                    <span class="mt-1 block text-xs text-foreground/50">@item.Description</span>
+                                </NavLink>
+                            }
+                        </div>
+                    </section>
+                }
+            </NorthStack>
+        </div>
+    </div>
 </NorthContainer>
-
-@code {
-    private sealed record Item(string Name, string Href, string Description);
-    private sealed record Group(string Title, Item[] Items);
-
-    private readonly Group[] _groups =
-    {
-        new("Actions", new[]
-        {
-            new Item("NorthButton", "/componentlib/button", "Кнопка"),
-            new Item("NorthToggleButton", "/componentlib/toggle-button", "Кнопка-переключатель"),
-        }),
-        new("Forms", new[]
-        {
-            new Item("NorthInput", "/componentlib/input", "Текстовое поле"),
-            new Item("NorthTextArea", "/componentlib/textarea", "Многострочное поле"),
-            new Item("NorthPasswordBox", "/componentlib/password-box", "Поле пароля"),
-            new Item("NorthNumericField", "/componentlib/numeric-field", "Числовое поле"),
-            new Item("NorthSlider", "/componentlib/slider", "Слайдер"),
-            new Item("NorthTimeField", "/componentlib/time-field", "Выбор времени"),
-            new Item("NorthDateTimePicker", "/componentlib/datetime-picker", "Выбор даты и времени"),
-            new Item("NorthCheckbox", "/componentlib/checkbox", "Чекбокс"),
-            new Item("NorthSwitch", "/componentlib/switch", "Переключатель"),
-            new Item("NorthSelect", "/componentlib/select", "Выпадающий список"),
-            new Item("NorthSelectGroup", "/componentlib/select-group", "Сегментированный переключатель"),
-        }),
-        new("Data display", new[]
-        {
-            new Item("NorthCard", "/componentlib/card", "Карточка"),
-            new Item("NorthChip", "/componentlib/chip", "Метка/тег"),
-            new Item("NorthTag", "/componentlib/tag", "Компактная метка"),
-            new Item("NorthBadge", "/componentlib/badge", "Индикатор-оверлей"),
-            new Item("NorthAvatar", "/componentlib/avatar", "Аватар"),
-            new Item("NorthDivider", "/componentlib/divider", "Разделительная линия"),
-            new Item("NorthSeparator", "/componentlib/separator", "Разделитель с подписью"),
-            new Item("NorthImage", "/componentlib/image", "Изображение с fallback"),
-            new Item("NorthExpansionPanel", "/componentlib/expansion-panel", "Аккордеон-секция"),
-            new Item("NorthList", "/componentlib/list", "Список с выбором"),
-            new Item("NorthTable", "/componentlib/table", "Таблица"),
-            new Item("NorthProgress", "/componentlib/progress", "Полоса прогресса"),
-            new Item("NorthSpinner", "/componentlib/spinner", "Индикатор загрузки"),
-            new Item("NorthText", "/componentlib/text", "Типографический текст"),
-        }),
-        new("Layout", new[]
-        {
-            new Item("NorthContainer", "/componentlib/container", "Центрирующий контейнер"),
-            new Item("NorthStack", "/componentlib/stack", "Flex-контейнер"),
-            new Item("NorthGrid", "/componentlib/grid", "12-колоночная сетка"),
-            new Item("NorthNavBar", "/componentlib/navbar", "Верхняя панель"),
-            new Item("NorthDrawer", "/componentlib/drawer", "Выезжающая панель"),
-            new Item("NorthBottomMenu", "/componentlib/bottom-menu", "Нижнее меню"),
-        }),
-        new("Navigation", new[]
-        {
-            new Item("NorthTabs", "/componentlib/tabs", "Вкладки"),
-            new Item("NorthMenu", "/componentlib/menu", "Контекстное меню"),
-        }),
-        new("Overlays", new[]
-        {
-            new Item("NorthPopover", "/componentlib/popover", "Позиционирование поповера"),
-            new Item("NorthTooltip", "/componentlib/tooltip", "Всплывающая подсказка"),
-            new Item("Диалоги", "/componentlib/dialog", "INorthDialogService"),
-            new Item("Тосты", "/componentlib/toast", "IToastManager"),
-        }),
-        new("Тема", new[]
-        {
-            new Item("NorthThemeProvider", "/componentlib/theme-provider", "Провайдер темы"),
-            new Item("NorthThemeSwitch", "/componentlib/theme-switch", "Кнопка переключения темы"),
-        }),
-        new("Сервисы", new[]
-        {
-            new Item("Navigator", "/componentlib/navigator", "INavigator — обёртка над NavigationManager"),
-        }),
-    };
-}

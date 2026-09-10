@@ -35,6 +35,7 @@
 | `Hover` | `bool` | `true` | Подсветка строки `<tbody>` при наведении |
 | `Striped` | `bool` | `false` | Зебра — чередующийся фон чётных строк |
 | `Bordered` | `bool` | `true` | Обводка контейнера таблицы |
+| `DividedColumns` | `bool` | `false` | Вертикальные разделители между колонками (кроме последней) |
 | `Density` | `NorthDensity` | `Normal` | `Dense` — компактные отступы ячеек, для больших наборов данных |
 | `ChildContent` | `RenderFragment?` | — | Произвольная разметка `<thead>`/`<tbody>` |
 

@@ -30,7 +30,7 @@
 
     @if (_showCode && !string.IsNullOrEmpty(Code))
     {
-        <pre class="scrollable-h mt-0 rounded-b-north-md border border-t-0 border-divider bg-content2 p-4 text-xs leading-relaxed"><code>@Code.Trim()</code></pre>
+        <NorthCodeBlock Code="@Code" MaxLines="20" Class="mt-2" />
     }
 </section>
 

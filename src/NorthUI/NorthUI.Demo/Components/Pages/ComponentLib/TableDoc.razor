@@ -29,6 +29,19 @@
         </NorthTable>
     </DocSection>
 
+    <DocSection Title="DividedColumns" Description="Вертикальные разделители между колонками (кроме последней — там и так край контейнера)." Row="false" Code="@DividedCode">
+        <NorthTable DividedColumns="true">
+            <thead>
+                <tr><th>Товар</th><th>Кол-во</th><th>Цена</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Кроссовки</td><td>1</td><td>4 990 ₽</td></tr>
+                <tr><td>Носки</td><td>3</td><td>590 ₽</td></tr>
+                <tr><td>Шнурки</td><td>2</td><td>190 ₽</td></tr>
+            </tbody>
+        </NorthTable>
+    </DocSection>
+
     <DocApiTable Rows="@_rows" />
 
 </DocPage>
@@ -62,11 +75,24 @@
         </NorthTable>
         """;
 
+    private const string DividedCode =
+        """
+        <NorthTable DividedColumns="true">
+            <thead>
+                <tr><th>Товар</th><th>Кол-во</th><th>Цена</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Кроссовки</td><td>1</td><td>4 990 ₽</td></tr>
+            </tbody>
+        </NorthTable>
+        """;
+
     private readonly List<DocApiRow> _rows = new()
     {
         new("Hover", "bool", "true", "Подсветка строки <tbody> при наведении"),
         new("Striped", "bool", "false", "Зебра — чередующийся фон чётных строк"),
         new("Bordered", "bool", "true", "Обводка контейнера таблицы"),
+        new("DividedColumns", "bool", "false", "Вертикальные разделители между колонками (кроме последней)"),
         new("Density", "NorthDensity", "Normal", "Dense — компактные отступы ячеек, для больших наборов данных"),
         new("ChildContent", "RenderFragment?", "—", "Произвольная разметка thead/tbody"),
     };

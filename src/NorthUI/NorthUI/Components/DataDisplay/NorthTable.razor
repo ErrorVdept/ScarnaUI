@@ -13,6 +13,8 @@
             <tr><td>Иван</td><td>ivan@example.com</td></tr>
         </tbody>
     </NorthTable>
+
+    <NorthTable DividedColumns="true">...</NorthTable>
 *@
 @namespace NorthUI.Components.DataDisplay
 @inherits NorthComponentBase
@@ -33,6 +35,9 @@
     /// <summary>Обводка контейнера таблицы.</summary>
     [Parameter] public bool Bordered { get; set; } = true;
 
+    /// <summary>Вертикальные разделители между колонками (кроме последней — там и так край контейнера).</summary>
+    [Parameter] public bool DividedColumns { get; set; }
+
     /// <summary>Normal (по умолчанию) — обычные отступы ячеек. Dense — компактные, для больших наборов данных.</summary>
     [Parameter] public NorthDensity Density { get; set; } = NorthDensity.Normal;
 
@@ -51,6 +56,7 @@
         .AddClass(DensityClass)
         .AddClass("[&_tbody_tr:hover]:bg-content2/60", Hover)
         .AddClass("[&_tbody_tr:nth-child(even)]:bg-content2/40", Striped)
+        .AddClass("[&_th:not(:last-child)]:border-r [&_td:not(:last-child)]:border-r [&_th:not(:last-child)]:border-divider [&_td:not(:last-child)]:border-divider", DividedColumns)
         .ToString();
 
     private string DensityClass => Density == NorthDensity.Dense

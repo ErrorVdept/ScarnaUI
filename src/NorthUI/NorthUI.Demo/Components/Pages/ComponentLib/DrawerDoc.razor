@@ -29,6 +29,39 @@
         </NorthDrawer>
     </DocSection>
 
+    <DocSection Title="Variant.Persistent — раздвигает содержимое" Description="Без подложки, реальный flex-элемент с анимируемой шириной — соседний контент сдвигается сам, без ручной синхронизации отступов. Подробнее и больше комбинаций (в т.ч. с NorthNavBar) — на странице showcase/main-layout." Code="@PersistentCode" Row="false">
+        <div class="flex overflow-hidden rounded-north-md border border-divider">
+            <NorthDrawer @bind-Open="_persistentOpen" Anchor="NorthDrawerAnchor.Left" Variant="NorthDrawerVariant.Persistent" Width="200px">
+                <div class="flex items-center justify-between border-b border-divider px-4 py-3">
+                    <span class="font-semibold">Меню</span>
+                </div>
+                <NorthList TValue="string" SelectionMode="NorthListSelectionMode.None" Class="p-3">
+                    <NorthListItem Value="@("home")">Главная</NorthListItem>
+                    <NorthListItem Value="@("orders")">Заказы</NorthListItem>
+                </NorthList>
+            </NorthDrawer>
+            <div class="flex-1 p-4">
+                <NorthButton Size="NorthSize.Small" Variant="NorthVariant.Bordered" OnClick="() => _persistentOpen = !_persistentOpen">Переключить</NorthButton>
+            </div>
+        </div>
+    </DocSection>
+
+    <DocSection Title="Variant.Mini — узкая полоса в закрытом состоянии" Description="В отличие от Persistent, не схлопывается до нуля — остаётся колонкой шириной MiniWidth. Подпись всегда в DOM (не через @@if) — max-width/opacity анимируются той же длительности, что и ширина панели, иначе текст появлялся бы рывком, не синхронно." Code="@MiniCode" Row="false">
+        <div class="flex overflow-hidden rounded-north-md border border-divider">
+            <NorthDrawer @bind-Open="_miniOpen" Anchor="NorthDrawerAnchor.Left" Variant="NorthDrawerVariant.Mini" Width="200px" MiniWidth="56px">
+                <NorthStack Spacing="1" Class="p-2">
+                    <span class="flex items-center gap-3 rounded-north-sm px-3 py-2 text-sm text-foreground/70">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
+                        <span class="@(_miniOpen ? "max-w-40 opacity-100" : "max-w-0 opacity-0") overflow-hidden whitespace-nowrap transition-all duration-200">Главная</span>
+                    </span>
+                </NorthStack>
+            </NorthDrawer>
+            <div class="flex-1 p-4">
+                <NorthButton Size="NorthSize.Small" Variant="NorthVariant.Bordered" OnClick="() => _miniOpen = !_miniOpen">Переключить</NorthButton>
+            </div>
+        </div>
+    </DocSection>
+
     <DocApiTable Rows="@_rows" />
 
 </DocPage>
@@ -36,6 +69,8 @@
 @code {
     private bool _leftOpen;
     private bool _bottomOpen;
+    private bool _persistentOpen = true;
+    private bool _miniOpen;
 
     private const string LeftCode =
         """
@@ -65,13 +100,41 @@
         </NorthDrawer>
         """;
 
+    private const string PersistentCode =
+        """
+        <div class="flex">
+            <NorthDrawer @bind-Open="_open" Anchor="NorthDrawerAnchor.Left"
+                         Variant="NorthDrawerVariant.Persistent" Width="200px">
+                <!-- содержимое меню -->
+            </NorthDrawer>
+            <div class="flex-1">
+                <!-- сдвигается само, вместе с шириной панели -->
+            </div>
+        </div>
+        """;
+
+    private const string MiniCode =
+        """
+        <NorthDrawer @bind-Open="_open" Anchor="NorthDrawerAnchor.Left"
+                     Variant="NorthDrawerVariant.Mini" Width="200px" MiniWidth="56px">
+            <span>
+                <svg><!-- иконка --></svg>
+                <span class="@(_open ? "max-w-40 opacity-100" : "max-w-0 opacity-0") overflow-hidden whitespace-nowrap transition-all duration-200">
+                    Главная
+                </span>
+            </span>
+        </NorthDrawer>
+        """;
+
     private readonly List<DocApiRow> _rows = new()
     {
         new("Open", "bool", "false", "Открыта ли панель. Поддерживает @bind-Open"),
         new("Anchor", "NorthDrawerAnchor", "Left", "Left/Right/Top/Bottom"),
+        new("Variant", "NorthDrawerVariant", "Temporary", "Temporary (overlay+подложка) / Persistent (раздвигает соседей) / Mini (в закрытом состоянии — узкая полоса)"),
         new("Width", "string", "\"280px\"", "Ширина панели (для Left/Right) — любое CSS-значение"),
         new("Height", "string", "\"280px\"", "Высота панели (для Top/Bottom)"),
-        new("CloseOnBackdropClick", "bool", "true", "Закрывать по клику на подложку"),
+        new("MiniWidth", "string", "\"72px\"", "Ширина/высота в закрытом состоянии у Variant.Mini"),
+        new("CloseOnBackdropClick", "bool", "true", "Закрывать по клику на подложку (только Temporary)"),
         new("ChildContent", "RenderFragment?", "—", "Содержимое панели"),
     };
 }

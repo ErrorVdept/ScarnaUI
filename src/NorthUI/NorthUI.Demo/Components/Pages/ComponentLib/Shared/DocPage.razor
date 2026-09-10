@@ -1,33 +1,41 @@
 @*
     Каркас страницы интерактивной документации одного компонента/сервиса —
-    как страницы на mudblazor.com. Задаёт заголовок, хлебную крошку, вводное
-    описание и (опционально) список файлов исходников. Секции с живыми примерами
-    (DocSection) и таблица API (DocApiTable) кладутся внутрь как ChildContent.
+    как страницы на mudblazor.com. Слева — ComponentLibSidebar (список всех
+    компонентов по категориям, во всю высоту страницы), справа — сама страница:
+    заголовок, хлебная крошка, вводное описание, список файлов исходников,
+    а дальше секции с живыми примерами (DocSection) и таблица API (DocApiTable)
+    как ChildContent.
 *@
 @namespace NorthUI.Demo.Components.Pages.ComponentLib.Shared
 
-<NorthContainer>
-    <NorthStack Spacing="6" Class="pb-16">
-        <div>
-            <NavLink href="/componentlib" class="text-sm text-foreground/50 hover:text-foreground">← Библиотека компонентов</NavLink>
-            <h1 class="mt-2 text-2xl font-semibold">@Title</h1>
-            @if (!string.IsNullOrEmpty(Lead))
-            {
-                <p class="mt-2 max-w-3xl text-sm text-foreground/70">@Lead</p>
-            }
-            @if (Files is { Count: > 0 })
-            {
-                <div class="mt-3 flex flex-wrap gap-2">
-                    @foreach (var file in Files)
+<NorthContainer MaxWidth="NorthContainerMaxWidth.ExtraLarge">
+    <div class="flex items-start gap-8 pb-16">
+        <ComponentLibSidebar />
+
+        <div class="min-w-0 flex-1">
+            <NorthStack Spacing="6">
+                <div>
+                    <NavLink href="/componentlib" class="text-sm text-foreground/50 hover:text-foreground lg:hidden">← Библиотека компонентов</NavLink>
+                    <h1 class="mt-2 text-2xl font-semibold lg:mt-0">@Title</h1>
+                    @if (!string.IsNullOrEmpty(Lead))
                     {
-                        <NorthTag>@file</NorthTag>
+                        <p class="mt-2 max-w-3xl text-sm text-foreground/70">@Lead</p>
+                    }
+                    @if (Files is { Count: > 0 })
+                    {
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            @foreach (var file in Files)
+                            {
+                                <NorthTag>@file</NorthTag>
+                            }
+                        </div>
                     }
                 </div>
-            }
-        </div>
 
-        @ChildContent
-    </NorthStack>
+                @ChildContent
+            </NorthStack>
+        </div>
+    </div>
 </NorthContainer>
 
 @code {

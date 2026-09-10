@@ -48,6 +48,7 @@
 
 ### Data display
 - [NorthCard](card.md) — карточка
+- [NorthPaper](paper.md) — простая поверхность (без Header/Footer), опционально кликабельная с hover-анимацией
 - [NorthChip](chip.md) — метка/тег
 - [NorthTag](tag.md) — маленькая компактная метка (облегчённый Chip)
 - [NorthBadge](badge.md) — индикатор-оверлей (счётчик, точка)
@@ -60,6 +61,7 @@
 - [NorthTable](table.md) — стилизация над обычной HTML-таблицей (аналог MudSimpleTable)
 - [NorthProgress](progress.md) — линейная полоса прогресса (determinate/indeterminate)
 - [NorthSpinner](spinner.md) — вращающийся индикатор загрузки (indeterminate)
+- [NorthCodeBlock](code-block.md) — блок кода с кнопкой копирования, авто/фиксированная высота
 - [NorthText](text.md) — типографический текст (аналог MudText)
 
 ### Navigation

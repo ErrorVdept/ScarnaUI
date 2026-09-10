@@ -4,10 +4,36 @@
 
 <PageTitle>NorthUI — компоненты</PageTitle>
 
+<NorthDrawer @bind-Open="_tocOpen" Anchor="NorthDrawerAnchor.Left" Width="260px">
+    <div class="flex items-center justify-between border-b border-divider px-4 py-3">
+        <span class="font-semibold">Оглавление</span>
+        <NorthButton Size="NorthSize.Small" Variant="NorthVariant.Light" OnClick="() => _tocOpen = false">✕</NorthButton>
+    </div>
+    <nav class="scrollable-v p-3">
+        <NorthStack Spacing="1">
+            @foreach (var item in _toc)
+            {
+                @* href полный ("/components#id"), не голый "#id" — у Blazor-приложений
+                   всегда есть <base href="/"> в <head>, а с ним href="#id" резолвится
+                   БРАУЗЕРОМ относительно этого base, а не текущего пути, и уводит на
+                   "/#id" (корень сайта) вместо прокрутки текущей страницы. *@
+                <a href="@($"/components#{item.Id}")" class="block rounded-north-sm px-2 py-1.5 text-sm text-foreground/70 transition-colors hover:bg-content2 hover:text-foreground" @onclick="() => _tocOpen = false">@item.Title</a>
+            }
+        </NorthStack>
+    </nav>
+</NorthDrawer>
+
 <NorthContainer>
+    <NorthButton Variant="NorthVariant.Light" Size="NorthSize.Small" Class="mb-6" OnClick="() => _tocOpen = true">
+        <StartIcon>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+        </StartIcon>
+        <ChildContent>Оглавление</ChildContent>
+    </NorthButton>
+
     <NorthStack Spacing="10" Class="pb-16">
 
-        <section>
+        <section id="buttons">
             <h2 class="mb-4 text-xl font-semibold">Buttons</h2>
             <NorthCard>
                 <NorthStack Spacing="4">
@@ -38,7 +64,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="forms">
             <h2 class="mb-4 text-xl font-semibold">Forms</h2>
             <NorthCard>
                 <NorthGrid Spacing="6">
@@ -104,7 +130,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="forms-extra">
             <h2 class="mb-4 text-xl font-semibold">Forms — TextArea, TimeField, DateTimePicker, PasswordBox</h2>
             <NorthCard>
                 <NorthGrid Spacing="6">
@@ -134,7 +160,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="data-display">
             <h2 class="mb-4 text-xl font-semibold">Data display</h2>
             <NorthCard>
                 <NorthStack Spacing="5">
@@ -168,7 +194,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="data-display-extra">
             <h2 class="mb-4 text-xl font-semibold">Data display — Image, ExpansionPanel, List</h2>
             <NorthCard>
                 <NorthGrid Spacing="6">
@@ -199,7 +225,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="drawer">
             <h2 class="mb-4 text-xl font-semibold">Layout — Drawer</h2>
             <NorthCard>
                 <NorthButton Variant="NorthVariant.Bordered" OnClick="() => _drawerOpen = true">Открыть панель</NorthButton>
@@ -217,7 +243,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="bottom-menu">
             <h2 class="mb-4 text-xl font-semibold">Layout — BottomMenu</h2>
             <NorthCard>
                 <p class="mb-3 text-sm text-foreground/60">Прибито к низу экрана (как мобильная навигация) — прокрутите страницу вниз, чтобы увидеть.</p>
@@ -235,7 +261,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="text">
             <h2 class="mb-4 text-xl font-semibold">NorthText</h2>
             <NorthCard>
                 <NorthText Typo="NorthTypo.H2" GutterBottom="true">Заголовок H2</NorthText>
@@ -249,7 +275,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="progress">
             <h2 class="mb-4 text-xl font-semibold">NorthProgress</h2>
             <NorthCard>
                 <NorthStack Spacing="4">
@@ -260,7 +286,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="table">
             <h2 class="mb-4 text-xl font-semibold">NorthTable</h2>
             <NorthCard>
                 <NorthTable Hover="true">
@@ -276,7 +302,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="tabs">
             <h2 class="mb-4 text-xl font-semibold">Navigation — Tabs</h2>
             <NorthCard>
                 <NorthTabs @bind-SelectedIndex="_tab">
@@ -293,7 +319,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="menu">
             <h2 class="mb-4 text-xl font-semibold">Navigation — Menu</h2>
             <NorthCard>
                 <NorthMenu>
@@ -310,7 +336,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="overlays">
             <h2 class="mb-4 text-xl font-semibold">Overlays</h2>
             <NorthCard>
                 <NorthStack Row="true" Spacing="4" Wrap="true" Align="NorthAlign.Center">
@@ -329,7 +355,7 @@
             </NorthCard>
         </section>
 
-        <section>
+        <section id="custom-classes">
             <h2 class="mb-4 text-xl font-semibold">Кастомные классы</h2>
             <NorthCard>
                 <NorthGrid Spacing="6">
@@ -368,6 +394,28 @@
 </NorthContainer>
 
 @code {
+    private sealed record TocItem(string Id, string Title);
+
+    private bool _tocOpen;
+
+    private readonly TocItem[] _toc =
+    {
+        new("buttons", "Buttons"),
+        new("forms", "Forms"),
+        new("forms-extra", "Forms — доп. поля"),
+        new("data-display", "Data display"),
+        new("data-display-extra", "Data display — доп."),
+        new("drawer", "Layout — Drawer"),
+        new("bottom-menu", "Layout — BottomMenu"),
+        new("text", "NorthText"),
+        new("progress", "NorthProgress"),
+        new("table", "NorthTable"),
+        new("tabs", "Navigation — Tabs"),
+        new("menu", "Navigation — Menu"),
+        new("overlays", "Overlays"),
+        new("custom-classes", "Кастомные классы"),
+    };
+
     private string? _name;
     private string? _email;
     private string? _country;

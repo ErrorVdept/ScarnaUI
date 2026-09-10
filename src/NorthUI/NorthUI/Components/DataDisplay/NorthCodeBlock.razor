@@ -1,0 +1,138 @@
+@*
+    Блок кода: моноширинный шрифт, тонкая рамка, опциональная кнопка копирования
+    (правый верхний угол). По умолчанию высота авто — растягивается по содержимому.
+
+    <NorthCodeBlock Code="dotnet add package NorthUI" />
+    <NorthCodeBlock Code="@longSnippet" MaxLines="12" />
+    <NorthCodeBlock Code="@longSnippet" Lines="6" ShowCopyButton="false" />
+*@
+@namespace NorthUI.Components.DataDisplay
+@inherits NorthComponentBase
+@implements IAsyncDisposable
+@inject IJSRuntime JSRuntime
+
+<div class="@WrapperClasses" style="@Style" @attributes="UserAttributes">
+    @if (ShowCopyButton)
+    {
+        <button type="button" class="north-codeblock__copy absolute right-2 top-2 flex size-7 items-center justify-center rounded-north-sm bg-content1/80 text-foreground/60 backdrop-blur transition-colors hover:bg-content1 hover:text-foreground" @onclick="CopyAsync" aria-label="Копировать код" title="Копировать код">
+            @if (_copied)
+            {
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-success"><polyline points="20 6 9 17 4 12" /></svg>
+            }
+            else
+            {
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+            }
+        </button>
+    }
+    <pre class="north-codeblock__pre m-0 overflow-auto p-4 font-mono text-xs leading-relaxed" style="@HeightStyle"><code>@Code.Trim()</code></pre>
+</div>
+
+@code {
+    private const string ModulePath = "./_content/NorthUI/js/north/codeblock.js";
+
+    // Совпадает с leading-relaxed у Tailwind — строки в px/em считаются по этому
+    // множителю, чтобы Lines/MinLines/MaxLines давали ровно то количество строк,
+    // что запрошено (а не на пиксель больше/меньше из-за рассинхронизации с CSS).
+    private const double LineHeightEm = 1.625;
+
+    private IJSObjectReference? _module;
+    private bool _copied;
+    private CancellationTokenSource? _copiedResetCts;
+
+    [Parameter, EditorRequired] public string Code { get; set; } = string.Empty;
+
+    /// <summary>Кнопка копирования в правом верхнем углу.</summary>
+    [Parameter] public bool ShowCopyButton { get; set; } = true;
+
+    /// <summary>Минимальное количество видимых строк. Не задано — блок растёт от содержимого без ограничения снизу.</summary>
+    [Parameter] public int? MinLines { get; set; }
+
+    /// <summary>Максимальное количество видимых строк — после него появляется вертикальная прокрутка.</summary>
+    [Parameter] public int? MaxLines { get; set; }
+
+    /// <summary>Точное количество строк (одновременно вместо MinLines и MaxLines) — фиксированная высота независимо от объёма содержимого.</summary>
+    [Parameter] public int? Lines { get; set; }
+
+    [Parameter] public NorthRadius Radius { get; set; } = NorthRadius.Medium;
+
+    private async Task CopyAsync()
+    {
+        try
+        {
+            _module ??= await JSRuntime.InvokeAsync<IJSObjectReference>("import", ModulePath);
+            await _module.InvokeVoidAsync("copyText", Code.Trim());
+        }
+        catch (JSException)
+        {
+            // navigator.clipboard.writeText может отказать (нет фокуса документа, небезопасный
+            // контекст, запрет разрешения и т.п.) — это ожидаемо в реальном браузере, а не
+            // повод рушить весь circuit необработанным исключением. Просто не показываем
+            // "скопировано".
+            return;
+        }
+
+        // Повторный клик до истечения предыдущего таймера должен просто перезапустить
+        // отсчёт, а не оставить два конкурирующих Task.Delay — второй сбрасывает _copied
+        // раньше первого и иконка "мигает" обратно на буфер обмена до истечения полных 1.5с.
+        _copiedResetCts?.Cancel();
+        _copiedResetCts = new CancellationTokenSource();
+        var token = _copiedResetCts.Token;
+
+        _copied = true;
+        StateHasChanged();
+
+        try
+        {
+            await Task.Delay(1500, token);
+            _copied = false;
+            StateHasChanged();
+        }
+        catch (OperationCanceledException)
+        {
+            // новый клик уже перезапустил отсчёт — этот, отменённый, просто завершается
+        }
+    }
+
+    private string? HeightStyle
+    {
+        get
+        {
+            if (Lines is int exact)
+            {
+                return $"height: {(exact * LineHeightEm).ToString(System.Globalization.CultureInfo.InvariantCulture)}em;";
+            }
+
+            if (MinLines is null && MaxLines is null)
+            {
+                return null;
+            }
+
+            var min = MinLines is int mn ? $"min-height: {(mn * LineHeightEm).ToString(System.Globalization.CultureInfo.InvariantCulture)}em; " : string.Empty;
+            var max = MaxLines is int mx ? $"max-height: {(mx * LineHeightEm).ToString(System.Globalization.CultureInfo.InvariantCulture)}em;" : string.Empty;
+            return $"{min}{max}";
+        }
+    }
+
+    private string WrapperClasses => CssBuilder.Default("north-codeblock relative border border-divider bg-content2")
+        .AddClass(NorthColorVariantClasses.Radius(Radius))
+        .AddClass(Class)
+        .ToString();
+
+    public async ValueTask DisposeAsync()
+    {
+        _copiedResetCts?.Cancel();
+
+        if (_module is not null)
+        {
+            try
+            {
+                await _module.DisposeAsync();
+            }
+            catch (JSDisconnectedException)
+            {
+                // circuit уже закрыт — освобождать нечего
+            }
+        }
+    }
+}
