@@ -1,0 +1,64 @@
+@page "/componentlib/menu"
+
+<DocPage Title="ScarnaMenu" Lead="Выпадающее контекстное меню, построенное на ScarnaPopover. Клик по пункту сам закрывает меню."
+         Files="@(new[] { "Components/Navigation/ScarnaMenu.razor", "Components/Navigation/ScarnaMenuItem.razor" })">
+
+    <DocSection Title="Пример" Description="ScarnaPopoverProvider уже есть в MainLayout, отдельно подключать не нужно." Code="@ExampleCode">
+        <ScarnaMenu>
+            <Trigger>
+                <ScarnaButton Variant="ScarnaVariant.Bordered">Действия ▾</ScarnaButton>
+            </Trigger>
+            <MenuContent>
+                <ScarnaMenuItem OnClick="Edit">Редактировать</ScarnaMenuItem>
+                <ScarnaMenuItem OnClick="Duplicate">Дублировать</ScarnaMenuItem>
+                <ScarnaDivider Class="my-1" />
+                <ScarnaMenuItem Color="ScarnaColor.Danger" OnClick="Delete">Удалить</ScarnaMenuItem>
+            </MenuContent>
+        </ScarnaMenu>
+        <span class="text-sm text-foreground/60">Последнее действие: @(_lastAction ?? "—")</span>
+    </DocSection>
+
+    <DocApiTable Title="Параметры ScarnaMenu" Rows="@_menuRows" />
+    <DocApiTable Title="Параметры ScarnaMenuItem" Rows="@_itemRows" />
+
+</DocPage>
+
+@code {
+    private string? _lastAction;
+
+    private void Edit() => _lastAction = "Редактировать";
+    private void Duplicate() => _lastAction = "Дублировать";
+    private void Delete() => _lastAction = "Удалить";
+
+    private const string ExampleCode =
+        """
+        <ScarnaMenu>
+            <Trigger>
+                <ScarnaButton Variant="ScarnaVariant.Bordered">Действия</ScarnaButton>
+            </Trigger>
+            <MenuContent>
+                <ScarnaMenuItem OnClick="Edit">Редактировать</ScarnaMenuItem>
+                <ScarnaMenuItem OnClick="Duplicate">Дублировать</ScarnaMenuItem>
+                <ScarnaDivider Class="my-1" />
+                <ScarnaMenuItem Color="ScarnaColor.Danger" OnClick="Delete">Удалить</ScarnaMenuItem>
+            </MenuContent>
+        </ScarnaMenu>
+        """;
+
+    private readonly List<DocApiRow> _menuRows = new()
+    {
+        new("Trigger", "RenderFragment?", "—", "Элемент, открывающий меню по клику (обычно кнопка)"),
+        new("MenuContent", "RenderFragment?", "—", "Набор ScarnaMenuItem/ScarnaDivider"),
+        new("Position", "ScarnaPosition", "BottomStart", "Позиция меню относительно триггера"),
+        new("IsParentFullSize", "bool", "false", "Растянуть меню на ширину триггера"),
+    };
+
+    private readonly List<DocApiRow> _itemRows = new()
+    {
+        new("Color", "ScarnaColor", "Default", "Danger — для деструктивных действий (удаление и т.п.)"),
+        new("Disabled", "bool", "false", "—"),
+        new("StartContent", "RenderFragment?", "—", "Иконка перед текстом"),
+        new("ChildContent", "RenderFragment?", "—", "Текст пункта"),
+        new("OnClick", "EventCallback", "—", "Обработчик выбора пункта (меню закроется автоматически после)"),
+    };
+}

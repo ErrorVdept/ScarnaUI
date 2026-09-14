@@ -1,0 +1,48 @@
+@page "/componentlib/container"
+
+<DocPage Title="ScarnaContainer" Lead="Центрирующий контейнер с максимальной шириной и боковыми отступами — типовая обёртка содержимого страницы."
+         Files="@(new[] { "Components/Layout/ScarnaContainer.razor" })">
+
+    <DocSection Title="MaxWidth" Description="Ограничивает ширину содержимого и центрирует его по горизонтали." Code="@MaxWidthCode" Row="false">
+        <ScarnaContainer MaxWidth="ScarnaContainerMaxWidth.Small" Class="border border-divider rounded-scarna-md p-3">
+            <p class="text-sm text-foreground/70">Small</p>
+        </ScarnaContainer>
+        <ScarnaContainer MaxWidth="ScarnaContainerMaxWidth.Medium" Class="border border-divider rounded-scarna-md p-3">
+            <p class="text-sm text-foreground/70">Medium</p>
+        </ScarnaContainer>
+        <ScarnaContainer MaxWidth="ScarnaContainerMaxWidth.Large" Class="border border-divider rounded-scarna-md p-3">
+            <p class="text-sm text-foreground/70">Large (по умолчанию)</p>
+        </ScarnaContainer>
+    </DocSection>
+
+    <DocSection Title="Fluid" Description="true — растянуть на всю ширину, игнорируя MaxWidth." Code="@FluidCode" Row="false">
+        <ScarnaContainer Fluid="true" Class="border border-divider rounded-scarna-md p-3">
+            <p class="text-sm text-foreground/70">Fluid="true" — занимает всю доступную ширину</p>
+        </ScarnaContainer>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string MaxWidthCode =
+        """
+        <ScarnaContainer MaxWidth="ScarnaContainerMaxWidth.Small">...</ScarnaContainer>
+        <ScarnaContainer MaxWidth="ScarnaContainerMaxWidth.Medium">...</ScarnaContainer>
+        <ScarnaContainer MaxWidth="ScarnaContainerMaxWidth.Large">...</ScarnaContainer>
+        """;
+
+    private const string FluidCode =
+        """
+        <ScarnaContainer Fluid="true">
+            ...
+        </ScarnaContainer>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("MaxWidth", "ScarnaContainerMaxWidth", "Large", "Small / Medium / Large / ExtraLarge"),
+        new("Fluid", "bool", "false", "true — растянуть на всю ширину, игнорируя MaxWidth"),
+    };
+}

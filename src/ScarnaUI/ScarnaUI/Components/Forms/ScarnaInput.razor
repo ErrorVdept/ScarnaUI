@@ -1,0 +1,110 @@
+@*
+    Однострочное текстовое поле. Поддерживает @bind-Value "из коробки" (см. ScarnaFormComponentBase)
+    и подсветку ошибок валидации, если используется внутри EditForm.
+
+    <EditForm Model="model">
+        <ScarnaInput Label="Email" @bind-Value="model.Email" />
+    </EditForm>
+*@
+@namespace ScarnaUI.Components.Forms
+@inherits ScarnaFormComponentBase<string>
+
+<div class="@WrapperOuterClasses" style="@Style" @attributes="UserAttributes">
+    @if (!string.IsNullOrEmpty(Label))
+    {
+        <label for="@_id" class="text-sm font-medium text-foreground/80">@Label</label>
+    }
+
+    <div class="@FieldWrapperClasses">
+        @StartContent
+        <input id="@_id"
+               type="@Type"
+               class="scarna-input__field w-full flex-1 bg-transparent outline-none text-foreground placeholder:text-foreground/40 disabled:cursor-not-allowed"
+               placeholder="@Placeholder"
+               value="@Value"
+               disabled="@Disabled"
+               readonly="@ReadOnly"
+               @oninput="HandleInputAsync" />
+        @EndContent
+    </div>
+
+    @if (IsInvalid && !string.IsNullOrEmpty(ErrorText))
+    {
+        <span class="text-xs text-danger">@ErrorText</span>
+    }
+    else if (!string.IsNullOrEmpty(HelperText))
+    {
+        <span class="text-xs text-foreground/50">@HelperText</span>
+    }
+</div>
+
+@code {
+    private readonly string _id = $"scarna-input-{Guid.NewGuid():N}";
+
+    /// <summary>Подпись над полем.</summary>
+    [Parameter] public string? Label { get; set; }
+
+    [Parameter] public string? Placeholder { get; set; }
+
+    /// <summary>Подсказка под полем, показывается, пока нет ошибки валидации.</summary>
+    [Parameter] public string? HelperText { get; set; }
+
+    /// <summary>HTML-атрибут type ("text", "email", "password", "number", ...).</summary>
+    [Parameter] public string Type { get; set; } = "text";
+
+    [Parameter] public bool Disabled { get; set; }
+
+    [Parameter] public bool ReadOnly { get; set; }
+
+    /// <summary>Bordered — контур на прозрачном фоне (по умолчанию), Flat — заливка без контура.</summary>
+    [Parameter] public ScarnaVariant Variant { get; set; } = ScarnaVariant.Bordered;
+
+    /// <summary>Показывать ли контур поля (по умолчанию — да). Независим от Variant: например, Variant.Flat + Bordered="false" даёт заливку совсем без обводки.</summary>
+    [Parameter] public bool Bordered { get; set; } = true;
+
+    [Parameter] public ScarnaSize Size { get; set; } = ScarnaSize.Medium;
+
+    /// <summary>Normal (по умолчанию) — обычная высота/отступы. Dense — компактное поле для плотных панелей фильтров/таблиц.</summary>
+    [Parameter] public ScarnaDensity Density { get; set; } = ScarnaDensity.Normal;
+
+    [Parameter] public ScarnaRadius Radius { get; set; } = ScarnaRadius.Medium;
+
+    /// <summary>Содержимое перед полем ввода (иконка, префикс "https://").</summary>
+    [Parameter] public RenderFragment? StartContent { get; set; }
+
+    /// <summary>Содержимое после поля ввода (иконка, кнопка очистки).</summary>
+    [Parameter] public RenderFragment? EndContent { get; set; }
+
+    private async Task HandleInputAsync(ChangeEventArgs e) => await SetValueAsync(e.Value?.ToString());
+
+    private string WrapperOuterClasses => CssBuilder.Default("scarna-input-wrapper flex flex-col gap-1")
+        .AddClass(Class)
+        .ToString();
+
+    private string FieldWrapperClasses => CssBuilder.Default("scarna-input flex items-center gap-2 transition-colors")
+        .AddClass(SizeClass)
+        .AddClass(ScarnaColorVariantClasses.Radius(Radius))
+        .AddClass(VariantClass)
+        .AddClass("ring-1 ring-danger", IsInvalid)
+        .ToString();
+
+    // Высота/паддинги зависят от пары (Size, Density) — Dense уменьшает обычный размер
+    // примерно на четверть, не трогая размер шрифта у Small (там уже некуда ужимать).
+    private string SizeClass => (Size, Density) switch
+    {
+        (ScarnaSize.Small, ScarnaDensity.Dense) => "h-7 px-2 text-sm",
+        (ScarnaSize.Small, _) => "h-8 px-3 text-sm",
+        (ScarnaSize.Large, ScarnaDensity.Dense) => "h-10 px-3 text-base",
+        (ScarnaSize.Large, _) => "h-12 px-4 text-base",
+        (_, ScarnaDensity.Dense) => "h-8 px-2.5 text-sm",
+        _ => "h-10 px-3 text-sm",
+    };
+
+    private string VariantClass => (Variant, Bordered) switch
+    {
+        (ScarnaVariant.Flat, true) => "bg-content2 border border-default focus-within:border-primary",
+        (ScarnaVariant.Flat, false) => "bg-content2 border border-transparent focus-within:bg-content3",
+        (_, true) => "bg-transparent border border-default focus-within:border-primary",
+        (_, false) => "bg-transparent border border-transparent",
+    };
+}

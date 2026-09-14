@@ -1,9 +1,9 @@
-# NorthSlider
+# ScarnaSlider
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/Forms/NorthSlider.razor`
-- `src/NorthUI/NorthUI/Styles/input.css` (`.north-slider::-webkit-slider-thumb`/`::-moz-range-thumb`, `::-webkit-slider-runnable-track`/`::-moz-range-track`)
-- `src/NorthUI/NorthUI/wwwroot/js/north/slider.js` (только для `ReadOnly` — см. ниже)
+- `src/ScarnaUI/ScarnaUI/Components/Forms/ScarnaSlider.razor`
+- `src/ScarnaUI/ScarnaUI/Styles/input.css` (`.scarna-slider::-webkit-slider-thumb`/`::-moz-range-thumb`, `::-webkit-slider-runnable-track`/`::-moz-range-track`)
+- `src/ScarnaUI/ScarnaUI/wwwroot/js/scarna/slider.js` (только для `ReadOnly` — см. ниже)
 
 ## Описание
 
@@ -17,9 +17,9 @@ Tailwind arbitrary-variant классов (`[&::-webkit-slider-thumb]:w-7` и т
 Один консолидированный блок обычного CSS — стандартный, проверенный способ стилизовать
 нативный range-thumb, и он же уже используется для скроллбара (`.scrollable`, см.
 [custom-classes.md](custom-classes.md)). Цвет обводки передаётся через CSS-переменную
-`--north-slider-thumb-color`, выставляемую инлайн-стилем из `NorthSlider.razor` (тот
+`--scarna-slider-thumb-color`, выставляемую инлайн-стилем из `ScarnaSlider.razor` (тот
 же `style`, что задаёт градиент дорожки). Компонент основан на
-`NorthFormComponentBase<double>` — поддерживает `@bind-Value`.
+`ScarnaFormComponentBase<double>` — поддерживает `@bind-Value`.
 
 По той же причине (браузер по умолчанию нежно оставляет собственную дорожку поверх
 всего остального) отдельно сброшены `::-webkit-slider-runnable-track`/`::-moz-range-track`
@@ -48,7 +48,7 @@ Blazor не станет откатывать `value` того же самого
 ## Пример использования
 
 ```razor
-<NorthSlider Label="Громкость" @bind-Value="_volume" Min="0" Max="100" ShowValue="true" />
+<ScarnaSlider Label="Громкость" @bind-Value="_volume" Min="0" Max="100" ShowValue="true" />
 ```
 
 ## Параметры
@@ -63,5 +63,5 @@ Blazor не станет откатывать `value` того же самого
 | `ReadOnly` | `bool` | `false` | Игнорирует ввод (мышь/тач/клавиатура), но, в отличие от `Disabled`, не тускнеет — см. описание выше |
 | `ShowValue` | `bool` | `false` | Показывать текущее значение справа от подписи |
 | `Format` | `string` | `"0.##"` | .NET numeric format string для отображаемого значения |
-| `Color` | `NorthColor` | `Primary` | Цвет ползунка и залитой части дорожки |
+| `Color` | `ScarnaColor` | `Primary` | Цвет ползунка и залитой части дорожки |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

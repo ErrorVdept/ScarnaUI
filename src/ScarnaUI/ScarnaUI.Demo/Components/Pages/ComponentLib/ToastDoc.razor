@@ -1,0 +1,40 @@
+@page "/componentlib/toast"
+@inject IToastManager ToastManager
+
+<DocPage Title="Тосты (IToastManager)" Lead="Императивный сервис показа тостов (снэкбаров) — реализация полностью на C#, без единой строчки JS."
+         Files="@(new[] { "Components/Overlays/ScarnaSnackbarProvider.razor", "Services/IToastManager.cs", "Services/ScarnaToast.cs" })">
+
+    <DocSection Title="Пример" Description="ScarnaSnackbarProvider уже есть в MainLayout. Каждый тост сам удаляется из очереди через Duration (по умолчанию 4 секунды)." Code="@ExampleCode">
+        <ScarnaButton Color="ScarnaColor.Default" OnClick='() => ToastManager.Add("Информационное сообщение", ScarnaToastSeverity.Info)'>Info</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Success" OnClick='() => ToastManager.Add("Изменения сохранены", ScarnaToastSeverity.Success)'>Success</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Warning" OnClick='() => ToastManager.Add("Проверьте введённые данные", ScarnaToastSeverity.Warning)'>Warning</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Danger" OnClick='() => ToastManager.Add("Не удалось сохранить", ScarnaToastSeverity.Error)'>Error</ScarnaButton>
+    </DocSection>
+
+    <DocApiTable Title="Члены IToastManager" Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string ExampleCode =
+        """
+        @inject IToastManager ToastManager
+
+        <ScarnaButton OnClick="Save">Сохранить</ScarnaButton>
+
+        @code {
+            private void Save()
+            {
+                ToastManager.Add("Изменения сохранены", ScarnaToastSeverity.Success);
+            }
+        }
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Toasts", "IReadOnlyList<ScarnaToast>", "—", "Текущая очередь показанных уведомлений"),
+        new("OnChange", "event", "—", "Событие при добавлении/удалении любого тоста"),
+        new("Add(message, severity, duration?)", "void", "—", "Добавить уведомление. severity по умолчанию Info"),
+        new("Remove(id)", "void", "—", "Убрать уведомление раньше срока"),
+    };
+}

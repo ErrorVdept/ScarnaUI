@@ -1,0 +1,84 @@
+@page "/componentlib/list"
+
+<DocPage Title="ScarnaList" Lead="Список с опциональным выбором — SelectionMode.None (просто кликабельные пункты), .Single или .Multiple."
+         Files="@(new[] { "Components/DataDisplay/ScarnaList.razor", "Components/DataDisplay/ScarnaListItem.razor", "Components/DataDisplay/ScarnaListEnums.cs" })">
+
+    <DocSection Title="Single" Description="@@bind-Value — один выбранный пункт." Row="false" Code="@SingleCode">
+        <ScarnaList SelectionMode="ScarnaListSelectionMode.Single" @bind-Value="_selected" Bordered="true">
+            <ScarnaListItem Value="@("inbox")">Входящие</ScarnaListItem>
+            <ScarnaListItem Value="@("sent")">Отправленные</ScarnaListItem>
+            <ScarnaListItem Value="@("trash")">Корзина</ScarnaListItem>
+        </ScarnaList>
+        <span class="text-sm text-foreground/60">Выбрано: @(_selected ?? "—")</span>
+    </DocSection>
+
+    <DocSection Title="Multiple" Description="@@bind-SelectedValues — несколько выбранных пунктов." Row="false" Code="@MultipleCode">
+        <ScarnaList SelectionMode="ScarnaListSelectionMode.Multiple" @bind-SelectedValues="_selectedFruits" Bordered="true">
+            <ScarnaListItem Value="@("apple")">Яблоко</ScarnaListItem>
+            <ScarnaListItem Value="@("banana")">Банан</ScarnaListItem>
+            <ScarnaListItem Value="@("cherry")">Вишня</ScarnaListItem>
+        </ScarnaList>
+        <span class="text-sm text-foreground/60">Выбрано: @string.Join(", ", _selectedFruits)</span>
+    </DocSection>
+
+    <DocSection Title="None — просто кликабельный список" Description="TValue указывается явно, т.к. ни Value, ни SelectedValues не заданы." Row="false" Code="@NoneCode">
+        <ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None" Bordered="true">
+            <ScarnaListItem Value="@("home")" OnClick='() => _lastClicked = "Главная"'>Главная</ScarnaListItem>
+            <ScarnaListItem Value="@("orders")" OnClick='() => _lastClicked = "Заказы"'>Заказы</ScarnaListItem>
+            <ScarnaListItem Value="@("settings")" OnClick='() => _lastClicked = "Настройки"'>Настройки</ScarnaListItem>
+        </ScarnaList>
+        <span class="text-sm text-foreground/60">Последний клик: @(_lastClicked ?? "—")</span>
+    </DocSection>
+
+    <DocApiTable Rows="@_listRows" />
+    <DocApiTable Title="Параметры ScarnaListItem" Rows="@_itemRows" />
+
+</DocPage>
+
+@code {
+    private string? _selected = "inbox";
+    private IReadOnlyCollection<string> _selectedFruits = new List<string> { "banana" };
+    private string? _lastClicked;
+
+    private const string SingleCode =
+        """
+        <ScarnaList SelectionMode="ScarnaListSelectionMode.Single" @bind-Value="_selected">
+            <ScarnaListItem Value="@("inbox")">Входящие</ScarnaListItem>
+            <ScarnaListItem Value="@("sent")">Отправленные</ScarnaListItem>
+        </ScarnaList>
+        """;
+
+    private const string MultipleCode =
+        """
+        <ScarnaList SelectionMode="ScarnaListSelectionMode.Multiple" @bind-SelectedValues="_selectedFruits">
+            <ScarnaListItem Value="@("apple")">Яблоко</ScarnaListItem>
+            <ScarnaListItem Value="@("banana")">Банан</ScarnaListItem>
+        </ScarnaList>
+        """;
+
+    private const string NoneCode =
+        """
+        <ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None">
+            <ScarnaListItem Value="@("home")" OnClick="GoHome">Главная</ScarnaListItem>
+        </ScarnaList>
+        """;
+
+    private readonly List<DocApiRow> _listRows = new()
+    {
+        new("SelectionMode", "ScarnaListSelectionMode", "None", "None/Single/Multiple"),
+        new("Value / ValueChanged", "TValue? / ...", "—", "Выбранное значение при Single"),
+        new("SelectedValues / SelectedValuesChanged", "IReadOnlyCollection<TValue>? / ...", "—", "Выбранные значения при Multiple"),
+        new("Bordered", "bool", "false", "Обводка списка"),
+        new("Density", "ScarnaDensity", "Normal", "Зарезервировано для компактного режима"),
+        new("ChildContent", "RenderFragment?", "—", "Набор ScarnaListItem"),
+    };
+
+    private readonly List<DocApiRow> _itemRows = new()
+    {
+        new("Value", "TValue", "—", "Обязательный. Значение пункта"),
+        new("StartContent", "RenderFragment?", "—", "Иконка/аватар перед текстом"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое пункта"),
+        new("Disabled", "bool", "false", "—"),
+        new("OnClick", "EventCallback", "—", "Доп. обработчик клика — вызывается при любом SelectionMode, в т.ч. None"),
+    };
+}

@@ -1,0 +1,71 @@
+@*
+    Простая поверхность — фон content1, скругление, опциональные рамка/тень.
+    Почти как ScarnaCard, но без секций Header/Footer — один произвольный
+    ChildContent (аналог MudPaper). Дополнительно умеет:
+     - Hovered: смена фона (bg-content2) при наведении — без смещения/тени, чтобы
+       не "прыгало" в плотных сетках плиток;
+     - OnClick: если задан, поверхность становится кликабельной (role="button",
+       клавиатура — Enter/Space) и по клику вызывает обработчик; если не задан —
+       обычный статичный контейнер, как ScarnaCard.
+
+    <ScarnaPaper>Обычная поверхность</ScarnaPaper>
+    <ScarnaPaper Hovered="true" OnClick="() => Selected = true">Кликабельная карточка</ScarnaPaper>
+*@
+@namespace ScarnaUI.Components.DataDisplay
+@inherits ScarnaComponentBase
+
+<div class="@Classes" style="@Style"
+     role="@(IsClickable ? "button" : null)"
+     tabindex="@(IsClickable ? "0" : null)"
+     @onclick="HandleClickAsync"
+     @onkeydown="HandleKeyDownAsync"
+     @attributes="UserAttributes">
+    @ChildContent
+</div>
+
+@code {
+    /// <summary>Рисовать ли тонкую рамку (в дополнение к тени).</summary>
+    [Parameter] public bool Bordered { get; set; }
+
+    /// <summary>Тень под поверхностью.</summary>
+    [Parameter] public bool Shadow { get; set; } = true;
+
+    /// <summary>Смена фона при наведении (без смещения/тени) — для кликабельных/интерактивных поверхностей.</summary>
+    [Parameter] public bool Hovered { get; set; }
+
+    [Parameter] public ScarnaRadius Radius { get; set; } = ScarnaRadius.Medium;
+
+    /// <summary>Если задан — поверхность становится кликабельной (курсор, role="button", Enter/Space). Не задан — обычный статичный контейнер.</summary>
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private bool IsClickable => OnClick.HasDelegate;
+
+    private async Task HandleClickAsync(MouseEventArgs args)
+    {
+        if (IsClickable)
+        {
+            await OnClick.InvokeAsync(args);
+        }
+    }
+
+    // role="button" делает поверхность доступной с клавиатуры — но, в отличие от
+    // настоящего <button>, div сам не реагирует на Enter/Space, это надо сделать вручную.
+    private async Task HandleKeyDownAsync(KeyboardEventArgs args)
+    {
+        if (IsClickable && args.Key is "Enter" or " ")
+        {
+            await OnClick.InvokeAsync(new MouseEventArgs());
+        }
+    }
+
+    private string Classes => CssBuilder.Default("scarna-paper bg-content1 text-foreground p-5 transition-colors duration-150")
+        .AddClass(ScarnaColorVariantClasses.Radius(Radius))
+        .AddClass("border border-divider", Bordered)
+        .AddClass("shadow-md", Shadow)
+        .AddClass("hover:bg-content2", Hovered)
+        .AddClass("cursor-pointer select-none active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus", IsClickable)
+        .AddClass(Class)
+        .ToString();
+}

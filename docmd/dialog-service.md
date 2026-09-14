@@ -1,13 +1,13 @@
-# Диалоги: INorthDialogService, NorthDialogProvider, NorthDialog
+# Диалоги: IScarnaDialogService, ScarnaDialogProvider, ScarnaDialog
 
 ## Файлы
-- `src/NorthUI/NorthUI/Services/INorthDialogService.cs`
-- `src/NorthUI/NorthUI/Services/NorthDialogService.cs` — реализация (internal)
-- `src/NorthUI/NorthUI/Services/NorthDialogModels.cs` — `NorthDialogOptions`, `NorthDialogResult`, `NorthDialogReference`, `NorthDialogSize`
-- `src/NorthUI/NorthUI/Components/Overlays/NorthDialogProvider.razor` — портал
-- `src/NorthUI/NorthUI/Components/Overlays/NorthDialogHost.razor` + `.razor.cs` — подложка + панель одного диалога (внутренний, напрямую не используется)
-- `src/NorthUI/NorthUI/Components/Overlays/NorthDialog.razor` — "скелет" содержимого диалога (заголовок/тело/действия)
-- `src/NorthUI/NorthUI/wwwroot/js/north/dialog.js` — focus trap, Escape, блокировка скролла страницы
+- `src/ScarnaUI/ScarnaUI/Services/IScarnaDialogService.cs`
+- `src/ScarnaUI/ScarnaUI/Services/ScarnaDialogService.cs` — реализация (internal)
+- `src/ScarnaUI/ScarnaUI/Services/ScarnaDialogModels.cs` — `ScarnaDialogOptions`, `ScarnaDialogResult`, `ScarnaDialogReference`, `ScarnaDialogSize`
+- `src/ScarnaUI/ScarnaUI/Components/Overlays/ScarnaDialogProvider.razor` — портал
+- `src/ScarnaUI/ScarnaUI/Components/Overlays/ScarnaDialogHost.razor` + `.razor.cs` — подложка + панель одного диалога (внутренний, напрямую не используется)
+- `src/ScarnaUI/ScarnaUI/Components/Overlays/ScarnaDialog.razor` — "скелет" содержимого диалога (заголовок/тело/действия)
+- `src/ScarnaUI/ScarnaUI/wwwroot/js/scarna/dialog.js` — focus trap, Escape, блокировка скролла страницы
 
 ## Принцип работы
 
@@ -15,51 +15,51 @@
 Открывает модалку поверх всего приложения без ручного `bool _isOpen` в каждом месте
 использования.
 
-1. Разместите `<NorthDialogProvider />` один раз в layout (см.
+1. Разместите `<ScarnaDialogProvider />` один раз в layout (см.
    [getting-started.md](getting-started.md)).
-2. Заинжектьте `INorthDialogService` в любой компонент и вызовите
+2. Заинжектьте `IScarnaDialogService` в любой компонент и вызовите
    `ShowAsync<TComponent>(...)`, передав тип **своего** компонента с содержимым диалога.
-3. `NorthDialogService` держит список открытых диалогов (`NorthDialogReference`) и
-   уведомляет `NorthDialogProvider` о любом изменении; провайдер рендерит по одному
-   `NorthDialogHost` на каждый открытый диалог — тот рисует подложку, панель нужного
+3. `ScarnaDialogService` держит список открытых диалогов (`ScarnaDialogReference`) и
+   уведомляет `ScarnaDialogProvider` о любом изменении; провайдер рендерит по одному
+   `ScarnaDialogHost` на каждый открытый диалог — тот рисует подложку, панель нужного
    размера и монтирует внутрь ваш компонент через `<DynamicComponent>`, попутно
    включая JS-focus-trap (`dialog.js`) и блокировку скролла страницы.
-4. Внутри своего компонента-содержимого получите `NorthDialogReference` через
+4. Внутри своего компонента-содержимого получите `ScarnaDialogReference` через
    `[CascadingParameter]` и вызовите `.Close(result)`, когда пользователь подтвердил
-   или отменил действие. `ShowAsync` вернёт `Task<NorthDialogResult>`, который
+   или отменил действие. `ShowAsync` вернёт `Task<ScarnaDialogResult>`, который
    завершается именно в этот момент — так вызывающий код может дождаться результата.
 
 ## Пример: свой диалог
 
 ```razor
 @* Components/Dialogs/ConfirmDeleteDialog.razor *@
-<NorthDialog Title="Удалить файл?">
+<ScarnaDialog Title="Удалить файл?">
     <DialogContent>Это действие необратимо.</DialogContent>
     <DialogActions>
-        <NorthButton Variant="NorthVariant.Light" OnClick="Cancel">Отмена</NorthButton>
-        <NorthButton Color="NorthColor.Danger" OnClick="Confirm">Удалить</NorthButton>
+        <ScarnaButton Variant="ScarnaVariant.Light" OnClick="Cancel">Отмена</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Danger" OnClick="Confirm">Удалить</ScarnaButton>
     </DialogActions>
-</NorthDialog>
+</ScarnaDialog>
 
 @code {
-    [CascadingParameter] private NorthDialogReference DialogReference { get; set; } = default!;
-    private void Cancel() => DialogReference.Close(NorthDialogResult.Cancel());
-    private void Confirm() => DialogReference.Close(NorthDialogResult.Ok());
+    [CascadingParameter] private ScarnaDialogReference DialogReference { get; set; } = default!;
+    private void Cancel() => DialogReference.Close(ScarnaDialogResult.Cancel());
+    private void Confirm() => DialogReference.Close(ScarnaDialogResult.Ok());
 }
 ```
 
 ## Пример: вызов из кода
 
 ```razor
-@inject INorthDialogService DialogService
+@inject IScarnaDialogService DialogService
 
-<NorthButton Color="NorthColor.Danger" OnClick="DeleteAsync">Удалить</NorthButton>
+<ScarnaButton Color="ScarnaColor.Danger" OnClick="DeleteAsync">Удалить</ScarnaButton>
 
 @code {
     private async Task DeleteAsync()
     {
         var result = await DialogService.ShowAsync<ConfirmDeleteDialog>(
-            new NorthDialogOptions { Size = NorthDialogSize.Small });
+            new ScarnaDialogOptions { Size = ScarnaDialogSize.Small });
 
         if (!result.Cancelled)
         {
@@ -76,31 +76,31 @@ await DialogService.ShowAsync<EditUserDialog>(
     new Dictionary<string, object?> { ["UserId"] = user.Id });
 ```
 
-## INorthDialogService
+## IScarnaDialogService
 
 | Метод | Назначение |
 |---|---|
-| `ShowAsync<TComponent>(NorthDialogOptions?)` | Показать диалог без параметров |
-| `ShowAsync<TComponent>(IReadOnlyDictionary<string, object?>, NorthDialogOptions?)` | Показать диалог с параметрами компонента |
+| `ShowAsync<TComponent>(ScarnaDialogOptions?)` | Показать диалог без параметров |
+| `ShowAsync<TComponent>(IReadOnlyDictionary<string, object?>, ScarnaDialogOptions?)` | Показать диалог с параметрами компонента |
 | `ShowAsync(Type, ...)` | Нетипизированная версия (тип компонента известен в рантайме) |
-| `Close(NorthDialogReference, NorthDialogResult?)` | Принудительно закрыть диалог снаружи |
+| `Close(ScarnaDialogReference, ScarnaDialogResult?)` | Принудительно закрыть диалог снаружи |
 
-## NorthDialogOptions
+## ScarnaDialogOptions
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
 | `Title` | `string?` | — | Используется, только если ваш компонент не рисует собственный заголовок |
-| `Size` | `NorthDialogSize` | `Medium` | `Small`/`Medium`/`Large`/`FullScreen` |
+| `Size` | `ScarnaDialogSize` | `Medium` | `Small`/`Medium`/`Large`/`FullScreen` |
 | `CloseOnEscapeKey` | `bool` | `true` | Закрывать по Escape (результат — `Cancel()`) |
 | `CloseOnBackdropClick` | `bool` | `true` | Закрывать по клику на подложку |
 
-## NorthDialogResult
+## ScarnaDialogResult
 
-`NorthDialogResult.Ok(data?)` / `NorthDialogResult.Cancel()`. `Cancelled` — булево
+`ScarnaDialogResult.Ok(data?)` / `ScarnaDialogResult.Cancel()`. `Cancelled` — булево
 поле ("закрыт без подтверждения"), `Data`/`DataAs<T>()` — произвольные данные,
 переданные из диалога.
 
-## NorthDialog (готовый "скелет" содержимого)
+## ScarnaDialog (готовый "скелет" содержимого)
 
 | Параметр | Тип | Назначение |
 |---|---|---|

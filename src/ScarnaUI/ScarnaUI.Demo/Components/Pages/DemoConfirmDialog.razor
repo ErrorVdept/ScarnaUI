@@ -1,0 +1,19 @@
+@* Пример компонента-содержимого для IScarnaDialogService.ShowAsync<DemoConfirmDialog>(). *@
+
+<ScarnaDialog Title="Удалить элемент?">
+    <DialogContent>
+        Это действие необратимо. Элемент будет удалён без возможности восстановления.
+    </DialogContent>
+    <DialogActions>
+        <ScarnaButton Variant="ScarnaVariant.Light" OnClick="Cancel">Отмена</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Danger" OnClick="Confirm">Удалить</ScarnaButton>
+    </DialogActions>
+</ScarnaDialog>
+
+@code {
+    [CascadingParameter] private ScarnaDialogReference DialogReference { get; set; } = default!;
+
+    private void Cancel() => DialogReference.Close(ScarnaDialogResult.Cancel());
+
+    private void Confirm() => DialogReference.Close(ScarnaDialogResult.Ok());
+}

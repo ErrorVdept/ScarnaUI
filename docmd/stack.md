@@ -1,8 +1,8 @@
-# NorthStack
+# ScarnaStack
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/Layout/NorthStack.razor`
-- `src/NorthUI/NorthUI/Components/Layout/NorthLayoutEnums.cs` (`NorthJustify`, `NorthAlign`)
+- `src/ScarnaUI/ScarnaUI/Components/Layout/ScarnaStack.razor`
+- `src/ScarnaUI/ScarnaUI/Components/Layout/ScarnaLayoutEnums.cs` (`ScarnaJustify`, `ScarnaAlign`)
 
 ## Описание
 
@@ -12,10 +12,10 @@ Flex-контейнер для расстановки дочерних элем�
 ## Пример использования
 
 ```razor
-<NorthStack Row="true" Spacing="3" Justify="NorthJustify.SpaceBetween" Align="NorthAlign.Center">
+<ScarnaStack Row="true" Spacing="3" Justify="ScarnaJustify.SpaceBetween" Align="ScarnaAlign.Center">
     <span>Итого: 1 200 ₽</span>
-    <NorthButton Color="NorthColor.Primary">Оформить</NorthButton>
-</NorthStack>
+    <ScarnaButton Color="ScarnaColor.Primary">Оформить</ScarnaButton>
+</ScarnaStack>
 ```
 
 ## Параметры
@@ -25,6 +25,6 @@ Flex-контейнер для расстановки дочерних элем�
 | `Row` | `bool` | `false` | `true` — flex-row, `false` — flex-column |
 | `Spacing` | `int` | `2` | Отступ между элементами в шагах по 0.25rem (2 = 0.5rem) |
 | `Wrap` | `bool` | `false` | Перенос элементов при нехватке места |
-| `Justify` | `NorthJustify` | `Start` | `Start` / `End` / `Center` / `SpaceBetween` / `SpaceAround` / `SpaceEvenly` (набор как у Justify в MudBlazor) |
-| `Align` | `NorthAlign` | `Stretch` | `Start` / `End` / `Center` / `Stretch` / `Baseline` (набор как у AlignItems в MudBlazor) |
+| `Justify` | `ScarnaJustify` | `Start` | `Start` / `End` / `Center` / `SpaceBetween` / `SpaceAround` / `SpaceEvenly` (набор как у Justify в MudBlazor) |
+| `Align` | `ScarnaAlign` | `Stretch` | `Start` / `End` / `Center` / `Stretch` / `Baseline` (набор как у AlignItems в MudBlazor) |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

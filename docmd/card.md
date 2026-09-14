@@ -1,7 +1,7 @@
-# NorthCard
+# ScarnaCard
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthCard.razor`
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaCard.razor`
 
 ## Описание
 
@@ -11,17 +11,17 @@
 ## Пример использования
 
 ```razor
-<NorthCard>
+<ScarnaCard>
     <HeaderContent><span class="font-semibold">Заказ #1234</span></HeaderContent>
     Товар: Кроссовки, размер 42. Статус: в пути.
-    <FooterContent><NorthButton Size="NorthSize.Small">Подробнее</NorthButton></FooterContent>
-</NorthCard>
+    <FooterContent><ScarnaButton Size="ScarnaSize.Small">Подробнее</ScarnaButton></FooterContent>
+</ScarnaCard>
 ```
 
 > Если контента для заголовка/подвала нет, просто не указывайте `HeaderContent`/
-> `FooterContent` — тогда всё содержимое `NorthCard` должно идти как обычный дочерний
+> `FooterContent` — тогда всё содержимое `ScarnaCard` должно идти как обычный дочерний
 > контент, без отдельных именованных тегов рядом (см. пример на странице `/` в
-> `NorthUI.Demo`).
+> `ScarnaUI.Demo`).
 
 ## Параметры
 
@@ -29,7 +29,7 @@
 |---|---|---|---|
 | `Bordered` | `bool` | `false` | Тонкая рамка в дополнение к тени |
 | `Shadow` | `bool` | `true` | Тень под карточкой |
-| `Radius` | `NorthRadius` | `Large` | Радиус скругления |
+| `Radius` | `ScarnaRadius` | `Large` | Радиус скругления |
 | `HeaderContent` | `RenderFragment?` | — | Заголовок (с разделителем снизу) |
 | `FooterContent` | `RenderFragment?` | — | Подвал (с разделителем сверху) |
 | `ChildContent` | `RenderFragment?` | — | Основное содержимое |

@@ -1,0 +1,103 @@
+@page "/componentlib/button"
+
+<DocPage Title="ScarnaButton" Lead="Кнопка с цветами, вариантами заливки, размерами и анимацией нажатия."
+         Files="@(new[] { "Components/Actions/ScarnaButton.razor" })">
+
+    <DocSection Title="Цвета" Code="@ColorsCode">
+        <ScarnaButton Color="ScarnaColor.Default">Default</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Primary">Primary</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Secondary">Secondary</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Success">Success</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Warning">Warning</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Danger">Danger</ScarnaButton>
+    </DocSection>
+
+    <DocSection Title="Варианты заливки" Code="@VariantsCode">
+        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid">Solid</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Flat">Flat</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Bordered">Bordered</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Light">Light</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Faded">Faded</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Shadow">Shadow</ScarnaButton>
+    </DocSection>
+
+    <DocSection Title="Размеры, Loading, Disabled" Code="@StatesCode">
+        <ScarnaButton Size="ScarnaSize.Small">Small</ScarnaButton>
+        <ScarnaButton Size="ScarnaSize.Medium">Medium</ScarnaButton>
+        <ScarnaButton Size="ScarnaSize.Large">Large</ScarnaButton>
+        <ScarnaButton Loading="true">Loading</ScarnaButton>
+        <ScarnaButton Disabled="true">Disabled</ScarnaButton>
+    </DocSection>
+
+    <DocSection Title="Клик" Description="OnClick — обычный EventCallback." Code="@ClickCode">
+        <ScarnaButton Color="ScarnaColor.Success" OnClick="HandleClick">Нажми меня</ScarnaButton>
+        <span class="text-sm text-foreground/60">Кликов: @_clicks</span>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private int _clicks;
+
+    private void HandleClick() => _clicks++;
+
+    private const string ColorsCode =
+        """
+        <ScarnaButton Color="ScarnaColor.Default">Default</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Primary">Primary</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Secondary">Secondary</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Success">Success</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Warning">Warning</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Danger">Danger</ScarnaButton>
+        """;
+
+    private const string VariantsCode =
+        """
+        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid">Solid</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Flat">Flat</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Bordered">Bordered</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Light">Light</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Faded">Faded</ScarnaButton>
+        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Shadow">Shadow</ScarnaButton>
+        """;
+
+    private const string StatesCode =
+        """
+        <ScarnaButton Size="ScarnaSize.Small">Small</ScarnaButton>
+        <ScarnaButton Size="ScarnaSize.Medium">Medium</ScarnaButton>
+        <ScarnaButton Size="ScarnaSize.Large">Large</ScarnaButton>
+        <ScarnaButton Loading="true">Loading</ScarnaButton>
+        <ScarnaButton Disabled="true">Disabled</ScarnaButton>
+        """;
+
+    private const string ClickCode =
+        """
+        <ScarnaButton Color="ScarnaColor.Success" OnClick="HandleClick">Нажми меня</ScarnaButton>
+
+        @code {
+            private int _clicks;
+            private void HandleClick() => _clicks++;
+        }
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Color", "ScarnaColor", "Default", "Семантический цвет заливки"),
+        new("Variant", "ScarnaVariant", "Solid", "Solid/Flat/Bordered/Light/Faded/Shadow"),
+        new("Size", "ScarnaSize", "Medium", "Small/Medium/Large"),
+        new("Radius", "ScarnaRadius", "Medium", "Радиус скругления"),
+        new("Bordered", "bool", "false", "Доп. обводка поверх выбранного Variant"),
+        new("Disabled", "bool", "false", "—"),
+        new("Loading", "bool", "false", "Показывает спиннер вместо содержимого, блокирует клики"),
+        new("FullWidth", "bool", "false", "Растянуть на 100% ширины родителя"),
+        new("Type", "string", "\"button\"", "HTML-атрибут type"),
+        new("Href", "string?", "—", "Если задан — рендерится как <a>, иначе как <button>"),
+        new("Target", "string?", "—", "target для ссылки (вместе с Href)"),
+        new("StartIcon", "RenderFragment?", "—", "Иконка перед текстом (скрывается, пока Loading)"),
+        new("EndIcon", "RenderFragment?", "—", "Иконка после текста"),
+        new("OnClick", "EventCallback<MouseEventArgs>", "—", "Обработчик клика"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое кнопки"),
+    };
+}

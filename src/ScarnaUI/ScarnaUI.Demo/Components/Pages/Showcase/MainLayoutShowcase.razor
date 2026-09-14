@@ -1,0 +1,355 @@
+@page "/showcase/main-layout"
+
+@*
+    Проверочная страница библиотеки: "Main Layouts" с
+    https://mudblazor.com/getting-started/wireframes#main-layouts, плюс остальные
+    комбинации AppBar+Drawer, которые открылись после добавления ScarnaDrawerVariant
+    (Persistent/Mini) — только публичные параметры ScarnaNavBar/ScarnaDrawer, ничего
+    в самих компонентах не менялось сверх этого. "Custom Content"-раздел с той же
+    страницы MudBlazor не делался — не просили.
+*@
+
+<PageTitle>Showcase — Layouts</PageTitle>
+
+<ScarnaContainer MaxWidth="ScarnaContainerMaxWidth.Large">
+    <ScarnaStack Spacing="10" Class="pb-16">
+
+        <div>
+            <h1 class="text-2xl font-semibold text-foreground">Layout wireframes</h1>
+            <p class="mt-2 max-w-xl text-sm text-foreground/60">
+                Типовые компоновки страницы — как в галерее wireframe'ов MudBlazor, только
+                из компонентов ScarnaUI (<code class="rounded-scarna-sm bg-content2 px-1.5 py-0.5 text-xs">ScarnaNavBar</code> +
+                <code class="rounded-scarna-sm bg-content2 px-1.5 py-0.5 text-xs">ScarnaDrawer</code>).
+                Variant у ScarnaDrawer — Temporary/Persistent/Mini, см. <a href="/componentlib/drawer" class="text-primary hover:underline">документацию</a>.
+            </p>
+        </div>
+
+        <DocSection Title="1. Temporary drawer + top appbar" Description="Обычная связка — Drawer выезжает поверх содержимого по клику на гамбургер, с подложкой (Variant.Temporary, по умолчанию)." Row="false" Code="@TemporaryCode">
+            <div class="overflow-hidden rounded-scarna-lg border border-divider bg-content1">
+                <ScarnaNavBar Sticky="false" Color="ScarnaColor.Primary">
+                    <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
+                        <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _temporaryOpen = !_temporaryOpen">
+                            @HamburgerIcon
+                        </ScarnaButton>
+                        <span class="font-semibold">My application</span>
+                    </ScarnaStack>
+                    <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!">
+                        @KebabIcon
+                    </ScarnaButton>
+                </ScarnaNavBar>
+
+                <div class="relative flex min-h-96 overflow-hidden">
+                    <ScarnaDrawer @bind-Open="_temporaryOpen" Anchor="ScarnaDrawerAnchor.Left" Width="240px" Class="absolute!">
+                        @NavList
+                    </ScarnaDrawer>
+
+                    <main class="flex-1 p-6">
+                        <p class="text-sm text-foreground/40">Содержимое страницы — пусто нарочно, это wireframe-заготовка.</p>
+                    </main>
+                </div>
+            </div>
+        </DocSection>
+
+        <DocSection Title="2. Persistent drawer — AppBar отодвигается вместе с ним" Description="Variant.Persistent — панель реальная часть потока (flex-элемент), поэтому весь правый столбец (AppBar + контент) сам раздвигается вместе с её шириной, плавно, без подложки и без ручной синхронизации отступов." Row="false" Code="@PersistentShiftCode">
+            <div class="flex min-h-96 overflow-hidden rounded-scarna-lg border border-divider bg-content1">
+                <ScarnaDrawer @bind-Open="_persistentShiftOpen" Anchor="ScarnaDrawerAnchor.Left" Variant="ScarnaDrawerVariant.Persistent" Width="240px">
+                    @NavList
+                </ScarnaDrawer>
+
+                <div class="flex flex-1 flex-col overflow-hidden">
+                    <ScarnaNavBar Sticky="false" Color="ScarnaColor.Primary" Class="rounded-none">
+                        <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
+                            <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _persistentShiftOpen = !_persistentShiftOpen">
+                                @HamburgerIcon
+                            </ScarnaButton>
+                            <span class="font-semibold">My application</span>
+                        </ScarnaStack>
+                        <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!">
+                            @KebabIcon
+                        </ScarnaButton>
+                    </ScarnaNavBar>
+
+                    <main class="flex-1 p-6">
+                        <p class="text-sm text-foreground/40">Содержимое страницы — пусто нарочно, это wireframe-заготовка.</p>
+                    </main>
+                </div>
+            </div>
+        </DocSection>
+
+        <DocSection Title="3. Top appbar with clipped drawer" Description="AppBar на всю ширину сверху, drawer — колонка НИЖЕ него (не наезжает поверх). Variant.Persistent — то же самое, что и раньше, но теперь с плавной анимацией ширины вместо мгновенного появления/исчезновения." Row="false" Code="@ClippedCode">
+            <div class="overflow-hidden rounded-scarna-lg border border-divider bg-content1">
+                <ScarnaNavBar Sticky="false" Color="ScarnaColor.Primary">
+                    <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
+                        <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _clippedOpen = !_clippedOpen">
+                            @HamburgerIcon
+                        </ScarnaButton>
+                        <span class="font-semibold">My application</span>
+                    </ScarnaStack>
+                    <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!">
+                        @KebabIcon
+                    </ScarnaButton>
+                </ScarnaNavBar>
+
+                <div class="flex min-h-96 overflow-hidden">
+                    <ScarnaDrawer @bind-Open="_clippedOpen" Anchor="ScarnaDrawerAnchor.Left" Variant="ScarnaDrawerVariant.Persistent" Width="240px">
+                        @NavList
+                    </ScarnaDrawer>
+
+                    <main class="flex-1 p-6">
+                        <p class="text-sm text-foreground/40">Содержимое страницы — пусто нарочно, это wireframe-заготовка.</p>
+                    </main>
+                </div>
+            </div>
+        </DocSection>
+
+        <DocSection Title="4. Mini drawer" Description="Variant.Mini — не схлопывается до нуля, в закрытом состоянии остаётся узкой полосой (MiniWidth) под одни иконки, разворачивается в полную ширину по клику. Подпись — тот же span всегда в DOM, но с max-width/opacity, синхронно анимируется вместе с шириной панели, а не появляется рывком." Row="false" Code="@MiniCode">
+            <div class="flex min-h-96 overflow-hidden rounded-scarna-lg border border-divider bg-content1">
+                <ScarnaDrawer @bind-Open="_miniOpen" Anchor="ScarnaDrawerAnchor.Left" Variant="ScarnaDrawerVariant.Mini" Width="240px" MiniWidth="64px">
+                    <ScarnaStack Spacing="1" Class="p-2">
+                        @foreach (var item in _navItems)
+                        {
+                            <span class="flex items-center gap-3 rounded-scarna-sm px-3 py-2 text-sm text-foreground/70 transition-colors hover:bg-content2 hover:text-foreground">
+                                @item.Icon
+                                <span class="@(_miniOpen ? "max-w-40 opacity-100" : "max-w-0 opacity-0") overflow-hidden whitespace-nowrap transition-all duration-200">@item.Text</span>
+                            </span>
+                        }
+                    </ScarnaStack>
+                </ScarnaDrawer>
+
+                <div class="flex flex-1 flex-col overflow-hidden">
+                    <ScarnaNavBar Sticky="false" Color="ScarnaColor.Primary" Class="rounded-none">
+                        <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
+                            <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _miniOpen = !_miniOpen">
+                                @HamburgerIcon
+                            </ScarnaButton>
+                            <span class="font-semibold">My application</span>
+                        </ScarnaStack>
+                        <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!">
+                            @KebabIcon
+                        </ScarnaButton>
+                    </ScarnaNavBar>
+
+                    <main class="flex-1 p-6">
+                        <p class="text-sm text-foreground/40">Содержимое страницы — пусто нарочно, это wireframe-заготовка.</p>
+                    </main>
+                </div>
+            </div>
+        </DocSection>
+
+        <DocSection Title="5. Mini drawer под appbar" Description="Та же связка, что и в примере 3 (AppBar на всю ширину сверху, drawer — колонка ниже него, не наезжает поверх), но с Variant.Mini вместо Persistent: панель не исчезает до нуля, а остаётся узкой полосой-иконками." Row="false" Code="@MiniUnderAppbarCode">
+            <div class="overflow-hidden rounded-scarna-lg border border-divider bg-content1">
+                <ScarnaNavBar Sticky="false" Color="ScarnaColor.Primary">
+                    <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
+                        <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _miniUnderAppbarOpen = !_miniUnderAppbarOpen">
+                            @HamburgerIcon
+                        </ScarnaButton>
+                        <span class="font-semibold">My application</span>
+                    </ScarnaStack>
+                    <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!">
+                        @KebabIcon
+                    </ScarnaButton>
+                </ScarnaNavBar>
+
+                <div class="flex min-h-96 overflow-hidden">
+                    <ScarnaDrawer @bind-Open="_miniUnderAppbarOpen" Anchor="ScarnaDrawerAnchor.Left" Variant="ScarnaDrawerVariant.Mini" Width="240px" MiniWidth="64px">
+                        <ScarnaStack Spacing="1" Class="p-2">
+                            @foreach (var item in _navItems)
+                            {
+                                <span class="flex items-center gap-3 rounded-scarna-sm px-3 py-2 text-sm text-foreground/70 transition-colors hover:bg-content2 hover:text-foreground">
+                                    @item.Icon
+                                    <span class="@(_miniUnderAppbarOpen ? "max-w-40 opacity-100" : "max-w-0 opacity-0") overflow-hidden whitespace-nowrap transition-all duration-200">@item.Text</span>
+                                </span>
+                            }
+                        </ScarnaStack>
+                    </ScarnaDrawer>
+
+                    <main class="flex-1 p-6">
+                        <p class="text-sm text-foreground/40">Содержимое страницы — пусто нарочно, это wireframe-заготовка.</p>
+                    </main>
+                </div>
+            </div>
+        </DocSection>
+
+        <DocSection Title="6. Appbar Only" Description="Только верхняя панель — без drawer вообще, самый простой каркас." Row="false" Code="@AppbarOnlyCode">
+            <div class="overflow-hidden rounded-scarna-lg border border-divider bg-content1">
+                <ScarnaNavBar Sticky="false" Color="ScarnaColor.Primary">
+                    <span class="font-semibold">My application</span>
+                    <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!">
+                        @KebabIcon
+                    </ScarnaButton>
+                </ScarnaNavBar>
+
+                <main class="min-h-96 p-6">
+                    <p class="text-sm text-foreground/40">Содержимое страницы — пусто нарочно, это wireframe-заготовка.</p>
+                </main>
+            </div>
+        </DocSection>
+
+    </ScarnaStack>
+</ScarnaContainer>
+
+@code {
+    // Temporary — заведомо закрыт при загрузке: у этого варианта подложка —
+    // position:fixed на весь экран (см. docmd/drawer.md), не только на область
+    // карточки-wireframe'а. Открытым по умолчанию она бы сразу затемняла всю
+    // страницу вокруг маленькой демо-карточки.
+    private bool _temporaryOpen;
+
+    // Persistent/Mini подложку не рисуют вообще — открытыми по умолчанию безопасны
+    // и сразу показывают более интересное (развёрнутое) состояние примера.
+    private bool _persistentShiftOpen = true;
+    private bool _clippedOpen = true;
+    private bool _miniOpen;
+    private bool _miniUnderAppbarOpen;
+
+    private sealed record NavItem(string Text, RenderFragment Icon);
+
+    private RenderFragment HamburgerIcon =>
+        @<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>;
+
+    private RenderFragment KebabIcon =>
+        @<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" /></svg>;
+
+    private RenderFragment NavList =>
+        @<div>
+            <div class="border-b border-divider px-4 py-3 font-semibold">Application</div>
+            <ScarnaStack Spacing="1" Class="p-2">
+                @foreach (var item in _navItems)
+                {
+                    <span class="flex items-center gap-3 rounded-scarna-sm px-3 py-2 text-sm text-foreground/70 transition-colors hover:bg-content2 hover:text-foreground">
+                        @item.Icon
+                        @item.Text
+                    </span>
+                }
+            </ScarnaStack>
+        </div>;
+
+    private NavItem[] _navItems =>
+    [
+        new("Dashboard", @<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></svg>),
+        new("Orders", @<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>),
+        new("Settings", @<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>),
+    ];
+
+    private const string TemporaryCode =
+        """
+        <div class="relative flex min-h-96 overflow-hidden">
+            <ScarnaNavBar Color="ScarnaColor.Primary">
+                <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
+                <span>My application</span>
+            </ScarnaNavBar>
+
+            <ScarnaDrawer @bind-Open="_open" Anchor="ScarnaDrawerAnchor.Left" Width="240px">
+                <!-- пункты меню -->
+            </ScarnaDrawer>
+
+            <main>...</main>
+        </div>
+        """;
+
+    private const string PersistentShiftCode =
+        """
+        <div class="flex min-h-96 overflow-hidden">
+            <ScarnaDrawer @bind-Open="_open" Anchor="ScarnaDrawerAnchor.Left"
+                         Variant="ScarnaDrawerVariant.Persistent" Width="240px">
+                <!-- пункты меню -->
+            </ScarnaDrawer>
+
+            <div class="flex flex-1 flex-col overflow-hidden">
+                <ScarnaNavBar Color="ScarnaColor.Primary">
+                    <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
+                    <span>My application</span>
+                </ScarnaNavBar>
+
+                <main>...</main>
+            </div>
+        </div>
+        """;
+
+    private const string ClippedCode =
+        """
+        <ScarnaNavBar Color="ScarnaColor.Primary">
+            <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
+            <span>My application</span>
+        </ScarnaNavBar>
+
+        <div class="flex min-h-96 overflow-hidden">
+            <ScarnaDrawer @bind-Open="_open" Anchor="ScarnaDrawerAnchor.Left"
+                         Variant="ScarnaDrawerVariant.Persistent" Width="240px">
+                <!-- пункты меню -->
+            </ScarnaDrawer>
+
+            <main class="flex-1">...</main>
+        </div>
+        """;
+
+    private const string MiniCode =
+        """
+        <div class="flex min-h-96 overflow-hidden">
+            <ScarnaDrawer @bind-Open="_open" Anchor="ScarnaDrawerAnchor.Left"
+                         Variant="ScarnaDrawerVariant.Mini" Width="240px" MiniWidth="64px">
+                @foreach (var item in NavItems)
+                {
+                    <span>
+                        @item.Icon
+                        @* Подпись всегда в DOM — max-w-0/opacity-0 → max-w-40/opacity-100,
+                           transition-all той же длительности, что и у ширины панели.
+                           Иначе резкое появление/исчезновение текста через @if смотрится
+                           как "прыжок" элементов, не синхронный с анимацией ширины. *@
+                        <span class="@(_open ? "max-w-40 opacity-100" : "max-w-0 opacity-0") overflow-hidden whitespace-nowrap transition-all duration-200">
+                            @item.Text
+                        </span>
+                    </span>
+                }
+            </ScarnaDrawer>
+
+            <div class="flex flex-1 flex-col overflow-hidden">
+                <ScarnaNavBar Color="ScarnaColor.Primary">
+                    <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
+                    <span>My application</span>
+                </ScarnaNavBar>
+
+                <main>...</main>
+            </div>
+        </div>
+        """;
+
+    private const string MiniUnderAppbarCode =
+        """
+        <ScarnaNavBar Color="ScarnaColor.Primary">
+            <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
+            <span>My application</span>
+        </ScarnaNavBar>
+
+        <div class="flex min-h-96 overflow-hidden">
+            <ScarnaDrawer @bind-Open="_open" Anchor="ScarnaDrawerAnchor.Left"
+                         Variant="ScarnaDrawerVariant.Mini" Width="240px" MiniWidth="64px">
+                @foreach (var item in NavItems)
+                {
+                    <span>
+                        @item.Icon
+                        @* Подпись всегда в DOM — max-w-0/opacity-0 → max-w-40/opacity-100,
+                           transition-all той же длительности, что и у ширины панели.
+                           Иначе резкое появление/исчезновение текста через @if смотрится
+                           как "прыжок" элементов, не синхронный с анимацией ширины. *@
+                        <span class="@(_open ? "max-w-40 opacity-100" : "max-w-0 opacity-0") overflow-hidden whitespace-nowrap transition-all duration-200">
+                            @item.Text
+                        </span>
+                    </span>
+                }
+            </ScarnaDrawer>
+
+            <main class="flex-1">...</main>
+        </div>
+        """;
+
+    private const string AppbarOnlyCode =
+        """
+        <ScarnaNavBar Color="ScarnaColor.Primary">
+            <span>My application</span>
+            <ScarnaButton><!-- kebab --></ScarnaButton>
+        </ScarnaNavBar>
+
+        <main>...</main>
+        """;
+}

@@ -1,0 +1,57 @@
+@page "/componentlib/toggle-button"
+
+<DocPage Title="ScarnaToggleButton" Lead="Кнопка-переключатель — как чекбокс (bool), но выглядит как обычная кнопка в нажатом/ненажатом состоянии."
+         Files="@(new[] { "Components/Actions/ScarnaToggleButton.razor" })">
+
+    <DocSection Title="Группа переключателей" Description="Каждая кнопка держит своё bool-значение независимо — типичный сценарий: панель форматирования текста." Code="@GroupCode">
+        <ScarnaToggleButton @bind-Value="_bold">Ж</ScarnaToggleButton>
+        <ScarnaToggleButton @bind-Value="_italic">К</ScarnaToggleButton>
+        <ScarnaToggleButton @bind-Value="_underline">Ч</ScarnaToggleButton>
+    </DocSection>
+
+    <DocSection Title="Цвета и Disabled" Code="@ColorsCode">
+        <ScarnaToggleButton Value="true" Color="ScarnaColor.Success">Success</ScarnaToggleButton>
+        <ScarnaToggleButton Value="true" Color="ScarnaColor.Danger">Danger</ScarnaToggleButton>
+        <ScarnaToggleButton Value="true" Disabled="true">Disabled</ScarnaToggleButton>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private bool _bold = true;
+    private bool _italic;
+    private bool _underline;
+
+    private const string GroupCode =
+        """
+        <ScarnaToggleButton @bind-Value="_bold">Ж</ScarnaToggleButton>
+        <ScarnaToggleButton @bind-Value="_italic">К</ScarnaToggleButton>
+        <ScarnaToggleButton @bind-Value="_underline">Ч</ScarnaToggleButton>
+
+        @code {
+            private bool _bold = true;
+            private bool _italic;
+            private bool _underline;
+        }
+        """;
+
+    private const string ColorsCode =
+        """
+        <ScarnaToggleButton Value="true" Color="ScarnaColor.Success">Success</ScarnaToggleButton>
+        <ScarnaToggleButton Value="true" Color="ScarnaColor.Danger">Danger</ScarnaToggleButton>
+        <ScarnaToggleButton Value="true" Disabled="true">Disabled</ScarnaToggleButton>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Value / ValueChanged / ValueExpression", "bool / ...", "false", "Механика @bind-Value"),
+        new("Color", "ScarnaColor", "Primary", "Цвет заливки во включённом состоянии"),
+        new("Size", "ScarnaSize", "Medium", "Small/Medium/Large"),
+        new("Radius", "ScarnaRadius", "Medium", "Радиус скругления"),
+        new("Bordered", "bool", "true", "Обводка в невключённом состоянии"),
+        new("Disabled", "bool", "false", "—"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое кнопки"),
+    };
+}

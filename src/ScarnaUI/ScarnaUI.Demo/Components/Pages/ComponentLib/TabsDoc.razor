@@ -1,0 +1,73 @@
+@page "/componentlib/tabs"
+
+<DocPage Title="ScarnaTabs" Lead="Вкладки с pill-фоном под активной вкладкой — заливка, а не подчёркивание."
+         Files="@(new[] { "Components/Navigation/ScarnaTabs.razor", "Components/Navigation/ScarnaTabPanel.razor" })">
+
+    <DocSection Title="Пример" Code="@ExampleCode" Row="false">
+        <ScarnaTabs @bind-SelectedIndex="_tab">
+            <ScarnaTabPanel Text="Профиль">
+                <p class="text-sm text-foreground/70">Содержимое вкладки «Профиль».</p>
+            </ScarnaTabPanel>
+            <ScarnaTabPanel Text="Настройки">
+                <p class="text-sm text-foreground/70">Содержимое вкладки «Настройки».</p>
+            </ScarnaTabPanel>
+            <ScarnaTabPanel Text="Безопасность">
+                <p class="text-sm text-foreground/70">Содержимое вкладки «Безопасность».</p>
+            </ScarnaTabPanel>
+        </ScarnaTabs>
+    </DocSection>
+
+    <DocSection Title="FullWidth" Description="Растягивает заголовки на всю ширину дорожки поровну." Code="@FullWidthCode" Row="false">
+        <ScarnaTabs @bind-SelectedIndex="_tab2" FullWidth="true">
+            <ScarnaTabPanel Text="Один">1</ScarnaTabPanel>
+            <ScarnaTabPanel Text="Два">2</ScarnaTabPanel>
+        </ScarnaTabs>
+    </DocSection>
+
+    <DocApiTable Title="Параметры ScarnaTabs" Rows="@_tabsRows" />
+    <DocApiTable Title="Параметры ScarnaTabPanel" Rows="@_panelRows" />
+
+</DocPage>
+
+@code {
+    private int _tab;
+    private int _tab2;
+
+    private const string ExampleCode =
+        """
+        <ScarnaTabs @bind-SelectedIndex="_tab">
+            <ScarnaTabPanel Text="Профиль">
+                <ProfileForm />
+            </ScarnaTabPanel>
+            <ScarnaTabPanel Text="Настройки">
+                <SettingsForm />
+            </ScarnaTabPanel>
+        </ScarnaTabs>
+
+        @code {
+            private int _tab;
+        }
+        """;
+
+    private const string FullWidthCode =
+        """
+        <ScarnaTabs @bind-SelectedIndex="_tab" FullWidth="true">
+            <ScarnaTabPanel Text="Один">1</ScarnaTabPanel>
+            <ScarnaTabPanel Text="Два">2</ScarnaTabPanel>
+        </ScarnaTabs>
+        """;
+
+    private readonly List<DocApiRow> _tabsRows = new()
+    {
+        new("SelectedIndex", "int", "0", "Индекс активной вкладки, поддерживает @bind-SelectedIndex"),
+        new("Justify", "ScarnaJustify", "Start", "К какому краю прижимать заголовки (заметно, только если FullWidth=false)"),
+        new("FullWidth", "bool", "false", "Растянуть заголовки на всю ширину дорожки поровну"),
+        new("ChildContent", "RenderFragment?", "—", "Набор <ScarnaTabPanel>"),
+    };
+
+    private readonly List<DocApiRow> _panelRows = new()
+    {
+        new("Text", "string", "—", "Обязательный. Текст заголовка вкладки"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое, видимое только когда вкладка активна"),
+    };
+}

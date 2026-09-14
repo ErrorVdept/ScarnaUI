@@ -1,0 +1,38 @@
+@*
+    Центрирующий контейнер с максимальной шириной и боковыми отступами —
+    типовая обёртка страницы (аналог MudContainer).
+
+    <ScarnaContainer MaxWidth="ScarnaContainerMaxWidth.Large">
+        ...содержимое страницы...
+    </ScarnaContainer>
+*@
+@namespace ScarnaUI.Components.Layout
+@inherits ScarnaComponentBase
+
+<div class="@Classes" style="@Style" @attributes="UserAttributes">
+    @ChildContent
+</div>
+
+@code {
+    /// <summary>Максимальная ширина контейнера.</summary>
+    [Parameter] public ScarnaContainerMaxWidth MaxWidth { get; set; } = ScarnaContainerMaxWidth.Large;
+
+    /// <summary>Растянуть на всю ширину без ограничения (эквивалент MaxWidth.False в MudBlazor).</summary>
+    [Parameter] public bool Fluid { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string Classes => CssBuilder.Default("scarna-container mx-auto w-full px-4 sm:px-6 lg:px-8")
+        .AddClass(MaxWidthClass, !Fluid)
+        .AddClass(Class)
+        .ToString();
+
+    private string MaxWidthClass => MaxWidth switch
+    {
+        ScarnaContainerMaxWidth.Small => "max-w-3xl",
+        ScarnaContainerMaxWidth.Medium => "max-w-5xl",
+        ScarnaContainerMaxWidth.Large => "max-w-6xl",
+        ScarnaContainerMaxWidth.ExtraLarge => "max-w-7xl",
+        _ => "max-w-6xl",
+    };
+}

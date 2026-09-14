@@ -1,0 +1,89 @@
+@page "/componentlib/chip"
+
+<DocPage Title="ScarnaChip" Lead="Небольшая цветная «пилюля» с текстом — тег, статус, значение фильтра."
+         Files="@(new[] { "Components/DataDisplay/ScarnaChip.razor" })">
+
+    <DocSection Title="Цвета" Code="@ColorsCode">
+        <ScarnaChip Color="ScarnaColor.Default">Default</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Primary">Primary</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Secondary">Secondary</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Success">Success</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Warning">Warning</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Danger">Danger</ScarnaChip>
+    </DocSection>
+
+    <DocSection Title="Варианты и размеры" Code="@VariantsCode">
+        <ScarnaChip Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid">Solid</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Primary" Variant="ScarnaVariant.Bordered">Bordered</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Primary" Variant="ScarnaVariant.Faded">Faded</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Primary" Size="ScarnaSize.Small">Small</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Primary" Size="ScarnaSize.Large">Large</ScarnaChip>
+    </DocSection>
+
+    <DocSection Title="Закрываемый чип" Description="OnClose показывает крестик справа." Code="@CloseCode">
+        @if (_visible)
+        {
+            <ScarnaChip Color="ScarnaColor.Danger" Variant="ScarnaVariant.Faded" OnClose="HandleClose">Удаляемый тег</ScarnaChip>
+        }
+        else
+        {
+            <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _visible = true">Вернуть тег</ScarnaButton>
+        }
+        <span class="text-sm text-foreground/60">Закрытий: @_closeCount</span>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private bool _visible = true;
+    private int _closeCount;
+
+    private void HandleClose()
+    {
+        _visible = false;
+        _closeCount++;
+    }
+
+    private const string ColorsCode =
+        """
+        <ScarnaChip Color="ScarnaColor.Default">Default</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Primary">Primary</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Secondary">Secondary</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Success">Success</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Warning">Warning</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Danger">Danger</ScarnaChip>
+        """;
+
+    private const string VariantsCode =
+        """
+        <ScarnaChip Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid">Solid</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Primary" Variant="ScarnaVariant.Bordered">Bordered</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Primary" Variant="ScarnaVariant.Faded">Faded</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Primary" Size="ScarnaSize.Small">Small</ScarnaChip>
+        <ScarnaChip Color="ScarnaColor.Primary" Size="ScarnaSize.Large">Large</ScarnaChip>
+        """;
+
+    private const string CloseCode =
+        """
+        <ScarnaChip Color="ScarnaColor.Danger" Variant="ScarnaVariant.Faded" OnClose="() => Remove(tag)">
+            Удаляемый тег
+        </ScarnaChip>
+
+        @code {
+            private void Remove(Tag tag) { ... }
+        }
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Color", "ScarnaColor", "Default", "См. theme-provider.md"),
+        new("Variant", "ScarnaVariant", "Flat", "Solid/Flat/Bordered/Light/Faded/Shadow"),
+        new("Size", "ScarnaSize", "Medium", "Small/Medium/Large"),
+        new("Bordered", "bool", "false", "Доп. обводка поверх Variant (для Variant.Bordered ничего не меняет)"),
+        new("StartContent", "RenderFragment?", "—", "Иконка/точка перед текстом"),
+        new("ChildContent", "RenderFragment?", "—", "Текст метки"),
+        new("OnClose", "EventCallback", "—", "Если задан — справа появляется крестик, вызывающий этот коллбэк"),
+    };
+}

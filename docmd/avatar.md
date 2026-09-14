@@ -1,7 +1,7 @@
-# NorthAvatar
+# ScarnaAvatar
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthAvatar.razor`
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaAvatar.razor`
 
 ## Описание
 
@@ -12,8 +12,8 @@
 ## Пример использования
 
 ```razor
-<NorthAvatar Src="/img/user.jpg" Alt="Иван Иванов" />
-<NorthAvatar Initials="ИИ" Color="NorthColor.Primary" Size="NorthSize.Large" />
+<ScarnaAvatar Src="/img/user.jpg" Alt="Иван Иванов" />
+<ScarnaAvatar Initials="ИИ" Color="ScarnaColor.Primary" Size="ScarnaSize.Large" />
 ```
 
 ## Параметры
@@ -23,7 +23,7 @@
 | `Src` | `string?` | — | URL изображения |
 | `Alt` | `string?` | — | `alt` для изображения |
 | `Initials` | `string?` | — | Инициалы (1-2 буквы), показываются, если нет `Src` или изображение не загрузилось |
-| `Size` | `NorthSize` | `Medium` | `Small`/`Medium`/`Large` |
-| `Color` | `NorthColor` | `Default` | Цвет фона под инициалами |
+| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
+| `Color` | `ScarnaColor` | `Default` | Цвет фона под инициалами |
 | `Bordered` | `bool` | `false` | Тонкая обводка в цвет фона страницы, отделяет от подложки |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

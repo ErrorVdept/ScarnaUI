@@ -1,0 +1,65 @@
+@*
+    Обёртка стилизации над обычным HTML-table — аналог MudSimpleTable: сама разметку
+    (<thead>/<tbody>/<tr>/<th>/<td>) пишете вы как обычный HTML, ScarnaTable добавляет
+    оформление в духе HeroUI Table (мягкий контейнер, приглушённая шапка, разделители
+    строк, hover/striped) через Tailwind descendant-селекторы на обёртке — а не через
+    подмену тегов на свои компоненты, как в MudTable.
+
+    <ScarnaTable Hover="true">
+        <thead>
+            <tr><th>Имя</th><th>Email</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Иван</td><td>ivan@example.com</td></tr>
+        </tbody>
+    </ScarnaTable>
+
+    <ScarnaTable DividedColumns="true">...</ScarnaTable>
+*@
+@namespace ScarnaUI.Components.DataDisplay
+@inherits ScarnaComponentBase
+
+<div class="@WrapperClasses" style="@Style" @attributes="UserAttributes">
+    <table class="@TableClasses">
+        @ChildContent
+    </table>
+</div>
+
+@code {
+    /// <summary>Подсвечивать строку тела таблицы при наведении.</summary>
+    [Parameter] public bool Hover { get; set; } = true;
+
+    /// <summary>Зебра — чередующийся фон чётных строк.</summary>
+    [Parameter] public bool Striped { get; set; }
+
+    /// <summary>Обводка контейнера таблицы.</summary>
+    [Parameter] public bool Bordered { get; set; } = true;
+
+    /// <summary>Вертикальные разделители между колонками (кроме последней — там и так край контейнера).</summary>
+    [Parameter] public bool DividedColumns { get; set; }
+
+    /// <summary>Normal (по умолчанию) — обычные отступы ячеек. Dense — компактные, для больших наборов данных.</summary>
+    [Parameter] public ScarnaDensity Density { get; set; } = ScarnaDensity.Normal;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string WrapperClasses => CssBuilder.Default("scarna-table-wrapper w-full overflow-x-auto rounded-scarna-lg bg-content1")
+        .AddClass("border border-divider", Bordered)
+        .AddClass(Class)
+        .ToString();
+
+    private string TableClasses => CssBuilder.Default(
+            "scarna-table w-full border-collapse text-left text-sm text-foreground " +
+            "[&_thead]:bg-content2 [&_thead_th]:font-semibold [&_thead_th]:text-xs [&_thead_th]:uppercase [&_thead_th]:tracking-wide [&_thead_th]:text-foreground/60 " +
+            "[&_tbody_tr]:border-t [&_tbody_tr]:border-divider [&_tbody_tr]:transition-colors " +
+            "[&_th]:px-4 [&_td]:px-4 [&_th]:text-left")
+        .AddClass(DensityClass)
+        .AddClass("[&_tbody_tr:hover]:bg-content2/60", Hover)
+        .AddClass("[&_tbody_tr:nth-child(even)]:bg-content2/40", Striped)
+        .AddClass("[&_th:not(:last-child)]:border-r [&_td:not(:last-child)]:border-r [&_th:not(:last-child)]:border-divider [&_td:not(:last-child)]:border-divider", DividedColumns)
+        .ToString();
+
+    private string DensityClass => Density == ScarnaDensity.Dense
+        ? "[&_th]:py-2 [&_td]:py-2"
+        : "[&_th]:py-3 [&_td]:py-3.5";
+}

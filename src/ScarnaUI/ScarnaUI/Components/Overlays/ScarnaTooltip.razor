@@ -1,0 +1,37 @@
+@*
+    Всплывающая подсказка по наведению/фокусу. Построена на ScarnaPopover —
+    живой пример того, как декларативные компоненты используют примитив поповера.
+
+    <ScarnaTooltip Text="Сохранить изменения">
+        <ScarnaButton>💾</ScarnaButton>
+    </ScarnaTooltip>
+*@
+@namespace ScarnaUI.Components.Overlays
+
+<span @ref="_anchor" class="scarna-tooltip-anchor inline-flex" @onmouseenter="Show" @onmouseleave="Hide" @onfocusin="Show" @onfocusout="Hide">
+    @ChildContent
+</span>
+
+<ScarnaPopover Open="_open" Anchor="_anchor" Position="Position" OffsetPx="6" CloseOnOutsideClick="false">
+    <div class="pointer-events-none rounded-scarna-sm bg-foreground px-2.5 py-1.5 text-xs font-medium text-background shadow-lg">
+        @Text
+    </div>
+</ScarnaPopover>
+
+@code {
+    private ElementReference _anchor;
+    private bool _open;
+
+    /// <summary>Текст подсказки.</summary>
+    [Parameter, EditorRequired] public string Text { get; set; } = string.Empty;
+
+    /// <summary>Позиция подсказки относительно якоря. По умолчанию — сверху по центру.</summary>
+    [Parameter] public ScarnaPosition Position { get; set; } = ScarnaPosition.Top;
+
+    /// <summary>Элемент, над которым при наведении/фокусе появляется подсказка.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private void Show() => _open = true;
+
+    private void Hide() => _open = false;
+}

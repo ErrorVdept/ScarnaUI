@@ -1,8 +1,8 @@
-# NorthDrawer
+# ScarnaDrawer
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/Layout/NorthDrawer.razor`
-- `src/NorthUI/NorthUI/Components/Layout/NorthDrawerEnums.cs` (`NorthDrawerAnchor`, `NorthDrawerVariant`)
+- `src/ScarnaUI/ScarnaUI/Components/Layout/ScarnaDrawer.razor`
+- `src/ScarnaUI/ScarnaUI/Components/Layout/ScarnaDrawerEnums.cs` (`ScarnaDrawerAnchor`, `ScarnaDrawerVariant`)
 
 ## Описание
 
@@ -22,16 +22,16 @@
 - **`Persistent`** — без подложки. Панель становится обычным flex-элементом
   (`position: relative`, `shrink-0`) с анимируемой шириной/высотой (`transition-[width,height]`).
   В закрытом состоянии схлопывается до `0`. Раз это настоящий элемент потока, а не
-  оверлей — положите `NorthDrawer` рядом с содержимым внутри общего `flex`-контейнера,
-  и всё, что рядом с ней (в том числе `NorthNavBar`, если он тоже внутри этого
+  оверлей — положите `ScarnaDrawer` рядом с содержимым внутри общего `flex`-контейнера,
+  и всё, что рядом с ней (в том числе `ScarnaNavBar`, если он тоже внутри этого
   контейнера), само сдвинется вместе с открытием/закрытием, безо всякой ручной
   синхронизации отступов на стороне страницы:
 
   ```razor
   <div class="flex">
-      <NorthDrawer @bind-Open="_open" Variant="NorthDrawerVariant.Persistent">...</NorthDrawer>
+      <ScarnaDrawer @bind-Open="_open" Variant="ScarnaDrawerVariant.Persistent">...</ScarnaDrawer>
       <div class="flex-1">
-          <NorthNavBar>...</NorthNavBar>  @* тоже сдвинется, если она внутри этой колонки *@
+          <ScarnaNavBar>...</ScarnaNavBar>  @* тоже сдвинется, если она внутри этой колонки *@
           <main>...</main>
       </div>
   </div>
@@ -44,7 +44,7 @@
   через `@if (Open) { ... }`** — так она появляется/исчезает рывком, не в такт с
   анимацией ширины панели, и выглядит как "прыжок" содержимого. Вместо этого держите
   `<span>` с подписью в DOM всегда, а видимость анимируйте той же длительностью
-  (`transition-all duration-200`), что и у самого `NorthDrawer`:
+  (`transition-all duration-200`), что и у самого `ScarnaDrawer`:
 
   ```razor
   <span>
@@ -55,19 +55,19 @@
   </span>
   ```
 
-Живые примеры всех трёх — на странице [`/showcase/main-layout`](../src/NorthUI/NorthUI.Demo/Components/Pages/Showcase/MainLayoutShowcase.razor)
+Живые примеры всех трёх — на странице [`/showcase/main-layout`](../src/ScarnaUI/ScarnaUI.Demo/Components/Pages/Showcase/MainLayoutShowcase.razor)
 (воспроизводит "Main Layouts" с wireframe'ов MudBlazor + дополнительные комбинации).
 
 ## Пример использования
 
 ```razor
-<NorthDrawer @bind-Open="_menuOpen" Anchor="NorthDrawerAnchor.Left">
-    <NorthList TValue="string" SelectionMode="NorthListSelectionMode.None" Class="p-3">
-        <NorthListItem Value="@("home")">Главная</NorthListItem>
-    </NorthList>
-</NorthDrawer>
+<ScarnaDrawer @bind-Open="_menuOpen" Anchor="ScarnaDrawerAnchor.Left">
+    <ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None" Class="p-3">
+        <ScarnaListItem Value="@("home")">Главная</ScarnaListItem>
+    </ScarnaList>
+</ScarnaDrawer>
 
-<NorthButton OnClick="() => _menuOpen = true">Меню</NorthButton>
+<ScarnaButton OnClick="() => _menuOpen = true">Меню</ScarnaButton>
 ```
 
 ## Параметры
@@ -75,8 +75,8 @@
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
 | `Open` / `OpenChanged` | `bool` / ... | — | Открыта ли панель. Поддерживает `@bind-Open` |
-| `Anchor` | `NorthDrawerAnchor` | `Left` | `Left`/`Right`/`Top`/`Bottom` |
-| `Variant` | `NorthDrawerVariant` | `Temporary` | `Temporary` (overlay+подложка) / `Persistent` (раздвигает соседей) / `Mini` (в закрытом состоянии — узкая полоса) |
+| `Anchor` | `ScarnaDrawerAnchor` | `Left` | `Left`/`Right`/`Top`/`Bottom` |
+| `Variant` | `ScarnaDrawerVariant` | `Temporary` | `Temporary` (overlay+подложка) / `Persistent` (раздвигает соседей) / `Mini` (в закрытом состоянии — узкая полоса) |
 | `Width` | `string` | `"280px"` | Ширина панели (для `Left`/`Right`) — любое CSS-значение |
 | `Height` | `string` | `"280px"` | Высота панели (для `Top`/`Bottom`) |
 | `MiniWidth` | `string` | `"72px"` | Ширина/высота в закрытом состоянии у `Variant.Mini`. Не используется у `Temporary`/`Persistent` |

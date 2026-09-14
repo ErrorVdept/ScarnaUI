@@ -1,0 +1,62 @@
+@page "/componentlib/navbar"
+
+<DocPage Title="ScarnaNavBar" Lead="Верхняя панель приложения — задаёт высоту, подложку и границу снизу; содержимое произвольное (логотип, ссылки, действия)."
+         Files="@(new[] { "Components/Layout/ScarnaNavBar.razor" })">
+
+    <DocSection Title="Пример" Description="Эта страница уже использует ScarnaNavBar в MainLayout — здесь показан ещё один экземпляр (Sticky=false) внутри рамки, чтобы не накладываться на настоящую панель сверху." Code="@ExampleCode" Row="false">
+        <div class="overflow-hidden rounded-scarna-md border border-divider">
+            <ScarnaNavBar Sticky="false">
+                <a href="/" class="text-lg font-semibold">Logo</a>
+                <ScarnaStack Row="true" Spacing="6">
+                    <span class="text-sm text-foreground/70">Главная</span>
+                    <span class="text-sm text-foreground/70">О нас</span>
+                </ScarnaStack>
+            </ScarnaNavBar>
+            <div class="p-4 text-sm text-foreground/50">Содержимое страницы ниже панели...</div>
+        </div>
+    </DocSection>
+
+    <DocSection Title="Цвет и плотность" Description="Density='Dense' — компактная высота 48px; Color — сплошная заливка." Code="@ColorCode" Row="false">
+        <div class="overflow-hidden rounded-scarna-md border border-divider">
+            <ScarnaNavBar Sticky="false" Density="ScarnaDensity.Dense" Color="ScarnaColor.Primary">
+                <span class="font-semibold">Dense + Primary</span>
+                <ScarnaThemeSwitch />
+            </ScarnaNavBar>
+        </div>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string ExampleCode =
+        """
+        <ScarnaNavBar>
+            <a href="/" class="text-lg font-semibold">Logo</a>
+            <ScarnaStack Row="true" Spacing="6">
+                <NavLink href="/">Главная</NavLink>
+                <NavLink href="/about">О нас</NavLink>
+            </ScarnaStack>
+        </ScarnaNavBar>
+        """;
+
+    private const string ColorCode =
+        """
+        <ScarnaNavBar Density="ScarnaDensity.Dense" Color="ScarnaColor.Primary">
+            <span class="font-semibold">Dense + Primary</span>
+            <ScarnaThemeSwitch />
+        </ScarnaNavBar>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Sticky", "bool", "true", "Прилипает к верху при прокрутке"),
+        new("Bordered", "bool", "true", "Граница снизу"),
+        new("Fluid", "bool", "true", "Растянуть содержимое на всю ширину (без ScarnaContainer.MaxWidth)"),
+        new("Density", "ScarnaDensity", "Normal", "Normal — 56px высотой, Dense — 48px"),
+        new("Color", "ScarnaColor", "Default", "Default — нейтральная подложка с блюром; любой другой — сплошная заливка цветом"),
+        new("Justify", "ScarnaJustify", "SpaceBetween", "Распределение содержимого по горизонтали"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое панели"),
+    };
+}

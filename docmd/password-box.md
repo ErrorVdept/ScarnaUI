@@ -1,13 +1,13 @@
-# NorthPasswordBox
+# ScarnaPasswordBox
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/Forms/NorthPasswordBox.razor`
+- `src/ScarnaUI/ScarnaUI/Components/Forms/ScarnaPasswordBox.razor`
 
 ## Описание
 
 Текстовое поле пароля с переключаемым отображением (кнопка-глазок) и настраиваемым
 символом маски (`MaskChar`, по умолчанию `*`). Основан на
-`NorthFormComponentBase<string>` — поддерживает `@bind-Value`.
+`ScarnaFormComponentBase<string>` — поддерживает `@bind-Value`.
 
 Не использует нативный `input[type=password]` для скрытого состояния — браузер сам
 решает, каким символом рисовать маску (обычно точка), и это никак не настроить через
@@ -24,8 +24,8 @@
 ## Пример использования
 
 ```razor
-<NorthPasswordBox Label="Пароль" @bind-Value="model.Password" />
-<NorthPasswordBox Label="PIN-код" @bind-Value="model.Pin" MaskChar="'•'" ShowToggle="false" />
+<ScarnaPasswordBox Label="Пароль" @bind-Value="model.Password" />
+<ScarnaPasswordBox Label="PIN-код" @bind-Value="model.Pin" MaskChar="'•'" ShowToggle="false" />
 ```
 
 ## Параметры
@@ -40,9 +40,9 @@
 | `ShowToggle` | `bool` | `true` | Показывать ли кнопку-глазок переключения видимости |
 | `Disabled` | `bool` | `false` | — |
 | `ReadOnly` | `bool` | `false` | — |
-| `Variant` | `NorthVariant` | `Bordered` | `Bordered`/`Flat` |
+| `Variant` | `ScarnaVariant` | `Bordered` | `Bordered`/`Flat` |
 | `Bordered` | `bool` | `true` | Показывать ли контур поля |
-| `Size` | `NorthSize` | `Medium` | `Small`/`Medium`/`Large` |
-| `Density` | `NorthDensity` | `Normal` | `Dense` — компактное поле |
-| `Radius` | `NorthRadius` | `Medium` | Радиус поля |
+| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
+| `Density` | `ScarnaDensity` | `Normal` | `Dense` — компактное поле |
+| `Radius` | `ScarnaRadius` | `Medium` | Радиус поля |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

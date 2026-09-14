@@ -1,13 +1,13 @@
-# NorthDateTimePicker
+# ScarnaDateTimePicker
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/Forms/NorthDateTimePicker.razor`
+- `src/ScarnaUI/ScarnaUI/Components/Forms/ScarnaDateTimePicker.razor`
 
 ## Описание
 
 Поле выбора даты и времени. Под капотом — нативный `input[type=datetime-local]`
 (браузерный календарь + time-picker бесплатно, тот же подход, что у
-[NorthTimeField](timefield.md)). Основан на `NorthFormComponentBase<DateTime?>` —
+[ScarnaTimeField](timefield.md)). Основан на `ScarnaFormComponentBase<DateTime?>` —
 формат `"yyyy-MM-ddTHH:mm"`, который ожидает атрибут `value`, собирается/парсится
 внутри компонента.
 
@@ -18,8 +18,8 @@ MudDatePicker) в этом проходе не строился — нативн
 ## Пример использования
 
 ```razor
-<NorthDateTimePicker Label="Дата и время встречи" @bind-Value="model.MeetingAt" />
-<NorthDateTimePicker Label="Срок" @bind-Value="model.Deadline" Min="DateTime.Today" />
+<ScarnaDateTimePicker Label="Дата и время встречи" @bind-Value="model.MeetingAt" />
+<ScarnaDateTimePicker Label="Срок" @bind-Value="model.Deadline" Min="DateTime.Today" />
 ```
 
 ## Параметры
@@ -32,9 +32,9 @@ MudDatePicker) в этом проходе не строился — нативн
 | `Min` / `Max` | `DateTime?` | — | Границы диапазона (нативная валидация браузера) |
 | `Disabled` | `bool` | `false` | — |
 | `ReadOnly` | `bool` | `false` | — |
-| `Variant` | `NorthVariant` | `Bordered` | `Bordered`/`Flat` |
+| `Variant` | `ScarnaVariant` | `Bordered` | `Bordered`/`Flat` |
 | `Bordered` | `bool` | `true` | Показывать ли контур поля |
-| `Size` | `NorthSize` | `Medium` | `Small`/`Medium`/`Large` |
-| `Density` | `NorthDensity` | `Normal` | `Dense` — компактное поле |
-| `Radius` | `NorthRadius` | `Medium` | Радиус поля |
+| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
+| `Density` | `ScarnaDensity` | `Normal` | `Dense` — компактное поле |
+| `Radius` | `ScarnaRadius` | `Medium` | Радиус поля |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

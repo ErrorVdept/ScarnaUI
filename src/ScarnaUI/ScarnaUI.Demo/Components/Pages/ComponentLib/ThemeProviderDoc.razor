@@ -1,0 +1,59 @@
+@page "/componentlib/theme-provider"
+
+<DocPage Title="ScarnaThemeProvider" Lead="Корневой провайдер темы — кладётся один раз в MainLayout, оборачивая всё приложение. Переносит токены темы в CSS-переменные на &lt;html&gt; через JS и запоминает выбор пользователя в localStorage."
+         Files="@(new[] { "Components/Theme/ScarnaThemeProvider.razor", "Components/Theme/ScarnaThemeProvider.razor.cs" })">
+
+    <DocSection Title="Использование" Description="Уже активен для всего приложения (см. MainLayout.razor) — повторно оборачивать вложенным ScarnaThemeProvider не нужно, это сломает каскад темы. Ниже — только код для справки." Code="@UsageCode" Row="false">
+        <p class="text-sm text-foreground/70">
+            ScarnaThemeProvider уже оборачивает всё приложение в <code class="text-xs">MainLayout.razor</code>.
+            Любой компонент ниже по дереву получает токены темы через
+            <code class="text-xs">[CascadingParameter] ScarnaThemeContext? ThemeContext</code>.
+            Эффект переключения темы можно увидеть на живом переключателе ниже —
+            он работает через тот же каскадный контекст, что описан здесь
+            (подробнее — <a class="text-primary hover:underline" href="/componentlib/theme-switch">ScarnaThemeSwitch</a>).
+        </p>
+        <ScarnaThemeSwitch />
+    </DocSection>
+
+    <DocApiTable Title="Параметры ScarnaThemeProvider" Rows="@_providerRows" />
+    <DocApiTable Title="Члены ScarnaThemeContext" Rows="@_contextRows" />
+
+</DocPage>
+
+@code {
+    private const string UsageCode =
+        """
+        @* MainLayout.razor *@
+        <ScarnaThemeProvider DefaultMode="ScarnaThemeMode.System">
+            <ScarnaPopoverProvider>
+                @Body
+            </ScarnaPopoverProvider>
+            <ScarnaDialogProvider />
+            <ScarnaSnackbarProvider />
+        </ScarnaThemeProvider>
+
+        @* Переключатель темы из кода приложения *@
+        @code {
+            [CascadingParameter] private ScarnaThemeContext? ThemeContext { get; set; }
+
+            private Task SetDark() => ThemeContext!.SetModeAsync(ScarnaThemeMode.Dark);
+        }
+        """;
+
+    private readonly List<DocApiRow> _providerRows = new()
+    {
+        new("ChildContent", "RenderFragment?", "—", "Дерево приложения"),
+        new("Theme", "ScarnaTheme", "палитра ScarnaUI по умолчанию", "Токены (цвета, радиусы, шрифт)"),
+        new("DefaultMode", "ScarnaThemeMode", "System", "Режим при первом запуске (если ещё нет сохранённого выбора)"),
+    };
+
+    private readonly List<DocApiRow> _contextRows = new()
+    {
+        new("Theme", "ScarnaTheme", "—", "Активные токены (тот самый объект ScarnaTheme)"),
+        new("ActivePalette", "ScarnaPalette", "—", "Light или Dark палитра — в зависимости от IsDarkMode"),
+        new("IsDarkMode", "bool", "—", "Сейчас показана тёмная тема (уже разрешённый System)"),
+        new("Mode", "ScarnaThemeMode", "—", "Выбранный пользователем режим"),
+        new("ToggleDarkModeAsync()", "Task", "—", "Переключить light ⇄ dark"),
+        new("SetModeAsync(mode)", "Task", "—", "Явно установить режим"),
+    };
+}

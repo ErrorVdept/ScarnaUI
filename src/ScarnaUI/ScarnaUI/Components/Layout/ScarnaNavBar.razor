@@ -1,0 +1,73 @@
+@*
+    Верхняя панель приложения (аналог MudAppBar/шапки сайта). Формализует то, что
+    в демо раньше собиралось вручную из <header>+ScarnaContainer+ScarnaStack —
+    задаёт высоту, подложку с блюром и границу снизу, содержимое — произвольное.
+
+    <ScarnaNavBar Density="ScarnaDensity.Dense" Justify="ScarnaJustify.SpaceBetween">
+        <a href="/" class="font-semibold">Logo</a>
+        <ScarnaStack Row="true" Spacing="4"><NavLink href="/">Главная</NavLink></ScarnaStack>
+    </ScarnaNavBar>
+*@
+@namespace ScarnaUI.Components.Layout
+@inherits ScarnaComponentBase
+
+<header class="@Classes" style="@Style" @attributes="UserAttributes">
+    <ScarnaContainer Fluid="Fluid">
+        <div class="@RowClasses">
+            @ChildContent
+        </div>
+    </ScarnaContainer>
+</header>
+
+@code {
+    /// <summary>Прилипает к верху при прокрутке (position: sticky).</summary>
+    [Parameter] public bool Sticky { get; set; } = true;
+
+    [Parameter] public bool Bordered { get; set; } = true;
+
+    /// <summary>Растянуть содержимое на всю ширину (без ограничения ScarnaContainer.MaxWidth).</summary>
+    [Parameter] public bool Fluid { get; set; } = true;
+
+    /// <summary>Normal (по умолчанию, 56px) — обычная высота. Dense — компактная (48px).</summary>
+    [Parameter] public ScarnaDensity Density { get; set; } = ScarnaDensity.Normal;
+
+    /// <summary>Цвет фона панели. Default (по умолчанию) — нейтральная подложка с блюром; любой другой — сплошная заливка цветом.</summary>
+    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Default;
+
+    /// <summary>Распределение содержимого по горизонтали — как AlignItems в MudBlazor (justify-content внутренней строки).</summary>
+    [Parameter] public ScarnaJustify Justify { get; set; } = ScarnaJustify.SpaceBetween;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string Classes => CssBuilder.Default("scarna-navbar z-30")
+        .AddClass(ColorClass)
+        .AddClass("sticky top-0", Sticky)
+        .AddClass("border-b border-divider", Bordered)
+        .AddClass(Class)
+        .ToString();
+
+    private string ColorClass => Color switch
+    {
+        ScarnaColor.Primary => "bg-primary text-primary-foreground",
+        ScarnaColor.Secondary => "bg-secondary text-secondary-foreground",
+        ScarnaColor.Success => "bg-success text-success-foreground",
+        ScarnaColor.Warning => "bg-warning text-warning-foreground",
+        ScarnaColor.Danger => "bg-danger text-danger-foreground",
+        _ => "bg-background/80 backdrop-blur text-foreground",
+    };
+
+    private string RowClasses => CssBuilder.Default("flex items-center gap-4")
+        .AddClass(Density == ScarnaDensity.Dense ? "h-12" : "h-14")
+        .AddClass(JustifyClass)
+        .ToString();
+
+    private string JustifyClass => Justify switch
+    {
+        ScarnaJustify.Start => "justify-start",
+        ScarnaJustify.End => "justify-end",
+        ScarnaJustify.Center => "justify-center",
+        ScarnaJustify.SpaceAround => "justify-around",
+        ScarnaJustify.SpaceEvenly => "justify-evenly",
+        _ => "justify-between",
+    };
+}

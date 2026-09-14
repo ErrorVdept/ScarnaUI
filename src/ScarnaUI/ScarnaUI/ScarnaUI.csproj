@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RazorLangVersion>Latest</RazorLangVersion>
+
+    <!-- Метаданные NuGet-пакета -->
+    <PackageId>ScarnaUI</PackageId>
+    <Description>Библиотека Blazor-компонентов ScarnaUI: DX от MudBlazor, дизайн-система от HeroUI, стилизация на Tailwind CSS.</Description>
+    <Authors>ScarnaUI</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <!-- Исходники Tailwind (Styles/) не нужно копировать в выходной пакет — в wwwroot уже лежит собранный CSS -->
+  <ItemGroup>
+    <Content Remove="Styles/**" />
+    <None Include="Styles/**" />
+  </ItemGroup>
+
+  <!--
+    Автопересборка scarna.css при каждой сборке САМОЙ библиотеки (BeforeTargets
+    CoreCompile — раньше, чем Razor-компилятор проверит содержимое wwwroot).
+    Не затрагивает проекты-потребители: этот Target объявлен в ScarnaUI.csproj
+    и MSBuild не переносит Target'ы referencing-проекта на ссылающиеся на него —
+    он выполняется только когда компилируется сам ScarnaUI.csproj.
+
+    build-css.ps1 идемпотентен и быстр (~100-150мс), поэтому гонять его на КАЖДОЙ
+    сборке (а не только когда что-то в Styles/*.razor реально изменилось) —
+    осознанно простое решение: отслеживать через Inputs/Outputs пришлось бы
+    список файлов по динамическому @source-глобу из input.css, а не просто
+    Styles/input.css, что не стоит выигранных миллисекунд.
+  -->
+  <Target Name="BuildTailwindCss" BeforeTargets="CoreCompile" Condition="'$(OS)' == 'Windows_NT'">
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\build-css.ps1&quot;" />
+  </Target>
+
+</Project>

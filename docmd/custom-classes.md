@@ -1,34 +1,34 @@
-# Кастомные CSS-классы NorthUI
+# Кастомные CSS-классы ScarnaUI
 
 ## Файлы
-- `src/NorthUI/NorthUI/Styles/input.css` — определения (`@utility`, `@source inline(...)`)
+- `src/ScarnaUI/ScarnaUI/Styles/input.css` — определения (`@utility`, `@source inline(...)`)
 
 ## Что это
 
-Помимо обычных Tailwind-утилит (`bg-primary`, `rounded-north-md`, `flex`, ...), NorthUI
+Помимо обычных Tailwind-утилит (`bg-primary`, `rounded-scarna-md`, `flex`, ...), ScarnaUI
 определяет несколько именованных классов "для удобства" — короткие, читаемые имена под
 частые задачи, которые иначе пришлось бы каждый раз собирать из нескольких utility-классов.
 Использовать их можно в любом месте разметки приложения, не только внутри компонентов
-NorthUI — как обычный CSS-класс.
+ScarnaUI — как обычный CSS-класс.
 
 ## ⚠️ Технический нюанс: почему они не пропадают из собранного CSS
 
-Tailwind включает в итоговый `north.css` только те классы, которые **статически
+Tailwind включает в итоговый `scarna.css` только те классы, которые **статически
 находит** при сканировании исходников (`.razor`/`.cshtml`/`.cs` — см.
 [getting-started.md](getting-started.md#⚠️-локаль-сервера-и-числа-в-css) про похожий
 нюанс со сборкой). Поскольку эти классы задуманы для использования в **чужом**
-проекте-потребителе (который NorthUI не сканирует — см. [getting-started.md](getting-started.md)),
+проекте-потребителе (который ScarnaUI не сканирует — см. [getting-started.md](getting-started.md)),
 их принудительно включают через `@source inline(...)` в `Styles/input.css`:
 
 ```css
-@source inline("north-width-full north-height-full scrollable scrollable-h scrollable-v");
+@source inline("scarna-width-full scarna-height-full scrollable scrollable-h scrollable-v");
 ```
 
 **Если добавляете новый класс в этот файл — не забудьте дописать его имя и в
 `@source inline(...)`, иначе он пропадёт из собранного CSS у всех, кто не использует
-его ещё и где-то в исходниках самого NorthUI.**
+его ещё и где-то в исходниках самого ScarnaUI.**
 
-## north-width-full / north-height-full
+## scarna-width-full / scarna-height-full
 
 Растягивают элемент на 100% ширины/высоты родителя. Названы иначе, чем стандартные
 Tailwind-утилиты `w-full`/`h-full` (тоже доступны, это просто более явные "фирменные"
@@ -36,14 +36,14 @@ Tailwind-утилиты `w-full`/`h-full` (тоже доступны, это п�
 
 ```razor
 <div class="flex h-24 gap-3">
-    <div class="north-height-full w-32 bg-content2">100% высоты родителя</div>
-    <div class="north-width-full bg-content2">Занимает всё оставшееся место</div>
+    <div class="scarna-height-full w-32 bg-content2">100% высоты родителя</div>
+    <div class="scarna-width-full bg-content2">Занимает всё оставшееся место</div>
 </div>
 ```
 
 ## scrollable / scrollable-h / scrollable-v
 
-Делают элемент прокручиваемым, с тонким скроллбаром в цвет темы (`--north-divider`)
+Делают элемент прокручиваемым, с тонким скроллбаром в цвет темы (`--scarna-divider`)
 вместо системного по умолчанию (`scrollbar-width: thin` + стилизация
 `::-webkit-scrollbar` для Chrome/Edge).
 
@@ -57,7 +57,7 @@ Tailwind-утилиты `w-full`/`h-full` (тоже доступны, это п�
 (`Class="scrollable-v h-64"` и т.п.), иначе скроллиться будет нечему.
 
 ```razor
-<div class="scrollable-v h-64 rounded-north-md border border-divider p-3">
+<div class="scrollable-v h-64 rounded-scarna-md border border-divider p-3">
     @foreach (var item in items)
     {
         <p>@item.Name</p>
@@ -65,7 +65,7 @@ Tailwind-утилиты `w-full`/`h-full` (тоже доступны, это п�
 </div>
 ```
 
-## Justify / AlignItems (NorthStack, NorthGrid)
+## Justify / AlignItems (ScarnaStack, ScarnaGrid)
 
 Не CSS-классы, а C#-параметры — упомянуты здесь, потому что решают ту же задачу
 "частых компоновочных нужд", что и остальное на этой странице, и сделаны по образцу
@@ -73,11 +73,11 @@ Tailwind-утилиты `w-full`/`h-full` (тоже доступны, это п�
 [grid.md](grid.md).
 
 ```razor
-<NorthStack Row="true" Justify="NorthJustify.SpaceEvenly" Align="NorthAlign.Baseline">
+<ScarnaStack Row="true" Justify="ScarnaJustify.SpaceEvenly" Align="ScarnaAlign.Baseline">
 ```
 
-`NorthJustify`: `Start`, `End`, `Center`, `SpaceBetween`, `SpaceAround`, `SpaceEvenly`.
-`NorthAlign`: `Start`, `End`, `Center`, `Stretch`, `Baseline`.
+`ScarnaJustify`: `Start`, `End`, `Center`, `SpaceBetween`, `SpaceAround`, `SpaceEvenly`.
+`ScarnaAlign`: `Start`, `End`, `Center`, `Stretch`, `Baseline`.
 
 ---
 

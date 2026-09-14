@@ -1,0 +1,77 @@
+@*
+    Линейная полоса прогресса. Determinate (по умолчанию) — конкретное значение
+    Value/Max; Indeterminate — бегущая полоса для операций неизвестной длительности.
+
+    <ScarnaProgress Label="Загрузка файла" Value="64" ShowValue="true" />
+    <ScarnaProgress Indeterminate="true" />
+*@
+@namespace ScarnaUI.Components.DataDisplay
+@inherits ScarnaComponentBase
+
+<div class="scarna-progress-wrapper flex flex-col gap-1.5" style="@Style" @attributes="UserAttributes">
+    @if (!string.IsNullOrEmpty(Label) || (ShowValue && !Indeterminate))
+    {
+        <div class="flex items-center justify-between text-sm">
+            @if (!string.IsNullOrEmpty(Label))
+            {
+                <span class="font-medium text-foreground/80">@Label</span>
+            }
+            @if (ShowValue && !Indeterminate)
+            {
+                <span class="text-foreground/60">@PercentClamped.ToString("0")%</span>
+            }
+        </div>
+    }
+    <div class="@TrackClasses" role="progressbar" aria-valuemin="0" aria-valuemax="@Max" aria-valuenow="@(Indeterminate ? null : Value)">
+        @if (Indeterminate)
+        {
+            <div class="@($"h-full w-1/3 rounded-scarna-full animate-scarna-progress-indeterminate {FillColorClass}")"></div>
+        }
+        else
+        {
+            <div class="@($"h-full rounded-scarna-full transition-[width] duration-300 ease-out {FillColorClass}")"
+                 style="@($"width: {PercentClamped.ToString(System.Globalization.CultureInfo.InvariantCulture)}%")"></div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public string? Label { get; set; }
+
+    [Parameter] public double Value { get; set; }
+
+    [Parameter] public double Max { get; set; } = 100;
+
+    /// <summary>Бегущая полоса вместо конкретного значения — для операций неизвестной длительности.</summary>
+    [Parameter] public bool Indeterminate { get; set; }
+
+    /// <summary>Показывать процент справа от подписи (игнорируется при Indeterminate).</summary>
+    [Parameter] public bool ShowValue { get; set; }
+
+    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Primary;
+
+    [Parameter] public ScarnaSize Size { get; set; } = ScarnaSize.Medium;
+
+    private double PercentClamped => Max <= 0 ? 0 : Math.Clamp(Value / Max * 100, 0, 100);
+
+    private string TrackClasses => CssBuilder.Default("scarna-progress-track w-full overflow-hidden rounded-scarna-full bg-content2")
+        .AddClass(SizeClass)
+        .ToString();
+
+    private string SizeClass => Size switch
+    {
+        ScarnaSize.Small => "h-1",
+        ScarnaSize.Large => "h-3",
+        _ => "h-2",
+    };
+
+    private string FillColorClass => Color switch
+    {
+        ScarnaColor.Secondary => "bg-secondary",
+        ScarnaColor.Success => "bg-success",
+        ScarnaColor.Warning => "bg-warning",
+        ScarnaColor.Danger => "bg-danger",
+        ScarnaColor.Default => "bg-default",
+        _ => "bg-primary",
+    };
+}

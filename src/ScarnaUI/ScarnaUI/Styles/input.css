@@ -1,0 +1,260 @@
+/*
+ * Точка входа Tailwind для сборки ScarnaUI.
+ *
+ * Собирается ТОЛЬКО при разработке самой библиотеки, через standalone-бинарник Tailwind
+ * CLI (см. build-css.ps1 в корне проекта) — Node.js/npm не требуются вообще.
+ * Результат — статический файл wwwroot/css/scarna/scarna.css, который проекты-потребители
+ * подключают обычным <link>, без какой-либо сборки на своей стороне.
+ *
+ * Здесь же настроен маппинг Tailwind-токенов (--color-primary, --radius-scarna-md, ...)
+ * на CSS-переменные темы (--scarna-primary, --scarna-radius-md, ...). Поскольку переменные
+ * темы меняются в рантайме через ScarnaThemeProvider (wwwroot/js/scarna/theme.js),
+ * все Tailwind-утилиты, использующие эти токены (bg-primary, rounded-scarna-md, ...),
+ * автоматически следуют за сменой темы без пересборки CSS.
+ */
+
+@import "tailwindcss";
+@import "../wwwroot/css/scarna/variables.css";
+
+/* Тёмная тема переключается атрибутом data-theme="dark" на <html> (см. theme.js),
+   а не системным prefers-color-scheme — поэтому переопределяем dark-вариант Tailwind. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Откуда Tailwind берёт классы для сканирования (JIT content-detection).
+   Демо-проект включён намеренно: ScarnaUI.Demo не тянет свой Tailwind-тулчейн,
+   а использует уже собранный CSS библиотеки — поэтому его разметку тоже нужно сканировать. */
+@source "../**/*.razor";
+@source "../**/*.cshtml";
+@source "../../ScarnaUI.Demo/**/*.razor";
+
+/*
+ * Принудительное включение "публичных" именованных утилит (см. ниже, docmd/custom-classes.md).
+ * Это не внутренние классы компонентов — консьюмер пишет их в СВОЁМ проекте, который
+ * Tailwind вообще не сканирует (ScarnaUI собирает CSS только из своих исходников + Demo,
+ * см. комментарий в начале файла). Без явного forced include их вообще не окажется
+ * в готовом scarna.css, если сама библиотека их нигде не использует.
+ */
+@source inline("scarna-width-full scarna-height-full scrollable scrollable-h scrollable-v");
+
+@theme inline {
+  --font-sans: var(--scarna-font-sans);
+
+  --color-background: hsl(var(--scarna-background));
+  --color-foreground: hsl(var(--scarna-foreground));
+
+  --color-content1: hsl(var(--scarna-content1));
+  --color-content2: hsl(var(--scarna-content2));
+  --color-content3: hsl(var(--scarna-content3));
+  --color-content4: hsl(var(--scarna-content4));
+
+  --color-default: hsl(var(--scarna-default));
+  --color-default-foreground: hsl(var(--scarna-default-foreground));
+
+  --color-primary: hsl(var(--scarna-primary));
+  --color-primary-foreground: hsl(var(--scarna-primary-foreground));
+
+  --color-secondary: hsl(var(--scarna-secondary));
+  --color-secondary-foreground: hsl(var(--scarna-secondary-foreground));
+
+  --color-success: hsl(var(--scarna-success));
+  --color-success-foreground: hsl(var(--scarna-success-foreground));
+
+  --color-warning: hsl(var(--scarna-warning));
+  --color-warning-foreground: hsl(var(--scarna-warning-foreground));
+
+  --color-danger: hsl(var(--scarna-danger));
+  --color-danger-foreground: hsl(var(--scarna-danger-foreground));
+
+  --color-focus: hsl(var(--scarna-focus));
+  --color-divider: hsl(var(--scarna-divider));
+  --color-overlay: hsl(var(--scarna-overlay));
+
+  --radius-scarna-sm: var(--scarna-radius-sm);
+  --radius-scarna-md: var(--scarna-radius-md);
+  --radius-scarna-lg: var(--scarna-radius-lg);
+  --radius-scarna-full: var(--scarna-radius-full);
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  /* Кольцо фокуса при навигации с клавиатуры — единое для всех интерактивных компонентов */
+  :focus-visible {
+    outline: 2px solid hsl(var(--scarna-focus));
+    outline-offset: 2px;
+  }
+}
+
+/*
+ * Анимации входа для оверлеев (диалог, поповер/тултип, тост). Только "enter" —
+ * без exit-анимации, т.к. размонтирование в Blazor происходит мгновенно вместе
+ * с изменением состояния (@if), и полноценный exit-transition потребовал бы
+ * отдельной JS-хореографии. --animate-* здесь генерирует Tailwind-утилиты
+ * (animate-scarna-fade-in и т.д.), @keyframes ниже — обычный проходной CSS.
+ */
+@theme {
+  --animate-scarna-fade-in: scarna-fade-in 150ms ease-out;
+  --animate-scarna-scale-in: scarna-scale-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-scarna-slide-up-in: scarna-slide-up-in 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-scarna-progress-indeterminate: scarna-progress-indeterminate 1.4s ease-in-out infinite;
+}
+
+@keyframes scarna-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scarna-scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scarna-slide-up-in {
+  from { opacity: 0; transform: translateY(0.5rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scarna-progress-indeterminate {
+  0% { transform: translateX(-100%); }
+  60% { transform: translateX(250%); }
+  100% { transform: translateX(250%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-scarna-fade-in,
+  .animate-scarna-scale-in,
+  .animate-scarna-slide-up-in {
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/*
+ * Именованные утилиты-"фишки" ScarnaUI (не входят в стандартный набор Tailwind).
+ * Задокументированы для потребителей библиотеки в docmd/custom-classes.md —
+ * при добавлении новой утилиты сюда обязательно дублируйте её туда же.
+ * @utility (в отличие от обычного класса в @layer) даёt Tailwind-класс "первого класса":
+ * его можно комбинировать с вариантами (sm:scarna-width-full, hover:scrollable и т.п.).
+ */
+@utility scarna-width-full {
+  width: 100%;
+}
+
+@utility scarna-height-full {
+  height: 100%;
+}
+
+@utility scrollable {
+  overflow: auto;
+}
+
+@utility scrollable-h {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+@utility scrollable-v {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@layer base {
+  /* Тонкий скроллбар в цвет темы для .scrollable* — вместо системного по умолчанию */
+  .scrollable,
+  .scrollable-h,
+  .scrollable-v {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--scarna-divider)) transparent;
+  }
+
+  .scrollable::-webkit-scrollbar,
+  .scrollable-h::-webkit-scrollbar,
+  .scrollable-v::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollable::-webkit-scrollbar-track,
+  .scrollable-h::-webkit-scrollbar-track,
+  .scrollable-v::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollable::-webkit-scrollbar-thumb,
+  .scrollable-h::-webkit-scrollbar-thumb,
+  .scrollable-v::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--scarna-divider));
+    border-radius: 9999px;
+  }
+}
+
+/*
+ * Стили ползунка ScarnaSlider — намеренно обычный CSS одним блоком на вендорный
+ * псевдоэлемент, а не россыпь Tailwind arbitrary-variant классов
+ * ([&::-webkit-slider-thumb]:w-7 и т.д. — было раньше). На ::-webkit-slider-thumb/
+ * ::-moz-range-thumb несколько десятков отдельных сгенерированных Tailwind-правил
+ * применялись ненадёжно (браузер учитывал часть свойств, часть — нет: итоговый
+ * ползунок терял фон/обводку/размер, оставался только трек). Один консолидированный
+ * рукописный блок — стандартный и куда более надёжный способ стилизовать нативный
+ * range-thumb. Цвет обводки передаётся через --scarna-slider-thumb-color (инлайн-стиль
+ * из ScarnaSlider.razor), по умолчанию совпадает с цветом заливки трека.
+ */
+@layer base {
+  .scarna-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+  }
+
+  /* Без явного сброса этого псевдоэлемента Chrome/Edge поверх нашего градиента
+     на самом <input> продолжает рисовать собственную дефолтную дорожку — плоский
+     серый прямоугольник с прямыми углами (отсюда баг "два слайдера, один квадратный"). */
+  .scarna-slider::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    height: 100%;
+    border-radius: inherit;
+  }
+
+  .scarna-slider::-moz-range-track {
+    background: transparent;
+    height: 100%;
+    border-radius: inherit;
+  }
+
+  .scarna-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.75rem;
+    height: 1.25rem;
+    border-radius: 0.75rem;
+    background-color: hsl(var(--scarna-background));
+    border: 2px solid hsl(var(--scarna-slider-thumb-color, var(--scarna-primary)));
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.15);
+    cursor: pointer;
+    transition: transform 150ms ease;
+  }
+
+  .scarna-slider::-moz-range-thumb {
+    width: 1.75rem;
+    height: 1.25rem;
+    border-radius: 0.75rem;
+    background-color: hsl(var(--scarna-background));
+    border: 2px solid hsl(var(--scarna-slider-thumb-color, var(--scarna-primary)));
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.15);
+    cursor: pointer;
+    transition: transform 150ms ease;
+  }
+
+  .scarna-slider:hover::-webkit-slider-thumb { transform: scale(1.05); }
+  .scarna-slider:active::-webkit-slider-thumb { transform: scale(0.95); }
+  .scarna-slider:hover::-moz-range-thumb { transform: scale(1.05); }
+  .scarna-slider:active::-moz-range-thumb { transform: scale(0.95); }
+
+  .scarna-slider:disabled::-webkit-slider-thumb,
+  .scarna-slider:disabled::-moz-range-thumb {
+    cursor: not-allowed;
+  }
+}

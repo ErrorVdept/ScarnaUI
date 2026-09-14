@@ -1,0 +1,22 @@
+@*
+    Портал для модальных диалогов, открытых через IScarnaDialogService.ShowAsync(...).
+    Кладётся один раз в layout приложения — как ScarnaPopoverProvider, отдельно от него,
+    т.к. диалоги открываются императивно из C#, а не декларативно из разметки.
+*@
+@namespace ScarnaUI.Components.Overlays
+@using ScarnaUI.Services
+@inject ScarnaDialogService DialogService
+@implements IDisposable
+
+@foreach (var dialog in DialogService.Dialogs)
+{
+    <ScarnaDialogHost @key="dialog.Id" Reference="dialog" />
+}
+
+@code {
+    protected override void OnInitialized() => DialogService.OnChange += HandleChange;
+
+    private void HandleChange() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => DialogService.OnChange -= HandleChange;
+}

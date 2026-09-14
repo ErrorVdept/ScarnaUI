@@ -1,17 +1,17 @@
-# NorthList / NorthListItem
+# ScarnaList / ScarnaListItem
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthList.razor`
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthListItem.razor`
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthListEnums.cs` (`NorthListSelectionMode`)
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaList.razor`
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaListItem.razor`
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaListEnums.cs` (`ScarnaListSelectionMode`)
 
 ## Описание
 
 Список с опциональным выбором — как `MudList`: `SelectionMode.None` (просто
-кликабельные пункты через `NorthListItem.OnClick` — например, навигационный список в
-[NorthDrawer](drawer.md)), `.Single` (`@bind-Value`, один выбранный пункт) или
+кликабельные пункты через `ScarnaListItem.OnClick` — например, навигационный список в
+[ScarnaDrawer](drawer.md)), `.Single` (`@bind-Value`, один выбранный пункт) или
 `.Multiple` (`@bind-SelectedValues`, несколько). Дженерик — `TValue` выводится
-автоматически из значений `Value` у вложенных `NorthListItem`; если ни `Value`, ни
+автоматически из значений `Value` у вложенных `ScarnaListItem`; если ни `Value`, ни
 `SelectedValues` не заданы (типичный случай для `SelectionMode.None`), укажите
 `TValue` явно.
 
@@ -19,35 +19,35 @@
 
 ```razor
 @* Одиночный выбор *@
-<NorthList SelectionMode="NorthListSelectionMode.Single" @bind-Value="_selected">
-    <NorthListItem Value="@("inbox")">Входящие</NorthListItem>
-    <NorthListItem Value="@("sent")">Отправленные</NorthListItem>
-</NorthList>
+<ScarnaList SelectionMode="ScarnaListSelectionMode.Single" @bind-Value="_selected">
+    <ScarnaListItem Value="@("inbox")">Входящие</ScarnaListItem>
+    <ScarnaListItem Value="@("sent")">Отправленные</ScarnaListItem>
+</ScarnaList>
 
 @* Множественный выбор *@
-<NorthList SelectionMode="NorthListSelectionMode.Multiple" @bind-SelectedValues="_selectedIds">
-    <NorthListItem Value="1">Пункт 1</NorthListItem>
-    <NorthListItem Value="2">Пункт 2</NorthListItem>
-</NorthList>
+<ScarnaList SelectionMode="ScarnaListSelectionMode.Multiple" @bind-SelectedValues="_selectedIds">
+    <ScarnaListItem Value="1">Пункт 1</ScarnaListItem>
+    <ScarnaListItem Value="2">Пункт 2</ScarnaListItem>
+</ScarnaList>
 
 @* Просто кликабельный список — TValue нужно указать явно *@
-<NorthList TValue="string" SelectionMode="NorthListSelectionMode.None">
-    <NorthListItem Value="@("home")" OnClick="GoHome">Главная</NorthListItem>
-</NorthList>
+<ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None">
+    <ScarnaListItem Value="@("home")" OnClick="GoHome">Главная</ScarnaListItem>
+</ScarnaList>
 ```
 
-## Параметры NorthList
+## Параметры ScarnaList
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
-| `SelectionMode` | `NorthListSelectionMode` | `None` | `None`/`Single`/`Multiple` |
+| `SelectionMode` | `ScarnaListSelectionMode` | `None` | `None`/`Single`/`Multiple` |
 | `Value` / `ValueChanged` | `TValue?` / ... | — | Выбранное значение при `Single` |
 | `SelectedValues` / `SelectedValuesChanged` | `IReadOnlyCollection<TValue>?` / ... | — | Выбранные значения при `Multiple` |
 | `Bordered` | `bool` | `false` | Обводка списка |
-| `Density` | `NorthDensity` | `Normal` | Зарезервировано для компактного режима |
-| `ChildContent` | `RenderFragment?` | — | Набор `NorthListItem` |
+| `Density` | `ScarnaDensity` | `Normal` | Зарезервировано для компактного режима |
+| `ChildContent` | `RenderFragment?` | — | Набор `ScarnaListItem` |
 
-## Параметры NorthListItem
+## Параметры ScarnaListItem
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|

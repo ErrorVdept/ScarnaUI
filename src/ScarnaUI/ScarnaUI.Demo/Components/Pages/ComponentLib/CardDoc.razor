@@ -1,0 +1,63 @@
+@page "/componentlib/card"
+
+<DocPage Title="ScarnaCard" Lead="Контейнер-карточка с фоном content1, скруглением и опциональными заголовком/подвалом."
+         Files="@(new[] { "Components/DataDisplay/ScarnaCard.razor" })">
+
+    <DocSection Title="Базовая карточка" Code="@BasicCode">
+        <ScarnaCard>
+            Товар: Кроссовки, размер 42. Статус: в пути.
+        </ScarnaCard>
+    </DocSection>
+
+    <DocSection Title="С заголовком и подвалом" Description="HeaderContent и FooterContent рисуются с разделителями." Code="@HeaderFooterCode">
+        <ScarnaCard>
+            <HeaderContent><span class="font-semibold">Заказ #1234</span></HeaderContent>
+            <ChildContent>Товар: Кроссовки, размер 42. Статус: в пути.</ChildContent>
+            <FooterContent><ScarnaButton Size="ScarnaSize.Small">Подробнее</ScarnaButton></FooterContent>
+        </ScarnaCard>
+    </DocSection>
+
+    <DocSection Title="Bordered / Shadow / Radius" Code="@VariantsCode">
+        <ScarnaCard Bordered="true" Shadow="false">Bordered, без тени</ScarnaCard>
+        <ScarnaCard Radius="ScarnaRadius.Small">Radius.Small</ScarnaCard>
+        <ScarnaCard Radius="ScarnaRadius.None">Radius.None</ScarnaCard>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string BasicCode =
+        """
+        <ScarnaCard>
+            Товар: Кроссовки, размер 42. Статус: в пути.
+        </ScarnaCard>
+        """;
+
+    private const string HeaderFooterCode =
+        """
+        <ScarnaCard>
+            <HeaderContent><span class="font-semibold">Заказ #1234</span></HeaderContent>
+            <ChildContent>Товар: Кроссовки, размер 42. Статус: в пути.</ChildContent>
+            <FooterContent><ScarnaButton Size="ScarnaSize.Small">Подробнее</ScarnaButton></FooterContent>
+        </ScarnaCard>
+        """;
+
+    private const string VariantsCode =
+        """
+        <ScarnaCard Bordered="true" Shadow="false">Bordered, без тени</ScarnaCard>
+        <ScarnaCard Radius="ScarnaRadius.Small">Radius.Small</ScarnaCard>
+        <ScarnaCard Radius="ScarnaRadius.None">Radius.None</ScarnaCard>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Bordered", "bool", "false", "Тонкая рамка в дополнение к тени"),
+        new("Shadow", "bool", "true", "Тень под карточкой"),
+        new("Radius", "ScarnaRadius", "Large", "Радиус скругления"),
+        new("HeaderContent", "RenderFragment?", "—", "Заголовок (с разделителем снизу)"),
+        new("FooterContent", "RenderFragment?", "—", "Подвал (с разделителем сверху)"),
+        new("ChildContent", "RenderFragment?", "—", "Основное содержимое"),
+    };
+}

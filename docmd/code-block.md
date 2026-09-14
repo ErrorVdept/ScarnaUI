@@ -1,8 +1,8 @@
-# NorthCodeBlock
+# ScarnaCodeBlock
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthCodeBlock.razor`
-- `src/NorthUI/NorthUI/wwwroot/js/north/codeblock.js` (копирование — `navigator.clipboard` доступен только через JS interop)
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaCodeBlock.razor`
+- `src/ScarnaUI/ScarnaUI/wwwroot/js/scarna/codeblock.js` (копирование — `navigator.clipboard` доступен только через JS interop)
 
 ## Описание
 
@@ -25,14 +25,14 @@
 
 Используется внутри самой библиотеки документации (`ComponentLib.Shared.DocSection`
 "Показать код" и страница `/getting-started`) — то есть каждый блок кода, который вы
-видите на этом сайте, это и есть `NorthCodeBlock`.
+видите на этом сайте, это и есть `ScarnaCodeBlock`.
 
 ## Пример использования
 
 ```razor
-<NorthCodeBlock Code="dotnet add package NorthUI" />
-<NorthCodeBlock Code="@longSnippet" MaxLines="12" />
-<NorthCodeBlock Code="@longSnippet" Lines="6" ShowCopyButton="false" />
+<ScarnaCodeBlock Code="dotnet add package ScarnaUI" />
+<ScarnaCodeBlock Code="@longSnippet" MaxLines="12" />
+<ScarnaCodeBlock Code="@longSnippet" Lines="6" ShowCopyButton="false" />
 ```
 
 ## Параметры
@@ -44,5 +44,5 @@
 | `MinLines` | `int?` | — | Минимальное количество видимых строк |
 | `MaxLines` | `int?` | — | Максимальное количество видимых строк — дальше вертикальная прокрутка |
 | `Lines` | `int?` | — | Точное количество строк (вместо `MinLines`/`MaxLines`) — фиксированная высота |
-| `Radius` | `NorthRadius` | `Medium` | Радиус скругления |
+| `Radius` | `ScarnaRadius` | `Medium` | Радиус скругления |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

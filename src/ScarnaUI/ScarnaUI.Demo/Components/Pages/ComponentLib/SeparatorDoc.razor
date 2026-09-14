@@ -1,0 +1,36 @@
+@page "/componentlib/separator"
+
+<DocPage Title="ScarnaSeparator" Lead="Без содержимого — то же самое, что ScarnaDivider. С ChildContent — линия-подпись-линия."
+         Files="@(new[] { "Components/DataDisplay/ScarnaSeparator.razor" })">
+
+    <DocSection Title="Без подписи" Row="false" Code="@PlainCode">
+        <ScarnaSeparator />
+    </DocSection>
+
+    <DocSection Title="С подписью" Row="false" Code="@LabeledCode">
+        <ScarnaSeparator>или</ScarnaSeparator>
+        <ScarnaSeparator>3 сентября</ScarnaSeparator>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string PlainCode =
+        """
+        <ScarnaSeparator />
+        """;
+
+    private const string LabeledCode =
+        """
+        <ScarnaSeparator>или</ScarnaSeparator>
+        <ScarnaSeparator>3 сентября</ScarnaSeparator>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Vertical", "bool", "false", "Вертикальная линия вместо горизонтальной. Игнорируется, если задан ChildContent"),
+        new("ChildContent", "RenderFragment?", "—", "Подпись посередине линии"),
+    };
+}

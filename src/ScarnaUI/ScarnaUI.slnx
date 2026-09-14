@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ScarnaUI.Demo/ScarnaUI.Demo.csproj" />
+  <Project Path="ScarnaUI/ScarnaUI.csproj" />
+</Solution>

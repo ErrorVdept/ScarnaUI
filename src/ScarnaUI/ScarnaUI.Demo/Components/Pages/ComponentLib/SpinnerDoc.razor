@@ -1,0 +1,49 @@
+@page "/componentlib/spinner"
+
+<DocPage Title="ScarnaSpinner" Lead="Вращающееся кольцо-индикатор загрузки (indeterminate, без конкретного значения прогресса)."
+         Files="@(new[] { "Components/DataDisplay/ScarnaSpinner.razor" })">
+
+    <DocSection Title="Цвета" Code="@ColorsCode">
+        <ScarnaSpinner />
+        <ScarnaSpinner Color="ScarnaColor.Primary" />
+        <ScarnaSpinner Color="ScarnaColor.Secondary" />
+        <ScarnaSpinner Color="ScarnaColor.Success" />
+        <ScarnaSpinner Color="ScarnaColor.Warning" />
+        <ScarnaSpinner Color="ScarnaColor.Danger" />
+    </DocSection>
+
+    <DocSection Title="Размеры" Code="@SizesCode">
+        <ScarnaSpinner Size="ScarnaSize.Small" />
+        <ScarnaSpinner Size="ScarnaSize.Medium" />
+        <ScarnaSpinner Size="ScarnaSize.Large" />
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string ColorsCode =
+        """
+        <ScarnaSpinner />
+        <ScarnaSpinner Color="ScarnaColor.Primary" />
+        <ScarnaSpinner Color="ScarnaColor.Secondary" />
+        <ScarnaSpinner Color="ScarnaColor.Success" />
+        <ScarnaSpinner Color="ScarnaColor.Warning" />
+        <ScarnaSpinner Color="ScarnaColor.Danger" />
+        """;
+
+    private const string SizesCode =
+        """
+        <ScarnaSpinner Size="ScarnaSize.Small" />
+        <ScarnaSpinner Size="ScarnaSize.Medium" />
+        <ScarnaSpinner Size="ScarnaSize.Large" />
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Color", "ScarnaColor", "Primary", "Цвет кольца"),
+        new("Size", "ScarnaSize", "Medium", "Small/Medium/Large"),
+        new("Label", "string", "\"Загрузка\"", "Текст для скринридеров (aria-label), визуально не отображается"),
+    };
+}

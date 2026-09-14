@@ -1,8 +1,8 @@
-# NorthProgress
+# ScarnaProgress
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthProgress.razor`
-- `src/NorthUI/NorthUI/Styles/input.css` (`--animate-north-progress-indeterminate`, keyframes)
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaProgress.razor`
+- `src/ScarnaUI/ScarnaUI/Styles/input.css` (`--animate-scarna-progress-indeterminate`, keyframes)
 
 ## Описание
 
@@ -14,8 +14,8 @@
 ## Пример использования
 
 ```razor
-<NorthProgress Label="Загрузка файла" Value="64" ShowValue="true" />
-<NorthProgress Label="Синхронизация" Indeterminate="true" Color="NorthColor.Secondary" />
+<ScarnaProgress Label="Загрузка файла" Value="64" ShowValue="true" />
+<ScarnaProgress Label="Синхронизация" Indeterminate="true" Color="ScarnaColor.Secondary" />
 ```
 
 ## Параметры
@@ -27,5 +27,5 @@
 | `Max` | `double` | `100` | Максимум |
 | `Indeterminate` | `bool` | `false` | Бегущая полоса вместо конкретного значения |
 | `ShowValue` | `bool` | `false` | Показывать процент справа от подписи |
-| `Color` | `NorthColor` | `Primary` | Цвет заливки |
-| `Size` | `NorthSize` | `Medium` | Высота полосы: `Small` (4px) / `Medium` (8px) / `Large` (12px) |
+| `Color` | `ScarnaColor` | `Primary` | Цвет заливки |
+| `Size` | `ScarnaSize` | `Medium` | Высота полосы: `Small` (4px) / `Medium` (8px) / `Large` (12px) |

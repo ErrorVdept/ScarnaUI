@@ -1,7 +1,7 @@
-# NorthDivider
+# ScarnaDivider
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthDivider.razor`
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaDivider.razor`
 
 ## Описание
 
@@ -10,13 +10,13 @@
 ## Пример использования
 
 ```razor
-<NorthDivider />
+<ScarnaDivider />
 
-<NorthStack Row="true" Align="NorthAlign.Center">
+<ScarnaStack Row="true" Align="ScarnaAlign.Center">
     <span>Профиль</span>
-    <NorthDivider Vertical="true" Class="h-6" />
+    <ScarnaDivider Vertical="true" Class="h-6" />
     <span>Настройки</span>
-</NorthStack>
+</ScarnaStack>
 ```
 
 ## Параметры

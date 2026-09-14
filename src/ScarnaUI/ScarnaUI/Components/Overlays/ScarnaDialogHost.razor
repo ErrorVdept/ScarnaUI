@@ -1,0 +1,20 @@
+@*
+    Внутренний компонент: рендерит подложку + панель одного открытого диалога и монтирует
+    в неё пользовательский компонент (Reference.ComponentType). Не используется напрямую
+    в коде приложения — только через ScarnaDialogProvider.
+*@
+@namespace ScarnaUI.Components.Overlays
+@using ScarnaUI.Services
+@implements IAsyncDisposable
+@inject IJSRuntime JSRuntime
+
+<div class="scarna-dialog-backdrop fixed inset-0 z-[1100] flex items-center justify-center bg-overlay/50 p-4 animate-scarna-fade-in" @onclick="OnBackdropClick">
+    <div @ref="_panelElement"
+         class="@($"scarna-dialog-panel relative w-full bg-content1 text-foreground rounded-scarna-lg shadow-xl border border-divider max-h-[90vh] overflow-y-auto animate-scarna-scale-in {SizeClass}")"
+         role="dialog" aria-modal="true"
+         @onclick:stopPropagation="true">
+        <CascadingValue Value="Reference" IsFixed="true">
+            <DynamicComponent Type="Reference.ComponentType" Parameters="ComponentParameters" />
+        </CascadingValue>
+    </div>
+</div>

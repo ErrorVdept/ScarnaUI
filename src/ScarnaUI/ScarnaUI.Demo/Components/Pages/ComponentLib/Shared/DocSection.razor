@@ -1,0 +1,56 @@
+@*
+    Один живой пример внутри страницы документации: заголовок, опциональное описание,
+    сам работающий компонент (ChildContent) в карточке-подложке и кнопка "Показать код",
+    открывающая исходник примера (Code) — тот же паттерн, что у примеров на mudblazor.com.
+*@
+@namespace ScarnaUI.Demo.Components.Pages.ComponentLib.Shared
+
+<section>
+    <div class="mb-3 flex items-baseline justify-between gap-4">
+        <div>
+            <h2 class="text-lg font-semibold">@Title</h2>
+            @if (!string.IsNullOrEmpty(Description))
+            {
+                <p class="mt-1 text-sm text-foreground/60">@Description</p>
+            }
+        </div>
+        @if (!string.IsNullOrEmpty(Code))
+        {
+            <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _showCode = !_showCode">
+                @(_showCode ? "Скрыть код" : "Показать код")
+            </ScarnaButton>
+        }
+    </div>
+
+    <ScarnaCard>
+        <div class="@DemoClasses">
+            @ChildContent
+        </div>
+    </ScarnaCard>
+
+    @if (_showCode && !string.IsNullOrEmpty(Code))
+    {
+        <ScarnaCodeBlock Code="@Code" MaxLines="20" Class="mt-2" />
+    }
+</section>
+
+@code {
+    private bool _showCode;
+
+    [Parameter, EditorRequired] public string Title { get; set; } = string.Empty;
+
+    [Parameter] public string? Description { get; set; }
+
+    /// <summary>Исходник примера, показываемый по кнопке "Показать код". Без него кнопка не рисуется.</summary>
+    [Parameter] public string? Code { get; set; }
+
+    /// <summary>Живой пример — обычно один или несколько компонентов ScarnaUI.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Растянуть содержимое на всю ширину и по флекс-ряду с переносом (по умолчанию — да, подходит для большинства примеров).</summary>
+    [Parameter] public bool Row { get; set; } = true;
+
+    private string DemoClasses => Row
+        ? "flex flex-wrap items-center gap-4"
+        : "flex flex-col gap-4";
+}

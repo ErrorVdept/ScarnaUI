@@ -1,0 +1,99 @@
+@page "/componentlib/table"
+
+<DocPage Title="ScarnaTable" Lead="Обёртка стилизации над обычной HTML-таблицей — аналог MudSimpleTable. Разметку thead/tbody вы пишете сами."
+         Files="@(new[] { "Components/DataDisplay/ScarnaTable.razor" })">
+
+    <DocSection Title="Базовое использование" Description="Hover — подсветка строки при наведении." Row="false" Code="@BasicCode">
+        <ScarnaTable Hover="true">
+            <thead>
+                <tr><th>Имя</th><th>Email</th><th>Статус</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Иван Петров</td><td>ivan@example.com</td><td><ScarnaChip Color="ScarnaColor.Success" Size="ScarnaSize.Small">Активен</ScarnaChip></td></tr>
+                <tr><td>Анна Смирнова</td><td>anna@example.com</td><td><ScarnaChip Color="ScarnaColor.Warning" Size="ScarnaSize.Small">Ожидает</ScarnaChip></td></tr>
+                <tr><td>Пётр Иванов</td><td>petr@example.com</td><td><ScarnaChip Color="ScarnaColor.Default" Size="ScarnaSize.Small">Неактивен</ScarnaChip></td></tr>
+            </tbody>
+        </ScarnaTable>
+    </DocSection>
+
+    <DocSection Title="Striped и Dense" Row="false" Code="@StripedCode">
+        <ScarnaTable Striped="true" Density="ScarnaDensity.Dense">
+            <thead>
+                <tr><th>Товар</th><th>Кол-во</th><th>Цена</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Кроссовки</td><td>1</td><td>4 990 ₽</td></tr>
+                <tr><td>Носки</td><td>3</td><td>590 ₽</td></tr>
+                <tr><td>Шнурки</td><td>2</td><td>190 ₽</td></tr>
+            </tbody>
+        </ScarnaTable>
+    </DocSection>
+
+    <DocSection Title="DividedColumns" Description="Вертикальные разделители между колонками (кроме последней — там и так край контейнера)." Row="false" Code="@DividedCode">
+        <ScarnaTable DividedColumns="true">
+            <thead>
+                <tr><th>Товар</th><th>Кол-во</th><th>Цена</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Кроссовки</td><td>1</td><td>4 990 ₽</td></tr>
+                <tr><td>Носки</td><td>3</td><td>590 ₽</td></tr>
+                <tr><td>Шнурки</td><td>2</td><td>190 ₽</td></tr>
+            </tbody>
+        </ScarnaTable>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string BasicCode =
+        """
+        <ScarnaTable Hover="true">
+            <thead>
+                <tr><th>Имя</th><th>Email</th><th>Статус</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Иван Петров</td>
+                    <td>ivan@example.com</td>
+                    <td><ScarnaChip Color="ScarnaColor.Success" Size="ScarnaSize.Small">Активен</ScarnaChip></td>
+                </tr>
+            </tbody>
+        </ScarnaTable>
+        """;
+
+    private const string StripedCode =
+        """
+        <ScarnaTable Striped="true" Density="ScarnaDensity.Dense">
+            <thead>
+                <tr><th>Товар</th><th>Кол-во</th><th>Цена</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Кроссовки</td><td>1</td><td>4 990 ₽</td></tr>
+            </tbody>
+        </ScarnaTable>
+        """;
+
+    private const string DividedCode =
+        """
+        <ScarnaTable DividedColumns="true">
+            <thead>
+                <tr><th>Товар</th><th>Кол-во</th><th>Цена</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Кроссовки</td><td>1</td><td>4 990 ₽</td></tr>
+            </tbody>
+        </ScarnaTable>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Hover", "bool", "true", "Подсветка строки <tbody> при наведении"),
+        new("Striped", "bool", "false", "Зебра — чередующийся фон чётных строк"),
+        new("Bordered", "bool", "true", "Обводка контейнера таблицы"),
+        new("DividedColumns", "bool", "false", "Вертикальные разделители между колонками (кроме последней)"),
+        new("Density", "ScarnaDensity", "Normal", "Dense — компактные отступы ячеек, для больших наборов данных"),
+        new("ChildContent", "RenderFragment?", "—", "Произвольная разметка thead/tbody"),
+    };
+}

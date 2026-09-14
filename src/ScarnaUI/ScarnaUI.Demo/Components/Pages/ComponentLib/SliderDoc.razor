@@ -1,0 +1,64 @@
+@page "/componentlib/slider"
+
+<DocPage Title="ScarnaSlider" Lead="Слайдер числового значения на основе нативного input type=range."
+         Files="@(new[] { "Components/Forms/ScarnaSlider.razor" })">
+
+    <DocSection Title="Интерактивный пример" Code="@InteractiveCode" Row="false">
+        <ScarnaSlider Label="Громкость" @bind-Value="_volume" Min="0" Max="100" ShowValue="true" />
+        <span class="text-sm text-foreground/60">Значение: @_volume</span>
+    </DocSection>
+
+    <DocSection Title="Цвета" Code="@ColorsCode" Row="false">
+        <ScarnaSlider Label="Primary" Value="70" Color="ScarnaColor.Primary" ShowValue="true" />
+        <ScarnaSlider Label="Success" Value="45" Color="ScarnaColor.Success" ShowValue="true" />
+        <ScarnaSlider Label="Danger" Value="20" Color="ScarnaColor.Danger" ShowValue="true" />
+    </DocSection>
+
+    <DocSection Title="Состояния" Code="@StatesCode" Row="false">
+        <ScarnaSlider Label="ReadOnly" Value="65" ReadOnly="true" />
+        <ScarnaSlider Label="Disabled" Value="40" Disabled="true" />
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private double _volume = 40;
+
+    private const string InteractiveCode =
+        """
+        <ScarnaSlider Label="Громкость" @bind-Value="_volume" Min="0" Max="100" ShowValue="true" />
+        <span class="text-sm text-foreground/60">Значение: @_volume</span>
+
+        @code {
+            private double _volume = 40;
+        }
+        """;
+
+    private const string ColorsCode =
+        """
+        <ScarnaSlider Label="Primary" Value="70" Color="ScarnaColor.Primary" ShowValue="true" />
+        <ScarnaSlider Label="Success" Value="45" Color="ScarnaColor.Success" ShowValue="true" />
+        <ScarnaSlider Label="Danger" Value="20" Color="ScarnaColor.Danger" ShowValue="true" />
+        """;
+
+    private const string StatesCode =
+        """
+        <ScarnaSlider Label="ReadOnly" Value="65" ReadOnly="true" />
+        <ScarnaSlider Label="Disabled" Value="40" Disabled="true" />
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Value / ValueChanged / ValueExpression", "double", "—", "Механика @bind-Value"),
+        new("Label", "string?", "—", "Подпись над слайдером"),
+        new("Min / Max", "double", "0 / 100", "Диапазон значений"),
+        new("Step", "double", "1", "Шаг"),
+        new("Disabled", "bool", "false", "—"),
+        new("ReadOnly", "bool", "false", "Игнорирует ввод (мышь/тач/клавиатура), но не тускнеет"),
+        new("ShowValue", "bool", "false", "Показывать текущее значение справа от подписи"),
+        new("Format", "string", "\"0.##\"", ".NET numeric format string для отображаемого значения"),
+        new("Color", "ScarnaColor", "Primary", "Цвет ползунка и залитой части дорожки"),
+    };
+}

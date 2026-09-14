@@ -1,11 +1,11 @@
-# NorthSeparator
+# ScarnaSeparator
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthSeparator.razor`
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaSeparator.razor`
 
 ## Описание
 
-Разделитель. Без содержимого — то же самое, что [NorthDivider](divider.md) (тонкая
+Разделитель. Без содержимого — то же самое, что [ScarnaDivider](divider.md) (тонкая
 линия цвета `divider`). С `ChildContent` — линия-подпись-линия ("или", дата и т.п.).
 Оставлен отдельным компонентом (а не параметром у Divider), потому что с подписью
 меняется сама разметка (`flex` из трёх частей вместо одного `div`).
@@ -13,8 +13,8 @@
 ## Пример использования
 
 ```razor
-<NorthSeparator />
-<NorthSeparator>или</NorthSeparator>
+<ScarnaSeparator />
+<ScarnaSeparator>или</ScarnaSeparator>
 ```
 
 ## Параметры

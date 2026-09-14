@@ -1,8 +1,8 @@
-# NorthTabs / NorthTabPanel
+# ScarnaTabs / ScarnaTabPanel
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/Navigation/NorthTabs.razor`
-- `src/NorthUI/NorthUI/Components/Navigation/NorthTabPanel.razor`
+- `src/ScarnaUI/ScarnaUI/Components/Navigation/ScarnaTabs.razor`
+- `src/ScarnaUI/ScarnaUI/Components/Navigation/ScarnaTabPanel.razor`
 
 ## Описание
 
@@ -12,42 +12,42 @@ MudBlazor (см. `INFO.md`): у `MudTabs` активная вкладка под
 полоской `.mud-tab-slider`, и её нельзя перекрасить в фон без переписывания разметки
 самого компонента. Здесь разметка своя, поэтому pill — обычный CSS-класс.
 
-`NorthTabPanel` не рисует свой заголовок — заголовки (кнопки с `Text`) рисует сам
-`NorthTabs`, опрашивая зарегистрированные панели. Видна только активная панель
+`ScarnaTabPanel` не рисует свой заголовок — заголовки (кнопки с `Text`) рисует сам
+`ScarnaTabs`, опрашивая зарегистрированные панели. Видна только активная панель
 (неактивные не рендерятся — при переключении вкладки её внутреннее состояние сбрасывается).
 
 ## Пример использования
 
 ```razor
-<NorthTabs @bind-SelectedIndex="_tab">
-    <NorthTabPanel Text="Профиль">
+<ScarnaTabs @bind-SelectedIndex="_tab">
+    <ScarnaTabPanel Text="Профиль">
         <ProfileForm />
-    </NorthTabPanel>
-    <NorthTabPanel Text="Настройки">
+    </ScarnaTabPanel>
+    <ScarnaTabPanel Text="Настройки">
         <SettingsForm />
-    </NorthTabPanel>
-</NorthTabs>
+    </ScarnaTabPanel>
+</ScarnaTabs>
 
 @code {
     private int _tab;
 }
 ```
 
-## Параметры NorthTabs
+## Параметры ScarnaTabs
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
 | `SelectedIndex` / `SelectedIndexChanged` | `int` | `0` | Индекс активной вкладки, поддерживает `@bind-SelectedIndex` |
-| `Justify` | `NorthJustify` | `Start` | К какому краю прижимать заголовки (заметно, только если `FullWidth="false"`) — как AlignItems в MudBlazor |
+| `Justify` | `ScarnaJustify` | `Start` | К какому краю прижимать заголовки (заметно, только если `FullWidth="false"`) — как AlignItems в MudBlazor |
 | `FullWidth` | `bool` | `false` | Растянуть заголовки на всю ширину дорожки поровну |
-| `ChildContent` | `RenderFragment?` | — | Набор `<NorthTabPanel>` |
+| `ChildContent` | `RenderFragment?` | — | Набор `<ScarnaTabPanel>` |
 
-## Параметры NorthTabPanel
+## Параметры ScarnaTabPanel
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
 | `Text` | `string` | — | **Обязательный.** Текст заголовка вкладки |
 | `ChildContent` | `RenderFragment?` | — | Содержимое, видимое только когда вкладка активна |
 
-`NorthTabPanel` обязан использоваться внутри `NorthTabs` — иначе бросает исключение
+`ScarnaTabPanel` обязан использоваться внутри `ScarnaTabs` — иначе бросает исключение
 при инициализации.

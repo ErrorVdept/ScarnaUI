@@ -1,0 +1,99 @@
+@page "/componentlib/select"
+
+<DocPage Title="ScarnaSelect" Lead="Выпадающий список с одиночным выбором на базе ScarnaPopover, с поддержкой @@bind-Value."
+         Files="@(new[] { "Components/Forms/ScarnaSelect.razor", "Components/Forms/ScarnaSelectItem.razor" })">
+
+    <DocSection Title="Интерактивный пример" Code="@InteractiveCode">
+        <ScarnaSelect Label="Страна" @bind-Value="_country" Placeholder="Выберите страну">
+            <ScarnaSelectItem Value="@("ru")" Text="Россия" />
+            <ScarnaSelectItem Value="@("kz")" Text="Казахстан" />
+            <ScarnaSelectItem Value="@("by")" Text="Беларусь" />
+        </ScarnaSelect>
+        <span class="text-sm text-foreground/60">Значение: @_country</span>
+    </DocSection>
+
+    <DocSection Title="Варианты и размеры" Code="@VariantsCode">
+        <ScarnaSelect TValue="string" Label="Flat" Variant="ScarnaVariant.Flat" Placeholder="Период" Class="w-48">
+            <ScarnaSelectItem Value="@("day")" Text="День" />
+            <ScarnaSelectItem Value="@("week")" Text="Неделя" />
+            <ScarnaSelectItem Value="@("month")" Text="Месяц" />
+        </ScarnaSelect>
+        <ScarnaSelect TValue="string" Label="Small" Size="ScarnaSize.Small" Placeholder="Период" Class="w-40">
+            <ScarnaSelectItem Value="@("day")" Text="День" />
+            <ScarnaSelectItem Value="@("week")" Text="Неделя" />
+        </ScarnaSelect>
+    </DocSection>
+
+    <DocSection Title="Состояния" Code="@StatesCode">
+        <ScarnaSelect TValue="string" Label="Только чтение" ReadOnly="true" Placeholder="Период" Class="w-48">
+            <ScarnaSelectItem Value="@("day")" Text="День" />
+        </ScarnaSelect>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+    <DocApiTable Title="ScarnaSelectItem" Rows="@_itemRows" />
+
+</DocPage>
+
+@code {
+    private string? _country;
+
+    private const string InteractiveCode =
+        """
+        <ScarnaSelect Label="Страна" @bind-Value="_country" Placeholder="Выберите страну">
+            <ScarnaSelectItem Value="@("ru")" Text="Россия" />
+            <ScarnaSelectItem Value="@("kz")" Text="Казахстан" />
+            <ScarnaSelectItem Value="@("by")" Text="Беларусь" />
+        </ScarnaSelect>
+        <span class="text-sm text-foreground/60">Значение: @_country</span>
+
+        @code {
+            private string? _country;
+        }
+        """;
+
+    private const string VariantsCode =
+        """
+        <ScarnaSelect Label="Flat" Variant="ScarnaVariant.Flat" Placeholder="Период">
+            <ScarnaSelectItem Value="@("day")" Text="День" />
+            <ScarnaSelectItem Value="@("week")" Text="Неделя" />
+            <ScarnaSelectItem Value="@("month")" Text="Месяц" />
+        </ScarnaSelect>
+        <ScarnaSelect Label="Small" Size="ScarnaSize.Small" Placeholder="Период">
+            <ScarnaSelectItem Value="@("day")" Text="День" />
+            <ScarnaSelectItem Value="@("week")" Text="Неделя" />
+        </ScarnaSelect>
+        """;
+
+    private const string StatesCode =
+        """
+        <ScarnaSelect Label="Только чтение" ReadOnly="true" Placeholder="Период">
+            <ScarnaSelectItem Value="@("day")" Text="День" />
+        </ScarnaSelect>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Value / ValueChanged / ValueExpression", "TValue?", "—", "Механика @bind-Value"),
+        new("Label", "string?", "—", "Подпись над полем"),
+        new("Placeholder", "string?", "\"Выберите...\"", "Текст, пока ничего не выбрано"),
+        new("HelperText", "string?", "—", "Подсказка под полем"),
+        new("ErrorText / Error", "—", "—", "См. getting-started.md"),
+        new("ReadOnly", "bool", "false", "Запрещает открытие списка, но не тускнеет (в отличие от Disabled)"),
+        new("Variant", "ScarnaVariant", "Bordered", "Bordered/Flat"),
+        new("Bordered", "bool", "true", "Показывать ли контур поля"),
+        new("Size", "ScarnaSize", "Medium", "Small/Medium/Large"),
+        new("Density", "ScarnaDensity", "Normal", "Dense — компактное поле"),
+        new("Radius", "ScarnaRadius", "Medium", "Радиус поля"),
+        new("Position", "ScarnaPosition", "BottomStart", "Позиция выпадающего списка"),
+        new("IsParentFullSize", "bool", "true", "Растянуть список на ширину поля (не уже min-w-[220px])"),
+        new("ChildContent", "RenderFragment?", "—", "Набор ScarnaSelectItem"),
+    };
+
+    private readonly List<DocApiRow> _itemRows = new()
+    {
+        new("Value", "TValue", "—", "Обязательный. Значение пункта"),
+        new("Text", "string", "—", "Обязательный. Текст пункта — используется и в списке, и как подпись после выбора"),
+        new("ChildContent", "RenderFragment?", "—", "Кастомная разметка пункта вместо простого текста"),
+    };
+}

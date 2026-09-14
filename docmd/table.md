@@ -1,12 +1,12 @@
-# NorthTable
+# ScarnaTable
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthTable.razor`
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaTable.razor`
 
 ## Описание
 
 Обёртка стилизации над обычной HTML-таблицей — аналог `MudSimpleTable`. Разметку
-(`<thead>`/`<tbody>`/`<tr>`/`<th>`/`<td>`) вы пишете сами как обычный HTML — NorthTable
+(`<thead>`/`<tbody>`/`<tr>`/`<th>`/`<td>`) вы пишете сами как обычный HTML — ScarnaTable
 не подменяет её своими компонентами (в отличие от `MudTable`), а лишь добавляет
 оформление в духе HeroUI Table через Tailwind descendant-селекторы
 (`[&_thead_th]:...`, `[&_tbody_tr:hover]:...`) на обёртке.
@@ -14,7 +14,7 @@
 ## Пример использования
 
 ```razor
-<NorthTable Hover="true" Striped="false">
+<ScarnaTable Hover="true" Striped="false">
     <thead>
         <tr><th>Имя</th><th>Email</th><th>Статус</th></tr>
     </thead>
@@ -22,10 +22,10 @@
         <tr>
             <td>Иван Петров</td>
             <td>ivan@example.com</td>
-            <td><NorthChip Color="NorthColor.Success" Size="NorthSize.Small">Активен</NorthChip></td>
+            <td><ScarnaChip Color="ScarnaColor.Success" Size="ScarnaSize.Small">Активен</ScarnaChip></td>
         </tr>
     </tbody>
-</NorthTable>
+</ScarnaTable>
 ```
 
 ## Параметры
@@ -36,7 +36,7 @@
 | `Striped` | `bool` | `false` | Зебра — чередующийся фон чётных строк |
 | `Bordered` | `bool` | `true` | Обводка контейнера таблицы |
 | `DividedColumns` | `bool` | `false` | Вертикальные разделители между колонками (кроме последней) |
-| `Density` | `NorthDensity` | `Normal` | `Dense` — компактные отступы ячеек, для больших наборов данных |
+| `Density` | `ScarnaDensity` | `Normal` | `Dense` — компактные отступы ячеек, для больших наборов данных |
 | `ChildContent` | `RenderFragment?` | — | Произвольная разметка `<thead>`/`<tbody>` |
 
 ## Технический нюанс

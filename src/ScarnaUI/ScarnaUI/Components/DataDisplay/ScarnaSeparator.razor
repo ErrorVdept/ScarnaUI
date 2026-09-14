@@ -1,0 +1,40 @@
+@*
+    Разделитель — как ScarnaDivider, но умеет показать подпись посередине линии
+    ("или", "12 июня" и т.п.). Без ChildContent ведёт себя как обычный ScarnaDivider.
+
+    <ScarnaSeparator />
+    <ScarnaSeparator>или</ScarnaSeparator>
+*@
+@namespace ScarnaUI.Components.DataDisplay
+@inherits ScarnaComponentBase
+
+@if (ChildContent is null)
+{
+    <div class="@LineClasses" style="@Style" role="separator" aria-orientation="@(Vertical ? "vertical" : "horizontal")" @attributes="UserAttributes"></div>
+}
+else
+{
+    <div class="@WrapperClasses" style="@Style" role="separator" aria-orientation="horizontal" @attributes="UserAttributes">
+        <span class="h-px flex-1 bg-divider"></span>
+        <span class="shrink-0 text-xs text-foreground/50">@ChildContent</span>
+        <span class="h-px flex-1 bg-divider"></span>
+    </div>
+}
+
+@code {
+    /// <summary>Вертикальная линия вместо горизонтальной. Игнорируется, если задан ChildContent (подпись имеет смысл только на горизонтальном разделителе).</summary>
+    [Parameter] public bool Vertical { get; set; }
+
+    /// <summary>Подпись посередине линии — если задана, компонент рисуется как линия-подпись-линия.</summary>
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string LineClasses => CssBuilder.Default("scarna-separator shrink-0 bg-divider")
+        .AddClass("w-full h-px", !Vertical)
+        .AddClass("h-full w-px", Vertical)
+        .AddClass(Class)
+        .ToString();
+
+    private string WrapperClasses => CssBuilder.Default("scarna-separator flex items-center gap-3")
+        .AddClass(Class)
+        .ToString();
+}

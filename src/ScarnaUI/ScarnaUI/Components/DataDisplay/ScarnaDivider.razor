@@ -1,0 +1,21 @@
+@*
+    Тонкая разделительная линия.
+
+    <ScarnaDivider />
+    <ScarnaDivider Vertical Class="h-6" />
+*@
+@namespace ScarnaUI.Components.DataDisplay
+@inherits ScarnaComponentBase
+
+<div class="@Classes" style="@Style" role="separator" aria-orientation="@(Vertical ? "vertical" : "horizontal")" @attributes="UserAttributes"></div>
+
+@code {
+    /// <summary>Вертикальная линия вместо горизонтальной (нужна явная высота через Class/Style у родителя).</summary>
+    [Parameter] public bool Vertical { get; set; }
+
+    private string Classes => CssBuilder.Default("scarna-divider shrink-0 bg-divider")
+        .AddClass("w-full h-px", !Vertical)
+        .AddClass("h-full w-px", Vertical)
+        .AddClass(Class)
+        .ToString();
+}

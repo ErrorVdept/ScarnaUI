@@ -2,11 +2,11 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "northui-demo",
+      "name": "scarnaui-demo",
       "runtimeExecutable": "dotnet",
-      "runtimeArgs": ["run", "--project", "src/NorthUI/NorthUI.Demo/NorthUI.Demo.csproj", "--launch-profile", "http"],
+      "runtimeArgs": ["run", "--project", "src/ScarnaUI/ScarnaUI.Demo/ScarnaUI.Demo.csproj", "--launch-profile", "http"],
       "port": 5074,
-      "url": "http://northui-demo.dev.localhost:5074"
+      "url": "http://scarnaui-demo.dev.localhost:5074"
     }
   ]
 }

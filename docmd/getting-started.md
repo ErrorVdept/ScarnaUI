@@ -1,35 +1,57 @@
 # Установка и базовые классы
 
 ## Файлы
-- `src/NorthUI/NorthUI/NorthUI.csproj` — сама библиотека (Razor Class Library)
-- `src/NorthUI/NorthUI/Components/Base/NorthComponentBase.cs`
-- `src/NorthUI/NorthUI/Components/Base/NorthFormComponentBase.cs`
-- `src/NorthUI/NorthUI/Components/Base/CssBuilder.cs`
-- `src/NorthUI/NorthUI/Components/Base/NorthColorVariantClasses.cs`
-- `src/NorthUI/NorthUI/Components/Base/NorthEnums.cs` (`NorthColor`, `NorthSize`, `NorthRadius`, `NorthVariant`)
-- `src/NorthUI/NorthUI/Services/NorthUiServiceCollectionExtensions.cs`
-- `src/NorthUI/NorthUI/_Imports.razor`
+- `src/ScarnaUI/ScarnaUI/ScarnaUI.csproj` — сама библиотека (Razor Class Library)
+- `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaComponentBase.cs`
+- `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaFormComponentBase.cs`
+- `src/ScarnaUI/ScarnaUI/Components/Base/CssBuilder.cs`
+- `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaColorVariantClasses.cs`
+- `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaEnums.cs` (`ScarnaColor`, `ScarnaSize`, `ScarnaRadius`, `ScarnaVariant`)
+- `src/ScarnaUI/ScarnaUI/Services/ScarnaUiServiceCollectionExtensions.cs`
+- `src/ScarnaUI/ScarnaUI/_Imports.razor`
 
 ## Подключение к проекту
 
-1. Добавить ссылку на проект NorthUI (`dotnet add reference ...NorthUI.csproj`).
+Два способа: `ProjectReference` (ниже, обычный способ для разработки внутри
+монорепозитория) или локальный NuGet-пакет (`dotnet add package` — удобно, если
+проект-потребитель лежит отдельно и не должен видеть исходники ScarnaUI). Для
+второго — `./pack-local.ps1` в корне репозитория собирает `.nupkg`, кладёт его
+в `./nupkgs` и регистрирует эту папку как локальный источник NuGet (один раз):
+
+```bash
+./pack-local.ps1                     # версия по умолчанию 1.0.0-local
+./pack-local.ps1 -Version 1.2.3      # конкретная версия
+```
+
+Версия по умолчанию **фиксированная** (не новая на каждый запуск) — специально:
+NuGet кэширует пакеты по номеру версии в `~/.nuget/packages`, и с плавающей
+версией пришлось бы вручную переставлять её у потребителя после каждой
+пересборки. Вместо этого скрипт сам чистит в этом кэше именно версию
+`scarnaui/<version>` при каждом запуске — так `dotnet restore` у потребителя
+после `./pack-local.ps1` всегда подтягивает свежую сборку под тем же номером:
+
+```bash
+dotnet add package ScarnaUI --version 1.0.0-local --source ScarnaUILocal
+```
+
+1. Добавить ссылку на проект ScarnaUI (`dotnet add reference ...ScarnaUI.csproj`).
 2. В `Program.cs` зарегистрировать сервисы:
 
 ```csharp
-builder.Services.AddNorthUI(); // диалоги + тосты
+builder.Services.AddScarnaUI(); // диалоги + тосты
 ```
 
 3. В `App.razor` подключить собранный CSS (лежит в самой библиотеке, приезжает как
-   статический ресурс RCL под `_content/NorthUI/...`):
+   статический ресурс RCL под `_content/ScarnaUI/...`):
 
 ```html
-<link rel="stylesheet" href="_content/NorthUI/css/north/north.css" />
+<link rel="stylesheet" href="_content/ScarnaUI/css/scarna/scarna.css" />
 ```
 
 3.1. **Обязательно** — в `App.razor`, в `<head>`, до `<ResourcePreloader />`/содержимого,
    добавить синхронный скрипт против "вспышки светлым" (FOUC). Без него страница на
    первом кадре всегда рисуется светлой (CSS-переменные по умолчанию — светлая тема),
-   и только после того, как Blazor Server подключит circuit и у `NorthThemeProvider`
+   и только после того, как Blazor Server подключит circuit и у `ScarnaThemeProvider`
    отработает первый `OnAfterRenderAsync` (JS round-trip), тёмная тема реально
    применяется — если у пользователя выбрана тёмная, будет заметная вспышка светлым
    перед переключением:
@@ -38,7 +60,7 @@ builder.Services.AddNorthUI(); // диалоги + тосты
 <script>
     (function () {
         try {
-            var stored = localStorage.getItem("north-theme-mode");
+            var stored = localStorage.getItem("scarna-theme-mode");
             var isDark = stored === "dark"
                 || (stored !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
             document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
@@ -48,34 +70,35 @@ builder.Services.AddNorthUI(); // диалоги + тосты
 </script>
 ```
 
-   Ключ `localStorage` (`"north-theme-mode"`) — тот же, что использует `theme.js`,
-   поэтому дальнейшее применение темы в `NorthThemeProvider` просто подтверждает уже
+   Ключ `localStorage` (`"scarna-theme-mode"`) — тот же, что использует `theme.js`,
+   поэтому дальнейшее применение темы в `ScarnaThemeProvider` просто подтверждает уже
    выставленное значение, а не меняет его. Готовый пример — в
-   `src/NorthUI/NorthUI.Demo/Components/App.razor`.
+   `src/ScarnaUI/ScarnaUI.Demo/Components/App.razor`.
 
 4. В `MainLayout.razor` обернуть содержимое провайдерами (порядок важен — Popover должен
    оборачивать `@Body`, Dialog/Snackbar можно разместить рядом):
 
 ```razor
-<NorthThemeProvider>
-    <NorthPopoverProvider>
+<ScarnaThemeProvider>
+    <ScarnaPopoverProvider>
         @Body
-    </NorthPopoverProvider>
+    </ScarnaPopoverProvider>
 
-    <NorthDialogProvider />
-    <NorthSnackbarProvider />
-</NorthThemeProvider>
+    <ScarnaDialogProvider />
+    <ScarnaSnackbarProvider />
+</ScarnaThemeProvider>
 ```
 
 5. В `_Imports.razor` своего проекта добавить `@using` на нужные неймспейсы
-   (`NorthUI.Components.Base`, `.Theme`, `.Layout`, `.Actions`, `.Forms`, `.Navigation`,
-   `.DataDisplay`, `.Overlays`, `NorthUI.Services`).
+   (`ScarnaUI.Components.Base`, `.Theme`, `.Layout`, `.Actions`, `.Forms`, `.Navigation`,
+   `.DataDisplay`, `.Overlays`, `ScarnaUI.Services`).
 
-Пересборка CSS самой библиотеки (нужна только при разработке NorthUI, не в проектах-
-потребителях) — см. `src/NorthUI/NorthUI/build-css.ps1` и раздел про сборку в
-[theme-provider.md](theme-provider.md).
+Пересборка CSS самой библиотеки (нужна только при разработке ScarnaUI, не в проектах-
+потребителях) происходит автоматически при каждой сборке `ScarnaUI.csproj` — см.
+`src/ScarnaUI/ScarnaUI/build-css.ps1`, MSBuild-таргет `BuildTailwindCss` в конце
+`ScarnaUI.csproj` и раздел про сборку в [theme-provider.md](theme-provider.md).
 
-## NorthComponentBase
+## ScarnaComponentBase
 
 Базовый класс **всех** компонентов библиотеки. Даёт три параметра, которые Blazor-
 разработчик ожидает от любого UI-компонента (как в MudBlazor):
@@ -89,15 +112,15 @@ builder.Services.AddNorthUI(); // диалоги + тосты
 Компонент-наследник собирает свои классы через `CssBuilder`:
 
 ```csharp
-private string Classes => CssBuilder.Default("north-card flex flex-col")
+private string Classes => CssBuilder.Default("scarna-card flex flex-col")
     .AddClass("border border-divider", Bordered)   // класс только если Bordered == true
     .AddClass(Class)                                 // пользовательские классы — последними
     .ToString();
 ```
 
-## NorthFormComponentBase\<T\>
+## ScarnaFormComponentBase\<T\>
 
-Базовый класс для полей ввода (`NorthInput`, `NorthCheckbox`, `NorthSwitch` и т.д.).
+Базовый класс для полей ввода (`ScarnaInput`, `ScarnaCheckbox`, `ScarnaSwitch` и т.д.).
 Добавляет то, что нужно любому полю формы:
 
 - `Value` / `ValueChanged` / `ValueExpression` — механика `@bind-Value` "из коробки";
@@ -117,9 +140,9 @@ private string Classes => CssBuilder.Default("north-card flex flex-col")
 
 | Класс | Где используется | Эффект |
 |---|---|---|
-| `animate-north-fade-in` | подложка диалога, поповер/тултип | плавное появление (opacity) |
-| `animate-north-scale-in` | панель диалога | появление с лёгким увеличением (0.95 → 1) |
-| `animate-north-slide-up-in` | тост | появление со сдвигом снизу вверх |
+| `animate-scarna-fade-in` | подложка диалога, поповер/тултип | плавное появление (opacity) |
+| `animate-scarna-scale-in` | панель диалога | появление с лёгким увеличением (0.95 → 1) |
+| `animate-scarna-slide-up-in` | тост | появление со сдвигом снизу вверх |
 
 Уважают `prefers-reduced-motion: reduce` (анимация схлопывается до 0.01мс). Для
 поповера/тултипа класс добавляется не в разметке, а из `popover.js` в момент,
@@ -136,14 +159,14 @@ SignalR round-trip) анимация может "проиграться" ещё 
 культуру ОС — на сервере с русской локалью `$"{0.5}rem"` даст `"0,5rem"`
 (запятая вместо точки), это невалидный CSS, и браузer **молча** отбрасывает всё
 объявление целиком — визуально это выглядит как "пропавшие" отступы/паддинги.
-Так уже было сломано в `NorthStack`/`NorthGrid` (расчёт `gap` из `Spacing`) —
+Так уже было сломано в `ScarnaStack`/`ScarnaGrid` (расчёт `gap` из `Spacing`) —
 исправлено на `(Spacing * 0.25).ToString(CultureInfo.InvariantCulture)`. Класс-строки
 (`"bg-primary"` и т.п.) эта проблема не касается — они не содержат чисел.
 
-## NorthColorVariantClasses
+## ScarnaColorVariantClasses
 
-Общая таблица "цвет × вариант заливки" (`NorthColor` × `NorthVariant`), которой
-пользуются `NorthButton`, `NorthChip`, `NorthBadge`, `NorthAvatar`. Классы в ней
+Общая таблица "цвет × вариант заливки" (`ScarnaColor` × `ScarnaVariant`), которой
+пользуются `ScarnaButton`, `ScarnaChip`, `ScarnaBadge`, `ScarnaAvatar`. Классы в ней
 записаны **буквально** (не через `$"bg-{color}"`) — так их видит статический
 анализатор Tailwind при сборке CSS. Подробнее про этот нюанс — в
 [theme-provider.md](theme-provider.md#почему-классы-написаны-буквально).

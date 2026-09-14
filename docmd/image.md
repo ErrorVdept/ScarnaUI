@@ -1,7 +1,7 @@
-# NorthImage
+# ScarnaImage
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthImage.razor`
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaImage.razor`
 
 ## Описание
 
@@ -11,7 +11,7 @@
 ## Пример использования
 
 ```razor
-<NorthImage Src="/img/cover.jpg" Alt="Обложка" Radius="NorthRadius.Large" Class="h-40 w-full" />
+<ScarnaImage Src="/img/cover.jpg" Alt="Обложка" Radius="ScarnaRadius.Large" Class="h-40 w-full" />
 ```
 
 ## Параметры
@@ -20,7 +20,7 @@
 |---|---|---|---|
 | `Src` | `string` | — | **Обязательный.** URL изображения |
 | `Alt` | `string?` | — | — |
-| `Radius` | `NorthRadius` | `Large` | Радиус скругления |
+| `Radius` | `ScarnaRadius` | `Large` | Радиус скругления |
 | `Bordered` | `bool` | `false` | Обводка |
 | `Lazy` | `bool` | `true` | Отложенная загрузка (`loading="lazy"`) |
 | `Fallback` | `RenderFragment?` | — | Что показать вместо изображения, если оно не загрузилось (по умолчанию — иконка-заглушка) |

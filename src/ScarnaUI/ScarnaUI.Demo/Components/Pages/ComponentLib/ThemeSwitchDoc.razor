@@ -1,0 +1,28 @@
+@page "/componentlib/theme-switch"
+
+<DocPage Title="ScarnaThemeSwitch" Lead="Готовая кнопка переключения светлой/тёмной темы — сама читает и меняет тему через каскадный ScarnaThemeContext."
+         Files="@(new[] { "Components/Theme/ScarnaThemeSwitch.razor" })">
+
+    <DocSection Title="Пример" Description="MainLayout уже содержит один ScarnaThemeSwitch в навбаре — второй экземпляр здесь просто переключает ту же общую тему." Code="@ExampleCode">
+        <ScarnaThemeSwitch />
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string ExampleCode =
+        """
+        <ScarnaThemeProvider>
+            <header>
+                <ScarnaThemeSwitch />
+            </header>
+            @Body
+        </ScarnaThemeProvider>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+    };
+}

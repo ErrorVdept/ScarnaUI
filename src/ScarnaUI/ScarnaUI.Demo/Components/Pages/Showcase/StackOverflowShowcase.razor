@@ -1,0 +1,137 @@
+@page "/showcase/stackoverflow"
+
+@*
+    Проверочная страница библиотеки: верстка окна приложения (macOS-style) целиком
+    из готовых компонентов ScarnaUI — ничего в самих компонентах не менялось, только
+    их публичные параметры (Color/Variant/Size/StartContent/Hovered/OnClick и т.д.).
+*@
+
+<PageTitle>Showcase — Stack Overflow</PageTitle>
+
+<div class="relative flex min-h-screen items-center justify-center overflow-hidden bg-content3 p-6 sm:p-10">
+    <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600')"></div>
+    <div class="absolute inset-0 bg-black/40"></div>
+
+    <ScarnaCard Class="relative z-10 w-full max-w-xl" Shadow="true">
+        <HeaderContent>
+            <div class="relative flex items-center justify-between">
+                <ScarnaStack Row="true" Spacing="2">
+                    <span class="size-3 rounded-full bg-danger"></span>
+                    <span class="size-3 rounded-full bg-default"></span>
+                    <span class="size-3 rounded-full bg-default"></span>
+                </ScarnaStack>
+                <span class="absolute left-1/2 -translate-x-1/2 text-sm font-semibold text-foreground/90">Stackoverflow</span>
+                <ScarnaAvatar Initials="JD" Color="ScarnaColor.Warning" Size="ScarnaSize.Small" />
+            </div>
+        </HeaderContent>
+
+        <ChildContent>
+            <ScarnaTabs @bind-SelectedIndex="_tab">
+                <ScarnaTabPanel Text="Questions">
+                    <ScarnaInput Placeholder="Search question" Variant="ScarnaVariant.Flat" Bordered="false" Class="mb-4">
+                        <StartContent>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-foreground/40">
+                                <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg>
+                        </StartContent>
+                    </ScarnaInput>
+
+                    <div class="scrollable-v flex max-h-80 flex-col gap-1 pr-1">
+                        @foreach (var q in _questions)
+                        {
+                            <ScarnaPaper Bordered="false" Shadow="false" Hovered="true" Radius="ScarnaRadius.Medium" Class="p-3" OnClick="() => OpenQuestion(q.Title)">
+                                <ScarnaText Typo="ScarnaTypo.Subtitle1">@q.Title</ScarnaText>
+
+                                <ScarnaStack Row="true" Wrap="true" Spacing="2" Align="ScarnaAlign.Center" Class="mt-1 text-xs text-foreground/50">
+                                    @if (q.Answered)
+                                    {
+                                        <ScarnaChip Color="ScarnaColor.Success" Variant="ScarnaVariant.Light" Size="ScarnaSize.Small">
+                                            <StartContent>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                                            </StartContent>
+                                            <ChildContent>Answered</ChildContent>
+                                        </ScarnaChip>
+                                        <span>•</span>
+                                    }
+                                    <span class="inline-flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+                                        @q.Comments
+                                    </span>
+                                    <span>•</span>
+                                    <span>@q.Age</span>
+                                    <span>•</span>
+                                    <span>@q.Views</span>
+                                </ScarnaStack>
+
+                                <ScarnaText Typo="ScarnaTypo.Body2" Class="mt-2 line-clamp-2 text-foreground/60">@q.Description</ScarnaText>
+
+                                <ScarnaStack Row="true" Justify="ScarnaJustify.SpaceBetween" Align="ScarnaAlign.Center" Class="mt-3">
+                                    <ScarnaStack Row="true" Wrap="true" Spacing="2">
+                                        @foreach (var tag in q.Tags)
+                                        {
+                                            <ScarnaChip Size="ScarnaSize.Small">@tag</ScarnaChip>
+                                        }
+                                    </ScarnaStack>
+                                    <ScarnaAvatar Initials="@q.AuthorInitials" Size="ScarnaSize.Small" Color="ScarnaColor.Secondary" />
+                                </ScarnaStack>
+                            </ScarnaPaper>
+                        }
+                    </div>
+                </ScarnaTabPanel>
+
+                <ScarnaTabPanel Text="Tags">
+                    <ScarnaStack Row="true" Wrap="true" Spacing="2">
+                        @foreach (var tag in new[] { "javascript", "typescript", "blazor", "npm", "module", "css", "dotnet", "react" })
+                        {
+                            <ScarnaChip Color="ScarnaColor.Primary" Variant="ScarnaVariant.Flat">@tag</ScarnaChip>
+                        }
+                    </ScarnaStack>
+                </ScarnaTabPanel>
+
+                <ScarnaTabPanel Text="Users">
+                    <ScarnaStack Spacing="3">
+                        @foreach (var user in _users)
+                        {
+                            <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
+                                <ScarnaAvatar Initials="@user.Initials" Color="ScarnaColor.Primary" />
+                                <ScarnaStack Spacing="0">
+                                    <ScarnaText Typo="ScarnaTypo.Subtitle2">@user.Name</ScarnaText>
+                                    <ScarnaText Typo="ScarnaTypo.Caption">@user.Reputation очков репутации</ScarnaText>
+                                </ScarnaStack>
+                            </ScarnaStack>
+                        }
+                    </ScarnaStack>
+                </ScarnaTabPanel>
+            </ScarnaTabs>
+        </ChildContent>
+    </ScarnaCard>
+</div>
+
+@code {
+    private int _tab;
+
+    private sealed record Question(string Title, bool Answered, int Comments, string Age, string Views, string Description, string[] Tags, string AuthorInitials);
+    private sealed record UserRow(string Initials, string Name, string Reputation);
+
+    private readonly Question[] _questions =
+    {
+        new("Is there a way to consume npm javascript module from typescript?", true, 3, "1 hour ago", "3K views",
+            "I have Typescript application, where I need to use JavaScript npm module - 'my_3p_videojs_npm_module' (which is basically copy paste...",
+            new[] { "javascript", "typescript", "module", "npm" }, "MK"),
+        new("How to properly mock data object for unit tests?", false, 4, "3 hours ago", "5.1K views",
+            "I'm trying to unit test a chunk of code that looks something like the following, but I'm not sure how to mock the dependency correctly...",
+            new[] { "unit-testing", "jest" }, "AS"),
+        new("Why does my Blazor component re-render twice on first load?", false, 1, "5 hours ago", "820 views",
+            "I have a component with OnInitializedAsync that fetches data from an API, and it seems to run twice before the circuit stabilizes...",
+            new[] { "blazor", "dotnet" }, "PL"),
+    };
+
+    private readonly UserRow[] _users =
+    {
+        new("MK", "Maria Kim", "24 511"),
+        new("AS", "Alex Smirnov", "18 204"),
+        new("PL", "Peter Lang", "9 732"),
+    };
+
+    private void OpenQuestion(string title) => Console.WriteLine($"Open: {title}");
+}

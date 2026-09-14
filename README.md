@@ -1,2 +1,2 @@
-# NorthUI
-NorthUI - blazor hero ui component library
+# ScarnaUI
+ScarnaUI - blazor hero ui component library

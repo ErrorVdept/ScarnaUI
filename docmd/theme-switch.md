@@ -1,27 +1,27 @@
-# NorthThemeSwitch
+# ScarnaThemeSwitch
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/Theme/NorthThemeSwitch.razor`
+- `src/ScarnaUI/ScarnaUI/Components/Theme/ScarnaThemeSwitch.razor`
 
 ## Описание
 
 Готовая кнопка переключения светлой/тёмной темы. Сама читает и меняет тему через
-каскадный `NorthThemeContext` (см. [theme-provider.md](theme-provider.md)) — в
+каскадный `ScarnaThemeContext` (см. [theme-provider.md](theme-provider.md)) — в
 приложении не нужно писать никакого кода, достаточно разместить компонент внутри
-`NorthThemeProvider`.
+`ScarnaThemeProvider`.
 
 ## Пример использования
 
 ```razor
-<NorthThemeProvider>
+<ScarnaThemeProvider>
     <header>
-        <NorthThemeSwitch />
+        <ScarnaThemeSwitch />
     </header>
     @Body
-</NorthThemeProvider>
+</ScarnaThemeProvider>
 ```
 
 ## Параметры
 
 Без параметров — иконка (солнце/луна) и обработчик клика зависят только от текущего
-`NorthThemeContext.IsDarkMode`.
+`ScarnaThemeContext.IsDarkMode`.

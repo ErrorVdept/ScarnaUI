@@ -1,10 +1,10 @@
-# Тосты: IToastManager, NorthSnackbarProvider
+# Тосты: IToastManager, ScarnaSnackbarProvider
 
 ## Файлы
-- `src/NorthUI/NorthUI/Services/IToastManager.cs`
-- `src/NorthUI/NorthUI/Services/ToastManager.cs` — реализация (internal), чистый C#, без JS
-- `src/NorthUI/NorthUI/Services/NorthToast.cs` — модель `NorthToast`, `NorthToastSeverity`
-- `src/NorthUI/NorthUI/Components/Overlays/NorthSnackbarProvider.razor` — портал/очередь
+- `src/ScarnaUI/ScarnaUI/Services/IToastManager.cs`
+- `src/ScarnaUI/ScarnaUI/Services/ToastManager.cs` — реализация (internal), чистый C#, без JS
+- `src/ScarnaUI/ScarnaUI/Services/ScarnaToast.cs` — модель `ScarnaToast`, `ScarnaToastSeverity`
+- `src/ScarnaUI/ScarnaUI/Components/Overlays/ScarnaSnackbarProvider.razor` — портал/очередь
 
 ## Принцип работы
 
@@ -12,10 +12,10 @@
 Реализация полностью на C#, без единой строчки JS: авто-скрытие тоста через заданное
 время сделано на `Task.Delay` внутри `ToastManager.Add`.
 
-1. Разместите `<NorthSnackbarProvider />` один раз в layout.
+1. Разместите `<ScarnaSnackbarProvider />` один раз в layout.
 2. Заинжектьте `IToastManager` в любой компонент и вызовите `Add(...)`.
-3. `ToastManager` держит очередь (`List<NorthToast>`) и поднимает событие `OnChange`
-   при любом изменении; `NorthSnackbarProvider` подписан на это событие и перерисовывает
+3. `ToastManager` держит очередь (`List<ScarnaToast>`) и поднимает событие `OnChange`
+   при любом изменении; `ScarnaSnackbarProvider` подписан на это событие и перерисовывает
    стопку уведомлений в правом нижнем углу экрана.
 4. Каждый добавленный тост сам себя удаляет из очереди через `Duration` (по умолчанию
    4 секунды) — если передать `TimeSpan.Zero`, тост останется, пока пользователь не
@@ -26,13 +26,13 @@
 ```razor
 @inject IToastManager ToastManager
 
-<NorthButton OnClick="Save">Сохранить</NorthButton>
+<ScarnaButton OnClick="Save">Сохранить</ScarnaButton>
 
 @code {
     private void Save()
     {
         // ... логика сохранения ...
-        ToastManager.Add("Изменения сохранены", NorthToastSeverity.Success);
+        ToastManager.Add("Изменения сохранены", ScarnaToastSeverity.Success);
     }
 }
 ```
@@ -41,7 +41,7 @@
 
 ```csharp
 ToastManager.Add("Соединение потеряно, повторное подключение...",
-    NorthToastSeverity.Error, duration: TimeSpan.Zero);
+    ScarnaToastSeverity.Error, duration: TimeSpan.Zero);
 ```
 
 ## IToastManager
@@ -53,7 +53,7 @@ ToastManager.Add("Соединение потеряно, повторное по
 | `Add(message, severity, duration?)` | Добавить уведомление. `severity` по умолчанию `Info` |
 | `Remove(id)` | Убрать уведомление раньше срока |
 
-## NorthToastSeverity
+## ScarnaToastSeverity
 
 `Info` (нейтральный, цвет `primary`) / `Success` / `Warning` / `Error` (цвет `danger`) —
 определяют цвет левой полосы и иконки уведомления.

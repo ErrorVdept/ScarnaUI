@@ -1,8 +1,8 @@
-# NorthContainer
+# ScarnaContainer
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/Layout/NorthContainer.razor`
-- `src/NorthUI/NorthUI/Components/Layout/NorthLayoutEnums.cs` (`NorthContainerMaxWidth`)
+- `src/ScarnaUI/ScarnaUI/Components/Layout/ScarnaContainer.razor`
+- `src/ScarnaUI/ScarnaUI/Components/Layout/ScarnaLayoutEnums.cs` (`ScarnaContainerMaxWidth`)
 
 ## Описание
 
@@ -12,16 +12,16 @@
 ## Пример использования
 
 ```razor
-<NorthContainer MaxWidth="NorthContainerMaxWidth.Large">
+<ScarnaContainer MaxWidth="ScarnaContainerMaxWidth.Large">
     <h1>Заголовок страницы</h1>
     ...
-</NorthContainer>
+</ScarnaContainer>
 ```
 
 ## Параметры
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
-| `MaxWidth` | `NorthContainerMaxWidth` | `Large` | `Small` / `Medium` / `Large` / `ExtraLarge` |
+| `MaxWidth` | `ScarnaContainerMaxWidth` | `Large` | `Small` / `Medium` / `Large` / `ExtraLarge` |
 | `Fluid` | `bool` | `false` | `true` — растянуть на всю ширину, игнорируя `MaxWidth` |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

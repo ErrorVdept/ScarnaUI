@@ -1,0 +1,61 @@
+@*
+    Выпадающее контекстное меню — построено на ScarnaPopover (см. docmd/popover.md).
+    Требует ScarnaPopoverProvider в дереве выше.
+
+    <ScarnaMenu>
+        <Trigger>
+            <ScarnaButton Variant="ScarnaVariant.Bordered">Действия</ScarnaButton>
+        </Trigger>
+        <MenuContent>
+            <ScarnaMenuItem OnClick="Edit">Редактировать</ScarnaMenuItem>
+            <ScarnaMenuItem OnClick="Duplicate">Дублировать</ScarnaMenuItem>
+            <ScarnaMenuDivider />
+            <ScarnaMenuItem OnClick="Delete" Color="ScarnaColor.Danger">Удалить</ScarnaMenuItem>
+        </MenuContent>
+    </ScarnaMenu>
+
+    Клик по пункту меню (ScarnaMenuItem) сам закрывает меню — отдельно это делать не нужно.
+*@
+@namespace ScarnaUI.Components.Navigation
+
+<span @ref="_anchor" @onclick="ToggleAsync" class="scarna-menu-trigger inline-flex cursor-pointer">
+    @Trigger
+</span>
+
+<ScarnaPopover Open="_open" Anchor="_anchor" Position="Position" IsParentFullSize="IsParentFullSize" OffsetPx="6" OnClose="CloseAsync">
+    <div class="scarna-menu min-w-[180px] rounded-scarna-md border border-divider bg-content1 p-1 shadow-lg" role="menu">
+        <CascadingValue Value="this" IsFixed="false">
+            @MenuContent
+        </CascadingValue>
+    </div>
+</ScarnaPopover>
+
+@code {
+    private ElementReference _anchor;
+    private bool _open;
+
+    /// <summary>Элемент-триггер, открывающий меню по клику (обычно кнопка).</summary>
+    [Parameter] public RenderFragment? Trigger { get; set; }
+
+    /// <summary>Набор `<ScarnaMenuItem>`/`<ScarnaMenuDivider>`.</summary>
+    [Parameter] public RenderFragment? MenuContent { get; set; }
+
+    /// <summary>Позиция меню относительно триггера.</summary>
+    [Parameter] public ScarnaPosition Position { get; set; } = ScarnaPosition.BottomStart;
+
+    /// <summary>Растянуть меню на ширину триггера (по умолчанию — нет, меню обычно уже/шире произвольной кнопки).</summary>
+    [Parameter] public bool IsParentFullSize { get; set; }
+
+    private Task ToggleAsync()
+    {
+        _open = !_open;
+        return Task.CompletedTask;
+    }
+
+    /// <summary>Вызывается ScarnaPopover (клик снаружи/Escape) и каждым ScarnaMenuItem после выбора.</summary>
+    internal Task CloseAsync()
+    {
+        _open = false;
+        return InvokeAsync(StateHasChanged);
+    }
+}

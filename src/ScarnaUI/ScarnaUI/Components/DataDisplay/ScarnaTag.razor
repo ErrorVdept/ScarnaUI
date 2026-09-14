@@ -1,0 +1,25 @@
+@*
+    Маленькая компактная метка — легче ScarnaChip: меньше паддингов, без Size (всегда
+    один компактный размер) и без встроенной кнопки закрытия. Для кликабельных тегов
+    с крестиком/иконкой и выбором размера используйте ScarnaChip.
+
+    <ScarnaTag>новое</ScarnaTag>
+    <ScarnaTag Color="ScarnaColor.Success">активен</ScarnaTag>
+*@
+@namespace ScarnaUI.Components.DataDisplay
+@inherits ScarnaComponentBase
+
+<span class="@Classes" style="@Style" @attributes="UserAttributes">@ChildContent</span>
+
+@code {
+    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Default;
+
+    [Parameter] public ScarnaVariant Variant { get; set; } = ScarnaVariant.Flat;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string Classes => CssBuilder.Default("scarna-tag inline-flex items-center h-5 px-1.5 rounded-scarna-sm text-[11px] font-medium leading-none whitespace-nowrap")
+        .AddClass(ScarnaColorVariantClasses.Get(Color, Variant))
+        .AddClass(Class)
+        .ToString();
+}

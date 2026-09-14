@@ -1,0 +1,88 @@
+/*
+ * ScarnaUI — CSS-переменные темы по умолчанию.
+ *
+ * Это "холодный старт" до того, как отработает JS (ScarnaThemeProvider + theme.js):
+ * значения здесь ДОЛЖНЫ совпадать со значениями по умолчанию в
+ * Components/Theme/ScarnaTheme.cs (ScarnaPalette.LightDefault / DarkDefault), иначе будет
+ * заметное "моргание" темы при первой отрисовке страницы.
+ *
+ * Палитра — HeroUI Theme Builder (lightness=0.6204, chroma=0.195, hue=253.83:
+ * https://heroui.com/en/themes?lightness=0.6204&chroma=0.195&hue=253.83), сконвертированная
+ * из OKLCH в HSL (см. tools/oklch-convert.mjs). Secondary в новых токенах HeroUI нет —
+ * подобрана отдельно по той же методологии.
+ *
+ * Формат цвета — HSL-триплет без функции ("H S% L%"), это даёт Tailwind-утилитам
+ * (bg-primary, text-primary и т.д., см. Styles/input.css) поддержку прозрачности
+ * вида bg-primary/50 через color-mix().
+ */
+
+:root {
+  --scarna-background: 210 10% 96.1%;
+  --scarna-foreground: 240 2% 9.6%;
+
+  --scarna-content1: 0 0% 100%;
+  --scarna-content2: 240 3.2% 93.9%;
+  --scarna-content3: 240 2.4% 92%;
+  --scarna-content4: 210 3.6% 89%;
+
+  --scarna-default: 210 5% 92.2%;
+  --scarna-default-foreground: 210 8% 9.8%;
+
+  --scarna-primary: 208.15 96.8% 49.2%;
+  --scarna-primary-foreground: 0 0% 98.8%;
+
+  --scarna-secondary: 276.77 58.5% 58.4%;
+  --scarna-secondary-foreground: 0 0% 98.8%;
+
+  --scarna-success: 146.33 81.1% 43.5%;
+  --scarna-success-foreground: 140 6.4% 9.2%;
+
+  --scarna-warning: 37.14 91.3% 54.9%;
+  --scarna-warning-foreground: 36 10.6% 9.2%;
+
+  --scarna-danger: 358.5 100% 60.8%;
+  --scarna-danger-foreground: 0 0% 98.8%;
+
+  --scarna-focus: 208.15 96.8% 49.2%;
+  --scarna-divider: 240 1.9% 89.6%;
+  --scarna-overlay: 0 0% 0%;
+
+  --scarna-radius-sm: 8px;
+  --scarna-radius-md: 12px;
+  --scarna-radius-lg: 14px;
+  --scarna-radius-full: 9999px;
+
+  --scarna-font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+[data-theme="dark"] {
+  --scarna-background: 180 9.1% 2.2%;
+  --scarna-foreground: 210 33.3% 98.8%;
+
+  --scarna-content1: 220 6.1% 9.6%;
+  --scarna-content2: 210 2.9% 13.7%;
+  --scarna-content3: 210 2.6% 15.3%;
+  --scarna-content4: 210 2.1% 18.4%;
+
+  --scarna-default: 240 1.3% 15.5%;
+  --scarna-default-foreground: 0 0% 98.8%;
+
+  --scarna-primary: 208.15 96.8% 49.2%;
+  --scarna-primary-foreground: 0 0% 98.8%;
+
+  --scarna-secondary: 276 69.8% 64.9%;
+  --scarna-secondary-foreground: 0 0% 98.8%;
+
+  --scarna-success: 146.33 81.1% 43.5%;
+  --scarna-success-foreground: 140 6.4% 9.2%;
+
+  --scarna-warning: 37.01 91.3% 64.1%;
+  --scarna-warning-foreground: 36 10.6% 9.2%;
+
+  --scarna-danger: 358.88 69% 54.5%;
+  --scarna-danger-foreground: 0 0% 98.8%;
+
+  --scarna-focus: 208.15 96.8% 49.2%;
+  --scarna-divider: 180 1.5% 13.1%;
+  --scarna-overlay: 0 0% 0%;
+}

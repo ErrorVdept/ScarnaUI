@@ -1,0 +1,105 @@
+@*
+    Поле выбора времени. Под капотом — нативный <input type="time"> (даёт браузерный
+    time-picker бесплатно, без своей JS-хореографии). Value — TimeOnly?, а не строка:
+    формат "HH:mm", который ожидает атрибут value у input[type=time], собирается/парсится
+    здесь один раз, а наружу компонент отдаёт уже готовый .NET-тип.
+
+    <ScarnaTimeField Label="Время начала" @bind-Value="model.StartTime" />
+*@
+@namespace ScarnaUI.Components.Forms
+@inherits ScarnaFormComponentBase<TimeOnly?>
+
+<div class="@WrapperOuterClasses" style="@Style" @attributes="UserAttributes">
+    @if (!string.IsNullOrEmpty(Label))
+    {
+        <label for="@_id" class="text-sm font-medium text-foreground/80">@Label</label>
+    }
+
+    <div class="@FieldWrapperClasses">
+        <input id="@_id"
+               type="time"
+               class="scarna-timefield__field w-full flex-1 bg-transparent outline-none text-foreground disabled:cursor-not-allowed [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-60"
+               value="@FormattedValue"
+               disabled="@Disabled"
+               readonly="@ReadOnly"
+               @oninput="HandleInputAsync" />
+    </div>
+
+    @if (IsInvalid && !string.IsNullOrEmpty(ErrorText))
+    {
+        <span class="text-xs text-danger">@ErrorText</span>
+    }
+    else if (!string.IsNullOrEmpty(HelperText))
+    {
+        <span class="text-xs text-foreground/50">@HelperText</span>
+    }
+</div>
+
+@code {
+    private const string TimeFormat = "HH:mm";
+    private readonly string _id = $"scarna-timefield-{Guid.NewGuid():N}";
+
+    [Parameter] public string? Label { get; set; }
+
+    [Parameter] public string? HelperText { get; set; }
+
+    [Parameter] public bool Disabled { get; set; }
+
+    [Parameter] public bool ReadOnly { get; set; }
+
+    [Parameter] public ScarnaVariant Variant { get; set; } = ScarnaVariant.Bordered;
+
+    [Parameter] public bool Bordered { get; set; } = true;
+
+    [Parameter] public ScarnaSize Size { get; set; } = ScarnaSize.Medium;
+
+    [Parameter] public ScarnaDensity Density { get; set; } = ScarnaDensity.Normal;
+
+    [Parameter] public ScarnaRadius Radius { get; set; } = ScarnaRadius.Medium;
+
+    private string? FormattedValue => Value?.ToString(TimeFormat, System.Globalization.CultureInfo.InvariantCulture);
+
+    private async Task HandleInputAsync(ChangeEventArgs e)
+    {
+        var raw = e.Value?.ToString();
+        if (string.IsNullOrEmpty(raw))
+        {
+            await SetValueAsync(null);
+            return;
+        }
+
+        if (TimeOnly.TryParseExact(raw, TimeFormat, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var parsed))
+        {
+            await SetValueAsync(parsed);
+        }
+    }
+
+    private string WrapperOuterClasses => CssBuilder.Default("scarna-timefield-wrapper flex flex-col gap-1")
+        .AddClass(Class)
+        .ToString();
+
+    private string FieldWrapperClasses => CssBuilder.Default("scarna-timefield flex items-center gap-2 transition-colors")
+        .AddClass(SizeClass)
+        .AddClass(ScarnaColorVariantClasses.Radius(Radius))
+        .AddClass(VariantClass)
+        .AddClass("ring-1 ring-danger", IsInvalid)
+        .ToString();
+
+    private string SizeClass => (Size, Density) switch
+    {
+        (ScarnaSize.Small, ScarnaDensity.Dense) => "h-7 px-2 text-sm",
+        (ScarnaSize.Small, _) => "h-8 px-3 text-sm",
+        (ScarnaSize.Large, ScarnaDensity.Dense) => "h-10 px-3 text-base",
+        (ScarnaSize.Large, _) => "h-12 px-4 text-base",
+        (_, ScarnaDensity.Dense) => "h-8 px-2.5 text-sm",
+        _ => "h-10 px-3 text-sm",
+    };
+
+    private string VariantClass => (Variant, Bordered) switch
+    {
+        (ScarnaVariant.Flat, true) => "bg-content2 border border-default focus-within:border-primary",
+        (ScarnaVariant.Flat, false) => "bg-content2 border border-transparent focus-within:bg-content3",
+        (_, true) => "bg-transparent border border-default focus-within:border-primary",
+        (_, false) => "bg-transparent border border-transparent",
+    };
+}

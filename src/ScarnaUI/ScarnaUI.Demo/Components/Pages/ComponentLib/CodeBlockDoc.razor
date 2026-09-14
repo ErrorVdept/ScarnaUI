@@ -1,0 +1,58 @@
+@page "/componentlib/code-block"
+
+<DocPage Title="ScarnaCodeBlock" Lead="Блок кода: моноширинный шрифт, опциональная кнопка копирования в правом верхнем углу. По умолчанию высота авто."
+         Files="@(new[] { "Components/DataDisplay/ScarnaCodeBlock.razor", "wwwroot/js/scarna/codeblock.js" })">
+
+    <DocSection Title="Базовое использование" Description="По умолчанию — авторастягиваемая высота и кнопка копирования." Row="false" Code="@BasicCode">
+        <ScarnaCodeBlock Code="dotnet add package ScarnaUI" />
+    </DocSection>
+
+    <DocSection Title="MaxLines" Description="После указанного количества строк появляется вертикальная прокрутка." Row="false" Code="@MaxLinesCode">
+        <ScarnaCodeBlock Code="@_longSnippet" MaxLines="6" />
+    </DocSection>
+
+    <DocSection Title="Lines" Description="Точное количество строк — фиксированная высота независимо от объёма содержимого (короткий код не сжимает блок, длинный — прокручивается)." Row="false" Code="@LinesCode">
+        <ScarnaCodeBlock Code="builder.Services.AddScarnaUI();" Lines="4" />
+    </DocSection>
+
+    <DocSection Title="ShowCopyButton = false" Row="false" Code="@NoCopyCode">
+        <ScarnaCodeBlock Code="dotnet add package ScarnaUI" ShowCopyButton="false" />
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private readonly string _longSnippet = string.Join('\n', Enumerable.Range(1, 15).Select(i => $"Console.WriteLine(\"Строка {i}\");"));
+
+    private const string BasicCode =
+        """
+        <ScarnaCodeBlock Code="dotnet add package ScarnaUI" />
+        """;
+
+    private const string MaxLinesCode =
+        """
+        <ScarnaCodeBlock Code="@longSnippet" MaxLines="6" />
+        """;
+
+    private const string LinesCode =
+        """
+        <ScarnaCodeBlock Code="builder.Services.AddScarnaUI();" Lines="4" />
+        """;
+
+    private const string NoCopyCode =
+        """
+        <ScarnaCodeBlock Code="dotnet add package ScarnaUI" ShowCopyButton="false" />
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Code", "string", "—", "Текст кода (обязательный)"),
+        new("ShowCopyButton", "bool", "true", "Кнопка копирования в правом верхнем углу"),
+        new("MinLines", "int?", "—", "Минимальное количество видимых строк"),
+        new("MaxLines", "int?", "—", "Максимальное количество видимых строк — дальше вертикальная прокрутка"),
+        new("Lines", "int?", "—", "Точное количество строк (вместо MinLines/MaxLines) — фиксированная высота"),
+        new("Radius", "ScarnaRadius", "Medium", "Радиус скругления"),
+    };
+}

@@ -1,30 +1,30 @@
-# NorthChip
+# ScarnaChip
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthChip.razor`
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaChip.razor`
 
 ## Описание
 
 Небольшая цветная "пилюля" с текстом — тег, статус, значение фильтра. Не путать с
-[NorthBadge](badge.md) — тот не самостоятельный, а накладывается поверх другого элемента.
+[ScarnaBadge](badge.md) — тот не самостоятельный, а накладывается поверх другого элемента.
 
 ## Пример использования
 
 ```razor
-<NorthChip Color="NorthColor.Success" Variant="NorthVariant.Flat">Активен</NorthChip>
+<ScarnaChip Color="ScarnaColor.Success" Variant="ScarnaVariant.Flat">Активен</ScarnaChip>
 
-<NorthChip Color="NorthColor.Danger" Variant="NorthVariant.Faded" OnClose="() => Remove(tag)">
+<ScarnaChip Color="ScarnaColor.Danger" Variant="ScarnaVariant.Faded" OnClose="() => Remove(tag)">
     @tag.Name
-</NorthChip>
+</ScarnaChip>
 ```
 
 ## Параметры
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
-| `Color` | `NorthColor` | `Default` | См. [theme-provider.md](theme-provider.md) |
-| `Variant` | `NorthVariant` | `Flat` | `Solid`/`Flat`/`Bordered`/`Light`/`Faded`/`Shadow` |
-| `Size` | `NorthSize` | `Medium` | `Small`/`Medium`/`Large` |
+| `Color` | `ScarnaColor` | `Default` | См. [theme-provider.md](theme-provider.md) |
+| `Variant` | `ScarnaVariant` | `Flat` | `Solid`/`Flat`/`Bordered`/`Light`/`Faded`/`Shadow` |
+| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
 | `Bordered` | `bool` | `false` | Доп. обводка поверх Variant (для Variant.Bordered ничего не меняет) |
 | `StartContent` | `RenderFragment?` | — | Иконка/точка перед текстом |
 | `ChildContent` | `RenderFragment?` | — | Текст метки |

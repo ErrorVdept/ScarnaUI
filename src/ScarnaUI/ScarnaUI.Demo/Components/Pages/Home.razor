@@ -1,0 +1,142 @@
+@page "/"
+@inject INavigator Navigator
+
+<PageTitle>ScarnaUI</PageTitle>
+
+<div class="relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-x-0 -top-40 -z-10 flex justify-center blur-3xl" aria-hidden="true">
+        <div class="aspect-[3/1] w-[70rem] bg-gradient-to-r from-primary/30 via-secondary/20 to-primary/30 opacity-40"></div>
+    </div>
+
+    <ScarnaContainer>
+        <ScarnaStack Spacing="5" Align="ScarnaAlign.Center" Class="pb-16 pt-20 text-center">
+            <ScarnaChip Color="ScarnaColor.Primary" Variant="ScarnaVariant.Flat">Blazor Server · .NET 10 · Tailwind CSS v4</ScarnaChip>
+
+            <h1 class="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-5xl font-semibold tracking-tight text-transparent sm:text-6xl">
+                Scarna<span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">UI</span>
+            </h1>
+
+            <p class="max-w-xl text-base text-foreground/60">
+                Библиотека Blazor-компонентов: DX как у MudBlazor (<code class="rounded-scarna-sm bg-content2 px-1.5 py-0.5 text-sm text-foreground/80">@@bind-Value</code>,
+                императивные сервисы, <code class="rounded-scarna-sm bg-content2 px-1.5 py-0.5 text-sm text-foreground/80">Class</code>/<code class="rounded-scarna-sm bg-content2 px-1.5 py-0.5 text-sm text-foreground/80">Style</code>
+                на каждом компоненте) и дизайн-система, вдохновлённая HeroUI — своя разметка, настраиваемая в рантайме тема.
+            </p>
+
+            <ScarnaStack Row="true" Wrap="true" Spacing="3" Justify="ScarnaJustify.Center" Class="pt-2">
+                <ScarnaButton Color="ScarnaColor.Primary" Href="/getting-started">Начать</ScarnaButton>
+                <ScarnaButton Variant="ScarnaVariant.Bordered" Href="/componentlib">Все компоненты</ScarnaButton>
+                <ScarnaButton Variant="ScarnaVariant.Light" Href="/showcase/stackoverflow">Живые примеры</ScarnaButton>
+            </ScarnaStack>
+
+            <ScarnaStack Row="true" Wrap="true" Spacing="8" Justify="ScarnaJustify.Center" Class="pt-8">
+                @foreach (var stat in _stats)
+                {
+                    <ScarnaStack Spacing="0" Align="ScarnaAlign.Center">
+                        <span class="text-2xl font-semibold text-foreground">@stat.Value</span>
+                        <span class="text-xs text-foreground/50">@stat.Label</span>
+                    </ScarnaStack>
+                }
+            </ScarnaStack>
+        </ScarnaStack>
+    </ScarnaContainer>
+</div>
+
+<ScarnaContainer>
+    <ScarnaStack Spacing="16" Class="pb-20">
+
+        <section>
+            <ScarnaStack Spacing="1" Align="ScarnaAlign.Center" Class="mb-6 text-center">
+                <h2 class="text-xl font-semibold text-foreground">Почему ScarnaUI</h2>
+                <p class="text-sm text-foreground/60">Три решения, определяющие всю библиотеку</p>
+            </ScarnaStack>
+            <ScarnaGrid Spacing="6">
+                @foreach (var feature in _features)
+                {
+                    <ScarnaItem Xs="12" Md="4">
+                        <ScarnaPaper Hovered="true" Class="h-full">
+                            <span class="@($"mb-4 flex size-10 items-center justify-center rounded-scarna-md {feature.IconBg}")">
+                                @feature.Icon
+                            </span>
+                            <p class="mb-2 font-semibold text-foreground">@feature.Title</p>
+                            <p class="text-sm text-foreground/60">@feature.Description</p>
+                        </ScarnaPaper>
+                    </ScarnaItem>
+                }
+            </ScarnaGrid>
+        </section>
+
+        <section>
+            <ScarnaStack Spacing="1" Align="ScarnaAlign.Center" Class="mb-6 text-center">
+                <h2 class="text-xl font-semibold text-foreground">Посмотрите в деле</h2>
+                <p class="text-sm text-foreground/60">Две готовые страницы целиком из компонентов библиотеки — без единой своей строчки CSS</p>
+            </ScarnaStack>
+            <ScarnaGrid Spacing="6">
+                <ScarnaItem Xs="12" Md="6">
+                    <ScarnaPaper Hovered="true" OnClick='() => Navigator.NavigateTo("/showcase/stackoverflow")' Class="flex h-full items-center gap-4">
+                        <span class="flex size-12 shrink-0 items-center justify-center rounded-scarna-md bg-warning/15 text-warning">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><line x1="2" y1="9" x2="22" y2="9" /></svg>
+                        </span>
+                        <span class="min-w-0">
+                            <span class="block font-semibold text-foreground">Клон Stack Overflow</span>
+                            <span class="block text-sm text-foreground/60">Окно приложения, вкладки, поиск, список вопросов</span>
+                        </span>
+                    </ScarnaPaper>
+                </ScarnaItem>
+                <ScarnaItem Xs="12" Md="6">
+                    <ScarnaPaper Hovered="true" OnClick='() => Navigator.NavigateTo("/showcase/tasks")' Class="flex h-full items-center gap-4">
+                        <span class="flex size-12 shrink-0 items-center justify-center rounded-scarna-md bg-success/15 text-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></svg>
+                        </span>
+                        <span class="min-w-0">
+                            <span class="block font-semibold text-foreground">Доска задач</span>
+                            <span class="block text-sm text-foreground/60">Канбан-колонки, приоритеты, аватары, вложения</span>
+                        </span>
+                    </ScarnaPaper>
+                </ScarnaItem>
+            </ScarnaGrid>
+        </section>
+
+        <ScarnaPaper Class="text-center" Radius="ScarnaRadius.Large">
+            <ScarnaStack Spacing="4" Align="ScarnaAlign.Center" Class="py-4">
+                <h2 class="text-xl font-semibold text-foreground">Готовы попробовать?</h2>
+                <p class="max-w-md text-sm text-foreground/60">Пять шагов от чистого проекта до работающей темы, диалогов и тостов — без npm.</p>
+                <ScarnaStack Row="true" Spacing="3">
+                    <ScarnaButton Color="ScarnaColor.Primary" Href="/getting-started">Инструкция по установке</ScarnaButton>
+                    <ScarnaButton Variant="ScarnaVariant.Bordered" Href="/componentlib">Каталог компонентов</ScarnaButton>
+                </ScarnaStack>
+            </ScarnaStack>
+        </ScarnaPaper>
+
+    </ScarnaStack>
+</ScarnaContainer>
+
+@code {
+    private sealed record Stat(string Value, string Label);
+    private sealed record Feature(string Title, string Description, string IconBg, RenderFragment Icon);
+
+    private readonly Stat[] _stats =
+    {
+        new("60+", "компонентов"),
+        new("0", "npm-зависимостей"),
+        new("2", "темы из коробки"),
+    };
+
+    private Feature[] _features => new[]
+    {
+        new Feature(
+            "Тема в рантайме",
+            "Цвета и радиусы — CSS-переменные. ScarnaThemeProvider меняет их через JS без пересборки CSS: смените Primary-цвет из кода приложения, и все компоненты перекрасятся мгновенно.",
+            "bg-primary/15 text-primary",
+            @<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" /><circle cx="17.5" cy="10.5" r=".5" /><circle cx="8.5" cy="7.5" r=".5" /><circle cx="6.5" cy="12.5" r=".5" /><path d="M12 2a10 10 0 1 0 0 20 2 2 0 0 0 2-2c0-.5-.2-1-.5-1.4-.3-.4-.5-.8-.5-1.3 0-1.1.9-2 2-2h2.4c1.9 0 3.5-1.6 3.5-3.5C21 6.4 17 2 12 2z" /></svg>),
+        new Feature(
+            "Своя разметка",
+            "Каждый компонент — собственный Razor-файл, без чужого DOM под капотом. Значит, дизайн-эффекты (например, pill-фон под активной вкладкой) не упираются в чужую структуру.",
+            "bg-secondary/15 text-secondary",
+            @<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>),
+        new Feature(
+            "Императивные сервисы",
+            "IScarnaDialogService.ShowAsync<T>() и IToastManager.Add(...) — как IDialogService/ISnackbar в MudBlazor, без ручного управления bool-флагами.",
+            "bg-success/15 text-success",
+            @<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9z" /></svg>),
+    };
+}

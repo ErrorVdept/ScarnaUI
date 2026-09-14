@@ -1,0 +1,85 @@
+@page "/componentlib/select-group"
+
+<DocPage Title="ScarnaSelectGroup" Lead="Одиночный выбор без выпадающего списка — все варианты видны сразу, pill-индикатор плавно едет между кнопками."
+         Files="@(new[] { "Components/Forms/ScarnaSelectGroup.razor", "Components/Forms/ScarnaSelectGroupItem.razor" })">
+
+    <DocSection Title="Интерактивный пример" Code="@InteractiveCode" Row="false">
+        <ScarnaSelectGroup Label="Период" @bind-Value="_period">
+            <ScarnaSelectGroupItem Value="@("day")" Text="День" />
+            <ScarnaSelectGroupItem Value="@("week")" Text="Неделя" />
+            <ScarnaSelectGroupItem Value="@("month")" Text="Месяц" />
+        </ScarnaSelectGroup>
+        <span class="text-sm text-foreground/60">Значение: @_period</span>
+    </DocSection>
+
+    <DocSection Title="FullWidth" Code="@FullWidthCode" Row="false">
+        <ScarnaSelectGroup Label="Период (FullWidth)" Value="@("week")" FullWidth="true">
+            <ScarnaSelectGroupItem Value="@("day")" Text="День" />
+            <ScarnaSelectGroupItem Value="@("week")" Text="Неделя" />
+            <ScarnaSelectGroupItem Value="@("month")" Text="Месяц" />
+        </ScarnaSelectGroup>
+    </DocSection>
+
+    <DocSection Title="Justify" Description='Заметно только при FullWidth="false".' Code="@JustifyCode" Row="false">
+        <ScarnaSelectGroup Label="Justify.Center" Value="@("week")" Justify="ScarnaJustify.Center">
+            <ScarnaSelectGroupItem Value="@("day")" Text="День" />
+            <ScarnaSelectGroupItem Value="@("week")" Text="Неделя" />
+            <ScarnaSelectGroupItem Value="@("month")" Text="Месяц" />
+        </ScarnaSelectGroup>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+    <DocApiTable Title="ScarnaSelectGroupItem" Rows="@_itemRows" />
+
+</DocPage>
+
+@code {
+    private string? _period = "week";
+
+    private const string InteractiveCode =
+        """
+        <ScarnaSelectGroup Label="Период" @bind-Value="_period">
+            <ScarnaSelectGroupItem Value="@("day")" Text="День" />
+            <ScarnaSelectGroupItem Value="@("week")" Text="Неделя" />
+            <ScarnaSelectGroupItem Value="@("month")" Text="Месяц" />
+        </ScarnaSelectGroup>
+        <span class="text-sm text-foreground/60">Значение: @_period</span>
+
+        @code {
+            private string? _period = "week";
+        }
+        """;
+
+    private const string FullWidthCode =
+        """
+        <ScarnaSelectGroup Label="Период (FullWidth)" @bind-Value="_period" FullWidth="true">
+            <ScarnaSelectGroupItem Value="@("day")" Text="День" />
+            <ScarnaSelectGroupItem Value="@("week")" Text="Неделя" />
+            <ScarnaSelectGroupItem Value="@("month")" Text="Месяц" />
+        </ScarnaSelectGroup>
+        """;
+
+    private const string JustifyCode =
+        """
+        <ScarnaSelectGroup Label="Justify.Center" @bind-Value="_period" Justify="ScarnaJustify.Center">
+            <ScarnaSelectGroupItem Value="@("day")" Text="День" />
+            <ScarnaSelectGroupItem Value="@("week")" Text="Неделя" />
+            <ScarnaSelectGroupItem Value="@("month")" Text="Месяц" />
+        </ScarnaSelectGroup>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Value / ValueChanged / ValueExpression", "TValue?", "—", "Механика @bind-Value"),
+        new("Label", "string?", "—", "Подпись над группой"),
+        new("Justify", "ScarnaJustify", "Start", "К какому краю прижимать кнопки (заметно, только если FullWidth=\"false\")"),
+        new("FullWidth", "bool", "false", "Растянуть кнопки на всю ширину родителя поровну"),
+        new("ChildContent", "RenderFragment?", "—", "Набор ScarnaSelectGroupItem"),
+    };
+
+    private readonly List<DocApiRow> _itemRows = new()
+    {
+        new("Value", "TValue", "—", "Обязательный. Значение пункта"),
+        new("Text", "string", "—", "Обязательный. Текст на кнопке"),
+    };
+}

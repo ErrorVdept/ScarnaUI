@@ -1,0 +1,49 @@
+@page "/componentlib/image"
+
+<DocPage Title="ScarnaImage" Lead="Обёртка над &lt;img&gt; со скруглением, обводкой и запасным содержимым при ошибке загрузки."
+         Files="@(new[] { "Components/DataDisplay/ScarnaImage.razor" })">
+
+    <DocSection Title="Базовое использование" Code="@BasicCode">
+        <ScarnaImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Alt="Пейзаж" Class="h-40 w-64" />
+    </DocSection>
+
+    <DocSection Title="Radius и Bordered" Code="@VariantsCode">
+        <ScarnaImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Radius="ScarnaRadius.Small" Class="h-32 w-48" />
+        <ScarnaImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Radius="ScarnaRadius.Full" Bordered="true" Class="h-32 w-32" />
+    </DocSection>
+
+    <DocSection Title="Fallback при ошибке загрузки" Description="Битый URL — показывается заглушка (или своя через Fallback)." Code="@FallbackCode">
+        <ScarnaImage Src="https://broken.invalid/no-such-image.jpg" Alt="Не загрузится" Class="h-32 w-48" />
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string BasicCode =
+        """
+        <ScarnaImage Src="/img/cover.jpg" Alt="Обложка" Class="h-40 w-64" />
+        """;
+
+    private const string VariantsCode =
+        """
+        <ScarnaImage Src="/img/cover.jpg" Radius="ScarnaRadius.Small" Class="h-32 w-48" />
+        <ScarnaImage Src="/img/cover.jpg" Radius="ScarnaRadius.Full" Bordered="true" Class="h-32 w-32" />
+        """;
+
+    private const string FallbackCode =
+        """
+        <ScarnaImage Src="https://broken.invalid/no-such-image.jpg" Alt="Не загрузится" Class="h-32 w-48" />
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Src", "string", "—", "Обязательный. URL изображения"),
+        new("Alt", "string?", "—", "—"),
+        new("Radius", "ScarnaRadius", "Large", "Радиус скругления"),
+        new("Bordered", "bool", "false", "Обводка"),
+        new("Lazy", "bool", "true", "Отложенная загрузка (loading=\"lazy\")"),
+        new("Fallback", "RenderFragment?", "—", "Что показать вместо изображения, если оно не загрузилось (по умолчанию — иконка-заглушка)"),
+    };
+}

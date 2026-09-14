@@ -1,0 +1,57 @@
+@page "/componentlib/dialog"
+@inject IScarnaDialogService DialogService
+
+<DocPage Title="Диалоги (IScarnaDialogService)" Lead="Императивный сервис показа модальных диалогов — открывает модалку поверх всего приложения без ручного bool _isOpen в каждом месте использования."
+         Files="@(new[] { "Components/Overlays/ScarnaDialog.razor", "Services/IScarnaDialogService.cs", "Services/ScarnaDialogModels.cs" })">
+
+    <DocSection Title="Пример" Description="ScarnaDialogProvider уже есть в MainLayout. Диалог — обычный компонент (здесь используется демонстрационный DemoConfirmDialog), результат приходит через Task<ScarnaDialogResult>." Code="@ExampleCode">
+        <ScarnaButton Color="ScarnaColor.Danger" Variant="ScarnaVariant.Flat" OnClick="OpenConfirmDialogAsync">
+            Открыть диалог
+        </ScarnaButton>
+        <span class="text-sm text-foreground/60">Результат: @(_lastResult ?? "—")</span>
+    </DocSection>
+
+    <DocApiTable Title="Параметры" Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private string? _lastResult;
+
+    private async Task OpenConfirmDialogAsync()
+    {
+        var result = await DialogService.ShowAsync<DemoConfirmDialog>(new ScarnaDialogOptions { Size = ScarnaDialogSize.Small });
+        _lastResult = result.Cancelled ? "Отменено" : "Подтверждено";
+    }
+
+    private const string ExampleCode =
+        """
+        @inject IScarnaDialogService DialogService
+
+        <ScarnaButton Color="ScarnaColor.Danger" OnClick="DeleteAsync">Удалить</ScarnaButton>
+
+        @code {
+            private async Task DeleteAsync()
+            {
+                var result = await DialogService.ShowAsync<DemoConfirmDialog>(
+                    new ScarnaDialogOptions { Size = ScarnaDialogSize.Small });
+
+                if (!result.Cancelled)
+                {
+                    // пользователь подтвердил
+                }
+            }
+        }
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Title", "string?", "—", "Используется, только если ваш компонент не рисует собственный заголовок (ScarnaDialogOptions)"),
+        new("Size", "ScarnaDialogSize", "Medium", "Small/Medium/Large/FullScreen (ScarnaDialogOptions)"),
+        new("CloseOnEscapeKey", "bool", "true", "Закрывать по Escape — результат Cancel() (ScarnaDialogOptions)"),
+        new("CloseOnBackdropClick", "bool", "true", "Закрывать по клику на подложку (ScarnaDialogOptions)"),
+        new("ShowAsync<TComponent>(options?)", "Task<ScarnaDialogResult>", "—", "Показать диалог без параметров компонента"),
+        new("ShowAsync<TComponent>(dict, options?)", "Task<ScarnaDialogResult>", "—", "Показать диалог с параметрами компонента"),
+        new("Close(reference, result?)", "void", "—", "Принудительно закрыть диалог снаружи"),
+    };
+}

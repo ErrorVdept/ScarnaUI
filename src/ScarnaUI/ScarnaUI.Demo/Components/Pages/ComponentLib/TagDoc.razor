@@ -1,0 +1,51 @@
+@page "/componentlib/tag"
+
+<DocPage Title="ScarnaTag" Lead="Маленькая компактная метка — облегчённый ScarnaChip: меньше паддингов, один размер, без крестика."
+         Files="@(new[] { "Components/DataDisplay/ScarnaTag.razor" })">
+
+    <DocSection Title="Цвета" Code="@ColorsCode">
+        <ScarnaTag>новое</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Primary">primary</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Secondary">secondary</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Success">активен</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Warning">warning</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Danger">danger</ScarnaTag>
+    </DocSection>
+
+    <DocSection Title="Варианты" Code="@VariantsCode">
+        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid">Solid</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Flat">Flat</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Bordered">Bordered</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Faded">Faded</ScarnaTag>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string ColorsCode =
+        """
+        <ScarnaTag>новое</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Primary">primary</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Secondary">secondary</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Success">активен</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Warning">warning</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Danger">danger</ScarnaTag>
+        """;
+
+    private const string VariantsCode =
+        """
+        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid">Solid</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Flat">Flat</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Bordered">Bordered</ScarnaTag>
+        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Faded">Faded</ScarnaTag>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Color", "ScarnaColor", "Default", "Цвет заливки"),
+        new("Variant", "ScarnaVariant", "Flat", "Вариант заливки"),
+        new("ChildContent", "RenderFragment?", "—", "Текст метки"),
+    };
+}

@@ -1,7 +1,7 @@
-# NorthExpansionPanel
+# ScarnaExpansionPanel
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthExpansionPanel.razor`
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaExpansionPanel.razor`
 
 ## Описание
 
@@ -15,9 +15,9 @@
 ## Пример использования
 
 ```razor
-<NorthExpansionPanel Title="Доставка">
+<ScarnaExpansionPanel Title="Доставка">
     Бесплатно при заказе от 3000 ₽, курьером 1-2 дня.
-</NorthExpansionPanel>
+</ScarnaExpansionPanel>
 ```
 
 ## Параметры

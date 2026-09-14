@@ -1,20 +1,20 @@
 # Navigator (INavigator)
 
 ## Файлы
-- `src/NorthUI/NorthUI/Services/INavigator.cs`
-- `src/NorthUI/NorthUI/Services/Navigator.cs`
+- `src/ScarnaUI/ScarnaUI/Services/INavigator.cs`
+- `src/ScarnaUI/ScarnaUI/Services/Navigator.cs`
 
 ## Описание
 
 Императивный сервис навигации — обёртка над встроенным `NavigationManager`, по духу
 как в MudBlazor: компоненты навигации (`NavLink`, `NavMenu`) не работают с голым
 `NavigationManager` напрямую, а используют готовые хелперы поверх него. `Navigator`
-даёт то же самое для NorthUI — в первую очередь для подсветки активного пункта в
-[NorthBottomMenu](bottom-menu.md)/[NorthNavBar](navbar.md) и будущем `NorthNavMenu`,
+даёт то же самое для ScarnaUI — в первую очередь для подсветки активного пункта в
+[ScarnaBottomMenu](bottom-menu.md)/[ScarnaNavBar](navbar.md) и будущем `ScarnaNavMenu`,
 без необходимости писать сравнение текущего URI руками в каждом таком компоненте.
 
-Регистрируется автоматически вместе с остальными сервисами NorthUI —
-`builder.Services.AddNorthUI()` (см. [getting-started.md](getting-started.md)).
+Регистрируется автоматически вместе с остальными сервисами ScarnaUI —
+`builder.Services.AddScarnaUI()` (см. [getting-started.md](getting-started.md)).
 Инжектируется как обычный Scoped-сервис.
 
 ## Пример использования
@@ -22,11 +22,11 @@
 ```razor
 @inject INavigator Navigator
 
-<NorthButton OnClick='() => Navigator.NavigateTo("/orders/5")'>К заказу</NorthButton>
+<ScarnaButton OnClick='() => Navigator.NavigateTo("/orders/5")'>К заказу</ScarnaButton>
 
-<NorthBottomMenuItem Text="Заказы" OnClick='() => Navigator.NavigateTo("/orders")'>
+<ScarnaBottomMenuItem Text="Заказы" OnClick='() => Navigator.NavigateTo("/orders")'>
     <span class="@(Navigator.IsActive("/orders") ? "text-primary" : "")">...</span>
-</NorthBottomMenuItem>
+</ScarnaBottomMenuItem>
 ```
 
 ```csharp

@@ -1,0 +1,78 @@
+@page "/componentlib/text"
+
+<DocPage Title="ScarnaText" Lead="Типографический текст — аналог MudText. HTML-тег зависит от Typo (h1-h6, p, span) или явного As."
+         Files="@(new[] { "Components/DataDisplay/ScarnaText.cs", "Components/DataDisplay/ScarnaTextEnums.cs" })">
+
+    <DocSection Title="Все варианты Typo" Row="false" Code="@TypoCode">
+        <ScarnaText Typo="ScarnaTypo.H1" GutterBottom="true">H1 Заголовок</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.H2" GutterBottom="true">H2 Заголовок</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.H3" GutterBottom="true">H3 Заголовок</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.H4" GutterBottom="true">H4 Заголовок</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.H5" GutterBottom="true">H5 Заголовок</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.H6" GutterBottom="true">H6 Заголовок</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Subtitle1" GutterBottom="true">Subtitle1 подзаголовок</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Subtitle2" GutterBottom="true">Subtitle2 подзаголовок</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Body1" GutterBottom="true">Body1 — обычный текст абзаца.</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Body2" GutterBottom="true">Body2 — текст поменьше.</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Caption" GutterBottom="true">Caption — приглушённая подпись</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Overline" GutterBottom="true">OVERLINE НАДПИСЬ</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Button">BUTTON TEXT</ScarnaText>
+    </DocSection>
+
+    <DocSection Title="Color и Align" Row="false" Code="@ColorAlignCode">
+        <ScarnaText Typo="ScarnaTypo.Body1" Color="ScarnaColor.Danger" GutterBottom="true">Body1 с Color="Danger"</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Body1" Color="ScarnaColor.Success" GutterBottom="true">Body1 с Color="Success"</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Body1" Align="ScarnaTextAlign.Center">Текст по центру (Align.Center)</ScarnaText>
+    </DocSection>
+
+    <DocSection Title="Truncate и As" Description="Truncate — обрезка в одну строку. As переопределяет HTML-тег." Row="false" Code="@TruncateCode">
+        <div class="w-48">
+            <ScarnaText Typo="ScarnaTypo.Body1" Truncate="true">Очень длинный текст, который не помещается в ширину и обрезается многоточием</ScarnaText>
+        </div>
+        <ScarnaText Typo="ScarnaTypo.H3" As="span">H3 визуально, но тег span</ScarnaText>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string TypoCode =
+        """
+        <ScarnaText Typo="ScarnaTypo.H2" GutterBottom="true">Заголовок раздела</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Subtitle1" GutterBottom="true">Подзаголовок</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Body1" GutterBottom="true">Обычный текст абзаца.</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Body2">Текст поменьше.</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Caption">Приглушённая подпись</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Overline">OVERLINE НАДПИСЬ</ScarnaText>
+        """;
+
+    private const string ColorAlignCode =
+        """
+        <ScarnaText Typo="ScarnaTypo.Body1" Color="ScarnaColor.Danger">Ошибка сохранения</ScarnaText>
+        <ScarnaText Typo="ScarnaTypo.Body1" Align="ScarnaTextAlign.Center">Текст по центру</ScarnaText>
+        """;
+
+    private const string TruncateCode =
+        """
+        <div class="w-48">
+            <ScarnaText Typo="ScarnaTypo.Body1" Truncate="true">
+                Очень длинный текст, который обрезается многоточием
+            </ScarnaText>
+        </div>
+
+        @* Заголовок H3 визуально, но семантически <span> *@
+        <ScarnaText Typo="ScarnaTypo.H3" As="span">...</ScarnaText>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Typo", "ScarnaTypo", "Body1", "H1-H6, Subtitle1/Subtitle2, Body1/Body2, Caption, Overline, Button — определяет и тег, и размер/начертание шрифта"),
+        new("Color", "ScarnaColor?", "null", "Не задан — обычный text-foreground (у Caption/Overline по умолчанию приглушённый text-foreground/60)"),
+        new("Align", "ScarnaTextAlign", "Inherit", "Start/Center/End/Justify"),
+        new("GutterBottom", "bool", "false", "Отступ снизу — для последовательных абзацев"),
+        new("Truncate", "bool", "false", "Обрезать в одну строку с многоточием при переполнении"),
+        new("As", "string?", "—", "Переопределить HTML-тег по умолчанию для выбранного Typo"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое"),
+    };
+}

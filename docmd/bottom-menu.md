@@ -1,18 +1,18 @@
-# NorthBottomMenu / NorthBottomMenuItem
+# ScarnaBottomMenu / ScarnaBottomMenuItem
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/Layout/NorthBottomMenu.razor`
-- `src/NorthUI/NorthUI/Components/Layout/NorthBottomMenuItem.razor`
+- `src/ScarnaUI/ScarnaUI/Components/Layout/ScarnaBottomMenu.razor`
+- `src/ScarnaUI/ScarnaUI/Components/Layout/ScarnaBottomMenuItem.razor`
 
 ## Описание
 
 Нижнее меню — панель вкладок, прибитая к низу экрана (`position: fixed`), как в
 мобильных приложениях (iOS tab bar / Android bottom navigation): иконка сверху,
-подпись снизу. В отличие от [NorthDrawer](drawer.md) с `Anchor="Bottom"` — не
+подпись снизу. В отличие от [ScarnaDrawer](drawer.md) с `Anchor="Bottom"` — не
 выезжающая панель поверх контента по требованию, а всегда видимая строка навигации.
 
 Регистрация пунктов и переключение активного устроены так же, как у
-[NorthTabs](tabs.md) (`Register`/`Unregister` через `[CascadingParameter]`, индекс
+[ScarnaTabs](tabs.md) (`Register`/`Unregister` через `[CascadingParameter]`, индекс
 вместо ссылки на объект), но без JS-измерения индикатора — здесь просто подсвечивается
 активная иконка/подпись цветом `primary`.
 
@@ -22,26 +22,26 @@
 ## Пример использования
 
 ```razor
-<NorthBottomMenu @bind-SelectedIndex="_tab">
-    <NorthBottomMenuItem Text="Главная"><HomeIcon /></NorthBottomMenuItem>
-    <NorthBottomMenuItem Text="Поиск"><SearchIcon /></NorthBottomMenuItem>
-    <NorthBottomMenuItem Text="Профиль"><ProfileIcon /></NorthBottomMenuItem>
-</NorthBottomMenu>
+<ScarnaBottomMenu @bind-SelectedIndex="_tab">
+    <ScarnaBottomMenuItem Text="Главная"><HomeIcon /></ScarnaBottomMenuItem>
+    <ScarnaBottomMenuItem Text="Поиск"><SearchIcon /></ScarnaBottomMenuItem>
+    <ScarnaBottomMenuItem Text="Профиль"><ProfileIcon /></ScarnaBottomMenuItem>
+</ScarnaBottomMenu>
 ```
 
-Каждый `NorthBottomMenuItem` также поддерживает свой `OnClick` в дополнение к выбору
+Каждый `ScarnaBottomMenuItem` также поддерживает свой `OnClick` в дополнение к выбору
 (удобно для навигации через [Navigator](navigator.md), например
 `OnClick='() => Navigator.NavigateTo("/search")'`).
 
-## Параметры NorthBottomMenu
+## Параметры ScarnaBottomMenu
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
 | `SelectedIndex` / `SelectedIndexChanged` | `int` | `0` | Механика `@bind-SelectedIndex` |
-| `ChildContent` | `RenderFragment?` | — | Набор `NorthBottomMenuItem` |
+| `ChildContent` | `RenderFragment?` | — | Набор `ScarnaBottomMenuItem` |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |
 
-## Параметры NorthBottomMenuItem
+## Параметры ScarnaBottomMenuItem
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|

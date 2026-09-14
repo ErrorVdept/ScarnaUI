@@ -1,9 +1,9 @@
-# NorthButton
+# ScarnaButton
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/Actions/NorthButton.razor`
-- `src/NorthUI/NorthUI/Components/Base/NorthColorVariantClasses.cs` (таблица цвет × вариант)
-- `src/NorthUI/NorthUI/Components/Base/NorthEnums.cs` (`NorthColor`, `NorthSize`, `NorthRadius`, `NorthVariant`)
+- `src/ScarnaUI/ScarnaUI/Components/Actions/ScarnaButton.razor`
+- `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaColorVariantClasses.cs` (таблица цвет × вариант)
+- `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaEnums.cs` (`ScarnaColor`, `ScarnaSize`, `ScarnaRadius`, `ScarnaVariant`)
 
 ## Описание
 
@@ -14,26 +14,26 @@
 ## Пример использования
 
 ```razor
-<NorthButton Color="NorthColor.Primary" Variant="NorthVariant.Solid" OnClick="Save">
+<ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid" OnClick="Save">
     Сохранить
-</NorthButton>
+</ScarnaButton>
 
-<NorthButton Href="/settings" Variant="NorthVariant.Light">Настройки</NorthButton>
+<ScarnaButton Href="/settings" Variant="ScarnaVariant.Light">Настройки</ScarnaButton>
 
-<NorthButton Loading="@_isSaving" Disabled="@_isSaving" OnClick="SaveAsync">
+<ScarnaButton Loading="@_isSaving" Disabled="@_isSaving" OnClick="SaveAsync">
     <StartIcon><svg>...</svg></StartIcon>
     Сохранить
-</NorthButton>
+</ScarnaButton>
 ```
 
 ## Параметры
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
-| `Color` | `NorthColor` | `Default` | `Default`/`Primary`/`Secondary`/`Success`/`Warning`/`Danger` |
-| `Variant` | `NorthVariant` | `Solid` | `Solid`/`Flat`/`Bordered`/`Light`/`Faded`/`Shadow` |
-| `Size` | `NorthSize` | `Medium` | `Small`/`Medium`/`Large` |
-| `Radius` | `NorthRadius` | `Medium` | `None`/`Small`/`Medium`/`Large`/`Full` |
+| `Color` | `ScarnaColor` | `Default` | `Default`/`Primary`/`Secondary`/`Success`/`Warning`/`Danger` |
+| `Variant` | `ScarnaVariant` | `Solid` | `Solid`/`Flat`/`Bordered`/`Light`/`Faded`/`Shadow` |
+| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
+| `Radius` | `ScarnaRadius` | `Medium` | `None`/`Small`/`Medium`/`Large`/`Full` |
 | `Bordered` | `bool` | `false` | Доп. обводка в цвет Color поверх Variant (для Variant.Bordered ничего не меняет) |
 | `Type` | `string` | `"button"` | HTML `type` для `<button>` |
 | `Href` | `string?` | — | Если задан — рендер как `<a href>` |

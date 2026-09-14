@@ -1,0 +1,79 @@
+@page "/componentlib/stack"
+
+<DocPage Title="ScarnaStack" Lead="Flex-контейнер для расстановки дочерних элементов в ряд или колонку с равным отступом между ними — самый часто используемый layout-компонент."
+         Files="@(new[] { "Components/Layout/ScarnaStack.razor" })">
+
+    <DocSection Title="Row / Column" Description="Row переключает направление на flex-row." Code="@RowCode">
+        <ScarnaStack Row="true" Spacing="3">
+            <ScarnaChip>Один</ScarnaChip>
+            <ScarnaChip>Два</ScarnaChip>
+            <ScarnaChip>Три</ScarnaChip>
+        </ScarnaStack>
+    </DocSection>
+
+    <DocSection Title="Spacing" Description="Отступ между элементами в шагах по 0.25rem." Code="@SpacingCode">
+        <ScarnaStack Row="true" Spacing="1">
+            <ScarnaChip>1</ScarnaChip><ScarnaChip>1</ScarnaChip>
+        </ScarnaStack>
+        <ScarnaStack Row="true" Spacing="6">
+            <ScarnaChip>6</ScarnaChip><ScarnaChip>6</ScarnaChip>
+        </ScarnaStack>
+    </DocSection>
+
+    <DocSection Title="Justify / Align" Description="Распределение и выравнивание по поперечной оси." Code="@JustifyCode" Row="false">
+        <ScarnaStack Row="true" Justify="ScarnaJustify.SpaceBetween" Class="border border-divider rounded-scarna-md p-3">
+            <span>Итого: 1 200 ₽</span>
+            <ScarnaButton Color="ScarnaColor.Primary">Оформить</ScarnaButton>
+        </ScarnaStack>
+        <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center" Class="border border-divider rounded-scarna-md p-3">
+            <ScarnaAvatar Initials="ИИ" />
+            <span class="text-sm text-foreground/70">Выровнено по центру</span>
+        </ScarnaStack>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private const string RowCode =
+        """
+        <ScarnaStack Row="true" Spacing="3">
+            <ScarnaChip>Один</ScarnaChip>
+            <ScarnaChip>Два</ScarnaChip>
+            <ScarnaChip>Три</ScarnaChip>
+        </ScarnaStack>
+        """;
+
+    private const string SpacingCode =
+        """
+        <ScarnaStack Row="true" Spacing="1">
+            <ScarnaChip>1</ScarnaChip><ScarnaChip>1</ScarnaChip>
+        </ScarnaStack>
+        <ScarnaStack Row="true" Spacing="6">
+            <ScarnaChip>6</ScarnaChip><ScarnaChip>6</ScarnaChip>
+        </ScarnaStack>
+        """;
+
+    private const string JustifyCode =
+        """
+        <ScarnaStack Row="true" Justify="ScarnaJustify.SpaceBetween">
+            <span>Итого: 1 200 ₽</span>
+            <ScarnaButton Color="ScarnaColor.Primary">Оформить</ScarnaButton>
+        </ScarnaStack>
+
+        <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
+            <ScarnaAvatar Initials="ИИ" />
+            <span>Выровнено по центру</span>
+        </ScarnaStack>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Row", "bool", "false", "true — flex-row, false — flex-column"),
+        new("Spacing", "int", "2", "Отступ между элементами в шагах по 0.25rem (2 = 0.5rem)"),
+        new("Wrap", "bool", "false", "Перенос элементов при нехватке места"),
+        new("Justify", "ScarnaJustify", "Start", "Start / End / Center / SpaceBetween / SpaceAround / SpaceEvenly"),
+        new("Align", "ScarnaAlign", "Stretch", "Start / End / Center / Stretch / Baseline"),
+    };
+}

@@ -1,0 +1,453 @@
+@page "/components"
+@inject IScarnaDialogService DialogService
+@inject IToastManager ToastManager
+
+<PageTitle>ScarnaUI — компоненты</PageTitle>
+
+<ScarnaDrawer @bind-Open="_tocOpen" Anchor="ScarnaDrawerAnchor.Left" Width="260px">
+    <div class="flex items-center justify-between border-b border-divider px-4 py-3">
+        <span class="font-semibold">Оглавление</span>
+        <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _tocOpen = false">✕</ScarnaButton>
+    </div>
+    <nav class="scrollable-v p-3">
+        <ScarnaStack Spacing="1">
+            @foreach (var item in _toc)
+            {
+                @* href полный ("/components#id"), не голый "#id" — у Blazor-приложений
+                   всегда есть <base href="/"> в <head>, а с ним href="#id" резолвится
+                   БРАУЗЕРОМ относительно этого base, а не текущего пути, и уводит на
+                   "/#id" (корень сайта) вместо прокрутки текущей страницы. *@
+                <a href="@($"/components#{item.Id}")" class="block rounded-scarna-sm px-2 py-1.5 text-sm text-foreground/70 transition-colors hover:bg-content2 hover:text-foreground" @onclick="() => _tocOpen = false">@item.Title</a>
+            }
+        </ScarnaStack>
+    </nav>
+</ScarnaDrawer>
+
+<ScarnaContainer>
+    <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="mb-6" OnClick="() => _tocOpen = true">
+        <StartIcon>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+        </StartIcon>
+        <ChildContent>Оглавление</ChildContent>
+    </ScarnaButton>
+
+    <ScarnaStack Spacing="10" Class="pb-16">
+
+        <section id="buttons">
+            <h2 class="mb-4 text-xl font-semibold">Buttons</h2>
+            <ScarnaCard>
+                <ScarnaStack Spacing="4">
+                    <ScarnaStack Row="true" Spacing="3" Wrap="true">
+                        <ScarnaButton Color="ScarnaColor.Default">Default</ScarnaButton>
+                        <ScarnaButton Color="ScarnaColor.Primary">Primary</ScarnaButton>
+                        <ScarnaButton Color="ScarnaColor.Secondary">Secondary</ScarnaButton>
+                        <ScarnaButton Color="ScarnaColor.Success">Success</ScarnaButton>
+                        <ScarnaButton Color="ScarnaColor.Warning">Warning</ScarnaButton>
+                        <ScarnaButton Color="ScarnaColor.Danger">Danger</ScarnaButton>
+                    </ScarnaStack>
+                    <ScarnaStack Row="true" Spacing="3" Wrap="true">
+                        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid">Solid</ScarnaButton>
+                        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Flat">Flat</ScarnaButton>
+                        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Bordered">Bordered</ScarnaButton>
+                        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Light">Light</ScarnaButton>
+                        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Faded">Faded</ScarnaButton>
+                        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Shadow">Shadow</ScarnaButton>
+                    </ScarnaStack>
+                    <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center" Wrap="true">
+                        <ScarnaButton Size="ScarnaSize.Small">Small</ScarnaButton>
+                        <ScarnaButton Size="ScarnaSize.Medium">Medium</ScarnaButton>
+                        <ScarnaButton Size="ScarnaSize.Large">Large</ScarnaButton>
+                        <ScarnaButton Loading="true">Loading</ScarnaButton>
+                        <ScarnaButton Disabled="true">Disabled</ScarnaButton>
+                    </ScarnaStack>
+                </ScarnaStack>
+            </ScarnaCard>
+        </section>
+
+        <section id="forms">
+            <h2 class="mb-4 text-xl font-semibold">Forms</h2>
+            <ScarnaCard>
+                <ScarnaGrid Spacing="6">
+                    <ScarnaItem Xs="12" Md="6">
+                        <ScarnaInput Label="Имя" Placeholder="Введите имя" @bind-Value="_name" HelperText="Как к вам обращаться" />
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12" Md="6">
+                        <ScarnaInput Label="Email" Type="email" Variant="ScarnaVariant.Flat" @bind-Value="_email" Error="@(!string.IsNullOrEmpty(_email) && !_email.Contains('@'))" ErrorText="Некорректный email" />
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12" Md="6">
+                        <ScarnaSelect Label="Страна" @bind-Value="_country" Placeholder="Выберите страну">
+                            <ScarnaSelectItem Value="@("ru")" Text="Россия" />
+                            <ScarnaSelectItem Value="@("kz")" Text="Казахстан" />
+                            <ScarnaSelectItem Value="@("by")" Text="Беларусь" />
+                        </ScarnaSelect>
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12">
+                        <ScarnaStack Row="true" Spacing="6">
+                            <ScarnaCheckbox @bind-Value="_agree">Согласен с условиями</ScarnaCheckbox>
+                            <ScarnaSwitch @bind-Value="_notify" Color="ScarnaColor.Success">Уведомления</ScarnaSwitch>
+                        </ScarnaStack>
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12" Md="6">
+                        <ScarnaSlider Label="Громкость" @bind-Value="_volume" ShowValue="true" />
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12" Md="6">
+                        <ScarnaNumericField Label="Количество (целое)" @bind-Value="_qty" Min="0" Max="99" Step="1" Format="ScarnaNumberFormat.Integer" />
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12" Md="6">
+                        <ScarnaSelectGroup Label="Период (FullWidth)" @bind-Value="_period" FullWidth="true">
+                            <ScarnaSelectGroupItem Value="@("day")" Text="День" />
+                            <ScarnaSelectGroupItem Value="@("week")" Text="Неделя" />
+                            <ScarnaSelectGroupItem Value="@("month")" Text="Месяц" />
+                        </ScarnaSelectGroup>
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12" Md="6">
+                        <p class="mb-2 text-sm font-medium text-foreground/80">ToggleButton</p>
+                        <ScarnaStack Row="true" Spacing="2">
+                            <ScarnaToggleButton @bind-Value="_bold">Ж</ScarnaToggleButton>
+                            <ScarnaToggleButton @bind-Value="_italic">К</ScarnaToggleButton>
+                            <ScarnaToggleButton @bind-Value="_underline">Ч</ScarnaToggleButton>
+                        </ScarnaStack>
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12">
+                        <ScarnaDivider Class="mb-4" />
+                        <p class="mb-3 text-sm text-foreground/60">Плотность Dense — для панелей фильтров и таблиц</p>
+                        <ScarnaStack Row="true" Spacing="4" Align="ScarnaAlign.Center" Wrap="true">
+                            <ScarnaInput Placeholder="Normal" Class="w-40" />
+                            <ScarnaInput Placeholder="Dense" Density="ScarnaDensity.Dense" Class="w-40" />
+                            <ScarnaCheckbox Density="ScarnaDensity.Dense" Value="true">Dense чекбокс</ScarnaCheckbox>
+                            <ScarnaSwitch Density="ScarnaDensity.Dense" Value="true" Color="ScarnaColor.Primary">Dense переключатель</ScarnaSwitch>
+                        </ScarnaStack>
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12">
+                        <ScarnaDivider Class="mb-4" />
+                        <p class="mb-3 text-sm text-foreground/60">Bordered="false" — без обводки, независимо от Variant</p>
+                        <ScarnaStack Row="true" Spacing="4" Wrap="true">
+                            <ScarnaInput Placeholder="Без обводки" Variant="ScarnaVariant.Flat" Bordered="false" Class="w-48" />
+                            <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid" Bordered="true">С доп. обводкой</ScarnaButton>
+                        </ScarnaStack>
+                    </ScarnaItem>
+                </ScarnaGrid>
+            </ScarnaCard>
+        </section>
+
+        <section id="forms-extra">
+            <h2 class="mb-4 text-xl font-semibold">Forms — TextArea, TimeField, DateTimePicker, PasswordBox</h2>
+            <ScarnaCard>
+                <ScarnaGrid Spacing="6">
+                    <ScarnaItem Xs="12" Md="6">
+                        <ScarnaTextArea Label="Комментарий" Placeholder="Расскажите подробнее..." @bind-Value="_comment" Rows="3" HelperText="Многострочное поле" />
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12" Md="6">
+                        <ScarnaPasswordBox Label="Пароль" @bind-Value="_password" Placeholder="Введите пароль" HelperText="Символ маски по умолчанию — *" />
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12" Md="6">
+                        <ScarnaTimeField Label="Время начала" @bind-Value="_startTime" />
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12" Md="6">
+                        <ScarnaDateTimePicker Label="Дата и время встречи" @bind-Value="_meetingAt" />
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12">
+                        <ScarnaDivider Class="mb-4" />
+                        <p class="mb-3 text-sm text-foreground/60">ReadOnly — поле активно выглядит как обычное, но не реагирует на ввод (в отличие от Disabled)</p>
+                        <ScarnaStack Row="true" Spacing="4" Align="ScarnaAlign.Center" Wrap="true">
+                            <ScarnaInput Value="Только чтение" ReadOnly="true" Class="w-48" />
+                            <ScarnaSlider Label="ReadOnly" Value="65" ReadOnly="true" Class="w-48" />
+                            <ScarnaCheckbox Value="true" ReadOnly="true">ReadOnly чекбокс</ScarnaCheckbox>
+                            <ScarnaSwitch Value="true" ReadOnly="true">ReadOnly переключатель</ScarnaSwitch>
+                        </ScarnaStack>
+                    </ScarnaItem>
+                </ScarnaGrid>
+            </ScarnaCard>
+        </section>
+
+        <section id="data-display">
+            <h2 class="mb-4 text-xl font-semibold">Data display</h2>
+            <ScarnaCard>
+                <ScarnaStack Spacing="5">
+                    <ScarnaStack Row="true" Spacing="2" Wrap="true">
+                        <ScarnaChip Color="ScarnaColor.Default">Default</ScarnaChip>
+                        <ScarnaChip Color="ScarnaColor.Primary">Primary</ScarnaChip>
+                        <ScarnaChip Color="ScarnaColor.Success" Variant="ScarnaVariant.Bordered">Success</ScarnaChip>
+                        <ScarnaChip Color="ScarnaColor.Danger" Variant="ScarnaVariant.Faded" OnClose='() => ToastManager.Add("Тег убран", ScarnaToastSeverity.Info)'>Удаляемый</ScarnaChip>
+                    </ScarnaStack>
+                    <ScarnaStack Row="true" Spacing="4" Align="ScarnaAlign.Center">
+                        <ScarnaAvatar Initials="ИИ" Color="ScarnaColor.Primary" />
+                        <ScarnaAvatar Initials="АБ" Color="ScarnaColor.Secondary" Size="ScarnaSize.Large" />
+                        <ScarnaBadge Content="5">
+                            <ScarnaAvatar Initials="ВГ" />
+                        </ScarnaBadge>
+                        <ScarnaBadge Dot="true" Color="ScarnaColor.Success">
+                            <ScarnaAvatar Initials="ОК" />
+                        </ScarnaBadge>
+                    </ScarnaStack>
+                    <ScarnaDivider />
+                    <p class="text-sm text-foreground/70">Карточка, чип, аватар и бейдж — всё выше уже они и есть.</p>
+                    <ScarnaSeparator>или</ScarnaSeparator>
+                    <ScarnaStack Row="true" Spacing="2" Wrap="true" Align="ScarnaAlign.Center">
+                        <ScarnaTag>новое</ScarnaTag>
+                        <ScarnaTag Color="ScarnaColor.Primary">primary</ScarnaTag>
+                        <ScarnaTag Color="ScarnaColor.Success" Variant="ScarnaVariant.Bordered">активен</ScarnaTag>
+                        <ScarnaSpinner />
+                        <ScarnaSpinner Color="ScarnaColor.Success" Size="ScarnaSize.Large" />
+                    </ScarnaStack>
+                </ScarnaStack>
+            </ScarnaCard>
+        </section>
+
+        <section id="data-display-extra">
+            <h2 class="mb-4 text-xl font-semibold">Data display — Image, ExpansionPanel, List</h2>
+            <ScarnaCard>
+                <ScarnaGrid Spacing="6">
+                    <ScarnaItem Xs="12" Md="4">
+                        <p class="mb-2 text-sm text-foreground/60">ScarnaImage (с fallback при ошибке)</p>
+                        <ScarnaImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Alt="Пейзаж" Class="h-40 w-full" />
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12" Md="4">
+                        <p class="mb-2 text-sm text-foreground/60">ScarnaExpansionPanel</p>
+                        <ScarnaStack Spacing="2">
+                            <ScarnaExpansionPanel Title="Доставка" @bind-Expanded="_panel1">
+                                Бесплатно при заказе от 3000 ₽, курьером 1-2 дня.
+                            </ScarnaExpansionPanel>
+                            <ScarnaExpansionPanel Title="Оплата" @bind-Expanded="_panel2">
+                                Картой онлайн или наличными при получении.
+                            </ScarnaExpansionPanel>
+                        </ScarnaStack>
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12" Md="4">
+                        <p class="mb-2 text-sm text-foreground/60">ScarnaList (SelectionMode.Multiple)</p>
+                        <ScarnaList SelectionMode="ScarnaListSelectionMode.Multiple" @bind-SelectedValues="_selectedFruits" Bordered="true">
+                            <ScarnaListItem Value="@("apple")">Яблоко</ScarnaListItem>
+                            <ScarnaListItem Value="@("banana")">Банан</ScarnaListItem>
+                            <ScarnaListItem Value="@("cherry")">Вишня</ScarnaListItem>
+                        </ScarnaList>
+                    </ScarnaItem>
+                </ScarnaGrid>
+            </ScarnaCard>
+        </section>
+
+        <section id="drawer">
+            <h2 class="mb-4 text-xl font-semibold">Layout — Drawer</h2>
+            <ScarnaCard>
+                <ScarnaButton Variant="ScarnaVariant.Bordered" OnClick="() => _drawerOpen = true">Открыть панель</ScarnaButton>
+                <ScarnaDrawer @bind-Open="_drawerOpen" Anchor="ScarnaDrawerAnchor.Left">
+                    <div class="flex items-center justify-between border-b border-divider px-4 py-3">
+                        <span class="font-semibold">Меню</span>
+                        <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _drawerOpen = false">✕</ScarnaButton>
+                    </div>
+                    <ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None" Class="p-3">
+                        <ScarnaListItem Value="@("home")">Главная</ScarnaListItem>
+                        <ScarnaListItem Value="@("orders")">Заказы</ScarnaListItem>
+                        <ScarnaListItem Value="@("settings")">Настройки</ScarnaListItem>
+                    </ScarnaList>
+                </ScarnaDrawer>
+            </ScarnaCard>
+        </section>
+
+        <section id="bottom-menu">
+            <h2 class="mb-4 text-xl font-semibold">Layout — BottomMenu</h2>
+            <ScarnaCard>
+                <p class="mb-3 text-sm text-foreground/60">Прибито к низу экрана (как мобильная навигация) — прокрутите страницу вниз, чтобы увидеть.</p>
+                <ScarnaBottomMenu @bind-SelectedIndex="_bottomMenuTab">
+                    <ScarnaBottomMenuItem Text="Главная">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+                    </ScarnaBottomMenuItem>
+                    <ScarnaBottomMenuItem Text="Поиск">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                    </ScarnaBottomMenuItem>
+                    <ScarnaBottomMenuItem Text="Профиль">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                    </ScarnaBottomMenuItem>
+                </ScarnaBottomMenu>
+            </ScarnaCard>
+        </section>
+
+        <section id="text">
+            <h2 class="mb-4 text-xl font-semibold">ScarnaText</h2>
+            <ScarnaCard>
+                <ScarnaText Typo="ScarnaTypo.H2" GutterBottom="true">Заголовок H2</ScarnaText>
+                <ScarnaText Typo="ScarnaTypo.Subtitle1" GutterBottom="true">Подзаголовок Subtitle1</ScarnaText>
+                <ScarnaText Typo="ScarnaTypo.Body1" GutterBottom="true">
+                    Body1 — обычный текст абзаца. Компонент выбирает подходящий HTML-тег
+                    автоматически (h1-h6, p, span) в зависимости от Typo, либо явно через As.
+                </ScarnaText>
+                <ScarnaText Typo="ScarnaTypo.Body2" Color="ScarnaColor.Danger" GutterBottom="true">Body2 с Color="Danger"</ScarnaText>
+                <ScarnaText Typo="ScarnaTypo.Caption">Caption — приглушённая подпись</ScarnaText>
+            </ScarnaCard>
+        </section>
+
+        <section id="progress">
+            <h2 class="mb-4 text-xl font-semibold">ScarnaProgress</h2>
+            <ScarnaCard>
+                <ScarnaStack Spacing="4">
+                    <ScarnaProgress Label="Загрузка файла" Value="64" ShowValue="true" />
+                    <ScarnaProgress Label="Ошибка" Value="30" Color="ScarnaColor.Danger" ShowValue="true" Size="ScarnaSize.Small" />
+                    <ScarnaProgress Label="Синхронизация" Indeterminate="true" Color="ScarnaColor.Secondary" />
+                </ScarnaStack>
+            </ScarnaCard>
+        </section>
+
+        <section id="table">
+            <h2 class="mb-4 text-xl font-semibold">ScarnaTable</h2>
+            <ScarnaCard>
+                <ScarnaTable Hover="true">
+                    <thead>
+                        <tr><th>Имя</th><th>Email</th><th>Статус</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Иван Петров</td><td>ivan@example.com</td><td><ScarnaChip Color="ScarnaColor.Success" Size="ScarnaSize.Small">Активен</ScarnaChip></td></tr>
+                        <tr><td>Анна Смирнова</td><td>anna@example.com</td><td><ScarnaChip Color="ScarnaColor.Warning" Size="ScarnaSize.Small">Ожидает</ScarnaChip></td></tr>
+                        <tr><td>Пётр Иванов</td><td>petr@example.com</td><td><ScarnaChip Color="ScarnaColor.Default" Size="ScarnaSize.Small">Неактивен</ScarnaChip></td></tr>
+                    </tbody>
+                </ScarnaTable>
+            </ScarnaCard>
+        </section>
+
+        <section id="tabs">
+            <h2 class="mb-4 text-xl font-semibold">Navigation — Tabs</h2>
+            <ScarnaCard>
+                <ScarnaTabs @bind-SelectedIndex="_tab">
+                    <ScarnaTabPanel Text="Профиль">
+                        <p class="text-sm text-foreground/70">Содержимое вкладки «Профиль». Активная вкладка — заливка фоном (pill), а не подчёркивание.</p>
+                    </ScarnaTabPanel>
+                    <ScarnaTabPanel Text="Настройки">
+                        <p class="text-sm text-foreground/70">Содержимое вкладки «Настройки».</p>
+                    </ScarnaTabPanel>
+                    <ScarnaTabPanel Text="Безопасность">
+                        <p class="text-sm text-foreground/70">Содержимое вкладки «Безопасность».</p>
+                    </ScarnaTabPanel>
+                </ScarnaTabs>
+            </ScarnaCard>
+        </section>
+
+        <section id="menu">
+            <h2 class="mb-4 text-xl font-semibold">Navigation — Menu</h2>
+            <ScarnaCard>
+                <ScarnaMenu>
+                    <Trigger>
+                        <ScarnaButton Variant="ScarnaVariant.Bordered">Действия ▾</ScarnaButton>
+                    </Trigger>
+                    <MenuContent>
+                        <ScarnaMenuItem OnClick='@(() => ToastManager.Add("Редактирование", ScarnaToastSeverity.Info))'>Редактировать</ScarnaMenuItem>
+                        <ScarnaMenuItem OnClick='@(() => ToastManager.Add("Дублировано", ScarnaToastSeverity.Info))'>Дублировать</ScarnaMenuItem>
+                        <ScarnaDivider Class="my-1" />
+                        <ScarnaMenuItem Color="ScarnaColor.Danger" OnClick='@(() => ToastManager.Add("Удалено", ScarnaToastSeverity.Warning))'>Удалить</ScarnaMenuItem>
+                    </MenuContent>
+                </ScarnaMenu>
+            </ScarnaCard>
+        </section>
+
+        <section id="overlays">
+            <h2 class="mb-4 text-xl font-semibold">Overlays</h2>
+            <ScarnaCard>
+                <ScarnaStack Row="true" Spacing="4" Wrap="true" Align="ScarnaAlign.Center">
+                    <ScarnaTooltip Text="Всплывающая подсказка сверху">
+                        <ScarnaButton Variant="ScarnaVariant.Bordered">Наведите курсор</ScarnaButton>
+                    </ScarnaTooltip>
+
+                    <ScarnaButton Color="ScarnaColor.Danger" Variant="ScarnaVariant.Flat" OnClick="OpenConfirmDialogAsync">
+                        Открыть диалог
+                    </ScarnaButton>
+
+                    <ScarnaButton Color="ScarnaColor.Success" Variant="ScarnaVariant.Flat" OnClick='@(() => ToastManager.Add("Сохранено успешно", ScarnaToastSeverity.Success))'>
+                        Показать тост
+                    </ScarnaButton>
+                </ScarnaStack>
+            </ScarnaCard>
+        </section>
+
+        <section id="custom-classes">
+            <h2 class="mb-4 text-xl font-semibold">Кастомные классы</h2>
+            <ScarnaCard>
+                <ScarnaGrid Spacing="6">
+                    <ScarnaItem Xs="12" Md="6">
+                        <p class="mb-2 text-sm text-foreground/60">.scrollable-v (высота ограничена — прокрутка по вертикали)</p>
+                        <div class="scrollable-v h-40 rounded-scarna-md border border-divider p-3">
+                            @for (var i = 1; i <= 20; i++)
+                            {
+                                <p class="py-1 text-sm text-foreground/80">Строка списка №@i</p>
+                            }
+                        </div>
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12" Md="6">
+                        <p class="mb-2 text-sm text-foreground/60">.scrollable-h (широкий контент — прокрутка по горизонтали)</p>
+                        <div class="scrollable-h rounded-scarna-md border border-divider p-3">
+                            <div class="flex w-[720px] gap-3">
+                                @for (var i = 1; i <= 6; i++)
+                                {
+                                    <div class="flex w-32 shrink-0 items-center justify-center rounded-scarna-sm bg-content2 py-6 text-sm">Карточка @i</div>
+                                }
+                            </div>
+                        </div>
+                    </ScarnaItem>
+                    <ScarnaItem Xs="12">
+                        <p class="mb-2 text-sm text-foreground/60">.scarna-width-full / .scarna-height-full</p>
+                        <div class="flex h-24 gap-3 rounded-scarna-md border border-divider p-3">
+                            <div class="scarna-height-full flex w-32 items-center justify-center rounded-scarna-sm bg-content2 text-sm">100% высоты</div>
+                            <div class="scarna-width-full flex items-center justify-center rounded-scarna-sm bg-content2 text-sm">100% ширины</div>
+                        </div>
+                    </ScarnaItem>
+                </ScarnaGrid>
+            </ScarnaCard>
+        </section>
+
+    </ScarnaStack>
+</ScarnaContainer>
+
+@code {
+    private sealed record TocItem(string Id, string Title);
+
+    private bool _tocOpen;
+
+    private readonly TocItem[] _toc =
+    {
+        new("buttons", "Buttons"),
+        new("forms", "Forms"),
+        new("forms-extra", "Forms — доп. поля"),
+        new("data-display", "Data display"),
+        new("data-display-extra", "Data display — доп."),
+        new("drawer", "Layout — Drawer"),
+        new("bottom-menu", "Layout — BottomMenu"),
+        new("text", "ScarnaText"),
+        new("progress", "ScarnaProgress"),
+        new("table", "ScarnaTable"),
+        new("tabs", "Navigation — Tabs"),
+        new("menu", "Navigation — Menu"),
+        new("overlays", "Overlays"),
+        new("custom-classes", "Кастомные классы"),
+    };
+
+    private string? _name;
+    private string? _email;
+    private string? _country;
+    private bool _agree;
+    private bool _notify = true;
+    private int _tab;
+
+    private double _volume = 40;
+    private double _qty = 1;
+    private string? _period = "week";
+    private bool _bold;
+    private bool _italic;
+    private bool _underline;
+
+    private bool _panel1 = true;
+    private bool _panel2;
+    private IReadOnlyCollection<string> _selectedFruits = new List<string> { "banana" };
+
+    private bool _drawerOpen;
+
+    private string? _comment;
+    private string? _password;
+    private TimeOnly? _startTime = new(9, 30);
+    private DateTime? _meetingAt = DateTime.Today.AddHours(14);
+    private int _bottomMenuTab;
+
+    private async Task OpenConfirmDialogAsync()
+    {
+        var result = await DialogService.ShowAsync<DemoConfirmDialog>(new ScarnaDialogOptions { Size = ScarnaDialogSize.Small });
+        if (!result.Cancelled)
+        {
+            ToastManager.Add("Элемент удалён", ScarnaToastSeverity.Warning);
+        }
+    }
+}

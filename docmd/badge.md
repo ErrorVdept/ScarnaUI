@@ -1,31 +1,31 @@
-# NorthBadge
+# ScarnaBadge
 
 ## Файлы
-- `src/NorthUI/NorthUI/Components/DataDisplay/NorthBadge.razor`
+- `src/ScarnaUI/ScarnaUI/Components/DataDisplay/ScarnaBadge.razor`
 
 ## Описание
 
 Индикатор-оверлей поверх произвольного содержимого (аватара, иконки, кнопки) —
 счётчик непрочитанных сообщений, точка "есть событие" и т.п. В отличие от
-[NorthChip](chip.md), не самостоятелен — всегда оборачивает `ChildContent`.
+[ScarnaChip](chip.md), не самостоятелен — всегда оборачивает `ChildContent`.
 
 ## Пример использования
 
 ```razor
-<NorthBadge Content="@unreadCount.ToString()" Visible="@(unreadCount > 0)">
-    <NorthAvatar Initials="ИИ" />
-</NorthBadge>
+<ScarnaBadge Content="@unreadCount.ToString()" Visible="@(unreadCount > 0)">
+    <ScarnaAvatar Initials="ИИ" />
+</ScarnaBadge>
 
-<NorthBadge Dot="true" Color="NorthColor.Success">
-    <NorthAvatar Src="/img/user.jpg" />
-</NorthBadge>
+<ScarnaBadge Dot="true" Color="ScarnaColor.Success">
+    <ScarnaAvatar Src="/img/user.jpg" />
+</ScarnaBadge>
 ```
 
 ## Параметры
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
-| `Color` | `NorthColor` | `Danger` | Цвет заливки значка |
+| `Color` | `ScarnaColor` | `Danger` | Цвет заливки значка |
 | `Content` | `string?` | — | Текст/число внутри значка (игнорируется при `Dot`) |
 | `Dot` | `bool` | `false` | Показать маленькую точку вместо текста |
 | `Visible` | `bool` | `true` | Управляет видимостью значка целиком |

@@ -1,0 +1,82 @@
+@page "/componentlib/badge"
+
+<DocPage Title="ScarnaBadge" Lead="Индикатор-оверлей поверх произвольного содержимого — счётчик, точка-статус и т.п."
+         Files="@(new[] { "Components/DataDisplay/ScarnaBadge.razor" })">
+
+    <DocSection Title="Текст и точка" Code="@BasicCode">
+        <ScarnaBadge Content="5">
+            <ScarnaAvatar Initials="ВГ" />
+        </ScarnaBadge>
+        <ScarnaBadge Dot="true" Color="ScarnaColor.Success">
+            <ScarnaAvatar Initials="ОК" />
+        </ScarnaBadge>
+        <ScarnaBadge Content="99+" Color="ScarnaColor.Primary">
+            <ScarnaAvatar Initials="АБ" />
+        </ScarnaBadge>
+    </DocSection>
+
+    <DocSection Title="Visible" Description="Управляет видимостью значка целиком, без изменения разметки." Code="@VisibleCode">
+        <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _hasUnread = !_hasUnread">
+            @(_hasUnread ? "Отметить прочитанным" : "Показать непрочитанные")
+        </ScarnaButton>
+        <ScarnaBadge Content="3" Visible="@_hasUnread">
+            <ScarnaAvatar Initials="ИИ" />
+        </ScarnaBadge>
+    </DocSection>
+
+    <DocSection Title="Bordered" Code="@BorderedCode">
+        <ScarnaBadge Dot="true" Color="ScarnaColor.Danger" Bordered="true">
+            <ScarnaAvatar Initials="НБ" />
+        </ScarnaBadge>
+        <ScarnaBadge Dot="true" Color="ScarnaColor.Danger" Bordered="false">
+            <ScarnaAvatar Initials="НБ" />
+        </ScarnaBadge>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private bool _hasUnread = true;
+
+    private const string BasicCode =
+        """
+        <ScarnaBadge Content="5">
+            <ScarnaAvatar Initials="ВГ" />
+        </ScarnaBadge>
+        <ScarnaBadge Dot="true" Color="ScarnaColor.Success">
+            <ScarnaAvatar Initials="ОК" />
+        </ScarnaBadge>
+        <ScarnaBadge Content="99+" Color="ScarnaColor.Primary">
+            <ScarnaAvatar Initials="АБ" />
+        </ScarnaBadge>
+        """;
+
+    private const string VisibleCode =
+        """
+        <ScarnaBadge Content="@unreadCount.ToString()" Visible="@(unreadCount > 0)">
+            <ScarnaAvatar Initials="ИИ" />
+        </ScarnaBadge>
+        """;
+
+    private const string BorderedCode =
+        """
+        <ScarnaBadge Dot="true" Color="ScarnaColor.Danger" Bordered="true">
+            <ScarnaAvatar Initials="НБ" />
+        </ScarnaBadge>
+        <ScarnaBadge Dot="true" Color="ScarnaColor.Danger" Bordered="false">
+            <ScarnaAvatar Initials="НБ" />
+        </ScarnaBadge>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Color", "ScarnaColor", "Danger", "Цвет заливки значка"),
+        new("Content", "string?", "—", "Текст/число внутри значка (игнорируется при Dot)"),
+        new("Dot", "bool", "false", "Показать маленькую точку вместо текста"),
+        new("Visible", "bool", "true", "Управляет видимостью значка целиком"),
+        new("Bordered", "bool", "true", "Обводка в цвет фона страницы, отделяет значок от того, что под ним"),
+        new("ChildContent", "RenderFragment?", "—", "Элемент, поверх которого рисуется значок"),
+    };
+}

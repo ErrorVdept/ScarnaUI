@@ -1,0 +1,69 @@
+@page "/componentlib/switch"
+
+<DocPage Title="ScarnaSwitch" Lead="Переключатель (toggle) — семантически то же, что чекбокс, но с метафорой вкл/выкл."
+         Files="@(new[] { "Components/Forms/ScarnaSwitch.razor" })">
+
+    <DocSection Title="Интерактивный пример" Code="@InteractiveCode">
+        <ScarnaSwitch @bind-Value="_notify" Color="ScarnaColor.Success">Уведомления по email</ScarnaSwitch>
+        <span class="text-sm text-foreground/60">Значение: @_notify</span>
+    </DocSection>
+
+    <DocSection Title="Цвета" Code="@ColorsCode">
+        <ScarnaSwitch Value="true" Color="ScarnaColor.Default">Default</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="ScarnaColor.Primary">Primary</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="ScarnaColor.Secondary">Secondary</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="ScarnaColor.Success">Success</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="ScarnaColor.Warning">Warning</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="ScarnaColor.Danger">Danger</ScarnaSwitch>
+    </DocSection>
+
+    <DocSection Title="Плотность и состояния" Code="@StatesCode">
+        <ScarnaSwitch Density="ScarnaDensity.Dense" Value="true">Dense переключатель</ScarnaSwitch>
+        <ScarnaSwitch Value="true" ReadOnly="true">ReadOnly переключатель</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Disabled="true">Disabled переключатель</ScarnaSwitch>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private bool _notify = true;
+
+    private const string InteractiveCode =
+        """
+        <ScarnaSwitch @bind-Value="_notify" Color="ScarnaColor.Success">Уведомления по email</ScarnaSwitch>
+        <span class="text-sm text-foreground/60">Значение: @_notify</span>
+
+        @code {
+            private bool _notify = true;
+        }
+        """;
+
+    private const string ColorsCode =
+        """
+        <ScarnaSwitch Value="true" Color="ScarnaColor.Default">Default</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="ScarnaColor.Primary">Primary</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="ScarnaColor.Secondary">Secondary</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="ScarnaColor.Success">Success</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="ScarnaColor.Warning">Warning</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="ScarnaColor.Danger">Danger</ScarnaSwitch>
+        """;
+
+    private const string StatesCode =
+        """
+        <ScarnaSwitch Density="ScarnaDensity.Dense" Value="true">Dense переключатель</ScarnaSwitch>
+        <ScarnaSwitch Value="true" ReadOnly="true">ReadOnly переключатель</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Disabled="true">Disabled переключатель</ScarnaSwitch>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Value / ValueChanged / ValueExpression", "bool", "—", "Механика @bind-Value"),
+        new("Disabled", "bool", "false", "—"),
+        new("ReadOnly", "bool", "false", "Запрещает переключение, но не тускнеет (в отличие от Disabled)"),
+        new("Color", "ScarnaColor", "Primary", "Цвет дорожки во включённом состоянии"),
+        new("Density", "ScarnaDensity", "Normal", "Dense — уменьшенная дорожка для плотных списков"),
+        new("ChildContent", "RenderFragment?", "—", "Подпись рядом с переключателем"),
+    };
+}

@@ -1,0 +1,140 @@
+@page "/componentlib/drawer"
+
+<DocPage Title="ScarnaDrawer" Lead="Выезжающая панель (боковое меню, панель фильтров) — декларативный компонент, управляемый через @@bind-Open."
+         Files="@(new[] { "Components/Layout/ScarnaDrawer.razor" })">
+
+    <DocSection Title="Anchor=Left" Description="Открывается кнопкой, закрывается по клику на подложку или крестик." Code="@LeftCode" Row="false">
+        <ScarnaButton Variant="ScarnaVariant.Bordered" OnClick="() => _leftOpen = true">Открыть слева</ScarnaButton>
+        <ScarnaDrawer @bind-Open="_leftOpen" Anchor="ScarnaDrawerAnchor.Left">
+            <div class="flex items-center justify-between border-b border-divider px-4 py-3">
+                <span class="font-semibold">Меню</span>
+                <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _leftOpen = false">✕</ScarnaButton>
+            </div>
+            <ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None" Class="p-3">
+                <ScarnaListItem Value="@("home")">Главная</ScarnaListItem>
+                <ScarnaListItem Value="@("orders")">Заказы</ScarnaListItem>
+                <ScarnaListItem Value="@("settings")">Настройки</ScarnaListItem>
+            </ScarnaList>
+        </ScarnaDrawer>
+    </DocSection>
+
+    <DocSection Title="Anchor=Bottom" Description="Height задаёт высоту панели для Top/Bottom." Code="@BottomCode" Row="false">
+        <ScarnaButton Variant="ScarnaVariant.Bordered" OnClick="() => _bottomOpen = true">Открыть снизу</ScarnaButton>
+        <ScarnaDrawer @bind-Open="_bottomOpen" Anchor="ScarnaDrawerAnchor.Bottom" Height="200px">
+            <div class="flex items-center justify-between border-b border-divider px-4 py-3">
+                <span class="font-semibold">Панель снизу</span>
+                <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _bottomOpen = false">✕</ScarnaButton>
+            </div>
+            <p class="p-4 text-sm text-foreground/70">Произвольное содержимое.</p>
+        </ScarnaDrawer>
+    </DocSection>
+
+    <DocSection Title="Variant.Persistent — раздвигает содержимое" Description="Без подложки, реальный flex-элемент с анимируемой шириной — соседний контент сдвигается сам, без ручной синхронизации отступов. Подробнее и больше комбинаций (в т.ч. с ScarnaNavBar) — на странице showcase/main-layout." Code="@PersistentCode" Row="false">
+        <div class="flex overflow-hidden rounded-scarna-md border border-divider">
+            <ScarnaDrawer @bind-Open="_persistentOpen" Anchor="ScarnaDrawerAnchor.Left" Variant="ScarnaDrawerVariant.Persistent" Width="200px">
+                <div class="flex items-center justify-between border-b border-divider px-4 py-3">
+                    <span class="font-semibold">Меню</span>
+                </div>
+                <ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None" Class="p-3">
+                    <ScarnaListItem Value="@("home")">Главная</ScarnaListItem>
+                    <ScarnaListItem Value="@("orders")">Заказы</ScarnaListItem>
+                </ScarnaList>
+            </ScarnaDrawer>
+            <div class="flex-1 p-4">
+                <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Bordered" OnClick="() => _persistentOpen = !_persistentOpen">Переключить</ScarnaButton>
+            </div>
+        </div>
+    </DocSection>
+
+    <DocSection Title="Variant.Mini — узкая полоса в закрытом состоянии" Description="В отличие от Persistent, не схлопывается до нуля — остаётся колонкой шириной MiniWidth. Подпись всегда в DOM (не через @@if) — max-width/opacity анимируются той же длительности, что и ширина панели, иначе текст появлялся бы рывком, не синхронно." Code="@MiniCode" Row="false">
+        <div class="flex overflow-hidden rounded-scarna-md border border-divider">
+            <ScarnaDrawer @bind-Open="_miniOpen" Anchor="ScarnaDrawerAnchor.Left" Variant="ScarnaDrawerVariant.Mini" Width="200px" MiniWidth="56px">
+                <ScarnaStack Spacing="1" Class="p-2">
+                    <span class="flex items-center gap-3 rounded-scarna-sm px-3 py-2 text-sm text-foreground/70">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
+                        <span class="@(_miniOpen ? "max-w-40 opacity-100" : "max-w-0 opacity-0") overflow-hidden whitespace-nowrap transition-all duration-200">Главная</span>
+                    </span>
+                </ScarnaStack>
+            </ScarnaDrawer>
+            <div class="flex-1 p-4">
+                <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Bordered" OnClick="() => _miniOpen = !_miniOpen">Переключить</ScarnaButton>
+            </div>
+        </div>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private bool _leftOpen;
+    private bool _bottomOpen;
+    private bool _persistentOpen = true;
+    private bool _miniOpen;
+
+    private const string LeftCode =
+        """
+        <ScarnaButton OnClick="() => _open = true">Открыть слева</ScarnaButton>
+
+        <ScarnaDrawer @bind-Open="_open" Anchor="ScarnaDrawerAnchor.Left">
+            <div class="flex items-center justify-between border-b border-divider px-4 py-3">
+                <span class="font-semibold">Меню</span>
+                <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _open = false">✕</ScarnaButton>
+            </div>
+            <ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None" Class="p-3">
+                <ScarnaListItem Value="@("home")">Главная</ScarnaListItem>
+                <ScarnaListItem Value="@("orders")">Заказы</ScarnaListItem>
+                <ScarnaListItem Value="@("settings")">Настройки</ScarnaListItem>
+            </ScarnaList>
+        </ScarnaDrawer>
+
+        @code {
+            private bool _open;
+        }
+        """;
+
+    private const string BottomCode =
+        """
+        <ScarnaDrawer @bind-Open="_open" Anchor="ScarnaDrawerAnchor.Bottom" Height="200px">
+            <p class="p-4">Произвольное содержимое.</p>
+        </ScarnaDrawer>
+        """;
+
+    private const string PersistentCode =
+        """
+        <div class="flex">
+            <ScarnaDrawer @bind-Open="_open" Anchor="ScarnaDrawerAnchor.Left"
+                         Variant="ScarnaDrawerVariant.Persistent" Width="200px">
+                <!-- содержимое меню -->
+            </ScarnaDrawer>
+            <div class="flex-1">
+                <!-- сдвигается само, вместе с шириной панели -->
+            </div>
+        </div>
+        """;
+
+    private const string MiniCode =
+        """
+        <ScarnaDrawer @bind-Open="_open" Anchor="ScarnaDrawerAnchor.Left"
+                     Variant="ScarnaDrawerVariant.Mini" Width="200px" MiniWidth="56px">
+            <span>
+                <svg><!-- иконка --></svg>
+                <span class="@(_open ? "max-w-40 opacity-100" : "max-w-0 opacity-0") overflow-hidden whitespace-nowrap transition-all duration-200">
+                    Главная
+                </span>
+            </span>
+        </ScarnaDrawer>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Open", "bool", "false", "Открыта ли панель. Поддерживает @bind-Open"),
+        new("Anchor", "ScarnaDrawerAnchor", "Left", "Left/Right/Top/Bottom"),
+        new("Variant", "ScarnaDrawerVariant", "Temporary", "Temporary (overlay+подложка) / Persistent (раздвигает соседей) / Mini (в закрытом состоянии — узкая полоса)"),
+        new("Width", "string", "\"280px\"", "Ширина панели (для Left/Right) — любое CSS-значение"),
+        new("Height", "string", "\"280px\"", "Высота панели (для Top/Bottom)"),
+        new("MiniWidth", "string", "\"72px\"", "Ширина/высота в закрытом состоянии у Variant.Mini"),
+        new("CloseOnBackdropClick", "bool", "true", "Закрывать по клику на подложку (только Temporary)"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое панели"),
+    };
+}

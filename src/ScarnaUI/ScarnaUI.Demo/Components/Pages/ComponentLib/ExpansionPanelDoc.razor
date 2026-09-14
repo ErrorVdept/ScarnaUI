@@ -1,0 +1,59 @@
+@page "/componentlib/expansion-panel"
+
+<DocPage Title="ScarnaExpansionPanel" Lead="Сворачиваемая панель (аккордеон-секция). Каждая панель независима."
+         Files="@(new[] { "Components/DataDisplay/ScarnaExpansionPanel.razor" })">
+
+    <DocSection Title="Базовое использование" Row="false" Code="@BasicCode">
+        <ScarnaStack Spacing="2">
+            <ScarnaExpansionPanel Title="Доставка" @bind-Expanded="_panel1">
+                Бесплатно при заказе от 3000 ₽, курьером 1-2 дня.
+            </ScarnaExpansionPanel>
+            <ScarnaExpansionPanel Title="Оплата" @bind-Expanded="_panel2">
+                Картой онлайн или наличными при получении.
+            </ScarnaExpansionPanel>
+            <ScarnaExpansionPanel Title="Возврат">
+                Возврат возможен в течение 14 дней с момента получения.
+            </ScarnaExpansionPanel>
+        </ScarnaStack>
+    </DocSection>
+
+    <DocSection Title="Bordered = false" Row="false" Code="@BorderedCode">
+        <ScarnaExpansionPanel Title="Без обводки" Bordered="false">
+            Панель без рамки вокруг заголовка и содержимого.
+        </ScarnaExpansionPanel>
+    </DocSection>
+
+    <DocApiTable Rows="@_rows" />
+
+</DocPage>
+
+@code {
+    private bool _panel1 = true;
+    private bool _panel2;
+
+    private const string BasicCode =
+        """
+        <ScarnaExpansionPanel Title="Доставка" @bind-Expanded="_panel1">
+            Бесплатно при заказе от 3000 ₽, курьером 1-2 дня.
+        </ScarnaExpansionPanel>
+        <ScarnaExpansionPanel Title="Оплата" @bind-Expanded="_panel2">
+            Картой онлайн или наличными при получении.
+        </ScarnaExpansionPanel>
+        """;
+
+    private const string BorderedCode =
+        """
+        <ScarnaExpansionPanel Title="Без обводки" Bordered="false">
+            Панель без рамки вокруг заголовка и содержимого.
+        </ScarnaExpansionPanel>
+        """;
+
+    private readonly List<DocApiRow> _rows = new()
+    {
+        new("Title", "string?", "—", "Текстовый заголовок"),
+        new("TitleContent", "RenderFragment?", "—", "Заголовок сложной разметкой (вместо Title)"),
+        new("Expanded", "bool", "false", "Развёрнута ли панель. Поддерживает @bind-Expanded"),
+        new("Bordered", "bool", "true", "Обводка панели"),
+        new("ChildContent", "RenderFragment?", "—", "Содержимое панели"),
+    };
+}

@@ -1,0 +1,70 @@
+@*
+    Нижнее меню — панель вкладок, прибитая к низу экрана, как в мобильных приложениях
+    (iOS tab bar / Android bottom navigation). В отличие от ScarnaDrawer(Anchor.Bottom) —
+    не выезжающая панель поверх контента, а всегда видимая строка навигации.
+
+    <ScarnaBottomMenu @bind-SelectedIndex="_tab">
+        <ScarnaBottomMenuItem Text="Главная"><Icon /></ScarnaBottomMenuItem>
+        <ScarnaBottomMenuItem Text="Поиск"><Icon /></ScarnaBottomMenuItem>
+        <ScarnaBottomMenuItem Text="Профиль"><Icon /></ScarnaBottomMenuItem>
+    </ScarnaBottomMenu>
+*@
+@namespace ScarnaUI.Components.Layout
+@inherits ScarnaComponentBase
+
+<nav class="@Classes" style="@Style" @attributes="UserAttributes">
+    <CascadingValue Value="this" IsFixed="false">
+        @ChildContent
+    </CascadingValue>
+</nav>
+
+@code {
+    private readonly List<ScarnaBottomMenuItem> _items = new();
+
+    /// <summary>Индекс активного пункта. Поддерживает @bind-SelectedIndex.</summary>
+    [Parameter] public int SelectedIndex { get; set; }
+
+    [Parameter] public EventCallback<int> SelectedIndexChanged { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    internal void Register(ScarnaBottomMenuItem item)
+    {
+        if (!_items.Contains(item))
+        {
+            _items.Add(item);
+            StateHasChanged();
+        }
+    }
+
+    internal void Unregister(ScarnaBottomMenuItem item)
+    {
+        if (_items.Remove(item))
+        {
+            StateHasChanged();
+        }
+    }
+
+    internal bool IsSelected(ScarnaBottomMenuItem item) => _items.IndexOf(item) == SelectedIndex;
+
+    internal async Task SelectAsync(ScarnaBottomMenuItem item)
+    {
+        var index = _items.IndexOf(item);
+        if (index < 0 || index == SelectedIndex)
+        {
+            return;
+        }
+
+        SelectedIndex = index;
+
+        if (SelectedIndexChanged.HasDelegate)
+        {
+            await SelectedIndexChanged.InvokeAsync(index);
+        }
+    }
+
+    private string Classes => CssBuilder.Default("scarna-bottom-menu fixed inset-x-0 bottom-0 z-[1040] flex items-stretch justify-around border-t border-divider bg-content1")
+        .AddClass("pb-[env(safe-area-inset-bottom)]")
+        .AddClass(Class)
+        .ToString();
+}
