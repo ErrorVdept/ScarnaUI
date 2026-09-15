@@ -54,7 +54,7 @@
     /// <summary>Точное количество строк (одновременно вместо MinLines и MaxLines) — фиксированная высота независимо от объёма содержимого.</summary>
     [Parameter] public int? Lines { get; set; }
 
-    [Parameter] public ScarnaRadius Radius { get; set; } = ScarnaRadius.Medium;
+    [Parameter] public Radius Radius { get; set; } = Radius.Medium;
 
     private async Task CopyAsync()
     {

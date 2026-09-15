@@ -4,7 +4,7 @@
     с крестиком/иконкой и выбором размера используйте ScarnaChip.
 
     <ScarnaTag>новое</ScarnaTag>
-    <ScarnaTag Color="ScarnaColor.Success">активен</ScarnaTag>
+    <ScarnaTag Color="Color.Success">активен</ScarnaTag>
 *@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
@@ -12,9 +12,9 @@
 <span class="@Classes" style="@Style" @attributes="UserAttributes">@ChildContent</span>
 
 @code {
-    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Default;
+    [Parameter] public Color Color { get; set; } = Color.Default;
 
-    [Parameter] public ScarnaVariant Variant { get; set; } = ScarnaVariant.Flat;
+    [Parameter] public Variant Variant { get; set; } = Variant.Flat;
 
     [Parameter] public RenderFragment? ChildContent { get; set; }
 

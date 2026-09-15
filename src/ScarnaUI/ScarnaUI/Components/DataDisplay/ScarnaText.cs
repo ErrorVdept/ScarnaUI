@@ -12,7 +12,7 @@ namespace ScarnaUI.Components.DataDisplay;
 /// <see cref="RenderTreeBuilder"/> напрямую.
 ///
 /// &lt;ScarnaText Typo="ScarnaTypo.H2"&gt;Заголовок раздела&lt;/ScarnaText&gt;
-/// &lt;ScarnaText Typo="ScarnaTypo.Body2" Color="ScarnaColor.Danger"&gt;Ошибка сохранения&lt;/ScarnaText&gt;
+/// &lt;ScarnaText Typo="ScarnaTypo.Body2" Color="Color.Danger"&gt;Ошибка сохранения&lt;/ScarnaText&gt;
 /// </summary>
 public sealed class ScarnaText : ScarnaComponentBase
 {
@@ -20,7 +20,7 @@ public sealed class ScarnaText : ScarnaComponentBase
     [Parameter] public ScarnaTypo Typo { get; set; } = ScarnaTypo.Body1;
 
     /// <summary>Цвет текста. Не задан (null) — обычный `text-foreground`.</summary>
-    [Parameter] public ScarnaColor? Color { get; set; }
+    [Parameter] public Color? Color { get; set; }
 
     [Parameter] public ScarnaTextAlign Align { get; set; } = ScarnaTextAlign.Inherit;
 
@@ -101,12 +101,12 @@ public sealed class ScarnaText : ScarnaComponentBase
     {
         null when Typo is ScarnaTypo.Caption or ScarnaTypo.Overline => "text-foreground/60",
         null => "text-foreground",
-        ScarnaColor.Primary => "text-primary",
-        ScarnaColor.Secondary => "text-secondary",
-        ScarnaColor.Success => "text-success",
-        ScarnaColor.Warning => "text-warning",
-        ScarnaColor.Danger => "text-danger",
-        ScarnaColor.Default => "text-foreground/70",
+        ScarnaUI.Components.Base.Color.Primary => "text-primary",
+        ScarnaUI.Components.Base.Color.Secondary => "text-secondary",
+        ScarnaUI.Components.Base.Color.Success => "text-success",
+        ScarnaUI.Components.Base.Color.Warning => "text-warning",
+        ScarnaUI.Components.Base.Color.Danger => "text-danger",
+        ScarnaUI.Components.Base.Color.Default => "text-foreground/70",
         _ => "text-foreground",
     };
 

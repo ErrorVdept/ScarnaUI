@@ -9,6 +9,8 @@
 
 ## С чего начать
 
+- [MAIN — обзор компонентов и примеры вёрстки](MAIN.md) — краткая шпаргалка: что
+  есть в библиотеке и как собрать типовую страницу.
 - [Установка и базовые классы](getting-started.md) — как подключить ScarnaUI к своему
   проекту и что такое `ScarnaComponentBase`/`ScarnaFormComponentBase`.
 - [Тема и ScarnaThemeProvider](theme-provider.md) — как устроена рантайм-тема.
@@ -22,12 +24,14 @@
 - [ScarnaThemeSwitch](theme-switch.md) — готовая кнопка переключения темы
 
 ### Layout
+- [ScarnaLayout](layout.md) — корневая обёртка приложения (аналог MudLayout), min-height экрана + базовые цвета темы
 - [ScarnaContainer](container.md) — центрирующий контейнер страницы
 - [ScarnaStack](stack.md) — flex-контейнер (ряд/колонка + отступы, Justify/AlignItems как в MudBlazor)
 - [ScarnaGrid / ScarnaItem](grid.md) — 12-колоночная сетка (тоже с Justify/Align)
 - [ScarnaNavBar](navbar.md) — верхняя панель приложения
 - [ScarnaDrawer](drawer.md) — выезжающая боковая панель
 - [ScarnaBottomMenu / ScarnaBottomMenuItem](bottom-menu.md) — нижнее меню как в мобильных приложениях
+- [ScarnaNavMenu / ScarnaNavLink](nav-menu.md) — вертикальное меню навигации с автоопределением активного пункта
 
 ### Actions
 - [ScarnaButton](button.md) — кнопка (цвета, варианты заливки, размеры, анимация нажатия)

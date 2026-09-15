@@ -5,7 +5,7 @@
 
     <DocSection Title="Пример" Description="ScarnaPopoverProvider уже есть в MainLayout, отдельно подключать не нужно. Якорь захватывается через @@ref." Code="@ExampleCode">
         <div @ref="_anchor" @onclick="() => _open = !_open" class="cursor-pointer">
-            <ScarnaButton Variant="ScarnaVariant.Bordered">Открыть поповер</ScarnaButton>
+            <ScarnaButton Variant="Variant.Bordered">Открыть поповер</ScarnaButton>
         </div>
         <ScarnaPopover Open="_open" Anchor="_anchor" Position="ScarnaPosition.BottomStart" OnClose="() => _open = false">
             <div class="rounded-scarna-md border border-divider bg-content1 p-3 shadow-lg">

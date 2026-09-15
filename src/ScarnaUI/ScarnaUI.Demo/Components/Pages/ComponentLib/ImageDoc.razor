@@ -8,12 +8,16 @@
     </DocSection>
 
     <DocSection Title="Radius и Bordered" Code="@VariantsCode">
-        <ScarnaImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Radius="ScarnaRadius.Small" Class="h-32 w-48" />
-        <ScarnaImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Radius="ScarnaRadius.Full" Bordered="true" Class="h-32 w-32" />
+        <ScarnaImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Radius="Radius.Small" Class="h-32 w-48" />
+        <ScarnaImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Radius="Radius.Full" Bordered="true" Class="h-32 w-32" />
     </DocSection>
 
     <DocSection Title="Fallback при ошибке загрузки" Description="Битый URL — показывается заглушка (или своя через Fallback)." Code="@FallbackCode">
         <ScarnaImage Src="https://broken.invalid/no-such-image.jpg" Alt="Не загрузится" Class="h-32 w-48" />
+    </DocSection>
+
+    <DocSection Title="Base64" Description="Готовый data:-URI работает прямо в Src (обычный HTML-атрибут). Если под рукой только сырой base64 без префикса — задайте MimeType, компонент сам соберёт data:-URI." Code="@Base64Code">
+        <ScarnaImage Src="@_base64Png" MimeType="image/png" Radius="Radius.None" Class="h-16 w-16" />
     </DocSection>
 
     <DocApiTable Rows="@_rows" />
@@ -28,8 +32,8 @@
 
     private const string VariantsCode =
         """
-        <ScarnaImage Src="/img/cover.jpg" Radius="ScarnaRadius.Small" Class="h-32 w-48" />
-        <ScarnaImage Src="/img/cover.jpg" Radius="ScarnaRadius.Full" Bordered="true" Class="h-32 w-32" />
+        <ScarnaImage Src="/img/cover.jpg" Radius="Radius.Small" Class="h-32 w-48" />
+        <ScarnaImage Src="/img/cover.jpg" Radius="Radius.Full" Bordered="true" Class="h-32 w-32" />
         """;
 
     private const string FallbackCode =
@@ -37,11 +41,24 @@
         <ScarnaImage Src="https://broken.invalid/no-such-image.jpg" Alt="Не загрузится" Class="h-32 w-48" />
         """;
 
+    private const string Base64Code =
+        """
+        @* Готовый data:-URI — работает как обычный HTML src, ничего дополнительно не нужно *@
+        <ScarnaImage Src="data:image/png;base64,iVBORw0KGgo..." />
+
+        @* Сырой base64 без префикса — компонент сам соберёт data:-URI по MimeType *@
+        <ScarnaImage Src="@rawBase64" MimeType="image/png" />
+        """;
+
+    // 1x1 PNG — только для демонстрации, компонент этого не требует.
+    private const string _base64Png = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=";
+
     private readonly List<DocApiRow> _rows = new()
     {
-        new("Src", "string", "—", "Обязательный. URL изображения"),
+        new("Src", "string", "—", "Обязательный. URL изображения, готовый data:-URI, либо сырой base64 (вместе с MimeType)"),
+        new("MimeType", "string?", "—", "Если задан — Src трактуется как сырой base64 без префикса, компонент сам собирает data:{MimeType};base64,{Src}"),
         new("Alt", "string?", "—", "—"),
-        new("Radius", "ScarnaRadius", "Large", "Радиус скругления"),
+        new("Radius", "Radius", "Large", "Радиус скругления"),
         new("Bordered", "bool", "false", "Обводка"),
         new("Lazy", "bool", "true", "Отложенная загрузка (loading=\"lazy\")"),
         new("Fallback", "RenderFragment?", "—", "Что показать вместо изображения, если оно не загрузилось (по умолчанию — иконка-заглушка)"),

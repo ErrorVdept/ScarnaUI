@@ -4,17 +4,17 @@
          Files="@(new[] { "Components/Forms/ScarnaCheckbox.razor" })">
 
     <DocSection Title="Интерактивный пример" Code="@InteractiveCode">
-        <ScarnaCheckbox @bind-Value="_agree" Color="ScarnaColor.Success">Согласен с условиями использования</ScarnaCheckbox>
+        <ScarnaCheckbox @bind-Value="_agree" Color="Color.Success">Согласен с условиями использования</ScarnaCheckbox>
         <span class="text-sm text-foreground/60">Значение: @_agree</span>
     </DocSection>
 
     <DocSection Title="Цвета" Code="@ColorsCode">
-        <ScarnaCheckbox Value="true" Color="ScarnaColor.Default">Default</ScarnaCheckbox>
-        <ScarnaCheckbox Value="true" Color="ScarnaColor.Primary">Primary</ScarnaCheckbox>
-        <ScarnaCheckbox Value="true" Color="ScarnaColor.Secondary">Secondary</ScarnaCheckbox>
-        <ScarnaCheckbox Value="true" Color="ScarnaColor.Success">Success</ScarnaCheckbox>
-        <ScarnaCheckbox Value="true" Color="ScarnaColor.Warning">Warning</ScarnaCheckbox>
-        <ScarnaCheckbox Value="true" Color="ScarnaColor.Danger">Danger</ScarnaCheckbox>
+        <ScarnaCheckbox Value="true" Color="Color.Default">Default</ScarnaCheckbox>
+        <ScarnaCheckbox Value="true" Color="Color.Primary">Primary</ScarnaCheckbox>
+        <ScarnaCheckbox Value="true" Color="Color.Secondary">Secondary</ScarnaCheckbox>
+        <ScarnaCheckbox Value="true" Color="Color.Success">Success</ScarnaCheckbox>
+        <ScarnaCheckbox Value="true" Color="Color.Warning">Warning</ScarnaCheckbox>
+        <ScarnaCheckbox Value="true" Color="Color.Danger">Danger</ScarnaCheckbox>
     </DocSection>
 
     <DocSection Title="Плотность и состояния" Code="@StatesCode">
@@ -32,7 +32,7 @@
 
     private const string InteractiveCode =
         """
-        <ScarnaCheckbox @bind-Value="_agree" Color="ScarnaColor.Success">Согласен с условиями использования</ScarnaCheckbox>
+        <ScarnaCheckbox @bind-Value="_agree" Color="Color.Success">Согласен с условиями использования</ScarnaCheckbox>
         <span class="text-sm text-foreground/60">Значение: @_agree</span>
 
         @code {
@@ -42,12 +42,12 @@
 
     private const string ColorsCode =
         """
-        <ScarnaCheckbox Value="true" Color="ScarnaColor.Default">Default</ScarnaCheckbox>
-        <ScarnaCheckbox Value="true" Color="ScarnaColor.Primary">Primary</ScarnaCheckbox>
-        <ScarnaCheckbox Value="true" Color="ScarnaColor.Secondary">Secondary</ScarnaCheckbox>
-        <ScarnaCheckbox Value="true" Color="ScarnaColor.Success">Success</ScarnaCheckbox>
-        <ScarnaCheckbox Value="true" Color="ScarnaColor.Warning">Warning</ScarnaCheckbox>
-        <ScarnaCheckbox Value="true" Color="ScarnaColor.Danger">Danger</ScarnaCheckbox>
+        <ScarnaCheckbox Value="true" Color="Color.Default">Default</ScarnaCheckbox>
+        <ScarnaCheckbox Value="true" Color="Color.Primary">Primary</ScarnaCheckbox>
+        <ScarnaCheckbox Value="true" Color="Color.Secondary">Secondary</ScarnaCheckbox>
+        <ScarnaCheckbox Value="true" Color="Color.Success">Success</ScarnaCheckbox>
+        <ScarnaCheckbox Value="true" Color="Color.Warning">Warning</ScarnaCheckbox>
+        <ScarnaCheckbox Value="true" Color="Color.Danger">Danger</ScarnaCheckbox>
         """;
 
     private const string StatesCode =
@@ -62,7 +62,7 @@
         new("Value / ValueChanged / ValueExpression", "bool", "—", "Механика @bind-Value"),
         new("Disabled", "bool", "false", "—"),
         new("ReadOnly", "bool", "false", "Запрещает переключение, но не тускнеет (в отличие от Disabled)"),
-        new("Color", "ScarnaColor", "Primary", "Цвет заливки в отмеченном состоянии"),
+        new("Color", "Color", "Primary", "Цвет заливки в отмеченном состоянии"),
         new("Density", "ScarnaDensity", "Normal", "Dense — уменьшенный квадрат для плотных списков"),
         new("ChildContent", "RenderFragment?", "—", "Подпись рядом с чекбоксом"),
     };

@@ -16,7 +16,7 @@
 ```razor
 <ScarnaText Typo="ScarnaTypo.H2" GutterBottom="true">Заголовок раздела</ScarnaText>
 <ScarnaText Typo="ScarnaTypo.Body1">Обычный текст абзаца.</ScarnaText>
-<ScarnaText Typo="ScarnaTypo.Body2" Color="ScarnaColor.Danger">Ошибка сохранения</ScarnaText>
+<ScarnaText Typo="ScarnaTypo.Body2" Color="Color.Danger">Ошибка сохранения</ScarnaText>
 <ScarnaText Typo="ScarnaTypo.Caption">Приглушённая подпись</ScarnaText>
 
 @* Заголовок H3 визуально, но семантически <span> (например, внутри <button>) *@
@@ -28,7 +28,7 @@
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
 | `Typo` | `ScarnaTypo` | `Body1` | `H1`-`H6`, `Subtitle1`/`Subtitle2`, `Body1`/`Body2`, `Caption`, `Overline`, `Button` — определяет и тег, и размер/начертание шрифта |
-| `Color` | `ScarnaColor?` | `null` | Не задан — обычный `text-foreground` (у `Caption`/`Overline` по умолчанию приглушённый `text-foreground/60`) |
+| `Color` | `Color?` | `null` | Не задан — обычный `text-foreground` (у `Caption`/`Overline` по умолчанию приглушённый `text-foreground/60`) |
 | `Align` | `ScarnaTextAlign` | `Inherit` | `Start`/`Center`/`End`/`Justify` |
 | `GutterBottom` | `bool` | `false` | Отступ снизу — для последовательных абзацев |
 | `Truncate` | `bool` | `false` | Обрезать в одну строку с многоточием при переполнении |

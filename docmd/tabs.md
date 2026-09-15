@@ -38,7 +38,7 @@ MudBlazor (см. `INFO.md`): у `MudTabs` активная вкладка под
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
 | `SelectedIndex` / `SelectedIndexChanged` | `int` | `0` | Индекс активной вкладки, поддерживает `@bind-SelectedIndex` |
-| `Justify` | `ScarnaJustify` | `Start` | К какому краю прижимать заголовки (заметно, только если `FullWidth="false"`) — как AlignItems в MudBlazor |
+| `Justify` | `Justify` | `Start` | К какому краю прижимать заголовки (заметно, только если `FullWidth="false"`) — как AlignItems в MudBlazor |
 | `FullWidth` | `bool` | `false` | Растянуть заголовки на всю ширину дорожки поровну |
 | `ChildContent` | `RenderFragment?` | — | Набор `<ScarnaTabPanel>` |
 

@@ -40,9 +40,9 @@
 | `ShowToggle` | `bool` | `true` | Показывать ли кнопку-глазок переключения видимости |
 | `Disabled` | `bool` | `false` | — |
 | `ReadOnly` | `bool` | `false` | — |
-| `Variant` | `ScarnaVariant` | `Bordered` | `Bordered`/`Flat` |
+| `Variant` | `Variant` | `Bordered` | `Bordered`/`Flat` |
 | `Bordered` | `bool` | `true` | Показывать ли контур поля |
-| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
+| `Size` | `Size` | `Medium` | `Small`/`Medium`/`Large` |
 | `Density` | `ScarnaDensity` | `Normal` | `Dense` — компактное поле |
-| `Radius` | `ScarnaRadius` | `Medium` | Радиус поля |
+| `Radius` | `Radius` | `Medium` | Радиус поля |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

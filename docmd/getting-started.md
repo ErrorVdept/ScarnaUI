@@ -6,7 +6,7 @@
 - `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaFormComponentBase.cs`
 - `src/ScarnaUI/ScarnaUI/Components/Base/CssBuilder.cs`
 - `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaColorVariantClasses.cs`
-- `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaEnums.cs` (`ScarnaColor`, `ScarnaSize`, `ScarnaRadius`, `ScarnaVariant`)
+- `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaEnums.cs` (`Color`, `Size`, `Radius`, `Variant`)
 - `src/ScarnaUI/ScarnaUI/Services/ScarnaUiServiceCollectionExtensions.cs`
 - `src/ScarnaUI/ScarnaUI/_Imports.razor`
 
@@ -165,7 +165,7 @@ SignalR round-trip) анимация может "проиграться" ещё 
 
 ## ScarnaColorVariantClasses
 
-Общая таблица "цвет × вариант заливки" (`ScarnaColor` × `ScarnaVariant`), которой
+Общая таблица "цвет × вариант заливки" (`Color` × `Variant`), которой
 пользуются `ScarnaButton`, `ScarnaChip`, `ScarnaBadge`, `ScarnaAvatar`. Классы в ней
 записаны **буквально** (не через `$"bg-{color}"`) — так их видит статический
 анализатор Tailwind при сборке CSS. Подробнее про этот нюанс — в

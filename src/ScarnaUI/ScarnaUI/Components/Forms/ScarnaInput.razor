@@ -57,17 +57,17 @@
     [Parameter] public bool ReadOnly { get; set; }
 
     /// <summary>Bordered — контур на прозрачном фоне (по умолчанию), Flat — заливка без контура.</summary>
-    [Parameter] public ScarnaVariant Variant { get; set; } = ScarnaVariant.Bordered;
+    [Parameter] public Variant Variant { get; set; } = Variant.Bordered;
 
     /// <summary>Показывать ли контур поля (по умолчанию — да). Независим от Variant: например, Variant.Flat + Bordered="false" даёт заливку совсем без обводки.</summary>
     [Parameter] public bool Bordered { get; set; } = true;
 
-    [Parameter] public ScarnaSize Size { get; set; } = ScarnaSize.Medium;
+    [Parameter] public Size Size { get; set; } = Size.Medium;
 
     /// <summary>Normal (по умолчанию) — обычная высота/отступы. Dense — компактное поле для плотных панелей фильтров/таблиц.</summary>
     [Parameter] public ScarnaDensity Density { get; set; } = ScarnaDensity.Normal;
 
-    [Parameter] public ScarnaRadius Radius { get; set; } = ScarnaRadius.Medium;
+    [Parameter] public Radius Radius { get; set; } = Radius.Medium;
 
     /// <summary>Содержимое перед полем ввода (иконка, префикс "https://").</summary>
     [Parameter] public RenderFragment? StartContent { get; set; }
@@ -92,18 +92,18 @@
     // примерно на четверть, не трогая размер шрифта у Small (там уже некуда ужимать).
     private string SizeClass => (Size, Density) switch
     {
-        (ScarnaSize.Small, ScarnaDensity.Dense) => "h-7 px-2 text-sm",
-        (ScarnaSize.Small, _) => "h-8 px-3 text-sm",
-        (ScarnaSize.Large, ScarnaDensity.Dense) => "h-10 px-3 text-base",
-        (ScarnaSize.Large, _) => "h-12 px-4 text-base",
+        (Size.Small, ScarnaDensity.Dense) => "h-7 px-2 text-sm",
+        (Size.Small, _) => "h-8 px-3 text-sm",
+        (Size.Large, ScarnaDensity.Dense) => "h-10 px-3 text-base",
+        (Size.Large, _) => "h-12 px-4 text-base",
         (_, ScarnaDensity.Dense) => "h-8 px-2.5 text-sm",
         _ => "h-10 px-3 text-sm",
     };
 
     private string VariantClass => (Variant, Bordered) switch
     {
-        (ScarnaVariant.Flat, true) => "bg-content2 border border-default focus-within:border-primary",
-        (ScarnaVariant.Flat, false) => "bg-content2 border border-transparent focus-within:bg-content3",
+        (Variant.Flat, true) => "bg-content2 border border-default focus-within:border-primary",
+        (Variant.Flat, false) => "bg-content2 border border-transparent focus-within:bg-content3",
         (_, true) => "bg-transparent border border-default focus-within:border-primary",
         (_, false) => "bg-transparent border border-transparent",
     };

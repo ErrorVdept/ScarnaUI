@@ -13,14 +13,23 @@
         <ScarnaCard>
             <HeaderContent><span class="font-semibold">Заказ #1234</span></HeaderContent>
             <ChildContent>Товар: Кроссовки, размер 42. Статус: в пути.</ChildContent>
-            <FooterContent><ScarnaButton Size="ScarnaSize.Small">Подробнее</ScarnaButton></FooterContent>
+            <FooterContent><ScarnaButton Size="Size.Small">Подробнее</ScarnaButton></FooterContent>
         </ScarnaCard>
     </DocSection>
 
     <DocSection Title="Bordered / Shadow / Radius" Code="@VariantsCode">
         <ScarnaCard Bordered="true" Shadow="false">Bordered, без тени</ScarnaCard>
-        <ScarnaCard Radius="ScarnaRadius.Small">Radius.Small</ScarnaCard>
-        <ScarnaCard Radius="ScarnaRadius.None">Radius.None</ScarnaCard>
+        <ScarnaCard Radius="Radius.Small">Radius.Small</ScarnaCard>
+        <ScarnaCard Radius="Radius.None">Radius.None</ScarnaCard>
+    </DocSection>
+
+    <DocSection Title="GlassEffect" Description="Полупрозрачный фон с блюром (backdrop-blur) вместо сплошного bg-content1 — тот же приём, что у ScarnaNavBar. Заметно поверх фонового изображения/градиента." Code="@GlassCode">
+        <div class="flex items-center justify-center rounded-scarna-lg bg-gradient-to-br from-primary to-secondary p-8">
+            <ScarnaCard GlassEffect="true" Class="text-white">
+                <HeaderContent><span class="font-semibold">GlassEffect="true"</span></HeaderContent>
+                <ChildContent>Фон карточки — полупрозрачный с блюром, виден градиент под ней.</ChildContent>
+            </ScarnaCard>
+        </div>
     </DocSection>
 
     <DocApiTable Rows="@_rows" />
@@ -40,22 +49,33 @@
         <ScarnaCard>
             <HeaderContent><span class="font-semibold">Заказ #1234</span></HeaderContent>
             <ChildContent>Товар: Кроссовки, размер 42. Статус: в пути.</ChildContent>
-            <FooterContent><ScarnaButton Size="ScarnaSize.Small">Подробнее</ScarnaButton></FooterContent>
+            <FooterContent><ScarnaButton Size="Size.Small">Подробнее</ScarnaButton></FooterContent>
         </ScarnaCard>
         """;
 
     private const string VariantsCode =
         """
         <ScarnaCard Bordered="true" Shadow="false">Bordered, без тени</ScarnaCard>
-        <ScarnaCard Radius="ScarnaRadius.Small">Radius.Small</ScarnaCard>
-        <ScarnaCard Radius="ScarnaRadius.None">Radius.None</ScarnaCard>
+        <ScarnaCard Radius="Radius.Small">Radius.Small</ScarnaCard>
+        <ScarnaCard Radius="Radius.None">Radius.None</ScarnaCard>
+        """;
+
+    private const string GlassCode =
+        """
+        <div class="bg-gradient-to-br from-primary to-secondary p-8">
+            <ScarnaCard GlassEffect="true">
+                <HeaderContent>GlassEffect="true"</HeaderContent>
+                Фон карточки — полупрозрачный с блюром.
+            </ScarnaCard>
+        </div>
         """;
 
     private readonly List<DocApiRow> _rows = new()
     {
         new("Bordered", "bool", "false", "Тонкая рамка в дополнение к тени"),
         new("Shadow", "bool", "true", "Тень под карточкой"),
-        new("Radius", "ScarnaRadius", "Large", "Радиус скругления"),
+        new("Radius", "Radius", "Large", "Радиус скругления"),
+        new("GlassEffect", "bool", "false", "Полупрозрачный фон с блюром вместо сплошного bg-content1 — как у ScarnaNavBar"),
         new("HeaderContent", "RenderFragment?", "—", "Заголовок (с разделителем снизу)"),
         new("FooterContent", "RenderFragment?", "—", "Подвал (с разделителем сверху)"),
         new("ChildContent", "RenderFragment?", "—", "Основное содержимое"),

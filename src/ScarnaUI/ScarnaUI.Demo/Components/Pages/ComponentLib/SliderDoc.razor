@@ -9,9 +9,9 @@
     </DocSection>
 
     <DocSection Title="Цвета" Code="@ColorsCode" Row="false">
-        <ScarnaSlider Label="Primary" Value="70" Color="ScarnaColor.Primary" ShowValue="true" />
-        <ScarnaSlider Label="Success" Value="45" Color="ScarnaColor.Success" ShowValue="true" />
-        <ScarnaSlider Label="Danger" Value="20" Color="ScarnaColor.Danger" ShowValue="true" />
+        <ScarnaSlider Label="Primary" Value="70" Color="Color.Primary" ShowValue="true" />
+        <ScarnaSlider Label="Success" Value="45" Color="Color.Success" ShowValue="true" />
+        <ScarnaSlider Label="Danger" Value="20" Color="Color.Danger" ShowValue="true" />
     </DocSection>
 
     <DocSection Title="Состояния" Code="@StatesCode" Row="false">
@@ -38,9 +38,9 @@
 
     private const string ColorsCode =
         """
-        <ScarnaSlider Label="Primary" Value="70" Color="ScarnaColor.Primary" ShowValue="true" />
-        <ScarnaSlider Label="Success" Value="45" Color="ScarnaColor.Success" ShowValue="true" />
-        <ScarnaSlider Label="Danger" Value="20" Color="ScarnaColor.Danger" ShowValue="true" />
+        <ScarnaSlider Label="Primary" Value="70" Color="Color.Primary" ShowValue="true" />
+        <ScarnaSlider Label="Success" Value="45" Color="Color.Success" ShowValue="true" />
+        <ScarnaSlider Label="Danger" Value="20" Color="Color.Danger" ShowValue="true" />
         """;
 
     private const string StatesCode =
@@ -59,6 +59,6 @@
         new("ReadOnly", "bool", "false", "Игнорирует ввод (мышь/тач/клавиатура), но не тускнеет"),
         new("ShowValue", "bool", "false", "Показывать текущее значение справа от подписи"),
         new("Format", "string", "\"0.##\"", ".NET numeric format string для отображаемого значения"),
-        new("Color", "ScarnaColor", "Primary", "Цвет ползунка и залитой части дорожки"),
+        new("Color", "Color", "Primary", "Цвет ползунка и залитой части дорожки"),
     };
 }

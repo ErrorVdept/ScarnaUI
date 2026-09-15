@@ -21,14 +21,14 @@
                     <span class="size-3 rounded-full bg-default"></span>
                 </ScarnaStack>
                 <span class="absolute left-1/2 -translate-x-1/2 text-sm font-semibold text-foreground/90">Stackoverflow</span>
-                <ScarnaAvatar Initials="JD" Color="ScarnaColor.Warning" Size="ScarnaSize.Small" />
+                <ScarnaAvatar Initials="JD" Color="Color.Warning" Size="Size.Small" />
             </div>
         </HeaderContent>
 
         <ChildContent>
             <ScarnaTabs @bind-SelectedIndex="_tab">
                 <ScarnaTabPanel Text="Questions">
-                    <ScarnaInput Placeholder="Search question" Variant="ScarnaVariant.Flat" Bordered="false" Class="mb-4">
+                    <ScarnaInput Placeholder="Search question" Variant="Variant.Flat" Bordered="false" Class="mb-4">
                         <StartContent>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-foreground/40">
                                 <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -39,13 +39,13 @@
                     <div class="scrollable-v flex max-h-80 flex-col gap-1 pr-1">
                         @foreach (var q in _questions)
                         {
-                            <ScarnaPaper Bordered="false" Shadow="false" Hovered="true" Radius="ScarnaRadius.Medium" Class="p-3" OnClick="() => OpenQuestion(q.Title)">
+                            <ScarnaPaper Bordered="false" Shadow="false" Hovered="true" Radius="Radius.Medium" Class="p-3" OnClick="() => OpenQuestion(q.Title)">
                                 <ScarnaText Typo="ScarnaTypo.Subtitle1">@q.Title</ScarnaText>
 
-                                <ScarnaStack Row="true" Wrap="true" Spacing="2" Align="ScarnaAlign.Center" Class="mt-1 text-xs text-foreground/50">
+                                <ScarnaStack Row="true" Wrap="true" Spacing="2" Align="Align.Center" Class="mt-1 text-xs text-foreground/50">
                                     @if (q.Answered)
                                     {
-                                        <ScarnaChip Color="ScarnaColor.Success" Variant="ScarnaVariant.Light" Size="ScarnaSize.Small">
+                                        <ScarnaChip Color="Color.Success" Variant="Variant.Light" Size="Size.Small">
                                             <StartContent>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
                                             </StartContent>
@@ -65,14 +65,14 @@
 
                                 <ScarnaText Typo="ScarnaTypo.Body2" Class="mt-2 line-clamp-2 text-foreground/60">@q.Description</ScarnaText>
 
-                                <ScarnaStack Row="true" Justify="ScarnaJustify.SpaceBetween" Align="ScarnaAlign.Center" Class="mt-3">
+                                <ScarnaStack Row="true" Justify="Justify.SpaceBetween" Align="Align.Center" Class="mt-3">
                                     <ScarnaStack Row="true" Wrap="true" Spacing="2">
                                         @foreach (var tag in q.Tags)
                                         {
-                                            <ScarnaChip Size="ScarnaSize.Small">@tag</ScarnaChip>
+                                            <ScarnaChip Size="Size.Small">@tag</ScarnaChip>
                                         }
                                     </ScarnaStack>
-                                    <ScarnaAvatar Initials="@q.AuthorInitials" Size="ScarnaSize.Small" Color="ScarnaColor.Secondary" />
+                                    <ScarnaAvatar Initials="@q.AuthorInitials" Size="Size.Small" Color="Color.Secondary" />
                                 </ScarnaStack>
                             </ScarnaPaper>
                         }
@@ -83,7 +83,7 @@
                     <ScarnaStack Row="true" Wrap="true" Spacing="2">
                         @foreach (var tag in new[] { "javascript", "typescript", "blazor", "npm", "module", "css", "dotnet", "react" })
                         {
-                            <ScarnaChip Color="ScarnaColor.Primary" Variant="ScarnaVariant.Flat">@tag</ScarnaChip>
+                            <ScarnaChip Color="Color.Primary" Variant="Variant.Flat">@tag</ScarnaChip>
                         }
                     </ScarnaStack>
                 </ScarnaTabPanel>
@@ -92,8 +92,8 @@
                     <ScarnaStack Spacing="3">
                         @foreach (var user in _users)
                         {
-                            <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
-                                <ScarnaAvatar Initials="@user.Initials" Color="ScarnaColor.Primary" />
+                            <ScarnaStack Row="true" Spacing="3" Align="Align.Center">
+                                <ScarnaAvatar Initials="@user.Initials" Color="Color.Primary" />
                                 <ScarnaStack Spacing="0">
                                     <ScarnaText Typo="ScarnaTypo.Subtitle2">@user.Name</ScarnaText>
                                     <ScarnaText Typo="ScarnaTypo.Caption">@user.Reputation очков репутации</ScarnaText>

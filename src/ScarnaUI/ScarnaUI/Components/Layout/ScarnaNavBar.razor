@@ -3,7 +3,7 @@
     в демо раньше собиралось вручную из <header>+ScarnaContainer+ScarnaStack —
     задаёт высоту, подложку с блюром и границу снизу, содержимое — произвольное.
 
-    <ScarnaNavBar Density="ScarnaDensity.Dense" Justify="ScarnaJustify.SpaceBetween">
+    <ScarnaNavBar Density="ScarnaDensity.Dense" Justify="Justify.SpaceBetween">
         <a href="/" class="font-semibold">Logo</a>
         <ScarnaStack Row="true" Spacing="4"><NavLink href="/">Главная</NavLink></ScarnaStack>
     </ScarnaNavBar>
@@ -32,10 +32,10 @@
     [Parameter] public ScarnaDensity Density { get; set; } = ScarnaDensity.Normal;
 
     /// <summary>Цвет фона панели. Default (по умолчанию) — нейтральная подложка с блюром; любой другой — сплошная заливка цветом.</summary>
-    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Default;
+    [Parameter] public Color Color { get; set; } = Color.Default;
 
     /// <summary>Распределение содержимого по горизонтали — как AlignItems в MudBlazor (justify-content внутренней строки).</summary>
-    [Parameter] public ScarnaJustify Justify { get; set; } = ScarnaJustify.SpaceBetween;
+    [Parameter] public Justify Justify { get; set; } = Justify.SpaceBetween;
 
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
@@ -48,11 +48,11 @@
 
     private string ColorClass => Color switch
     {
-        ScarnaColor.Primary => "bg-primary text-primary-foreground",
-        ScarnaColor.Secondary => "bg-secondary text-secondary-foreground",
-        ScarnaColor.Success => "bg-success text-success-foreground",
-        ScarnaColor.Warning => "bg-warning text-warning-foreground",
-        ScarnaColor.Danger => "bg-danger text-danger-foreground",
+        Color.Primary => "bg-primary text-primary-foreground",
+        Color.Secondary => "bg-secondary text-secondary-foreground",
+        Color.Success => "bg-success text-success-foreground",
+        Color.Warning => "bg-warning text-warning-foreground",
+        Color.Danger => "bg-danger text-danger-foreground",
         _ => "bg-background/80 backdrop-blur text-foreground",
     };
 
@@ -63,11 +63,11 @@
 
     private string JustifyClass => Justify switch
     {
-        ScarnaJustify.Start => "justify-start",
-        ScarnaJustify.End => "justify-end",
-        ScarnaJustify.Center => "justify-center",
-        ScarnaJustify.SpaceAround => "justify-around",
-        ScarnaJustify.SpaceEvenly => "justify-evenly",
+        Justify.Start => "justify-start",
+        Justify.End => "justify-end",
+        Justify.Center => "justify-center",
+        Justify.SpaceAround => "justify-around",
+        Justify.SpaceEvenly => "justify-evenly",
         _ => "justify-between",
     };
 }

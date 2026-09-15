@@ -11,9 +11,9 @@
 ## Пример использования
 
 ```razor
-<ScarnaChip Color="ScarnaColor.Success" Variant="ScarnaVariant.Flat">Активен</ScarnaChip>
+<ScarnaChip Color="Color.Success" Variant="Variant.Flat">Активен</ScarnaChip>
 
-<ScarnaChip Color="ScarnaColor.Danger" Variant="ScarnaVariant.Faded" OnClose="() => Remove(tag)">
+<ScarnaChip Color="Color.Danger" Variant="Variant.Faded" OnClose="() => Remove(tag)">
     @tag.Name
 </ScarnaChip>
 ```
@@ -22,9 +22,9 @@
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
-| `Color` | `ScarnaColor` | `Default` | См. [theme-provider.md](theme-provider.md) |
-| `Variant` | `ScarnaVariant` | `Flat` | `Solid`/`Flat`/`Bordered`/`Light`/`Faded`/`Shadow` |
-| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
+| `Color` | `Color` | `Default` | См. [theme-provider.md](theme-provider.md) |
+| `Variant` | `Variant` | `Flat` | `Solid`/`Flat`/`Bordered`/`Light`/`Faded`/`Shadow` |
+| `Size` | `Size` | `Medium` | `Small`/`Medium`/`Large` |
 | `Bordered` | `bool` | `false` | Доп. обводка поверх Variant (для Variant.Bordered ничего не меняет) |
 | `StartContent` | `RenderFragment?` | — | Иконка/точка перед текстом |
 | `ChildContent` | `RenderFragment?` | — | Текст метки |

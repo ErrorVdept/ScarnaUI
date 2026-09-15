@@ -10,8 +10,8 @@
     </DocSection>
 
     <DocSection Title="Цвета и Disabled" Code="@ColorsCode">
-        <ScarnaToggleButton Value="true" Color="ScarnaColor.Success">Success</ScarnaToggleButton>
-        <ScarnaToggleButton Value="true" Color="ScarnaColor.Danger">Danger</ScarnaToggleButton>
+        <ScarnaToggleButton Value="true" Color="Color.Success">Success</ScarnaToggleButton>
+        <ScarnaToggleButton Value="true" Color="Color.Danger">Danger</ScarnaToggleButton>
         <ScarnaToggleButton Value="true" Disabled="true">Disabled</ScarnaToggleButton>
     </DocSection>
 
@@ -39,17 +39,17 @@
 
     private const string ColorsCode =
         """
-        <ScarnaToggleButton Value="true" Color="ScarnaColor.Success">Success</ScarnaToggleButton>
-        <ScarnaToggleButton Value="true" Color="ScarnaColor.Danger">Danger</ScarnaToggleButton>
+        <ScarnaToggleButton Value="true" Color="Color.Success">Success</ScarnaToggleButton>
+        <ScarnaToggleButton Value="true" Color="Color.Danger">Danger</ScarnaToggleButton>
         <ScarnaToggleButton Value="true" Disabled="true">Disabled</ScarnaToggleButton>
         """;
 
     private readonly List<DocApiRow> _rows = new()
     {
         new("Value / ValueChanged / ValueExpression", "bool / ...", "false", "Механика @bind-Value"),
-        new("Color", "ScarnaColor", "Primary", "Цвет заливки во включённом состоянии"),
-        new("Size", "ScarnaSize", "Medium", "Small/Medium/Large"),
-        new("Radius", "ScarnaRadius", "Medium", "Радиус скругления"),
+        new("Color", "Color", "Primary", "Цвет заливки во включённом состоянии"),
+        new("Size", "Size", "Medium", "Small/Medium/Large"),
+        new("Radius", "Radius", "Medium", "Радиус скругления"),
         new("Bordered", "bool", "true", "Обводка в невключённом состоянии"),
         new("Disabled", "bool", "false", "—"),
         new("ChildContent", "RenderFragment?", "—", "Содержимое кнопки"),

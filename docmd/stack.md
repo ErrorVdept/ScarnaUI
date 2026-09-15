@@ -2,7 +2,7 @@
 
 ## Файлы
 - `src/ScarnaUI/ScarnaUI/Components/Layout/ScarnaStack.razor`
-- `src/ScarnaUI/ScarnaUI/Components/Layout/ScarnaLayoutEnums.cs` (`ScarnaJustify`, `ScarnaAlign`)
+- `src/ScarnaUI/ScarnaUI/Components/Layout/ScarnaLayoutEnums.cs` (`Justify`, `Align`)
 
 ## Описание
 
@@ -12,9 +12,9 @@ Flex-контейнер для расстановки дочерних элем�
 ## Пример использования
 
 ```razor
-<ScarnaStack Row="true" Spacing="3" Justify="ScarnaJustify.SpaceBetween" Align="ScarnaAlign.Center">
+<ScarnaStack Row="true" Spacing="3" Justify="Justify.SpaceBetween" Align="Align.Center">
     <span>Итого: 1 200 ₽</span>
-    <ScarnaButton Color="ScarnaColor.Primary">Оформить</ScarnaButton>
+    <ScarnaButton Color="Color.Primary">Оформить</ScarnaButton>
 </ScarnaStack>
 ```
 
@@ -25,6 +25,6 @@ Flex-контейнер для расстановки дочерних элем�
 | `Row` | `bool` | `false` | `true` — flex-row, `false` — flex-column |
 | `Spacing` | `int` | `2` | Отступ между элементами в шагах по 0.25rem (2 = 0.5rem) |
 | `Wrap` | `bool` | `false` | Перенос элементов при нехватке места |
-| `Justify` | `ScarnaJustify` | `Start` | `Start` / `End` / `Center` / `SpaceBetween` / `SpaceAround` / `SpaceEvenly` (набор как у Justify в MudBlazor) |
-| `Align` | `ScarnaAlign` | `Stretch` | `Start` / `End` / `Center` / `Stretch` / `Baseline` (набор как у AlignItems в MudBlazor) |
+| `Justify` | `Justify` | `Start` | `Start` / `End` / `Center` / `SpaceBetween` / `SpaceAround` / `SpaceEvenly` (набор как у Justify в MudBlazor) |
+| `Align` | `Align` | `Stretch` | `Start` / `End` / `Center` / `Stretch` / `Baseline` (набор как у AlignItems в MudBlazor) |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

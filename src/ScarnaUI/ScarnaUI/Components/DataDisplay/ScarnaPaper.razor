@@ -10,6 +10,7 @@
 
     <ScarnaPaper>Обычная поверхность</ScarnaPaper>
     <ScarnaPaper Hovered="true" OnClick="() => Selected = true">Кликабельная карточка</ScarnaPaper>
+    <ScarnaPaper GlassEffect="true">Поверх фонового изображения/градиента</ScarnaPaper>
 *@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
@@ -33,7 +34,10 @@
     /// <summary>Смена фона при наведении (без смещения/тени) — для кликабельных/интерактивных поверхностей.</summary>
     [Parameter] public bool Hovered { get; set; }
 
-    [Parameter] public ScarnaRadius Radius { get; set; } = ScarnaRadius.Medium;
+    [Parameter] public Radius Radius { get; set; } = Radius.Medium;
+
+    /// <summary>Полупрозрачный фон с блюром (backdrop-blur) вместо сплошного bg-content1 — как у ScarnaNavBar.</summary>
+    [Parameter] public bool GlassEffect { get; set; }
 
     /// <summary>Если задан — поверхность становится кликабельной (курсор, role="button", Enter/Space). Не задан — обычный статичный контейнер.</summary>
     [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
@@ -60,7 +64,9 @@
         }
     }
 
-    private string Classes => CssBuilder.Default("scarna-paper bg-content1 text-foreground p-5 transition-colors duration-150")
+    private string Classes => CssBuilder.Default("scarna-paper text-foreground p-5 transition-colors duration-150")
+        .AddClass("bg-content1/80 backdrop-blur-md", GlassEffect)
+        .AddClass("bg-content1", !GlassEffect)
         .AddClass(ScarnaColorVariantClasses.Radius(Radius))
         .AddClass("border border-divider", Bordered)
         .AddClass("shadow-md", Shadow)

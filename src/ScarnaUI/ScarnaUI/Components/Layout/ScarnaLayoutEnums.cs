@@ -4,7 +4,7 @@ namespace ScarnaUI.Components.Layout;
 /// Выравнивание по главной оси (justify-content) — как Justify в MudBlazor.
 /// Используется в ScarnaStack (flex) и ScarnaGrid (распределение свободного места в сетке).
 /// </summary>
-public enum ScarnaJustify
+public enum Justify
 {
     Start,
     End,
@@ -18,7 +18,7 @@ public enum ScarnaJustify
 /// Выравнивание по поперечной оси (align-items) — как AlignItems в MudBlazor.
 /// Используется в ScarnaStack (flex) и ScarnaGrid (align-items ячеек).
 /// </summary>
-public enum ScarnaAlign
+public enum Align
 {
     Start,
     End,

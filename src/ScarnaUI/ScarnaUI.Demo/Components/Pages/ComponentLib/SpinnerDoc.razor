@@ -5,17 +5,17 @@
 
     <DocSection Title="Цвета" Code="@ColorsCode">
         <ScarnaSpinner />
-        <ScarnaSpinner Color="ScarnaColor.Primary" />
-        <ScarnaSpinner Color="ScarnaColor.Secondary" />
-        <ScarnaSpinner Color="ScarnaColor.Success" />
-        <ScarnaSpinner Color="ScarnaColor.Warning" />
-        <ScarnaSpinner Color="ScarnaColor.Danger" />
+        <ScarnaSpinner Color="Color.Primary" />
+        <ScarnaSpinner Color="Color.Secondary" />
+        <ScarnaSpinner Color="Color.Success" />
+        <ScarnaSpinner Color="Color.Warning" />
+        <ScarnaSpinner Color="Color.Danger" />
     </DocSection>
 
     <DocSection Title="Размеры" Code="@SizesCode">
-        <ScarnaSpinner Size="ScarnaSize.Small" />
-        <ScarnaSpinner Size="ScarnaSize.Medium" />
-        <ScarnaSpinner Size="ScarnaSize.Large" />
+        <ScarnaSpinner Size="Size.Small" />
+        <ScarnaSpinner Size="Size.Medium" />
+        <ScarnaSpinner Size="Size.Large" />
     </DocSection>
 
     <DocApiTable Rows="@_rows" />
@@ -26,24 +26,24 @@
     private const string ColorsCode =
         """
         <ScarnaSpinner />
-        <ScarnaSpinner Color="ScarnaColor.Primary" />
-        <ScarnaSpinner Color="ScarnaColor.Secondary" />
-        <ScarnaSpinner Color="ScarnaColor.Success" />
-        <ScarnaSpinner Color="ScarnaColor.Warning" />
-        <ScarnaSpinner Color="ScarnaColor.Danger" />
+        <ScarnaSpinner Color="Color.Primary" />
+        <ScarnaSpinner Color="Color.Secondary" />
+        <ScarnaSpinner Color="Color.Success" />
+        <ScarnaSpinner Color="Color.Warning" />
+        <ScarnaSpinner Color="Color.Danger" />
         """;
 
     private const string SizesCode =
         """
-        <ScarnaSpinner Size="ScarnaSize.Small" />
-        <ScarnaSpinner Size="ScarnaSize.Medium" />
-        <ScarnaSpinner Size="ScarnaSize.Large" />
+        <ScarnaSpinner Size="Size.Small" />
+        <ScarnaSpinner Size="Size.Medium" />
+        <ScarnaSpinner Size="Size.Large" />
         """;
 
     private readonly List<DocApiRow> _rows = new()
     {
-        new("Color", "ScarnaColor", "Primary", "Цвет кольца"),
-        new("Size", "ScarnaSize", "Medium", "Small/Medium/Large"),
+        new("Color", "Color", "Primary", "Цвет кольца"),
+        new("Size", "Size", "Medium", "Small/Medium/Large"),
         new("Label", "string", "\"Загрузка\"", "Текст для скринридеров (aria-label), визуально не отображается"),
     };
 }

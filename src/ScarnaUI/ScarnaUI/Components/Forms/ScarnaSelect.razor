@@ -66,16 +66,16 @@
     /// <summary>Запрещает открытие списка (клик по полю игнорируется), но, в отличие от Disabled, поле визуально не тускнеет.</summary>
     [Parameter] public bool ReadOnly { get; set; }
 
-    [Parameter] public ScarnaVariant Variant { get; set; } = ScarnaVariant.Bordered;
+    [Parameter] public Variant Variant { get; set; } = Variant.Bordered;
 
     /// <summary>Показывать ли контур поля (по умолчанию — да), независимо от Variant.</summary>
     [Parameter] public bool Bordered { get; set; } = true;
 
-    [Parameter] public ScarnaSize Size { get; set; } = ScarnaSize.Medium;
+    [Parameter] public Size Size { get; set; } = Size.Medium;
 
     [Parameter] public ScarnaDensity Density { get; set; } = ScarnaDensity.Normal;
 
-    [Parameter] public ScarnaRadius Radius { get; set; } = ScarnaRadius.Medium;
+    [Parameter] public Radius Radius { get; set; } = Radius.Medium;
 
     /// <summary>Позиция выпадающего списка относительно поля.</summary>
     [Parameter] public ScarnaPosition Position { get; set; } = ScarnaPosition.BottomStart;
@@ -155,18 +155,18 @@
 
     private string SizeClass => (Size, Density) switch
     {
-        (ScarnaSize.Small, ScarnaDensity.Dense) => "h-7 px-2 text-sm",
-        (ScarnaSize.Small, _) => "h-8 px-3 text-sm",
-        (ScarnaSize.Large, ScarnaDensity.Dense) => "h-10 px-3 text-base",
-        (ScarnaSize.Large, _) => "h-12 px-4 text-base",
+        (Size.Small, ScarnaDensity.Dense) => "h-7 px-2 text-sm",
+        (Size.Small, _) => "h-8 px-3 text-sm",
+        (Size.Large, ScarnaDensity.Dense) => "h-10 px-3 text-base",
+        (Size.Large, _) => "h-12 px-4 text-base",
         (_, ScarnaDensity.Dense) => "h-8 px-2.5 text-sm",
         _ => "h-10 px-3 text-sm",
     };
 
     private string VariantClass => (Variant, Bordered) switch
     {
-        (ScarnaVariant.Flat, true) => "bg-content2 border border-default",
-        (ScarnaVariant.Flat, false) => "bg-content2 border border-transparent",
+        (Variant.Flat, true) => "bg-content2 border border-default",
+        (Variant.Flat, false) => "bg-content2 border border-transparent",
         (_, true) => "bg-transparent border border-default",
         (_, false) => "bg-transparent border border-transparent",
     };

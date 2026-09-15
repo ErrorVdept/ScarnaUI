@@ -29,7 +29,7 @@
 |---|---|---|---|
 | `Value` / `ValueChanged` / `ValueExpression` | `TValue?` / ... | — | Механика `@bind-Value` |
 | `Label` | `string?` | — | Подпись над группой |
-| `Justify` | `ScarnaJustify` | `Start` | К какому краю прижимать кнопки (заметно, только если `FullWidth="false"`) |
+| `Justify` | `Justify` | `Start` | К какому краю прижимать кнопки (заметно, только если `FullWidth="false"`) |
 | `FullWidth` | `bool` | `false` | Растянуть кнопки на всю ширину родителя поровну — например, `<ScarnaSelectGroup FullWidth="true">` |
 | `ChildContent` | `RenderFragment?` | — | Набор `ScarnaSelectGroupItem` |
 

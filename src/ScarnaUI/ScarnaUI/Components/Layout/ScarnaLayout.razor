@@ -1,0 +1,40 @@
+@*
+    Корневая обёртка приложения (аналог MudLayout) — задаёт минимальную высоту экрана
+    и базовые цвета темы для всего, что внутри (ScarnaNavBar + ScarnaDrawer + main).
+    Кладётся один раз в MainLayout.razor вместо <div class="min-h-screen bg-background text-foreground">.
+
+    <ScarnaLayout>
+        <ScarnaNavBar>...</ScarnaNavBar>
+        <main class="py-8">@Body</main>
+    </ScarnaLayout>
+*@
+@namespace ScarnaUI.Components.Layout
+@inherits ScarnaComponentBase
+
+<div class="@Classes" style="@CombinedStyle" @attributes="UserAttributes">
+    @ChildContent
+</div>
+
+@code {
+    /// <summary>CSS min-height корневого элемента. Пусто/null — без min-height (например, вложенный layout внутри модалки).</summary>
+    [Parameter] public string? MinHeight { get; set; } = "100vh";
+
+    /// <summary>Рендерить как flex flex-col — даёт "бесплатный" sticky footer (footer после main class="flex-1" прижимается к низу).</summary>
+    [Parameter] public bool Flex { get; set; } = true;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string Classes => CssBuilder.Default("scarna-layout bg-background text-foreground")
+        .AddClass("flex flex-col", Flex)
+        .AddClass(Class)
+        .ToString();
+
+    private string CombinedStyle
+    {
+        get
+        {
+            var minHeightStyle = string.IsNullOrWhiteSpace(MinHeight) ? "" : $"min-height: {MinHeight};";
+            return string.IsNullOrWhiteSpace(Style) ? minHeightStyle : $"{minHeightStyle} {Style}";
+        }
+    }
+}

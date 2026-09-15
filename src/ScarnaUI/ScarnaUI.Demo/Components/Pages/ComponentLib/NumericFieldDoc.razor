@@ -14,8 +14,8 @@
     </DocSection>
 
     <DocSection Title="Размеры и состояния" Code="@StatesCode">
-        <ScarnaNumericField Label="Small" Size="ScarnaSize.Small" Value="1" Class="w-32" />
-        <ScarnaNumericField Label="Large" Size="ScarnaSize.Large" Value="1" Class="w-32" />
+        <ScarnaNumericField Label="Small" Size="Size.Small" Value="1" Class="w-32" />
+        <ScarnaNumericField Label="Large" Size="Size.Large" Value="1" Class="w-32" />
         <ScarnaNumericField Label="Отключено" Disabled="true" Value="5" Class="w-32" />
         <ScarnaNumericField Label="Только чтение" ReadOnly="true" Value="5" Class="w-32" />
     </DocSection>
@@ -49,8 +49,8 @@
 
     private const string StatesCode =
         """
-        <ScarnaNumericField Label="Small" Size="ScarnaSize.Small" Value="1" />
-        <ScarnaNumericField Label="Large" Size="ScarnaSize.Large" Value="1" />
+        <ScarnaNumericField Label="Small" Size="Size.Small" Value="1" />
+        <ScarnaNumericField Label="Large" Size="Size.Large" Value="1" />
         <ScarnaNumericField Label="Отключено" Disabled="true" Value="5" />
         <ScarnaNumericField Label="Только чтение" ReadOnly="true" Value="5" />
         """;
@@ -65,10 +65,10 @@
         new("Format", "ScarnaNumberFormat", "Decimal", "Integer — округляет ввод/шаг до целого; Decimal — дробные значения разрешены"),
         new("Disabled", "bool", "false", "—"),
         new("ReadOnly", "bool", "false", "Поле и кнопки +/− не реагируют на ввод, но не тускнеют"),
-        new("Variant", "ScarnaVariant", "Bordered", "Bordered/Flat"),
+        new("Variant", "Variant", "Bordered", "Bordered/Flat"),
         new("Bordered", "bool", "true", "Показывать ли контур поля"),
-        new("Size", "ScarnaSize", "Medium", "Small/Medium/Large"),
+        new("Size", "Size", "Medium", "Small/Medium/Large"),
         new("Density", "ScarnaDensity", "Normal", "Dense — компактное поле"),
-        new("Radius", "ScarnaRadius", "Medium", "Радиус поля"),
+        new("Radius", "Radius", "Medium", "Радиус поля"),
     };
 }

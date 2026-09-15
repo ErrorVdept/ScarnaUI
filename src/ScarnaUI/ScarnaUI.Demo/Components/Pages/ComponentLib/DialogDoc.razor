@@ -5,7 +5,7 @@
          Files="@(new[] { "Components/Overlays/ScarnaDialog.razor", "Services/IScarnaDialogService.cs", "Services/ScarnaDialogModels.cs" })">
 
     <DocSection Title="Пример" Description="ScarnaDialogProvider уже есть в MainLayout. Диалог — обычный компонент (здесь используется демонстрационный DemoConfirmDialog), результат приходит через Task<ScarnaDialogResult>." Code="@ExampleCode">
-        <ScarnaButton Color="ScarnaColor.Danger" Variant="ScarnaVariant.Flat" OnClick="OpenConfirmDialogAsync">
+        <ScarnaButton Color="Color.Danger" Variant="Variant.Flat" OnClick="OpenConfirmDialogAsync">
             Открыть диалог
         </ScarnaButton>
         <span class="text-sm text-foreground/60">Результат: @(_lastResult ?? "—")</span>
@@ -28,7 +28,7 @@
         """
         @inject IScarnaDialogService DialogService
 
-        <ScarnaButton Color="ScarnaColor.Danger" OnClick="DeleteAsync">Удалить</ScarnaButton>
+        <ScarnaButton Color="Color.Danger" OnClick="DeleteAsync">Удалить</ScarnaButton>
 
         @code {
             private async Task DeleteAsync()

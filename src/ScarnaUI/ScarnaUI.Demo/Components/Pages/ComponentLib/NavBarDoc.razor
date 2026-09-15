@@ -18,7 +18,7 @@
 
     <DocSection Title="Цвет и плотность" Description="Density='Dense' — компактная высота 48px; Color — сплошная заливка." Code="@ColorCode" Row="false">
         <div class="overflow-hidden rounded-scarna-md border border-divider">
-            <ScarnaNavBar Sticky="false" Density="ScarnaDensity.Dense" Color="ScarnaColor.Primary">
+            <ScarnaNavBar Sticky="false" Density="ScarnaDensity.Dense" Color="Color.Primary">
                 <span class="font-semibold">Dense + Primary</span>
                 <ScarnaThemeSwitch />
             </ScarnaNavBar>
@@ -43,7 +43,7 @@
 
     private const string ColorCode =
         """
-        <ScarnaNavBar Density="ScarnaDensity.Dense" Color="ScarnaColor.Primary">
+        <ScarnaNavBar Density="ScarnaDensity.Dense" Color="Color.Primary">
             <span class="font-semibold">Dense + Primary</span>
             <ScarnaThemeSwitch />
         </ScarnaNavBar>
@@ -55,8 +55,8 @@
         new("Bordered", "bool", "true", "Граница снизу"),
         new("Fluid", "bool", "true", "Растянуть содержимое на всю ширину (без ScarnaContainer.MaxWidth)"),
         new("Density", "ScarnaDensity", "Normal", "Normal — 56px высотой, Dense — 48px"),
-        new("Color", "ScarnaColor", "Default", "Default — нейтральная подложка с блюром; любой другой — сплошная заливка цветом"),
-        new("Justify", "ScarnaJustify", "SpaceBetween", "Распределение содержимого по горизонтали"),
+        new("Color", "Color", "Default", "Default — нейтральная подложка с блюром; любой другой — сплошная заливка цветом"),
+        new("Justify", "Justify", "SpaceBetween", "Распределение содержимого по горизонтали"),
         new("ChildContent", "RenderFragment?", "—", "Содержимое панели"),
     };
 }

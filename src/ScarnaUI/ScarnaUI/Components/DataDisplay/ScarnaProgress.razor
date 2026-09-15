@@ -48,9 +48,9 @@
     /// <summary>Показывать процент справа от подписи (игнорируется при Indeterminate).</summary>
     [Parameter] public bool ShowValue { get; set; }
 
-    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Primary;
+    [Parameter] public Color Color { get; set; } = Color.Primary;
 
-    [Parameter] public ScarnaSize Size { get; set; } = ScarnaSize.Medium;
+    [Parameter] public Size Size { get; set; } = Size.Medium;
 
     private double PercentClamped => Max <= 0 ? 0 : Math.Clamp(Value / Max * 100, 0, 100);
 
@@ -60,18 +60,18 @@
 
     private string SizeClass => Size switch
     {
-        ScarnaSize.Small => "h-1",
-        ScarnaSize.Large => "h-3",
+        Size.Small => "h-1",
+        Size.Large => "h-3",
         _ => "h-2",
     };
 
     private string FillColorClass => Color switch
     {
-        ScarnaColor.Secondary => "bg-secondary",
-        ScarnaColor.Success => "bg-success",
-        ScarnaColor.Warning => "bg-warning",
-        ScarnaColor.Danger => "bg-danger",
-        ScarnaColor.Default => "bg-default",
+        Color.Secondary => "bg-secondary",
+        Color.Success => "bg-success",
+        Color.Warning => "bg-warning",
+        Color.Danger => "bg-danger",
+        Color.Default => "bg-default",
         _ => "bg-primary",
     };
 }

@@ -45,11 +45,11 @@
 | `Type` | `string` | `"text"` | HTML `type` (`text`/`email`/`password`/`number`...) |
 | `Disabled` | `bool` | `false` | — |
 | `ReadOnly` | `bool` | `false` | — |
-| `Variant` | `ScarnaVariant` | `Bordered` | `Bordered` — контур на прозрачном фоне, `Flat` — заливка без контура |
+| `Variant` | `Variant` | `Bordered` | `Bordered` — контур на прозрачном фоне, `Flat` — заливка без контура |
 | `Bordered` | `bool` | `true` | Показывать ли контур поля, независимо от Variant (`Flat`+`Bordered="false"` — заливка совсем без обводки) |
-| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
+| `Size` | `Size` | `Medium` | `Small`/`Medium`/`Large` |
 | `Density` | `ScarnaDensity` | `Normal` | `Normal` — обычная высота, `Dense` — уменьшенная высота/паддинги для плотных панелей фильтров и таблиц |
-| `Radius` | `ScarnaRadius` | `Medium` | Радиус поля |
+| `Radius` | `Radius` | `Medium` | Радиус поля |
 | `StartContent` | `RenderFragment?` | — | Иконка/префикс перед полем |
 | `EndContent` | `RenderFragment?` | — | Иконка/кнопка после поля |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

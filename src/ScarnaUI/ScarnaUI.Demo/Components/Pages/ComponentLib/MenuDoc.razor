@@ -6,13 +6,13 @@
     <DocSection Title="Пример" Description="ScarnaPopoverProvider уже есть в MainLayout, отдельно подключать не нужно." Code="@ExampleCode">
         <ScarnaMenu>
             <Trigger>
-                <ScarnaButton Variant="ScarnaVariant.Bordered">Действия ▾</ScarnaButton>
+                <ScarnaButton Variant="Variant.Bordered">Действия ▾</ScarnaButton>
             </Trigger>
             <MenuContent>
                 <ScarnaMenuItem OnClick="Edit">Редактировать</ScarnaMenuItem>
                 <ScarnaMenuItem OnClick="Duplicate">Дублировать</ScarnaMenuItem>
                 <ScarnaDivider Class="my-1" />
-                <ScarnaMenuItem Color="ScarnaColor.Danger" OnClick="Delete">Удалить</ScarnaMenuItem>
+                <ScarnaMenuItem Color="Color.Danger" OnClick="Delete">Удалить</ScarnaMenuItem>
             </MenuContent>
         </ScarnaMenu>
         <span class="text-sm text-foreground/60">Последнее действие: @(_lastAction ?? "—")</span>
@@ -34,13 +34,13 @@
         """
         <ScarnaMenu>
             <Trigger>
-                <ScarnaButton Variant="ScarnaVariant.Bordered">Действия</ScarnaButton>
+                <ScarnaButton Variant="Variant.Bordered">Действия</ScarnaButton>
             </Trigger>
             <MenuContent>
                 <ScarnaMenuItem OnClick="Edit">Редактировать</ScarnaMenuItem>
                 <ScarnaMenuItem OnClick="Duplicate">Дублировать</ScarnaMenuItem>
                 <ScarnaDivider Class="my-1" />
-                <ScarnaMenuItem Color="ScarnaColor.Danger" OnClick="Delete">Удалить</ScarnaMenuItem>
+                <ScarnaMenuItem Color="Color.Danger" OnClick="Delete">Удалить</ScarnaMenuItem>
             </MenuContent>
         </ScarnaMenu>
         """;
@@ -55,7 +55,7 @@
 
     private readonly List<DocApiRow> _itemRows = new()
     {
-        new("Color", "ScarnaColor", "Default", "Danger — для деструктивных действий (удаление и т.п.)"),
+        new("Color", "Color", "Default", "Danger — для деструктивных действий (удаление и т.п.)"),
         new("Disabled", "bool", "false", "—"),
         new("StartContent", "RenderFragment?", "—", "Иконка перед текстом"),
         new("ChildContent", "RenderFragment?", "—", "Текст пункта"),

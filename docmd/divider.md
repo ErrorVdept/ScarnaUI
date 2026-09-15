@@ -12,7 +12,7 @@
 ```razor
 <ScarnaDivider />
 
-<ScarnaStack Row="true" Align="ScarnaAlign.Center">
+<ScarnaStack Row="true" Align="Align.Center">
     <span>Профиль</span>
     <ScarnaDivider Vertical="true" Class="h-6" />
     <span>Настройки</span>

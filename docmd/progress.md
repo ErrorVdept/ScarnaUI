@@ -15,7 +15,7 @@
 
 ```razor
 <ScarnaProgress Label="Загрузка файла" Value="64" ShowValue="true" />
-<ScarnaProgress Label="Синхронизация" Indeterminate="true" Color="ScarnaColor.Secondary" />
+<ScarnaProgress Label="Синхронизация" Indeterminate="true" Color="Color.Secondary" />
 ```
 
 ## Параметры
@@ -27,5 +27,5 @@
 | `Max` | `double` | `100` | Максимум |
 | `Indeterminate` | `bool` | `false` | Бегущая полоса вместо конкретного значения |
 | `ShowValue` | `bool` | `false` | Показывать процент справа от подписи |
-| `Color` | `ScarnaColor` | `Primary` | Цвет заливки |
-| `Size` | `ScarnaSize` | `Medium` | Высота полосы: `Small` (4px) / `Medium` (8px) / `Large` (12px) |
+| `Color` | `Color` | `Primary` | Цвет заливки |
+| `Size` | `Size` | `Medium` | Высота полосы: `Small` (4px) / `Medium` (8px) / `Large` (12px) |

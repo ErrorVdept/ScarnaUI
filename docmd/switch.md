@@ -12,7 +12,7 @@
 ## Пример использования
 
 ```razor
-<ScarnaSwitch @bind-Value="model.NotificationsEnabled" Color="ScarnaColor.Success">
+<ScarnaSwitch @bind-Value="model.NotificationsEnabled" Color="Color.Success">
     Уведомления по email
 </ScarnaSwitch>
 ```
@@ -24,7 +24,7 @@
 | `Value` / `ValueChanged` / `ValueExpression` | `bool` / ... | — | Механика `@bind-Value` |
 | `Disabled` | `bool` | `false` | — |
 | `ReadOnly` | `bool` | `false` | Запрещает переключение (клик отменяется через `@onclick:preventDefault`), но, в отличие от `Disabled`, переключатель визуально не тускнеет |
-| `Color` | `ScarnaColor` | `Primary` | Цвет дорожки во включённом состоянии |
+| `Color` | `Color` | `Primary` | Цвет дорожки во включённом состоянии |
 | `Density` | `ScarnaDensity` | `Normal` | `Dense` — уменьшенная дорожка для плотных списков |
 | `ChildContent` | `RenderFragment?` | — | Подпись рядом с переключателем |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

@@ -9,8 +9,8 @@
     </div>
 
     <ScarnaContainer>
-        <ScarnaStack Spacing="5" Align="ScarnaAlign.Center" Class="pb-16 pt-20 text-center">
-            <ScarnaChip Color="ScarnaColor.Primary" Variant="ScarnaVariant.Flat">Blazor Server · .NET 10 · Tailwind CSS v4</ScarnaChip>
+        <ScarnaStack Spacing="5" Align="Align.Center" Class="pb-16 pt-20 text-center">
+            <ScarnaChip Color="Color.Primary" Variant="Variant.Flat">Blazor Server · .NET 10 · Tailwind CSS v4</ScarnaChip>
 
             <h1 class="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-5xl font-semibold tracking-tight text-transparent sm:text-6xl">
                 Scarna<span class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">UI</span>
@@ -22,16 +22,16 @@
                 на каждом компоненте) и дизайн-система, вдохновлённая HeroUI — своя разметка, настраиваемая в рантайме тема.
             </p>
 
-            <ScarnaStack Row="true" Wrap="true" Spacing="3" Justify="ScarnaJustify.Center" Class="pt-2">
-                <ScarnaButton Color="ScarnaColor.Primary" Href="/getting-started">Начать</ScarnaButton>
-                <ScarnaButton Variant="ScarnaVariant.Bordered" Href="/componentlib">Все компоненты</ScarnaButton>
-                <ScarnaButton Variant="ScarnaVariant.Light" Href="/showcase/stackoverflow">Живые примеры</ScarnaButton>
+            <ScarnaStack Row="true" Wrap="true" Spacing="3" Justify="Justify.Center" Class="pt-2">
+                <ScarnaButton Color="Color.Primary" Href="/getting-started">Начать</ScarnaButton>
+                <ScarnaButton Variant="Variant.Bordered" Href="/componentlib">Все компоненты</ScarnaButton>
+                <ScarnaButton Variant="Variant.Light" Href="/showcase/stackoverflow">Живые примеры</ScarnaButton>
             </ScarnaStack>
 
-            <ScarnaStack Row="true" Wrap="true" Spacing="8" Justify="ScarnaJustify.Center" Class="pt-8">
+            <ScarnaStack Row="true" Wrap="true" Spacing="8" Justify="Justify.Center" Class="pt-8">
                 @foreach (var stat in _stats)
                 {
-                    <ScarnaStack Spacing="0" Align="ScarnaAlign.Center">
+                    <ScarnaStack Spacing="0" Align="Align.Center">
                         <span class="text-2xl font-semibold text-foreground">@stat.Value</span>
                         <span class="text-xs text-foreground/50">@stat.Label</span>
                     </ScarnaStack>
@@ -45,7 +45,7 @@
     <ScarnaStack Spacing="16" Class="pb-20">
 
         <section>
-            <ScarnaStack Spacing="1" Align="ScarnaAlign.Center" Class="mb-6 text-center">
+            <ScarnaStack Spacing="1" Align="Align.Center" Class="mb-6 text-center">
                 <h2 class="text-xl font-semibold text-foreground">Почему ScarnaUI</h2>
                 <p class="text-sm text-foreground/60">Три решения, определяющие всю библиотеку</p>
             </ScarnaStack>
@@ -66,7 +66,7 @@
         </section>
 
         <section>
-            <ScarnaStack Spacing="1" Align="ScarnaAlign.Center" Class="mb-6 text-center">
+            <ScarnaStack Spacing="1" Align="Align.Center" Class="mb-6 text-center">
                 <h2 class="text-xl font-semibold text-foreground">Посмотрите в деле</h2>
                 <p class="text-sm text-foreground/60">Две готовые страницы целиком из компонентов библиотеки — без единой своей строчки CSS</p>
             </ScarnaStack>
@@ -96,13 +96,13 @@
             </ScarnaGrid>
         </section>
 
-        <ScarnaPaper Class="text-center" Radius="ScarnaRadius.Large">
-            <ScarnaStack Spacing="4" Align="ScarnaAlign.Center" Class="py-4">
+        <ScarnaPaper Class="text-center" Radius="Radius.Large">
+            <ScarnaStack Spacing="4" Align="Align.Center" Class="py-4">
                 <h2 class="text-xl font-semibold text-foreground">Готовы попробовать?</h2>
                 <p class="max-w-md text-sm text-foreground/60">Пять шагов от чистого проекта до работающей темы, диалогов и тостов — без npm.</p>
                 <ScarnaStack Row="true" Spacing="3">
-                    <ScarnaButton Color="ScarnaColor.Primary" Href="/getting-started">Инструкция по установке</ScarnaButton>
-                    <ScarnaButton Variant="ScarnaVariant.Bordered" Href="/componentlib">Каталог компонентов</ScarnaButton>
+                    <ScarnaButton Color="Color.Primary" Href="/getting-started">Инструкция по установке</ScarnaButton>
+                    <ScarnaButton Variant="Variant.Bordered" Href="/componentlib">Каталог компонентов</ScarnaButton>
                 </ScarnaStack>
             </ScarnaStack>
         </ScarnaPaper>

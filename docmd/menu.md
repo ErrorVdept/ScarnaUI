@@ -15,13 +15,13 @@
 ```razor
 <ScarnaMenu>
     <Trigger>
-        <ScarnaButton Variant="ScarnaVariant.Bordered">Действия</ScarnaButton>
+        <ScarnaButton Variant="Variant.Bordered">Действия</ScarnaButton>
     </Trigger>
     <MenuContent>
         <ScarnaMenuItem OnClick="Edit">Редактировать</ScarnaMenuItem>
         <ScarnaMenuItem OnClick="Duplicate">Дублировать</ScarnaMenuItem>
         <ScarnaDivider Class="my-1" />
-        <ScarnaMenuItem Color="ScarnaColor.Danger" OnClick="Delete">Удалить</ScarnaMenuItem>
+        <ScarnaMenuItem Color="Color.Danger" OnClick="Delete">Удалить</ScarnaMenuItem>
     </MenuContent>
 </ScarnaMenu>
 ```
@@ -42,7 +42,7 @@
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
-| `Color` | `ScarnaColor` | `Default` | `Danger` — для деструктивных действий (удаление и т.п.) |
+| `Color` | `Color` | `Default` | `Danger` — для деструктивных действий (удаление и т.п.) |
 | `Disabled` | `bool` | `false` | — |
 | `StartContent` | `RenderFragment?` | — | Иконка перед текстом |
 | `ChildContent` | `RenderFragment?` | — | Текст пункта |

@@ -22,7 +22,7 @@
         <tr>
             <td>Иван Петров</td>
             <td>ivan@example.com</td>
-            <td><ScarnaChip Color="ScarnaColor.Success" Size="ScarnaSize.Small">Активен</ScarnaChip></td>
+            <td><ScarnaChip Color="Color.Success" Size="Size.Small">Активен</ScarnaChip></td>
         </tr>
     </tbody>
 </ScarnaTable>

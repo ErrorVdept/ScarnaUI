@@ -1,7 +1,7 @@
 @*
     Небольшая цветная "пилюля" с текстом/меткой — тег, статус, значение фильтра.
 
-    <ScarnaChip Color="ScarnaColor.Success" Variant="ScarnaVariant.Flat">Активен</ScarnaChip>
+    <ScarnaChip Color="Color.Success" Variant="Variant.Flat">Активен</ScarnaChip>
     <ScarnaChip OnClose="Remove">Удаляемый тег</ScarnaChip>
 *@
 @namespace ScarnaUI.Components.DataDisplay
@@ -22,11 +22,11 @@
 </span>
 
 @code {
-    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Default;
+    [Parameter] public Color Color { get; set; } = Color.Default;
 
-    [Parameter] public ScarnaVariant Variant { get; set; } = ScarnaVariant.Flat;
+    [Parameter] public Variant Variant { get; set; } = Variant.Flat;
 
-    [Parameter] public ScarnaSize Size { get; set; } = ScarnaSize.Medium;
+    [Parameter] public Size Size { get; set; } = Size.Medium;
 
     /// <summary>Принудительно добавляет обводку в цвет Color поверх выбранного Variant (для Variant.Bordered ничего не меняет — обводка там уже есть).</summary>
     [Parameter] public bool Bordered { get; set; }
@@ -42,15 +42,15 @@
     private string Classes => CssBuilder.Default("scarna-chip inline-flex items-center gap-1.5 font-medium whitespace-nowrap transition-colors")
         .AddClass(SizeClass)
         .AddClass(ScarnaColorVariantClasses.Get(Color, Variant))
-        .AddClass(ScarnaColorVariantClasses.Radius(ScarnaRadius.Full))
-        .AddClass("border border-current/40", Bordered && Variant != ScarnaVariant.Bordered)
+        .AddClass(ScarnaColorVariantClasses.Radius(Radius.Full))
+        .AddClass("border border-current/40", Bordered && Variant != Variant.Bordered)
         .AddClass(Class)
         .ToString();
 
     private string SizeClass => Size switch
     {
-        ScarnaSize.Small => "h-6 px-2 text-xs",
-        ScarnaSize.Large => "h-9 px-4 text-sm",
+        Size.Small => "h-6 px-2 text-xs",
+        Size.Large => "h-9 px-4 text-sm",
         _ => "h-7 px-3 text-xs",
     };
 }

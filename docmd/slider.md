@@ -63,5 +63,5 @@ Blazor не станет откатывать `value` того же самого
 | `ReadOnly` | `bool` | `false` | Игнорирует ввод (мышь/тач/клавиатура), но, в отличие от `Disabled`, не тускнеет — см. описание выше |
 | `ShowValue` | `bool` | `false` | Показывать текущее значение справа от подписи |
 | `Format` | `string` | `"0.##"` | .NET numeric format string для отображаемого значения |
-| `Color` | `ScarnaColor` | `Primary` | Цвет ползунка и залитой части дорожки |
+| `Color` | `Color` | `Primary` | Цвет ползунка и залитой части дорожки |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

@@ -73,11 +73,11 @@ Tailwind-утилиты `w-full`/`h-full` (тоже доступны, это п�
 [grid.md](grid.md).
 
 ```razor
-<ScarnaStack Row="true" Justify="ScarnaJustify.SpaceEvenly" Align="ScarnaAlign.Baseline">
+<ScarnaStack Row="true" Justify="Justify.SpaceEvenly" Align="Align.Baseline">
 ```
 
-`ScarnaJustify`: `Start`, `End`, `Center`, `SpaceBetween`, `SpaceAround`, `SpaceEvenly`.
-`ScarnaAlign`: `Start`, `End`, `Center`, `Stretch`, `Baseline`.
+`Justify`: `Start`, `End`, `Center`, `SpaceBetween`, `SpaceAround`, `SpaceEvenly`.
+`Align`: `Start`, `End`, `Center`, `Stretch`, `Baseline`.
 
 ---
 

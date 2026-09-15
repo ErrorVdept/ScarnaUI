@@ -1,9 +1,9 @@
 @*
     Левое меню документации — список всех компонентов/сервисов по категориям
     (данные из ComponentLibNav, единые с карточками на Index.razor). Активная
-    страница подсвечивается через NavLink (Match=All, т.к. маршруты не вложены
-    друг в друга). Прилипает при скролле и скроллится независимо от страницы,
-    если сам не помещается по высоте.
+    страница подсвечивается через ScarnaNavLink (Exact="true", т.к. маршруты не
+    вложены друг в друга). Прилипает при скролле и скроллится независимо от
+    страницы, если сам не помещается по высоте.
 *@
 @namespace ScarnaUI.Demo.Components.Pages.ComponentLib.Shared
 
@@ -16,18 +16,12 @@
         {
             <div class="mb-4">
                 <p class="mb-1.5 px-2 text-xs font-semibold uppercase tracking-wide text-foreground/40">@group.Title</p>
-                <ul class="flex flex-col">
+                <ScarnaNavMenu Class="gap-0.5!">
                     @foreach (var item in group.Items)
                     {
-                        <li>
-                            <NavLink href="@item.Href" Match="NavLinkMatch.All"
-                                     class="block rounded-scarna-sm px-2 py-1 text-sm text-foreground/70 transition-colors hover:bg-content2 hover:text-foreground"
-                                     ActiveClass="bg-primary/10 text-primary font-medium hover:bg-primary/10 hover:text-primary">
-                                @item.Name
-                            </NavLink>
-                        </li>
+                        <ScarnaNavLink Href="@item.Href" Exact="true">@item.Name</ScarnaNavLink>
                     }
-                </ul>
+                </ScarnaNavMenu>
             </div>
         }
     </nav>

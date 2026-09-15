@@ -16,7 +16,7 @@
         </div>
         @if (!string.IsNullOrEmpty(Code))
         {
-            <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _showCode = !_showCode">
+            <ScarnaButton Size="Size.Small" Variant="Variant.Light" OnClick="() => _showCode = !_showCode">
                 @(_showCode ? "Скрыть код" : "Показать код")
             </ScarnaButton>
         }

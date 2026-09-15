@@ -3,7 +3,7 @@
     с конкретным значением см. ScarnaProgress.
 
     <ScarnaSpinner />
-    <ScarnaSpinner Color="ScarnaColor.Success" Size="ScarnaSize.Large" />
+    <ScarnaSpinner Color="Color.Success" Size="Size.Large" />
 *@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
@@ -14,9 +14,9 @@
 </svg>
 
 @code {
-    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Primary;
+    [Parameter] public Color Color { get; set; } = Color.Primary;
 
-    [Parameter] public ScarnaSize Size { get; set; } = ScarnaSize.Medium;
+    [Parameter] public Size Size { get; set; } = Size.Medium;
 
     /// <summary>Текст для скринридеров (визуально не отображается).</summary>
     [Parameter] public string Label { get; set; } = "Загрузка";
@@ -29,18 +29,18 @@
 
     private string SizeClass => Size switch
     {
-        ScarnaSize.Small => "size-4",
-        ScarnaSize.Large => "size-8",
+        Size.Small => "size-4",
+        Size.Large => "size-8",
         _ => "size-6",
     };
 
     private string ColorClass => Color switch
     {
-        ScarnaColor.Secondary => "text-secondary",
-        ScarnaColor.Success => "text-success",
-        ScarnaColor.Warning => "text-warning",
-        ScarnaColor.Danger => "text-danger",
-        ScarnaColor.Default => "text-foreground/60",
+        Color.Secondary => "text-secondary",
+        Color.Success => "text-success",
+        Color.Warning => "text-warning",
+        Color.Danger => "text-danger",
+        Color.Default => "text-foreground/60",
         _ => "text-primary",
     };
 }

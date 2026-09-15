@@ -23,7 +23,7 @@
 </span>
 
 @code {
-    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Danger;
+    [Parameter] public Color Color { get; set; } = Color.Danger;
 
     /// <summary>Содержимое значка (число, короткий текст). Игнорируется, если Dot = true.</summary>
     [Parameter] public string? Content { get; set; }
@@ -43,6 +43,6 @@
         .AddClass("ring-2 ring-background", Bordered)
         .AddClass("top-0 right-0 size-2.5 -translate-y-1/4 translate-x-1/4", Dot)
         .AddClass("-top-1 -right-1 min-w-[18px] h-[18px] px-1 text-[10px] -translate-y-0 translate-x-0", !Dot)
-        .AddClass(ScarnaColorVariantClasses.Get(Color, ScarnaVariant.Solid))
+        .AddClass(ScarnaColorVariantClasses.Get(Color, Variant.Solid))
         .ToString();
 }

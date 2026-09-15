@@ -1,7 +1,13 @@
 @*
     Обёртка над <img> со скруглением, обводкой и запасным содержимым при ошибке загрузки.
 
-    <ScarnaImage Src="/img/cover.jpg" Alt="Обложка" Radius="ScarnaRadius.Large" />
+    <ScarnaImage Src="/img/cover.jpg" Alt="Обложка" Radius="Radius.Large" />
+
+    Base64: можно передать готовый data:-URI прямо в Src (работает "из коробки" —
+    это обычный HTML-атрибут src), либо, если под рукой только сырой base64 без
+    префикса, задать MimeType — компонент сам соберёт data:-URI:
+
+    <ScarnaImage Src="@rawBase64" MimeType="image/png" />
 *@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
@@ -9,7 +15,7 @@
 <div class="@WrapperClasses" style="@Style" @attributes="UserAttributes">
     @if (!_failed)
     {
-        <img src="@Src" alt="@Alt" loading="@(Lazy ? "lazy" : "eager")"
+        <img src="@ResolvedSrc" alt="@Alt" loading="@(Lazy ? "lazy" : "eager")"
              class="h-full w-full object-cover"
              @onerror="() => _failed = true" />
     }
@@ -34,9 +40,12 @@
 
     [Parameter, EditorRequired] public string Src { get; set; } = string.Empty;
 
+    /// <summary>MIME-тип (например, "image/png"), если Src — сырой base64 без префикса "data:...;base64,". Компонент сам соберёт data:-URI. Если Src уже полноценный URL/data:-URI — не задавайте.</summary>
+    [Parameter] public string? MimeType { get; set; }
+
     [Parameter] public string? Alt { get; set; }
 
-    [Parameter] public ScarnaRadius Radius { get; set; } = ScarnaRadius.Large;
+    [Parameter] public Radius Radius { get; set; } = Radius.Large;
 
     [Parameter] public bool Bordered { get; set; }
 
@@ -45,6 +54,8 @@
 
     /// <summary>Содержимое, показываемое вместо изображения, если оно не загрузилось.</summary>
     [Parameter] public RenderFragment? Fallback { get; set; }
+
+    private string ResolvedSrc => string.IsNullOrEmpty(MimeType) ? Src : $"data:{MimeType};base64,{Src}";
 
     private string WrapperClasses => CssBuilder.Default("scarna-image overflow-hidden bg-content2")
         .AddClass(ScarnaColorVariantClasses.Radius(Radius))

@@ -25,7 +25,7 @@
     [Parameter] public bool ReadOnly { get; set; }
 
     /// <summary>Цвет дорожки во включённом состоянии.</summary>
-    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Primary;
+    [Parameter] public Color Color { get; set; } = Color.Primary;
 
     /// <summary>Normal (по умолчанию) — обычный размер. Dense — уменьшенная дорожка, для плотных списков.</summary>
     [Parameter] public ScarnaDensity Density { get; set; } = ScarnaDensity.Normal;
@@ -64,11 +64,11 @@
 
     private string CheckedTrackClasses => Color switch
     {
-        ScarnaColor.Secondary => "bg-secondary",
-        ScarnaColor.Success => "bg-success",
-        ScarnaColor.Warning => "bg-warning",
-        ScarnaColor.Danger => "bg-danger",
-        ScarnaColor.Default => "bg-default",
+        Color.Secondary => "bg-secondary",
+        Color.Success => "bg-success",
+        Color.Warning => "bg-warning",
+        Color.Danger => "bg-danger",
+        Color.Default => "bg-default",
         _ => "bg-primary",
     };
 }

@@ -3,10 +3,10 @@
 
 <ScarnaThemeProvider>
     <ScarnaPopoverProvider>
-        <div class="min-h-screen bg-background text-foreground">
+        <ScarnaLayout>
             <ScarnaNavBar>
                 <a href="/" class="text-lg font-semibold text-foreground">Scarna<span class="text-primary">UI</span></a>
-                <ScarnaStack Row="true" Spacing="6" Align="ScarnaAlign.Center">
+                <ScarnaStack Row="true" Spacing="6" Align="Align.Center">
                     <NavLink href="/" Match="NavLinkMatch.All" class="text-sm text-foreground/70 hover:text-foreground">Обзор</NavLink>
                     <NavLink href="/getting-started" class="text-sm text-foreground/70 hover:text-foreground">Установка</NavLink>
                     <NavLink href="/components" class="text-sm text-foreground/70 hover:text-foreground">Компоненты</NavLink>
@@ -49,7 +49,7 @@
             <main class="py-8">
                 @Body
             </main>
-        </div>
+        </ScarnaLayout>
     </ScarnaPopoverProvider>
 
     <ScarnaDialogProvider />

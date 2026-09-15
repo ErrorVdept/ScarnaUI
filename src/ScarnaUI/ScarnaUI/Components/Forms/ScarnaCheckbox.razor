@@ -30,7 +30,7 @@
     [Parameter] public bool ReadOnly { get; set; }
 
     /// <summary>Цвет заливки в отмеченном состоянии.</summary>
-    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Primary;
+    [Parameter] public Color Color { get; set; } = Color.Primary;
 
     /// <summary>Normal (по умолчанию) — обычный размер. Dense — уменьшенный квадрат, для плотных списков.</summary>
     [Parameter] public ScarnaDensity Density { get; set; } = ScarnaDensity.Normal;
@@ -62,11 +62,11 @@
 
     private string CheckedColorClasses => Color switch
     {
-        ScarnaColor.Secondary => "bg-secondary border-secondary text-secondary-foreground",
-        ScarnaColor.Success => "bg-success border-success text-success-foreground",
-        ScarnaColor.Warning => "bg-warning border-warning text-warning-foreground",
-        ScarnaColor.Danger => "bg-danger border-danger text-danger-foreground",
-        ScarnaColor.Default => "bg-default border-default text-default-foreground",
+        Color.Secondary => "bg-secondary border-secondary text-secondary-foreground",
+        Color.Success => "bg-success border-success text-success-foreground",
+        Color.Warning => "bg-warning border-warning text-warning-foreground",
+        Color.Danger => "bg-danger border-danger text-danger-foreground",
+        Color.Default => "bg-default border-default text-default-foreground",
         _ => "bg-primary border-primary text-primary-foreground",
     };
 }

@@ -11,7 +11,7 @@
 ## Пример использования
 
 ```razor
-<ScarnaCheckbox @bind-Value="model.AcceptTerms" Color="ScarnaColor.Success">
+<ScarnaCheckbox @bind-Value="model.AcceptTerms" Color="Color.Success">
     Согласен с условиями использования
 </ScarnaCheckbox>
 ```
@@ -23,7 +23,7 @@
 | `Value` / `ValueChanged` / `ValueExpression` | `bool` / ... | — | Механика `@bind-Value` |
 | `Disabled` | `bool` | `false` | — |
 | `ReadOnly` | `bool` | `false` | Запрещает переключение (клик отменяется через `@onclick:preventDefault`), но, в отличие от `Disabled`, чекбокс визуально не тускнеет |
-| `Color` | `ScarnaColor` | `Primary` | Цвет заливки в отмеченном состоянии |
+| `Color` | `Color` | `Primary` | Цвет заливки в отмеченном состоянии |
 | `Density` | `ScarnaDensity` | `Normal` | `Dense` — уменьшенный квадрат для плотных списков |
 | `ChildContent` | `RenderFragment?` | — | Подпись рядом с чекбоксом |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

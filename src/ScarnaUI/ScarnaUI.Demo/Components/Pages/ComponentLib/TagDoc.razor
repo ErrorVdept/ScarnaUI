@@ -5,18 +5,18 @@
 
     <DocSection Title="Цвета" Code="@ColorsCode">
         <ScarnaTag>новое</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Primary">primary</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Secondary">secondary</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Success">активен</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Warning">warning</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Danger">danger</ScarnaTag>
+        <ScarnaTag Color="Color.Primary">primary</ScarnaTag>
+        <ScarnaTag Color="Color.Secondary">secondary</ScarnaTag>
+        <ScarnaTag Color="Color.Success">активен</ScarnaTag>
+        <ScarnaTag Color="Color.Warning">warning</ScarnaTag>
+        <ScarnaTag Color="Color.Danger">danger</ScarnaTag>
     </DocSection>
 
     <DocSection Title="Варианты" Code="@VariantsCode">
-        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid">Solid</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Flat">Flat</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Bordered">Bordered</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Faded">Faded</ScarnaTag>
+        <ScarnaTag Color="Color.Primary" Variant="Variant.Solid">Solid</ScarnaTag>
+        <ScarnaTag Color="Color.Primary" Variant="Variant.Flat">Flat</ScarnaTag>
+        <ScarnaTag Color="Color.Primary" Variant="Variant.Bordered">Bordered</ScarnaTag>
+        <ScarnaTag Color="Color.Primary" Variant="Variant.Faded">Faded</ScarnaTag>
     </DocSection>
 
     <DocApiTable Rows="@_rows" />
@@ -27,25 +27,25 @@
     private const string ColorsCode =
         """
         <ScarnaTag>новое</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Primary">primary</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Secondary">secondary</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Success">активен</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Warning">warning</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Danger">danger</ScarnaTag>
+        <ScarnaTag Color="Color.Primary">primary</ScarnaTag>
+        <ScarnaTag Color="Color.Secondary">secondary</ScarnaTag>
+        <ScarnaTag Color="Color.Success">активен</ScarnaTag>
+        <ScarnaTag Color="Color.Warning">warning</ScarnaTag>
+        <ScarnaTag Color="Color.Danger">danger</ScarnaTag>
         """;
 
     private const string VariantsCode =
         """
-        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid">Solid</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Flat">Flat</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Bordered">Bordered</ScarnaTag>
-        <ScarnaTag Color="ScarnaColor.Primary" Variant="ScarnaVariant.Faded">Faded</ScarnaTag>
+        <ScarnaTag Color="Color.Primary" Variant="Variant.Solid">Solid</ScarnaTag>
+        <ScarnaTag Color="Color.Primary" Variant="Variant.Flat">Flat</ScarnaTag>
+        <ScarnaTag Color="Color.Primary" Variant="Variant.Bordered">Bordered</ScarnaTag>
+        <ScarnaTag Color="Color.Primary" Variant="Variant.Faded">Faded</ScarnaTag>
         """;
 
     private readonly List<DocApiRow> _rows = new()
     {
-        new("Color", "ScarnaColor", "Default", "Цвет заливки"),
-        new("Variant", "ScarnaVariant", "Flat", "Вариант заливки"),
+        new("Color", "Color", "Default", "Цвет заливки"),
+        new("Variant", "Variant", "Flat", "Вариант заливки"),
         new("ChildContent", "RenderFragment?", "—", "Текст метки"),
     };
 }

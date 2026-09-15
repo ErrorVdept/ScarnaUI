@@ -5,10 +5,10 @@
          Files="@(new[] { "Components/Overlays/ScarnaSnackbarProvider.razor", "Services/IToastManager.cs", "Services/ScarnaToast.cs" })">
 
     <DocSection Title="Пример" Description="ScarnaSnackbarProvider уже есть в MainLayout. Каждый тост сам удаляется из очереди через Duration (по умолчанию 4 секунды)." Code="@ExampleCode">
-        <ScarnaButton Color="ScarnaColor.Default" OnClick='() => ToastManager.Add("Информационное сообщение", ScarnaToastSeverity.Info)'>Info</ScarnaButton>
-        <ScarnaButton Color="ScarnaColor.Success" OnClick='() => ToastManager.Add("Изменения сохранены", ScarnaToastSeverity.Success)'>Success</ScarnaButton>
-        <ScarnaButton Color="ScarnaColor.Warning" OnClick='() => ToastManager.Add("Проверьте введённые данные", ScarnaToastSeverity.Warning)'>Warning</ScarnaButton>
-        <ScarnaButton Color="ScarnaColor.Danger" OnClick='() => ToastManager.Add("Не удалось сохранить", ScarnaToastSeverity.Error)'>Error</ScarnaButton>
+        <ScarnaButton Color="Color.Default" OnClick='() => ToastManager.Add("Информационное сообщение", ScarnaToastSeverity.Info)'>Info</ScarnaButton>
+        <ScarnaButton Color="Color.Success" OnClick='() => ToastManager.Add("Изменения сохранены", ScarnaToastSeverity.Success)'>Success</ScarnaButton>
+        <ScarnaButton Color="Color.Warning" OnClick='() => ToastManager.Add("Проверьте введённые данные", ScarnaToastSeverity.Warning)'>Warning</ScarnaButton>
+        <ScarnaButton Color="Color.Danger" OnClick='() => ToastManager.Add("Не удалось сохранить", ScarnaToastSeverity.Error)'>Error</ScarnaButton>
     </DocSection>
 
     <DocApiTable Title="Члены IToastManager" Rows="@_rows" />

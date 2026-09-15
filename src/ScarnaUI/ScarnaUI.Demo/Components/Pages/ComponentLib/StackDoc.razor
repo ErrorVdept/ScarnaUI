@@ -21,11 +21,11 @@
     </DocSection>
 
     <DocSection Title="Justify / Align" Description="Распределение и выравнивание по поперечной оси." Code="@JustifyCode" Row="false">
-        <ScarnaStack Row="true" Justify="ScarnaJustify.SpaceBetween" Class="border border-divider rounded-scarna-md p-3">
+        <ScarnaStack Row="true" Justify="Justify.SpaceBetween" Class="border border-divider rounded-scarna-md p-3">
             <span>Итого: 1 200 ₽</span>
-            <ScarnaButton Color="ScarnaColor.Primary">Оформить</ScarnaButton>
+            <ScarnaButton Color="Color.Primary">Оформить</ScarnaButton>
         </ScarnaStack>
-        <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center" Class="border border-divider rounded-scarna-md p-3">
+        <ScarnaStack Row="true" Spacing="3" Align="Align.Center" Class="border border-divider rounded-scarna-md p-3">
             <ScarnaAvatar Initials="ИИ" />
             <span class="text-sm text-foreground/70">Выровнено по центру</span>
         </ScarnaStack>
@@ -57,12 +57,12 @@
 
     private const string JustifyCode =
         """
-        <ScarnaStack Row="true" Justify="ScarnaJustify.SpaceBetween">
+        <ScarnaStack Row="true" Justify="Justify.SpaceBetween">
             <span>Итого: 1 200 ₽</span>
-            <ScarnaButton Color="ScarnaColor.Primary">Оформить</ScarnaButton>
+            <ScarnaButton Color="Color.Primary">Оформить</ScarnaButton>
         </ScarnaStack>
 
-        <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
+        <ScarnaStack Row="true" Spacing="3" Align="Align.Center">
             <ScarnaAvatar Initials="ИИ" />
             <span>Выровнено по центру</span>
         </ScarnaStack>
@@ -73,7 +73,7 @@
         new("Row", "bool", "false", "true — flex-row, false — flex-column"),
         new("Spacing", "int", "2", "Отступ между элементами в шагах по 0.25rem (2 = 0.5rem)"),
         new("Wrap", "bool", "false", "Перенос элементов при нехватке места"),
-        new("Justify", "ScarnaJustify", "Start", "Start / End / Center / SpaceBetween / SpaceAround / SpaceEvenly"),
-        new("Align", "ScarnaAlign", "Stretch", "Start / End / Center / Stretch / Baseline"),
+        new("Justify", "Justify", "Start", "Start / End / Center / SpaceBetween / SpaceAround / SpaceEvenly"),
+        new("Align", "Align", "Stretch", "Start / End / Center / Stretch / Baseline"),
     };
 }

@@ -31,8 +31,8 @@
 | `Format` | `ScarnaNumberFormat` | `Decimal` | `Integer` — округляет любой ввод/шаг до целого (аналог выбора типа переменной у MudNumericField); `Decimal` — дробные значения разрешены |
 | `Disabled` | `bool` | `false` | — |
 | `ReadOnly` | `bool` | `false` | Поле и кнопки +/− не реагируют на ввод, но, в отличие от `Disabled`, не тускнеют |
-| `Variant` | `ScarnaVariant` | `Bordered` | `Bordered`/`Flat` |
+| `Variant` | `Variant` | `Bordered` | `Bordered`/`Flat` |
 | `Bordered` | `bool` | `true` | Показывать ли контур поля |
-| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
+| `Size` | `Size` | `Medium` | `Small`/`Medium`/`Large` |
 | `Density` | `ScarnaDensity` | `Normal` | `Dense` — компактное поле |
-| `Radius` | `ScarnaRadius` | `Medium` | Радиус поля |
+| `Radius` | `Radius` | `Medium` | Радиус поля |

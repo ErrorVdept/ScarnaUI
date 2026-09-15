@@ -68,7 +68,7 @@
     /// <summary>Формат числа для ShowValue (стандартный .NET numeric format string).</summary>
     [Parameter] public string Format { get; set; } = "0.##";
 
-    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Primary;
+    [Parameter] public Color Color { get; set; } = Color.Primary;
 
     private const string ModulePath = "./_content/ScarnaUI/js/scarna/slider.js";
 
@@ -116,11 +116,11 @@
 
     private string ColorVar => Color switch
     {
-        ScarnaColor.Secondary => "--scarna-secondary",
-        ScarnaColor.Success => "--scarna-success",
-        ScarnaColor.Warning => "--scarna-warning",
-        ScarnaColor.Danger => "--scarna-danger",
-        ScarnaColor.Default => "--scarna-default",
+        Color.Secondary => "--scarna-secondary",
+        Color.Success => "--scarna-success",
+        Color.Warning => "--scarna-warning",
+        Color.Danger => "--scarna-danger",
+        Color.Default => "--scarna-default",
         _ => "--scarna-primary",
     };
 
@@ -133,8 +133,17 @@
         {
             var range = Max - Min;
             var percent = range <= 0 ? 0 : Math.Clamp((Value - Min) / range * 100, 0, 100);
-            var p = percent.ToString(System.Globalization.CultureInfo.InvariantCulture);
-            return $"background: linear-gradient(to right, hsl(var({ColorVar})) 0%, hsl(var({ColorVar})) {p}%, hsl(var(--scarna-default)) {p}%, hsl(var(--scarna-default)) 100%); " +
+
+            // Ползунок (::-webkit-slider-thumb/::-moz-range-thumb, ширина 1.75rem — см.
+            // input.css) браузер вставляет с отступом в половину своей ширины от каждого
+            // края трека: при value=Min центр ползунка не в 0% дорожки, а в 0.875rem от
+            // левого края, при value=Max — в (100% - 0.875rem). Линейный градиент "0%..100%
+            // от ширины поля" этого не учитывает, поэтому у левого края заливка не дотягивает
+            // до ползунка, а у правого — перегоняет его. Граница заливки считается через
+            // calc() с тем же инсетом в 0.875rem, что и у самого ползунка.
+            var fraction = (percent / 100).ToString("0.####", System.Globalization.CultureInfo.InvariantCulture);
+            var stop = $"calc((100% - 1.75rem) * {fraction} + 0.875rem)";
+            return $"background: linear-gradient(to right, hsl(var({ColorVar})) 0%, hsl(var({ColorVar})) {stop}, hsl(var(--scarna-default)) {stop}, hsl(var(--scarna-default)) 100%); " +
                    $"--scarna-slider-thumb-color: var({ColorVar});";
         }
     }

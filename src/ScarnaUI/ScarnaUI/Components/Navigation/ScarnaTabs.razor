@@ -47,7 +47,7 @@
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
     /// <summary>Выравнивание заголовков вдоль дорожки — как AlignItems в MudBlazor, но здесь это распределение по главной оси (justify-content), т.к. поперечная и так центрирована. Заметно, только если FullWidth="false" и заголовки не заполняют всю ширину.</summary>
-    [Parameter] public ScarnaJustify Justify { get; set; } = ScarnaJustify.Start;
+    [Parameter] public Justify Justify { get; set; } = Justify.Start;
 
     /// <summary>Растянуть заголовки на всю ширину дорожки поровну (вместо ширины по содержимому).</summary>
     [Parameter] public bool FullWidth { get; set; }
@@ -113,11 +113,11 @@
 
     private string JustifyClass => Justify switch
     {
-        ScarnaJustify.End => "justify-end",
-        ScarnaJustify.Center => "justify-center",
-        ScarnaJustify.SpaceBetween => "justify-between",
-        ScarnaJustify.SpaceAround => "justify-around",
-        ScarnaJustify.SpaceEvenly => "justify-evenly",
+        Justify.End => "justify-end",
+        Justify.Center => "justify-center",
+        Justify.SpaceBetween => "justify-between",
+        Justify.SpaceAround => "justify-around",
+        Justify.SpaceEvenly => "justify-evenly",
         _ => "justify-start",
     };
 

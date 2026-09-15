@@ -26,14 +26,14 @@
 
         <DocSection Title="1. Temporary drawer + top appbar" Description="Обычная связка — Drawer выезжает поверх содержимого по клику на гамбургер, с подложкой (Variant.Temporary, по умолчанию)." Row="false" Code="@TemporaryCode">
             <div class="overflow-hidden rounded-scarna-lg border border-divider bg-content1">
-                <ScarnaNavBar Sticky="false" Color="ScarnaColor.Primary">
-                    <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
-                        <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _temporaryOpen = !_temporaryOpen">
+                <ScarnaNavBar Sticky="false" Color="Color.Primary">
+                    <ScarnaStack Row="true" Spacing="3" Align="Align.Center">
+                        <ScarnaButton Variant="Variant.Light" Size="Size.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _temporaryOpen = !_temporaryOpen">
                             @HamburgerIcon
                         </ScarnaButton>
                         <span class="font-semibold">My application</span>
                     </ScarnaStack>
-                    <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!">
+                    <ScarnaButton Variant="Variant.Light" Size="Size.Small" Class="text-primary-foreground! hover:bg-white/15!">
                         @KebabIcon
                     </ScarnaButton>
                 </ScarnaNavBar>
@@ -57,14 +57,14 @@
                 </ScarnaDrawer>
 
                 <div class="flex flex-1 flex-col overflow-hidden">
-                    <ScarnaNavBar Sticky="false" Color="ScarnaColor.Primary" Class="rounded-none">
-                        <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
-                            <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _persistentShiftOpen = !_persistentShiftOpen">
+                    <ScarnaNavBar Sticky="false" Color="Color.Primary" Class="rounded-none">
+                        <ScarnaStack Row="true" Spacing="3" Align="Align.Center">
+                            <ScarnaButton Variant="Variant.Light" Size="Size.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _persistentShiftOpen = !_persistentShiftOpen">
                                 @HamburgerIcon
                             </ScarnaButton>
                             <span class="font-semibold">My application</span>
                         </ScarnaStack>
-                        <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!">
+                        <ScarnaButton Variant="Variant.Light" Size="Size.Small" Class="text-primary-foreground! hover:bg-white/15!">
                             @KebabIcon
                         </ScarnaButton>
                     </ScarnaNavBar>
@@ -78,14 +78,14 @@
 
         <DocSection Title="3. Top appbar with clipped drawer" Description="AppBar на всю ширину сверху, drawer — колонка НИЖЕ него (не наезжает поверх). Variant.Persistent — то же самое, что и раньше, но теперь с плавной анимацией ширины вместо мгновенного появления/исчезновения." Row="false" Code="@ClippedCode">
             <div class="overflow-hidden rounded-scarna-lg border border-divider bg-content1">
-                <ScarnaNavBar Sticky="false" Color="ScarnaColor.Primary">
-                    <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
-                        <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _clippedOpen = !_clippedOpen">
+                <ScarnaNavBar Sticky="false" Color="Color.Primary">
+                    <ScarnaStack Row="true" Spacing="3" Align="Align.Center">
+                        <ScarnaButton Variant="Variant.Light" Size="Size.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _clippedOpen = !_clippedOpen">
                             @HamburgerIcon
                         </ScarnaButton>
                         <span class="font-semibold">My application</span>
                     </ScarnaStack>
-                    <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!">
+                    <ScarnaButton Variant="Variant.Light" Size="Size.Small" Class="text-primary-foreground! hover:bg-white/15!">
                         @KebabIcon
                     </ScarnaButton>
                 </ScarnaNavBar>
@@ -117,14 +117,14 @@
                 </ScarnaDrawer>
 
                 <div class="flex flex-1 flex-col overflow-hidden">
-                    <ScarnaNavBar Sticky="false" Color="ScarnaColor.Primary" Class="rounded-none">
-                        <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
-                            <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _miniOpen = !_miniOpen">
+                    <ScarnaNavBar Sticky="false" Color="Color.Primary" Class="rounded-none">
+                        <ScarnaStack Row="true" Spacing="3" Align="Align.Center">
+                            <ScarnaButton Variant="Variant.Light" Size="Size.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _miniOpen = !_miniOpen">
                                 @HamburgerIcon
                             </ScarnaButton>
                             <span class="font-semibold">My application</span>
                         </ScarnaStack>
-                        <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!">
+                        <ScarnaButton Variant="Variant.Light" Size="Size.Small" Class="text-primary-foreground! hover:bg-white/15!">
                             @KebabIcon
                         </ScarnaButton>
                     </ScarnaNavBar>
@@ -138,14 +138,14 @@
 
         <DocSection Title="5. Mini drawer под appbar" Description="Та же связка, что и в примере 3 (AppBar на всю ширину сверху, drawer — колонка ниже него, не наезжает поверх), но с Variant.Mini вместо Persistent: панель не исчезает до нуля, а остаётся узкой полосой-иконками." Row="false" Code="@MiniUnderAppbarCode">
             <div class="overflow-hidden rounded-scarna-lg border border-divider bg-content1">
-                <ScarnaNavBar Sticky="false" Color="ScarnaColor.Primary">
-                    <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center">
-                        <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _miniUnderAppbarOpen = !_miniUnderAppbarOpen">
+                <ScarnaNavBar Sticky="false" Color="Color.Primary">
+                    <ScarnaStack Row="true" Spacing="3" Align="Align.Center">
+                        <ScarnaButton Variant="Variant.Light" Size="Size.Small" Class="text-primary-foreground! hover:bg-white/15!" OnClick="() => _miniUnderAppbarOpen = !_miniUnderAppbarOpen">
                             @HamburgerIcon
                         </ScarnaButton>
                         <span class="font-semibold">My application</span>
                     </ScarnaStack>
-                    <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!">
+                    <ScarnaButton Variant="Variant.Light" Size="Size.Small" Class="text-primary-foreground! hover:bg-white/15!">
                         @KebabIcon
                     </ScarnaButton>
                 </ScarnaNavBar>
@@ -172,9 +172,9 @@
 
         <DocSection Title="6. Appbar Only" Description="Только верхняя панель — без drawer вообще, самый простой каркас." Row="false" Code="@AppbarOnlyCode">
             <div class="overflow-hidden rounded-scarna-lg border border-divider bg-content1">
-                <ScarnaNavBar Sticky="false" Color="ScarnaColor.Primary">
+                <ScarnaNavBar Sticky="false" Color="Color.Primary">
                     <span class="font-semibold">My application</span>
-                    <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="text-primary-foreground! hover:bg-white/15!">
+                    <ScarnaButton Variant="Variant.Light" Size="Size.Small" Class="text-primary-foreground! hover:bg-white/15!">
                         @KebabIcon
                     </ScarnaButton>
                 </ScarnaNavBar>
@@ -234,7 +234,7 @@
     private const string TemporaryCode =
         """
         <div class="relative flex min-h-96 overflow-hidden">
-            <ScarnaNavBar Color="ScarnaColor.Primary">
+            <ScarnaNavBar Color="Color.Primary">
                 <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
                 <span>My application</span>
             </ScarnaNavBar>
@@ -256,7 +256,7 @@
             </ScarnaDrawer>
 
             <div class="flex flex-1 flex-col overflow-hidden">
-                <ScarnaNavBar Color="ScarnaColor.Primary">
+                <ScarnaNavBar Color="Color.Primary">
                     <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
                     <span>My application</span>
                 </ScarnaNavBar>
@@ -268,7 +268,7 @@
 
     private const string ClippedCode =
         """
-        <ScarnaNavBar Color="ScarnaColor.Primary">
+        <ScarnaNavBar Color="Color.Primary">
             <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
             <span>My application</span>
         </ScarnaNavBar>
@@ -304,7 +304,7 @@
             </ScarnaDrawer>
 
             <div class="flex flex-1 flex-col overflow-hidden">
-                <ScarnaNavBar Color="ScarnaColor.Primary">
+                <ScarnaNavBar Color="Color.Primary">
                     <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
                     <span>My application</span>
                 </ScarnaNavBar>
@@ -316,7 +316,7 @@
 
     private const string MiniUnderAppbarCode =
         """
-        <ScarnaNavBar Color="ScarnaColor.Primary">
+        <ScarnaNavBar Color="Color.Primary">
             <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
             <span>My application</span>
         </ScarnaNavBar>
@@ -345,7 +345,7 @@
 
     private const string AppbarOnlyCode =
         """
-        <ScarnaNavBar Color="ScarnaColor.Primary">
+        <ScarnaNavBar Color="Color.Primary">
             <span>My application</span>
             <ScarnaButton><!-- kebab --></ScarnaButton>
         </ScarnaNavBar>

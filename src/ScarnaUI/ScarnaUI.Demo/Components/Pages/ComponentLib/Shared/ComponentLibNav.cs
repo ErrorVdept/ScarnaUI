@@ -61,6 +61,7 @@ public static class ComponentLibNav
             new ComponentLibNavItem("ScarnaNavBar", "/componentlib/navbar", "Верхняя панель"),
             new ComponentLibNavItem("ScarnaDrawer", "/componentlib/drawer", "Выезжающая панель"),
             new ComponentLibNavItem("ScarnaBottomMenu", "/componentlib/bottom-menu", "Нижнее меню"),
+            new ComponentLibNavItem("ScarnaNavMenu", "/componentlib/nav-menu", "Вертикальная навигация"),
         }),
         new("Navigation", new[]
         {

@@ -13,7 +13,7 @@
 ## Пример использования
 
 ```razor
-<ScarnaNavBar Density="ScarnaDensity.Dense" Color="ScarnaColor.Primary">
+<ScarnaNavBar Density="ScarnaDensity.Dense" Color="Color.Primary">
     <a href="/" class="text-lg font-semibold">Logo</a>
     <ScarnaStack Row="true" Spacing="6">
         <NavLink href="/">Главная</NavLink>
@@ -30,6 +30,6 @@
 | `Bordered` | `bool` | `true` | Граница снизу |
 | `Fluid` | `bool` | `true` | Растянуть содержимое на всю ширину (без `ScarnaContainer.MaxWidth`) |
 | `Density` | `ScarnaDensity` | `Normal` | `Normal` — 56px высотой, `Dense` — 48px |
-| `Color` | `ScarnaColor` | `Default` | `Default` — нейтральная подложка с блюром; любой другой — сплошная заливка цветом |
-| `Justify` | `ScarnaJustify` | `SpaceBetween` | Распределение содержимого по горизонтали — как AlignItems в MudBlazor |
+| `Color` | `Color` | `Default` | `Default` — нейтральная подложка с блюром; любой другой — сплошная заливка цветом |
+| `Justify` | `Justify` | `SpaceBetween` | Распределение содержимого по горизонтали — как AlignItems в MudBlazor |
 | `ChildContent` | `RenderFragment?` | — | Содержимое панели |

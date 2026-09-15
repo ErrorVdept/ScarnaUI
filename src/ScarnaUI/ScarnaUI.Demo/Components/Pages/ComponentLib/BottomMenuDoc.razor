@@ -18,6 +18,20 @@
         <span class="text-sm text-foreground/60">Выбрана вкладка: @_tab</span>
     </DocSection>
 
+    <DocSection Title="Floating" Description="Плавающая панель с отступом снизу и с боков вместо полосы во всю ширину — обычно вместе с Radius.Full и Shadow." Code="@FloatingCode" Row="false">
+        <ScarnaBottomMenu Floating="true" Radius="Radius.Full" Shadow="true" @bind-SelectedIndex="_floatingTab" Class="relative! inset-auto! mx-auto! w-full max-w-xs">
+            <ScarnaBottomMenuItem Text="Главная">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+            </ScarnaBottomMenuItem>
+            <ScarnaBottomMenuItem Text="Поиск">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+            </ScarnaBottomMenuItem>
+            <ScarnaBottomMenuItem Text="Профиль">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+            </ScarnaBottomMenuItem>
+        </ScarnaBottomMenu>
+    </DocSection>
+
     <DocApiTable Title="Параметры ScarnaBottomMenu" Rows="@_menuRows" />
     <DocApiTable Title="Параметры ScarnaBottomMenuItem" Rows="@_itemRows" />
 
@@ -25,6 +39,7 @@
 
 @code {
     private int _tab;
+    private int _floatingTab;
 
     private const string ExampleCode =
         """
@@ -39,9 +54,23 @@
         }
         """;
 
+    private const string FloatingCode =
+        """
+        <ScarnaBottomMenu Floating="true" Radius="Radius.Full" Shadow="true" @bind-SelectedIndex="_tab">
+            <ScarnaBottomMenuItem Text="Главная"><HomeIcon /></ScarnaBottomMenuItem>
+            <ScarnaBottomMenuItem Text="Поиск"><SearchIcon /></ScarnaBottomMenuItem>
+            <ScarnaBottomMenuItem Text="Профиль"><ProfileIcon /></ScarnaBottomMenuItem>
+        </ScarnaBottomMenu>
+        """;
+
     private readonly List<DocApiRow> _menuRows = new()
     {
         new("SelectedIndex", "int", "0", "Механика @bind-SelectedIndex"),
+        new("Floating", "bool", "false", "Плавающая панель с отступом снизу и с боков вместо полосы во всю ширину"),
+        new("Bordered", "bool", "true", "Рамка сверху (обычный вид) или по периметру (Floating)"),
+        new("Shadow", "bool", "false", "Тень под панелью"),
+        new("Radius", "Radius", "None", "Радиус скругления углов (для Floating обычно Full)"),
+        new("GlassEffect", "bool", "false", "Полупрозрачный фон с блюром вместо сплошного — как у ScarnaNavBar"),
         new("ChildContent", "RenderFragment?", "—", "Набор ScarnaBottomMenuItem"),
     };
 

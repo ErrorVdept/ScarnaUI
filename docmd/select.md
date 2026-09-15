@@ -44,11 +44,11 @@
 | `HelperText` | `string?` | — | Подсказка под полем |
 | `ErrorText` / `Error` | — | — | См. [getting-started.md](getting-started.md) |
 | `ReadOnly` | `bool` | `false` | Запрещает открытие списка (клик по полю игнорируется), но, в отличие от `Disabled`, поле визуально не тускнеет |
-| `Variant` | `ScarnaVariant` | `Bordered` | `Bordered`/`Flat` |
+| `Variant` | `Variant` | `Bordered` | `Bordered`/`Flat` |
 | `Bordered` | `bool` | `true` | Показывать ли контур поля, независимо от Variant |
-| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
+| `Size` | `Size` | `Medium` | `Small`/`Medium`/`Large` |
 | `Density` | `ScarnaDensity` | `Normal` | `Dense` — компактное поле |
-| `Radius` | `ScarnaRadius` | `Medium` | Радиус поля |
+| `Radius` | `Radius` | `Medium` | Радиус поля |
 | `Position` | `ScarnaPosition` | `BottomStart` | Позиция выпадающего списка (см. [popover.md](popover.md#scarnaposition)) |
 | `IsParentFullSize` | `bool` | `true` | Растянуть список на ширину поля (не уже `min-w-[220px]`) |
 | `ChildContent` | `RenderFragment?` | — | Набор `ScarnaSelectItem` |

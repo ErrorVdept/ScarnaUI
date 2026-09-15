@@ -6,7 +6,7 @@
     <DocSection Title="Базовая поверхность" Code="@BasicCode">
         <ScarnaPaper>Обычная поверхность</ScarnaPaper>
         <ScarnaPaper Bordered="true" Shadow="false">Bordered, без тени</ScarnaPaper>
-        <ScarnaPaper Radius="ScarnaRadius.None">Radius.None</ScarnaPaper>
+        <ScarnaPaper Radius="Radius.None">Radius.None</ScarnaPaper>
     </DocSection>
 
     <DocSection Title="Hovered" Description="Смена фона (bg-content2) при наведении — без смещения/тени, чтобы не «прыгало» в плотных сетках плиток." Code="@HoveredCode">
@@ -18,6 +18,12 @@
             Кликни меня
         </ScarnaPaper>
         <span class="text-sm text-foreground/60">Кликов: @_clicks</span>
+    </DocSection>
+
+    <DocSection Title="GlassEffect" Description="Полупрозрачный фон с блюром (backdrop-blur) вместо сплошного bg-content1 — тот же приём, что у ScarnaNavBar." Code="@GlassCode">
+        <div class="flex items-center justify-center rounded-scarna-lg bg-gradient-to-br from-primary to-secondary p-8">
+            <ScarnaPaper GlassEffect="true" Class="text-white">GlassEffect="true"</ScarnaPaper>
+        </div>
     </DocSection>
 
     <DocApiTable Rows="@_rows" />
@@ -33,7 +39,7 @@
         """
         <ScarnaPaper>Обычная поверхность</ScarnaPaper>
         <ScarnaPaper Bordered="true" Shadow="false">Bordered, без тени</ScarnaPaper>
-        <ScarnaPaper Radius="ScarnaRadius.None">Radius.None</ScarnaPaper>
+        <ScarnaPaper Radius="Radius.None">Radius.None</ScarnaPaper>
         """;
 
     private const string HoveredCode =
@@ -53,12 +59,20 @@
         }
         """;
 
+    private const string GlassCode =
+        """
+        <div class="bg-gradient-to-br from-primary to-secondary p-8">
+            <ScarnaPaper GlassEffect="true">GlassEffect="true"</ScarnaPaper>
+        </div>
+        """;
+
     private readonly List<DocApiRow> _rows = new()
     {
         new("Bordered", "bool", "false", "Тонкая рамка в дополнение к тени"),
         new("Shadow", "bool", "true", "Тень под поверхностью"),
         new("Hovered", "bool", "false", "Смена фона (bg-content2) при наведении"),
-        new("Radius", "ScarnaRadius", "Medium", "Радиус скругления"),
+        new("Radius", "Radius", "Medium", "Радиус скругления"),
+        new("GlassEffect", "bool", "false", "Полупрозрачный фон с блюром вместо сплошного bg-content1 — как у ScarnaNavBar"),
         new("OnClick", "EventCallback<MouseEventArgs>", "—", "Если задан — поверхность кликабельна (role=\"button\", Enter/Space). Не задан — обычный статичный контейнер"),
         new("ChildContent", "RenderFragment?", "—", "Содержимое"),
     };

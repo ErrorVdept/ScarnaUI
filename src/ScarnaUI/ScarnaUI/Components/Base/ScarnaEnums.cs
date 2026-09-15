@@ -6,7 +6,7 @@ namespace ScarnaUI.Components.Base;
 /// которые определяются в активной теме (<see cref="ScarnaUI.Theme.ScarnaTheme"/>) и могут
 /// быть изменены в рантайме — см. ScarnaThemeProvider.
 /// </summary>
-public enum ScarnaColor
+public enum Color
 {
     /// <summary>Нейтральный серый цвет — используется по умолчанию, если ничего не задано.</summary>
     Default,
@@ -18,7 +18,7 @@ public enum ScarnaColor
 }
 
 /// <summary>Размер компонента. Влияет на паддинги, шрифт и высоту контрола.</summary>
-public enum ScarnaSize
+public enum Size
 {
     Small,
     Medium,
@@ -29,7 +29,7 @@ public enum ScarnaSize
 /// Радиус скругления углов компонента. По умолчанию — <see cref="Medium"/>,
 /// значение берётся из активной темы (--scarna-radius-*) и может отличаться от глобального.
 /// </summary>
-public enum ScarnaRadius
+public enum Radius
 {
     None,
     Small,
@@ -52,7 +52,7 @@ public enum ScarnaDensity
 /// Визуальный вариант заливки — паттерн из HeroUI: один и тот же компонент (кнопка, чип,
 /// поле ввода) можно отрисовать по-разному, не меняя его семантику.
 /// </summary>
-public enum ScarnaVariant
+public enum Variant
 {
     /// <summary>Заливка сплошным цветом, текст — контрастным (foreground).</summary>
     Solid,

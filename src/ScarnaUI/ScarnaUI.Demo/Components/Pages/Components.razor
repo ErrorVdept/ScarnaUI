@@ -7,7 +7,7 @@
 <ScarnaDrawer @bind-Open="_tocOpen" Anchor="ScarnaDrawerAnchor.Left" Width="260px">
     <div class="flex items-center justify-between border-b border-divider px-4 py-3">
         <span class="font-semibold">Оглавление</span>
-        <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _tocOpen = false">✕</ScarnaButton>
+        <ScarnaButton Size="Size.Small" Variant="Variant.Light" OnClick="() => _tocOpen = false">✕</ScarnaButton>
     </div>
     <nav class="scrollable-v p-3">
         <ScarnaStack Spacing="1">
@@ -24,7 +24,7 @@
 </ScarnaDrawer>
 
 <ScarnaContainer>
-    <ScarnaButton Variant="ScarnaVariant.Light" Size="ScarnaSize.Small" Class="mb-6" OnClick="() => _tocOpen = true">
+    <ScarnaButton Variant="Variant.Light" Size="Size.Small" Class="mb-6" OnClick="() => _tocOpen = true">
         <StartIcon>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
         </StartIcon>
@@ -38,25 +38,25 @@
             <ScarnaCard>
                 <ScarnaStack Spacing="4">
                     <ScarnaStack Row="true" Spacing="3" Wrap="true">
-                        <ScarnaButton Color="ScarnaColor.Default">Default</ScarnaButton>
-                        <ScarnaButton Color="ScarnaColor.Primary">Primary</ScarnaButton>
-                        <ScarnaButton Color="ScarnaColor.Secondary">Secondary</ScarnaButton>
-                        <ScarnaButton Color="ScarnaColor.Success">Success</ScarnaButton>
-                        <ScarnaButton Color="ScarnaColor.Warning">Warning</ScarnaButton>
-                        <ScarnaButton Color="ScarnaColor.Danger">Danger</ScarnaButton>
+                        <ScarnaButton Color="Color.Default">Default</ScarnaButton>
+                        <ScarnaButton Color="Color.Primary">Primary</ScarnaButton>
+                        <ScarnaButton Color="Color.Secondary">Secondary</ScarnaButton>
+                        <ScarnaButton Color="Color.Success">Success</ScarnaButton>
+                        <ScarnaButton Color="Color.Warning">Warning</ScarnaButton>
+                        <ScarnaButton Color="Color.Danger">Danger</ScarnaButton>
                     </ScarnaStack>
                     <ScarnaStack Row="true" Spacing="3" Wrap="true">
-                        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid">Solid</ScarnaButton>
-                        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Flat">Flat</ScarnaButton>
-                        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Bordered">Bordered</ScarnaButton>
-                        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Light">Light</ScarnaButton>
-                        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Faded">Faded</ScarnaButton>
-                        <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Shadow">Shadow</ScarnaButton>
+                        <ScarnaButton Color="Color.Primary" Variant="Variant.Solid">Solid</ScarnaButton>
+                        <ScarnaButton Color="Color.Primary" Variant="Variant.Flat">Flat</ScarnaButton>
+                        <ScarnaButton Color="Color.Primary" Variant="Variant.Bordered">Bordered</ScarnaButton>
+                        <ScarnaButton Color="Color.Primary" Variant="Variant.Light">Light</ScarnaButton>
+                        <ScarnaButton Color="Color.Primary" Variant="Variant.Faded">Faded</ScarnaButton>
+                        <ScarnaButton Color="Color.Primary" Variant="Variant.Shadow">Shadow</ScarnaButton>
                     </ScarnaStack>
-                    <ScarnaStack Row="true" Spacing="3" Align="ScarnaAlign.Center" Wrap="true">
-                        <ScarnaButton Size="ScarnaSize.Small">Small</ScarnaButton>
-                        <ScarnaButton Size="ScarnaSize.Medium">Medium</ScarnaButton>
-                        <ScarnaButton Size="ScarnaSize.Large">Large</ScarnaButton>
+                    <ScarnaStack Row="true" Spacing="3" Align="Align.Center" Wrap="true">
+                        <ScarnaButton Size="Size.Small">Small</ScarnaButton>
+                        <ScarnaButton Size="Size.Medium">Medium</ScarnaButton>
+                        <ScarnaButton Size="Size.Large">Large</ScarnaButton>
                         <ScarnaButton Loading="true">Loading</ScarnaButton>
                         <ScarnaButton Disabled="true">Disabled</ScarnaButton>
                     </ScarnaStack>
@@ -72,7 +72,7 @@
                         <ScarnaInput Label="Имя" Placeholder="Введите имя" @bind-Value="_name" HelperText="Как к вам обращаться" />
                     </ScarnaItem>
                     <ScarnaItem Xs="12" Md="6">
-                        <ScarnaInput Label="Email" Type="email" Variant="ScarnaVariant.Flat" @bind-Value="_email" Error="@(!string.IsNullOrEmpty(_email) && !_email.Contains('@'))" ErrorText="Некорректный email" />
+                        <ScarnaInput Label="Email" Type="email" Variant="Variant.Flat" @bind-Value="_email" Error="@(!string.IsNullOrEmpty(_email) && !_email.Contains('@'))" ErrorText="Некорректный email" />
                     </ScarnaItem>
                     <ScarnaItem Xs="12" Md="6">
                         <ScarnaSelect Label="Страна" @bind-Value="_country" Placeholder="Выберите страну">
@@ -84,7 +84,7 @@
                     <ScarnaItem Xs="12">
                         <ScarnaStack Row="true" Spacing="6">
                             <ScarnaCheckbox @bind-Value="_agree">Согласен с условиями</ScarnaCheckbox>
-                            <ScarnaSwitch @bind-Value="_notify" Color="ScarnaColor.Success">Уведомления</ScarnaSwitch>
+                            <ScarnaSwitch @bind-Value="_notify" Color="Color.Success">Уведомления</ScarnaSwitch>
                         </ScarnaStack>
                     </ScarnaItem>
                     <ScarnaItem Xs="12" Md="6">
@@ -111,19 +111,19 @@
                     <ScarnaItem Xs="12">
                         <ScarnaDivider Class="mb-4" />
                         <p class="mb-3 text-sm text-foreground/60">Плотность Dense — для панелей фильтров и таблиц</p>
-                        <ScarnaStack Row="true" Spacing="4" Align="ScarnaAlign.Center" Wrap="true">
+                        <ScarnaStack Row="true" Spacing="4" Align="Align.Center" Wrap="true">
                             <ScarnaInput Placeholder="Normal" Class="w-40" />
                             <ScarnaInput Placeholder="Dense" Density="ScarnaDensity.Dense" Class="w-40" />
                             <ScarnaCheckbox Density="ScarnaDensity.Dense" Value="true">Dense чекбокс</ScarnaCheckbox>
-                            <ScarnaSwitch Density="ScarnaDensity.Dense" Value="true" Color="ScarnaColor.Primary">Dense переключатель</ScarnaSwitch>
+                            <ScarnaSwitch Density="ScarnaDensity.Dense" Value="true" Color="Color.Primary">Dense переключатель</ScarnaSwitch>
                         </ScarnaStack>
                     </ScarnaItem>
                     <ScarnaItem Xs="12">
                         <ScarnaDivider Class="mb-4" />
                         <p class="mb-3 text-sm text-foreground/60">Bordered="false" — без обводки, независимо от Variant</p>
                         <ScarnaStack Row="true" Spacing="4" Wrap="true">
-                            <ScarnaInput Placeholder="Без обводки" Variant="ScarnaVariant.Flat" Bordered="false" Class="w-48" />
-                            <ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid" Bordered="true">С доп. обводкой</ScarnaButton>
+                            <ScarnaInput Placeholder="Без обводки" Variant="Variant.Flat" Bordered="false" Class="w-48" />
+                            <ScarnaButton Color="Color.Primary" Variant="Variant.Solid" Bordered="true">С доп. обводкой</ScarnaButton>
                         </ScarnaStack>
                     </ScarnaItem>
                 </ScarnaGrid>
@@ -149,7 +149,7 @@
                     <ScarnaItem Xs="12">
                         <ScarnaDivider Class="mb-4" />
                         <p class="mb-3 text-sm text-foreground/60">ReadOnly — поле активно выглядит как обычное, но не реагирует на ввод (в отличие от Disabled)</p>
-                        <ScarnaStack Row="true" Spacing="4" Align="ScarnaAlign.Center" Wrap="true">
+                        <ScarnaStack Row="true" Spacing="4" Align="Align.Center" Wrap="true">
                             <ScarnaInput Value="Только чтение" ReadOnly="true" Class="w-48" />
                             <ScarnaSlider Label="ReadOnly" Value="65" ReadOnly="true" Class="w-48" />
                             <ScarnaCheckbox Value="true" ReadOnly="true">ReadOnly чекбокс</ScarnaCheckbox>
@@ -165,30 +165,30 @@
             <ScarnaCard>
                 <ScarnaStack Spacing="5">
                     <ScarnaStack Row="true" Spacing="2" Wrap="true">
-                        <ScarnaChip Color="ScarnaColor.Default">Default</ScarnaChip>
-                        <ScarnaChip Color="ScarnaColor.Primary">Primary</ScarnaChip>
-                        <ScarnaChip Color="ScarnaColor.Success" Variant="ScarnaVariant.Bordered">Success</ScarnaChip>
-                        <ScarnaChip Color="ScarnaColor.Danger" Variant="ScarnaVariant.Faded" OnClose='() => ToastManager.Add("Тег убран", ScarnaToastSeverity.Info)'>Удаляемый</ScarnaChip>
+                        <ScarnaChip Color="Color.Default">Default</ScarnaChip>
+                        <ScarnaChip Color="Color.Primary">Primary</ScarnaChip>
+                        <ScarnaChip Color="Color.Success" Variant="Variant.Bordered">Success</ScarnaChip>
+                        <ScarnaChip Color="Color.Danger" Variant="Variant.Faded" OnClose='() => ToastManager.Add("Тег убран", ScarnaToastSeverity.Info)'>Удаляемый</ScarnaChip>
                     </ScarnaStack>
-                    <ScarnaStack Row="true" Spacing="4" Align="ScarnaAlign.Center">
-                        <ScarnaAvatar Initials="ИИ" Color="ScarnaColor.Primary" />
-                        <ScarnaAvatar Initials="АБ" Color="ScarnaColor.Secondary" Size="ScarnaSize.Large" />
+                    <ScarnaStack Row="true" Spacing="4" Align="Align.Center">
+                        <ScarnaAvatar Initials="ИИ" Color="Color.Primary" />
+                        <ScarnaAvatar Initials="АБ" Color="Color.Secondary" Size="Size.Large" />
                         <ScarnaBadge Content="5">
                             <ScarnaAvatar Initials="ВГ" />
                         </ScarnaBadge>
-                        <ScarnaBadge Dot="true" Color="ScarnaColor.Success">
+                        <ScarnaBadge Dot="true" Color="Color.Success">
                             <ScarnaAvatar Initials="ОК" />
                         </ScarnaBadge>
                     </ScarnaStack>
                     <ScarnaDivider />
                     <p class="text-sm text-foreground/70">Карточка, чип, аватар и бейдж — всё выше уже они и есть.</p>
                     <ScarnaSeparator>или</ScarnaSeparator>
-                    <ScarnaStack Row="true" Spacing="2" Wrap="true" Align="ScarnaAlign.Center">
+                    <ScarnaStack Row="true" Spacing="2" Wrap="true" Align="Align.Center">
                         <ScarnaTag>новое</ScarnaTag>
-                        <ScarnaTag Color="ScarnaColor.Primary">primary</ScarnaTag>
-                        <ScarnaTag Color="ScarnaColor.Success" Variant="ScarnaVariant.Bordered">активен</ScarnaTag>
+                        <ScarnaTag Color="Color.Primary">primary</ScarnaTag>
+                        <ScarnaTag Color="Color.Success" Variant="Variant.Bordered">активен</ScarnaTag>
                         <ScarnaSpinner />
-                        <ScarnaSpinner Color="ScarnaColor.Success" Size="ScarnaSize.Large" />
+                        <ScarnaSpinner Color="Color.Success" Size="Size.Large" />
                     </ScarnaStack>
                 </ScarnaStack>
             </ScarnaCard>
@@ -228,11 +228,11 @@
         <section id="drawer">
             <h2 class="mb-4 text-xl font-semibold">Layout — Drawer</h2>
             <ScarnaCard>
-                <ScarnaButton Variant="ScarnaVariant.Bordered" OnClick="() => _drawerOpen = true">Открыть панель</ScarnaButton>
+                <ScarnaButton Variant="Variant.Bordered" OnClick="() => _drawerOpen = true">Открыть панель</ScarnaButton>
                 <ScarnaDrawer @bind-Open="_drawerOpen" Anchor="ScarnaDrawerAnchor.Left">
                     <div class="flex items-center justify-between border-b border-divider px-4 py-3">
                         <span class="font-semibold">Меню</span>
-                        <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _drawerOpen = false">✕</ScarnaButton>
+                        <ScarnaButton Size="Size.Small" Variant="Variant.Light" OnClick="() => _drawerOpen = false">✕</ScarnaButton>
                     </div>
                     <ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None" Class="p-3">
                         <ScarnaListItem Value="@("home")">Главная</ScarnaListItem>
@@ -270,7 +270,7 @@
                     Body1 — обычный текст абзаца. Компонент выбирает подходящий HTML-тег
                     автоматически (h1-h6, p, span) в зависимости от Typo, либо явно через As.
                 </ScarnaText>
-                <ScarnaText Typo="ScarnaTypo.Body2" Color="ScarnaColor.Danger" GutterBottom="true">Body2 с Color="Danger"</ScarnaText>
+                <ScarnaText Typo="ScarnaTypo.Body2" Color="Color.Danger" GutterBottom="true">Body2 с Color="Danger"</ScarnaText>
                 <ScarnaText Typo="ScarnaTypo.Caption">Caption — приглушённая подпись</ScarnaText>
             </ScarnaCard>
         </section>
@@ -280,8 +280,8 @@
             <ScarnaCard>
                 <ScarnaStack Spacing="4">
                     <ScarnaProgress Label="Загрузка файла" Value="64" ShowValue="true" />
-                    <ScarnaProgress Label="Ошибка" Value="30" Color="ScarnaColor.Danger" ShowValue="true" Size="ScarnaSize.Small" />
-                    <ScarnaProgress Label="Синхронизация" Indeterminate="true" Color="ScarnaColor.Secondary" />
+                    <ScarnaProgress Label="Ошибка" Value="30" Color="Color.Danger" ShowValue="true" Size="Size.Small" />
+                    <ScarnaProgress Label="Синхронизация" Indeterminate="true" Color="Color.Secondary" />
                 </ScarnaStack>
             </ScarnaCard>
         </section>
@@ -294,9 +294,9 @@
                         <tr><th>Имя</th><th>Email</th><th>Статус</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>Иван Петров</td><td>ivan@example.com</td><td><ScarnaChip Color="ScarnaColor.Success" Size="ScarnaSize.Small">Активен</ScarnaChip></td></tr>
-                        <tr><td>Анна Смирнова</td><td>anna@example.com</td><td><ScarnaChip Color="ScarnaColor.Warning" Size="ScarnaSize.Small">Ожидает</ScarnaChip></td></tr>
-                        <tr><td>Пётр Иванов</td><td>petr@example.com</td><td><ScarnaChip Color="ScarnaColor.Default" Size="ScarnaSize.Small">Неактивен</ScarnaChip></td></tr>
+                        <tr><td>Иван Петров</td><td>ivan@example.com</td><td><ScarnaChip Color="Color.Success" Size="Size.Small">Активен</ScarnaChip></td></tr>
+                        <tr><td>Анна Смирнова</td><td>anna@example.com</td><td><ScarnaChip Color="Color.Warning" Size="Size.Small">Ожидает</ScarnaChip></td></tr>
+                        <tr><td>Пётр Иванов</td><td>petr@example.com</td><td><ScarnaChip Color="Color.Default" Size="Size.Small">Неактивен</ScarnaChip></td></tr>
                     </tbody>
                 </ScarnaTable>
             </ScarnaCard>
@@ -324,13 +324,13 @@
             <ScarnaCard>
                 <ScarnaMenu>
                     <Trigger>
-                        <ScarnaButton Variant="ScarnaVariant.Bordered">Действия ▾</ScarnaButton>
+                        <ScarnaButton Variant="Variant.Bordered">Действия ▾</ScarnaButton>
                     </Trigger>
                     <MenuContent>
                         <ScarnaMenuItem OnClick='@(() => ToastManager.Add("Редактирование", ScarnaToastSeverity.Info))'>Редактировать</ScarnaMenuItem>
                         <ScarnaMenuItem OnClick='@(() => ToastManager.Add("Дублировано", ScarnaToastSeverity.Info))'>Дублировать</ScarnaMenuItem>
                         <ScarnaDivider Class="my-1" />
-                        <ScarnaMenuItem Color="ScarnaColor.Danger" OnClick='@(() => ToastManager.Add("Удалено", ScarnaToastSeverity.Warning))'>Удалить</ScarnaMenuItem>
+                        <ScarnaMenuItem Color="Color.Danger" OnClick='@(() => ToastManager.Add("Удалено", ScarnaToastSeverity.Warning))'>Удалить</ScarnaMenuItem>
                     </MenuContent>
                 </ScarnaMenu>
             </ScarnaCard>
@@ -339,16 +339,16 @@
         <section id="overlays">
             <h2 class="mb-4 text-xl font-semibold">Overlays</h2>
             <ScarnaCard>
-                <ScarnaStack Row="true" Spacing="4" Wrap="true" Align="ScarnaAlign.Center">
+                <ScarnaStack Row="true" Spacing="4" Wrap="true" Align="Align.Center">
                     <ScarnaTooltip Text="Всплывающая подсказка сверху">
-                        <ScarnaButton Variant="ScarnaVariant.Bordered">Наведите курсор</ScarnaButton>
+                        <ScarnaButton Variant="Variant.Bordered">Наведите курсор</ScarnaButton>
                     </ScarnaTooltip>
 
-                    <ScarnaButton Color="ScarnaColor.Danger" Variant="ScarnaVariant.Flat" OnClick="OpenConfirmDialogAsync">
+                    <ScarnaButton Color="Color.Danger" Variant="Variant.Flat" OnClick="OpenConfirmDialogAsync">
                         Открыть диалог
                     </ScarnaButton>
 
-                    <ScarnaButton Color="ScarnaColor.Success" Variant="ScarnaVariant.Flat" OnClick='@(() => ToastManager.Add("Сохранено успешно", ScarnaToastSeverity.Success))'>
+                    <ScarnaButton Color="Color.Success" Variant="Variant.Flat" OnClick='@(() => ToastManager.Add("Сохранено успешно", ScarnaToastSeverity.Success))'>
                         Показать тост
                     </ScarnaButton>
                 </ScarnaStack>

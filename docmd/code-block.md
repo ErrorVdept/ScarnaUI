@@ -44,5 +44,5 @@
 | `MinLines` | `int?` | — | Минимальное количество видимых строк |
 | `MaxLines` | `int?` | — | Максимальное количество видимых строк — дальше вертикальная прокрутка |
 | `Lines` | `int?` | — | Точное количество строк (вместо `MinLines`/`MaxLines`) — фиксированная высота |
-| `Radius` | `ScarnaRadius` | `Medium` | Радиус скругления |
+| `Radius` | `Radius` | `Medium` | Радиус скругления |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

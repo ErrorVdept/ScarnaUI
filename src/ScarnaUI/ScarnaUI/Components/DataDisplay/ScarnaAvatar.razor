@@ -1,8 +1,10 @@
 @*
-    Круглый аватар: изображение по Src, а если его нет/не загрузилось — инициалы.
+    Аватар: изображение по Src, а если его нет/не загрузилось — инициалы. По умолчанию
+    круглый, Square="true" переключает на закруглённый квадрат (радиус — Radius).
 
     <ScarnaAvatar Src="/img/user.jpg" Alt="Иван Иванов" />
-    <ScarnaAvatar Initials="ИИ" Color="ScarnaColor.Primary" />
+    <ScarnaAvatar Initials="ИИ" Color="Color.Primary" />
+    <ScarnaAvatar Src="/img/user.jpg" Square="true" Radius="Radius.Medium" />
 *@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
@@ -10,7 +12,7 @@
 <span class="@Classes" style="@Style" @attributes="UserAttributes">
     @if (!string.IsNullOrEmpty(Src) && !_imageFailed)
     {
-        <img src="@Src" alt="@Alt" class="h-full w-full rounded-full object-cover" @onerror="() => _imageFailed = true" />
+        <img src="@Src" alt="@Alt" class="h-full w-full object-cover" @onerror="() => _imageFailed = true" />
     }
     else if (!string.IsNullOrEmpty(Initials))
     {
@@ -34,24 +36,32 @@
     /// <summary>Инициалы, показываемые вместо изображения (1-2 буквы).</summary>
     [Parameter] public string? Initials { get; set; }
 
-    [Parameter] public ScarnaSize Size { get; set; } = ScarnaSize.Medium;
+    [Parameter] public Size Size { get; set; } = Size.Medium;
 
-    [Parameter] public ScarnaColor Color { get; set; } = ScarnaColor.Default;
+    [Parameter] public Color Color { get; set; } = Color.Default;
 
     /// <summary>Тонкая обводка по краю аватара (в цвет фона страницы — визуально отделяет от подложки).</summary>
     [Parameter] public bool Bordered { get; set; }
 
-    private string Classes => CssBuilder.Default("scarna-avatar inline-flex items-center justify-center overflow-hidden rounded-full shrink-0")
+    /// <summary>Закруглённый квадрат вместо круга (радиус — Radius).</summary>
+    [Parameter] public bool Square { get; set; }
+
+    /// <summary>Радиус скругления при Square="true". На круглый аватар (по умолчанию) не влияет.</summary>
+    [Parameter] public Radius Radius { get; set; } = Radius.Medium;
+
+    private string Classes => CssBuilder.Default("scarna-avatar inline-flex items-center justify-center overflow-hidden shrink-0")
+        .AddClass("rounded-full", !Square)
+        .AddClass(ScarnaColorVariantClasses.Radius(Radius), Square)
         .AddClass(SizeClass)
-        .AddClass(ScarnaColorVariantClasses.Get(Color, ScarnaVariant.Flat))
+        .AddClass(ScarnaColorVariantClasses.Get(Color, Variant.Flat))
         .AddClass("ring-2 ring-background", Bordered)
         .AddClass(Class)
         .ToString();
 
     private string SizeClass => Size switch
     {
-        ScarnaSize.Small => "size-8 text-xs",
-        ScarnaSize.Large => "size-14 text-lg",
+        Size.Small => "size-8 text-xs",
+        Size.Large => "size-14 text-lg",
         _ => "size-10 text-sm",
     };
 }

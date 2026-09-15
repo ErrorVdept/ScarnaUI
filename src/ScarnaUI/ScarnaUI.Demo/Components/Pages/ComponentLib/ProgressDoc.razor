@@ -5,17 +5,17 @@
 
     <DocSection Title="Determinate" Row="false" Code="@DeterminateCode">
         <ScarnaProgress Label="Загрузка файла" Value="64" ShowValue="true" />
-        <ScarnaProgress Label="Ошибка" Value="30" Color="ScarnaColor.Danger" ShowValue="true" Size="ScarnaSize.Small" />
+        <ScarnaProgress Label="Ошибка" Value="30" Color="Color.Danger" ShowValue="true" Size="Size.Small" />
     </DocSection>
 
     <DocSection Title="Indeterminate" Row="false" Code="@IndeterminateCode">
-        <ScarnaProgress Label="Синхронизация" Indeterminate="true" Color="ScarnaColor.Secondary" />
+        <ScarnaProgress Label="Синхронизация" Indeterminate="true" Color="Color.Secondary" />
     </DocSection>
 
     <DocSection Title="Размеры" Row="false" Code="@SizesCode">
-        <ScarnaProgress Label="Small" Value="50" Size="ScarnaSize.Small" ShowValue="true" />
-        <ScarnaProgress Label="Medium" Value="50" Size="ScarnaSize.Medium" ShowValue="true" />
-        <ScarnaProgress Label="Large" Value="50" Size="ScarnaSize.Large" ShowValue="true" />
+        <ScarnaProgress Label="Small" Value="50" Size="Size.Small" ShowValue="true" />
+        <ScarnaProgress Label="Medium" Value="50" Size="Size.Medium" ShowValue="true" />
+        <ScarnaProgress Label="Large" Value="50" Size="Size.Large" ShowValue="true" />
     </DocSection>
 
     <DocApiTable Rows="@_rows" />
@@ -26,19 +26,19 @@
     private const string DeterminateCode =
         """
         <ScarnaProgress Label="Загрузка файла" Value="64" ShowValue="true" />
-        <ScarnaProgress Label="Ошибка" Value="30" Color="ScarnaColor.Danger" ShowValue="true" Size="ScarnaSize.Small" />
+        <ScarnaProgress Label="Ошибка" Value="30" Color="Color.Danger" ShowValue="true" Size="Size.Small" />
         """;
 
     private const string IndeterminateCode =
         """
-        <ScarnaProgress Label="Синхронизация" Indeterminate="true" Color="ScarnaColor.Secondary" />
+        <ScarnaProgress Label="Синхронизация" Indeterminate="true" Color="Color.Secondary" />
         """;
 
     private const string SizesCode =
         """
-        <ScarnaProgress Label="Small" Value="50" Size="ScarnaSize.Small" ShowValue="true" />
-        <ScarnaProgress Label="Medium" Value="50" Size="ScarnaSize.Medium" ShowValue="true" />
-        <ScarnaProgress Label="Large" Value="50" Size="ScarnaSize.Large" ShowValue="true" />
+        <ScarnaProgress Label="Small" Value="50" Size="Size.Small" ShowValue="true" />
+        <ScarnaProgress Label="Medium" Value="50" Size="Size.Medium" ShowValue="true" />
+        <ScarnaProgress Label="Large" Value="50" Size="Size.Large" ShowValue="true" />
         """;
 
     private readonly List<DocApiRow> _rows = new()
@@ -48,7 +48,7 @@
         new("Max", "double", "100", "Максимум"),
         new("Indeterminate", "bool", "false", "Бегущая полоса вместо конкретного значения"),
         new("ShowValue", "bool", "false", "Показывать процент справа от подписи"),
-        new("Color", "ScarnaColor", "Primary", "Цвет заливки"),
-        new("Size", "ScarnaSize", "Medium", "Высота полосы: Small (4px) / Medium (8px) / Large (12px)"),
+        new("Color", "Color", "Primary", "Цвет заливки"),
+        new("Size", "Size", "Medium", "Высота полосы: Small (4px) / Medium (8px) / Large (12px)"),
     };
 }

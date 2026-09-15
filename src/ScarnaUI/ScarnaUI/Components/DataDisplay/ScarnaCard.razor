@@ -5,8 +5,13 @@
     <ScarnaCard>
         <HeaderContent>Заголовок</HeaderContent>
         Основное содержимое
-        <FooterContent><ScarnaButton Size="ScarnaSize.Small">Подробнее</ScarnaButton></FooterContent>
+        <FooterContent><ScarnaButton Size="Size.Small">Подробнее</ScarnaButton></FooterContent>
     </ScarnaCard>
+
+    GlassEffect — полупрозрачный фон с блюром (тот же приём, что у ScarnaNavBar) —
+    для карточек поверх фонового изображения/градиента:
+
+    <ScarnaCard GlassEffect="true">...</ScarnaCard>
 *@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
@@ -30,7 +35,10 @@
     /// <summary>Тень под карточкой.</summary>
     [Parameter] public bool Shadow { get; set; } = true;
 
-    [Parameter] public ScarnaRadius Radius { get; set; } = ScarnaRadius.Large;
+    [Parameter] public Radius Radius { get; set; } = Radius.Large;
+
+    /// <summary>Полупрозрачный фон с блюром (backdrop-blur) вместо сплошного bg-content1 — как у ScarnaNavBar.</summary>
+    [Parameter] public bool GlassEffect { get; set; }
 
     [Parameter] public RenderFragment? HeaderContent { get; set; }
 
@@ -38,7 +46,9 @@
 
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
-    private string Classes => CssBuilder.Default("scarna-card flex flex-col overflow-hidden bg-content1 text-foreground")
+    private string Classes => CssBuilder.Default("scarna-card flex flex-col overflow-hidden text-foreground")
+        .AddClass("bg-content1/80 backdrop-blur-md", GlassEffect)
+        .AddClass("bg-content1", !GlassEffect)
         .AddClass(ScarnaColorVariantClasses.Radius(Radius))
         .AddClass("border border-divider", Bordered)
         .AddClass("shadow-md", Shadow)

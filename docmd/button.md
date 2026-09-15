@@ -3,7 +3,7 @@
 ## Файлы
 - `src/ScarnaUI/ScarnaUI/Components/Actions/ScarnaButton.razor`
 - `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaColorVariantClasses.cs` (таблица цвет × вариант)
-- `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaEnums.cs` (`ScarnaColor`, `ScarnaSize`, `ScarnaRadius`, `ScarnaVariant`)
+- `src/ScarnaUI/ScarnaUI/Components/Base/ScarnaEnums.cs` (`Color`, `Size`, `Radius`, `Variant`)
 
 ## Описание
 
@@ -14,11 +14,11 @@
 ## Пример использования
 
 ```razor
-<ScarnaButton Color="ScarnaColor.Primary" Variant="ScarnaVariant.Solid" OnClick="Save">
+<ScarnaButton Color="Color.Primary" Variant="Variant.Solid" OnClick="Save">
     Сохранить
 </ScarnaButton>
 
-<ScarnaButton Href="/settings" Variant="ScarnaVariant.Light">Настройки</ScarnaButton>
+<ScarnaButton Href="/settings" Variant="Variant.Light">Настройки</ScarnaButton>
 
 <ScarnaButton Loading="@_isSaving" Disabled="@_isSaving" OnClick="SaveAsync">
     <StartIcon><svg>...</svg></StartIcon>
@@ -30,10 +30,10 @@
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
-| `Color` | `ScarnaColor` | `Default` | `Default`/`Primary`/`Secondary`/`Success`/`Warning`/`Danger` |
-| `Variant` | `ScarnaVariant` | `Solid` | `Solid`/`Flat`/`Bordered`/`Light`/`Faded`/`Shadow` |
-| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
-| `Radius` | `ScarnaRadius` | `Medium` | `None`/`Small`/`Medium`/`Large`/`Full` |
+| `Color` | `Color` | `Default` | `Default`/`Primary`/`Secondary`/`Success`/`Warning`/`Danger` |
+| `Variant` | `Variant` | `Solid` | `Solid`/`Flat`/`Bordered`/`Light`/`Faded`/`Shadow` |
+| `Size` | `Size` | `Medium` | `Small`/`Medium`/`Large` |
+| `Radius` | `Radius` | `Medium` | `None`/`Small`/`Medium`/`Large`/`Full` |
 | `Bordered` | `bool` | `false` | Доп. обводка в цвет Color поверх Variant (для Variant.Bordered ничего не меняет) |
 | `Type` | `string` | `"button"` | HTML `type` для `<button>` |
 | `Href` | `string?` | — | Если задан — рендер как `<a href>` |

@@ -9,9 +9,9 @@
     </DocSection>
 
     <DocSection Title="Варианты и размеры" Code="@VariantsCode">
-        <ScarnaTimeField Label="Flat" Variant="ScarnaVariant.Flat" Class="w-40" />
-        <ScarnaTimeField Label="Small" Size="ScarnaSize.Small" Class="w-40" />
-        <ScarnaTimeField Label="Large" Size="ScarnaSize.Large" Class="w-40" />
+        <ScarnaTimeField Label="Flat" Variant="Variant.Flat" Class="w-40" />
+        <ScarnaTimeField Label="Small" Size="Size.Small" Class="w-40" />
+        <ScarnaTimeField Label="Large" Size="Size.Large" Class="w-40" />
     </DocSection>
 
     <DocSection Title="Состояния" Code="@StatesCode">
@@ -38,9 +38,9 @@
 
     private const string VariantsCode =
         """
-        <ScarnaTimeField Label="Flat" Variant="ScarnaVariant.Flat" />
-        <ScarnaTimeField Label="Small" Size="ScarnaSize.Small" />
-        <ScarnaTimeField Label="Large" Size="ScarnaSize.Large" />
+        <ScarnaTimeField Label="Flat" Variant="Variant.Flat" />
+        <ScarnaTimeField Label="Small" Size="Size.Small" />
+        <ScarnaTimeField Label="Large" Size="Size.Large" />
         """;
 
     private const string StatesCode =
@@ -56,10 +56,10 @@
         new("HelperText / ErrorText / Error", "—", "—", "Подсказка/ошибка под полем"),
         new("Disabled", "bool", "false", "—"),
         new("ReadOnly", "bool", "false", "—"),
-        new("Variant", "ScarnaVariant", "Bordered", "Bordered/Flat"),
+        new("Variant", "Variant", "Bordered", "Bordered/Flat"),
         new("Bordered", "bool", "true", "Показывать ли контур поля"),
-        new("Size", "ScarnaSize", "Medium", "Small/Medium/Large"),
+        new("Size", "Size", "Medium", "Small/Medium/Large"),
         new("Density", "ScarnaDensity", "Normal", "Dense — компактное поле"),
-        new("Radius", "ScarnaRadius", "Medium", "Радиус поля"),
+        new("Radius", "Radius", "Medium", "Радиус поля"),
     };
 }

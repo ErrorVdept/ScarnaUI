@@ -13,12 +13,12 @@
     </DocSection>
 
     <DocSection Title="Варианты и размеры" Code="@VariantsCode">
-        <ScarnaSelect TValue="string" Label="Flat" Variant="ScarnaVariant.Flat" Placeholder="Период" Class="w-48">
+        <ScarnaSelect TValue="string" Label="Flat" Variant="Variant.Flat" Placeholder="Период" Class="w-48">
             <ScarnaSelectItem Value="@("day")" Text="День" />
             <ScarnaSelectItem Value="@("week")" Text="Неделя" />
             <ScarnaSelectItem Value="@("month")" Text="Месяц" />
         </ScarnaSelect>
-        <ScarnaSelect TValue="string" Label="Small" Size="ScarnaSize.Small" Placeholder="Период" Class="w-40">
+        <ScarnaSelect TValue="string" Label="Small" Size="Size.Small" Placeholder="Период" Class="w-40">
             <ScarnaSelectItem Value="@("day")" Text="День" />
             <ScarnaSelectItem Value="@("week")" Text="Неделя" />
         </ScarnaSelect>
@@ -54,12 +54,12 @@
 
     private const string VariantsCode =
         """
-        <ScarnaSelect Label="Flat" Variant="ScarnaVariant.Flat" Placeholder="Период">
+        <ScarnaSelect Label="Flat" Variant="Variant.Flat" Placeholder="Период">
             <ScarnaSelectItem Value="@("day")" Text="День" />
             <ScarnaSelectItem Value="@("week")" Text="Неделя" />
             <ScarnaSelectItem Value="@("month")" Text="Месяц" />
         </ScarnaSelect>
-        <ScarnaSelect Label="Small" Size="ScarnaSize.Small" Placeholder="Период">
+        <ScarnaSelect Label="Small" Size="Size.Small" Placeholder="Период">
             <ScarnaSelectItem Value="@("day")" Text="День" />
             <ScarnaSelectItem Value="@("week")" Text="Неделя" />
         </ScarnaSelect>
@@ -80,11 +80,11 @@
         new("HelperText", "string?", "—", "Подсказка под полем"),
         new("ErrorText / Error", "—", "—", "См. getting-started.md"),
         new("ReadOnly", "bool", "false", "Запрещает открытие списка, но не тускнеет (в отличие от Disabled)"),
-        new("Variant", "ScarnaVariant", "Bordered", "Bordered/Flat"),
+        new("Variant", "Variant", "Bordered", "Bordered/Flat"),
         new("Bordered", "bool", "true", "Показывать ли контур поля"),
-        new("Size", "ScarnaSize", "Medium", "Small/Medium/Large"),
+        new("Size", "Size", "Medium", "Small/Medium/Large"),
         new("Density", "ScarnaDensity", "Normal", "Dense — компактное поле"),
-        new("Radius", "ScarnaRadius", "Medium", "Радиус поля"),
+        new("Radius", "Radius", "Medium", "Радиус поля"),
         new("Position", "ScarnaPosition", "BottomStart", "Позиция выпадающего списка"),
         new("IsParentFullSize", "bool", "true", "Растянуть список на ширину поля (не уже min-w-[220px])"),
         new("ChildContent", "RenderFragment?", "—", "Набор ScarnaSelectItem"),

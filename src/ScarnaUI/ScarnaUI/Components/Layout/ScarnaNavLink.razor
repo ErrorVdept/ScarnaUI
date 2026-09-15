@@ -1,0 +1,81 @@
+@*
+    Один пункт вертикальной навигации (обычно внутри ScarnaNavMenu) — аналог
+    встроенного NavLink, но в стиле дизайн-системы ScarnaUI: активный пункт
+    подсвечивается фоном/цветом (как ScarnaListItem), а не CSS-классом "active".
+    Активность определяется через INavigator по текущему URL и обновляется при
+    каждой навигации, в т.ч. по кнопкам браузера "назад"/"вперёд".
+
+    <ScarnaNavLink Href="/orders"><OrdersIcon />Заказы</ScarnaNavLink>
+    <ScarnaNavLink Href="/settings" Exact="true">Настройки</ScarnaNavLink>
+
+    OnClick вызывается в дополнение к переходу — удобно, например, чтобы закрыть
+    ScarnaDrawer(Variant.Temporary) на мобильном сразу после выбора пункта:
+
+    <ScarnaNavLink Href="/orders" OnClick="() => _drawerOpen = false">Заказы</ScarnaNavLink>
+*@
+@namespace ScarnaUI.Components.Layout
+@inherits ScarnaComponentBase
+@implements IDisposable
+@inject INavigator Navigator
+
+<a href="@Href" target="@Target" class="@Classes" style="@Style"
+   aria-current="@(IsActive ? "page" : null)" aria-disabled="@(Disabled ? "true" : null)" tabindex="@(Disabled ? "-1" : null)"
+   @onclick="HandleClickAsync" @onclick:preventDefault="Disabled"
+   @attributes="UserAttributes">
+    @StartContent
+    <span class="flex-1 truncate">@ChildContent</span>
+    @EndContent
+</a>
+
+@code {
+    /// <summary>Адрес перехода — то же, что href у обычной ссылки.</summary>
+    [Parameter, EditorRequired] public string Href { get; set; } = string.Empty;
+
+    /// <summary>Требовать точного совпадения адреса. По умолчанию — false: активен также для дочерних путей (например, Href="/orders" активен и на "/orders/5").</summary>
+    [Parameter] public bool Exact { get; set; }
+
+    [Parameter] public string? Target { get; set; }
+
+    [Parameter] public bool Disabled { get; set; }
+
+    /// <summary>Иконка перед текстом.</summary>
+    [Parameter] public RenderFragment? StartContent { get; set; }
+
+    /// <summary>Содержимое после текста — например, счётчик/бейдж.</summary>
+    [Parameter] public RenderFragment? EndContent { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Доп. обработчик клика — вызывается в дополнение к переходу (не вызывается, если Disabled).</summary>
+    [Parameter] public EventCallback OnClick { get; set; }
+
+    private bool IsActive => !Disabled && Navigator.IsActive(Href, Exact);
+
+    protected override void OnInitialized() => Navigator.LocationChanged += HandleLocationChanged;
+
+    // Компонент сам не знает, что сменился активный пункт — IsActive пересчитывается
+    // только при перерисовке, поэтому подписываемся на смену адреса и просим её явно.
+    private void HandleLocationChanged(object? sender, LocationChangedEventArgs e) => StateHasChanged();
+
+    private async Task HandleClickAsync()
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        if (OnClick.HasDelegate)
+        {
+            await OnClick.InvokeAsync();
+        }
+    }
+
+    private string Classes => CssBuilder.Default("scarna-nav-link flex items-center gap-3 rounded-scarna-sm px-3 py-2 text-sm transition-colors")
+        .AddClass("bg-primary/10 text-primary font-medium", IsActive)
+        .AddClass("text-foreground/70 hover:bg-content2 hover:text-foreground", !IsActive && !Disabled)
+        .AddClass("pointer-events-none opacity-50", Disabled)
+        .AddClass(Class)
+        .ToString();
+
+    public void Dispose() => Navigator.LocationChanged -= HandleLocationChanged;
+}

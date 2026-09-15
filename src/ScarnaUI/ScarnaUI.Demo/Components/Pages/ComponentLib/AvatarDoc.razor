@@ -5,21 +5,27 @@
 
     <DocSection Title="Изображение и инициалы" Code="@BasicCode">
         <ScarnaAvatar Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=200" Alt="Пейзаж" />
-        <ScarnaAvatar Initials="ИИ" Color="ScarnaColor.Primary" />
-        <ScarnaAvatar Initials="АБ" Color="ScarnaColor.Secondary" />
+        <ScarnaAvatar Initials="ИИ" Color="Color.Primary" />
+        <ScarnaAvatar Initials="АБ" Color="Color.Secondary" />
         <ScarnaAvatar />
     </DocSection>
 
     <DocSection Title="Размеры" Code="@SizesCode">
-        <ScarnaAvatar Initials="ММ" Size="ScarnaSize.Small" />
-        <ScarnaAvatar Initials="ММ" Size="ScarnaSize.Medium" />
-        <ScarnaAvatar Initials="ММ" Size="ScarnaSize.Large" />
+        <ScarnaAvatar Initials="ММ" Size="Size.Small" />
+        <ScarnaAvatar Initials="ММ" Size="Size.Medium" />
+        <ScarnaAvatar Initials="ММ" Size="Size.Large" />
     </DocSection>
 
     <DocSection Title="Bordered и цвета" Code="@ColorsCode">
-        <ScarnaAvatar Initials="ОК" Color="ScarnaColor.Success" Bordered="true" />
-        <ScarnaAvatar Initials="ВГ" Color="ScarnaColor.Warning" Bordered="true" />
-        <ScarnaAvatar Initials="НД" Color="ScarnaColor.Danger" Bordered="true" />
+        <ScarnaAvatar Initials="ОК" Color="Color.Success" Bordered="true" />
+        <ScarnaAvatar Initials="ВГ" Color="Color.Warning" Bordered="true" />
+        <ScarnaAvatar Initials="НД" Color="Color.Danger" Bordered="true" />
+    </DocSection>
+
+    <DocSection Title="Square — закруглённый квадрат" Description="Square='true' переключает форму с круга на квадрат со скруглением по Radius." Code="@SquareCode">
+        <ScarnaAvatar Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=200" Alt="Пейзаж" Square="true" />
+        <ScarnaAvatar Initials="ИИ" Color="Color.Primary" Square="true" Radius="Radius.Medium" />
+        <ScarnaAvatar Initials="АБ" Color="Color.Secondary" Square="true" Radius="Radius.None" />
     </DocSection>
 
     <DocApiTable Rows="@_rows" />
@@ -30,23 +36,30 @@
     private const string BasicCode =
         """
         <ScarnaAvatar Src="/img/user.jpg" Alt="Иван Иванов" />
-        <ScarnaAvatar Initials="ИИ" Color="ScarnaColor.Primary" />
-        <ScarnaAvatar Initials="АБ" Color="ScarnaColor.Secondary" />
+        <ScarnaAvatar Initials="ИИ" Color="Color.Primary" />
+        <ScarnaAvatar Initials="АБ" Color="Color.Secondary" />
         <ScarnaAvatar />
         """;
 
     private const string SizesCode =
         """
-        <ScarnaAvatar Initials="ММ" Size="ScarnaSize.Small" />
-        <ScarnaAvatar Initials="ММ" Size="ScarnaSize.Medium" />
-        <ScarnaAvatar Initials="ММ" Size="ScarnaSize.Large" />
+        <ScarnaAvatar Initials="ММ" Size="Size.Small" />
+        <ScarnaAvatar Initials="ММ" Size="Size.Medium" />
+        <ScarnaAvatar Initials="ММ" Size="Size.Large" />
         """;
 
     private const string ColorsCode =
         """
-        <ScarnaAvatar Initials="ОК" Color="ScarnaColor.Success" Bordered="true" />
-        <ScarnaAvatar Initials="ВГ" Color="ScarnaColor.Warning" Bordered="true" />
-        <ScarnaAvatar Initials="НД" Color="ScarnaColor.Danger" Bordered="true" />
+        <ScarnaAvatar Initials="ОК" Color="Color.Success" Bordered="true" />
+        <ScarnaAvatar Initials="ВГ" Color="Color.Warning" Bordered="true" />
+        <ScarnaAvatar Initials="НД" Color="Color.Danger" Bordered="true" />
+        """;
+
+    private const string SquareCode =
+        """
+        <ScarnaAvatar Src="/img/user.jpg" Square="true" />
+        <ScarnaAvatar Initials="ИИ" Color="Color.Primary" Square="true" Radius="Radius.Medium" />
+        <ScarnaAvatar Initials="АБ" Color="Color.Secondary" Square="true" Radius="Radius.None" />
         """;
 
     private readonly List<DocApiRow> _rows = new()
@@ -54,8 +67,10 @@
         new("Src", "string?", "—", "URL изображения"),
         new("Alt", "string?", "—", "alt для изображения"),
         new("Initials", "string?", "—", "Инициалы (1-2 буквы), показываются, если нет Src или изображение не загрузилось"),
-        new("Size", "ScarnaSize", "Medium", "Small/Medium/Large"),
-        new("Color", "ScarnaColor", "Default", "Цвет фона под инициалами"),
+        new("Size", "Size", "Medium", "Small/Medium/Large"),
+        new("Color", "Color", "Default", "Цвет фона под инициалами"),
         new("Bordered", "bool", "false", "Тонкая обводка в цвет фона страницы, отделяет от подложки"),
+        new("Square", "bool", "false", "Закруглённый квадрат вместо круга"),
+        new("Radius", "Radius", "Medium", "Радиус скругления при Square=\"true\" (на круглый аватар не влияет)"),
     };
 }

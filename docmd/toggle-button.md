@@ -25,9 +25,9 @@
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
 | `Value` / `ValueChanged` / `ValueExpression` | `bool` / ... | — | Механика `@bind-Value` |
-| `Color` | `ScarnaColor` | `Primary` | Цвет заливки во включённом состоянии |
-| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
-| `Radius` | `ScarnaRadius` | `Medium` | Радиус углов |
+| `Color` | `Color` | `Primary` | Цвет заливки во включённом состоянии |
+| `Size` | `Size` | `Medium` | `Small`/`Medium`/`Large` |
+| `Radius` | `Radius` | `Medium` | Радиус углов |
 | `Disabled` | `bool` | `false` | — |
 | `Bordered` | `bool` | `true` | Обводка в невключённом состоянии |
 | `ChildContent` | `RenderFragment?` | — | Содержимое кнопки |

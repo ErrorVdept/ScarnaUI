@@ -4,7 +4,7 @@
 
     <ScarnaStack Spacing="3" Row>
         <ScarnaButton>Отмена</ScarnaButton>
-        <ScarnaButton Color="ScarnaColor.Primary">Сохранить</ScarnaButton>
+        <ScarnaButton Color="Color.Primary">Сохранить</ScarnaButton>
     </ScarnaStack>
 *@
 @namespace ScarnaUI.Components.Layout
@@ -25,10 +25,10 @@
     [Parameter] public bool Wrap { get; set; }
 
     /// <summary>Выравнивание по главной оси (justify-content).</summary>
-    [Parameter] public ScarnaJustify Justify { get; set; } = ScarnaJustify.Start;
+    [Parameter] public Justify Justify { get; set; } = Justify.Start;
 
     /// <summary>Выравнивание по поперечной оси (align-items).</summary>
-    [Parameter] public ScarnaAlign Align { get; set; } = ScarnaAlign.Stretch;
+    [Parameter] public Align Align { get; set; } = Align.Stretch;
 
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
@@ -54,20 +54,20 @@
 
     private string JustifyClass => Justify switch
     {
-        ScarnaJustify.End => "justify-end",
-        ScarnaJustify.Center => "justify-center",
-        ScarnaJustify.SpaceBetween => "justify-between",
-        ScarnaJustify.SpaceAround => "justify-around",
-        ScarnaJustify.SpaceEvenly => "justify-evenly",
+        Justify.End => "justify-end",
+        Justify.Center => "justify-center",
+        Justify.SpaceBetween => "justify-between",
+        Justify.SpaceAround => "justify-around",
+        Justify.SpaceEvenly => "justify-evenly",
         _ => "justify-start",
     };
 
     private string AlignClass => Align switch
     {
-        ScarnaAlign.Start => "items-start",
-        ScarnaAlign.End => "items-end",
-        ScarnaAlign.Center => "items-center",
-        ScarnaAlign.Baseline => "items-baseline",
+        Align.Start => "items-start",
+        Align.End => "items-end",
+        Align.Center => "items-center",
+        Align.Baseline => "items-baseline",
         _ => "items-stretch",
     };
 }

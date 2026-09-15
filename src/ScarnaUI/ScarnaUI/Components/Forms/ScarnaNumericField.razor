@@ -63,15 +63,15 @@
 
     [Parameter] public bool ReadOnly { get; set; }
 
-    [Parameter] public ScarnaVariant Variant { get; set; } = ScarnaVariant.Bordered;
+    [Parameter] public Variant Variant { get; set; } = Variant.Bordered;
 
     [Parameter] public bool Bordered { get; set; } = true;
 
-    [Parameter] public ScarnaSize Size { get; set; } = ScarnaSize.Medium;
+    [Parameter] public Size Size { get; set; } = Size.Medium;
 
     [Parameter] public ScarnaDensity Density { get; set; } = ScarnaDensity.Normal;
 
-    [Parameter] public ScarnaRadius Radius { get; set; } = ScarnaRadius.Medium;
+    [Parameter] public Radius Radius { get; set; } = Radius.Medium;
 
     private string FormattedValue => Format == ScarnaNumberFormat.Integer
         ? Value.ToString("F0", System.Globalization.CultureInfo.InvariantCulture)
@@ -108,18 +108,18 @@
 
     private string SizeClass => (Size, Density) switch
     {
-        (ScarnaSize.Small, ScarnaDensity.Dense) => "h-7 text-sm",
-        (ScarnaSize.Small, _) => "h-8 text-sm",
-        (ScarnaSize.Large, ScarnaDensity.Dense) => "h-10 text-base",
-        (ScarnaSize.Large, _) => "h-12 text-base",
+        (Size.Small, ScarnaDensity.Dense) => "h-7 text-sm",
+        (Size.Small, _) => "h-8 text-sm",
+        (Size.Large, ScarnaDensity.Dense) => "h-10 text-base",
+        (Size.Large, _) => "h-12 text-base",
         (_, ScarnaDensity.Dense) => "h-8 text-sm",
         _ => "h-10 text-sm",
     };
 
     private string VariantClass => (Variant, Bordered) switch
     {
-        (ScarnaVariant.Flat, true) => "bg-content2 border border-default focus-within:border-primary",
-        (ScarnaVariant.Flat, false) => "bg-content2 border border-transparent",
+        (Variant.Flat, true) => "bg-content2 border border-default focus-within:border-primary",
+        (Variant.Flat, false) => "bg-content2 border border-transparent",
         (_, true) => "bg-transparent border border-default focus-within:border-primary",
         (_, false) => "bg-transparent border border-transparent",
     };

@@ -4,17 +4,17 @@
          Files="@(new[] { "Components/Forms/ScarnaSwitch.razor" })">
 
     <DocSection Title="Интерактивный пример" Code="@InteractiveCode">
-        <ScarnaSwitch @bind-Value="_notify" Color="ScarnaColor.Success">Уведомления по email</ScarnaSwitch>
+        <ScarnaSwitch @bind-Value="_notify" Color="Color.Success">Уведомления по email</ScarnaSwitch>
         <span class="text-sm text-foreground/60">Значение: @_notify</span>
     </DocSection>
 
     <DocSection Title="Цвета" Code="@ColorsCode">
-        <ScarnaSwitch Value="true" Color="ScarnaColor.Default">Default</ScarnaSwitch>
-        <ScarnaSwitch Value="true" Color="ScarnaColor.Primary">Primary</ScarnaSwitch>
-        <ScarnaSwitch Value="true" Color="ScarnaColor.Secondary">Secondary</ScarnaSwitch>
-        <ScarnaSwitch Value="true" Color="ScarnaColor.Success">Success</ScarnaSwitch>
-        <ScarnaSwitch Value="true" Color="ScarnaColor.Warning">Warning</ScarnaSwitch>
-        <ScarnaSwitch Value="true" Color="ScarnaColor.Danger">Danger</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="Color.Default">Default</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="Color.Primary">Primary</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="Color.Secondary">Secondary</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="Color.Success">Success</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="Color.Warning">Warning</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="Color.Danger">Danger</ScarnaSwitch>
     </DocSection>
 
     <DocSection Title="Плотность и состояния" Code="@StatesCode">
@@ -32,7 +32,7 @@
 
     private const string InteractiveCode =
         """
-        <ScarnaSwitch @bind-Value="_notify" Color="ScarnaColor.Success">Уведомления по email</ScarnaSwitch>
+        <ScarnaSwitch @bind-Value="_notify" Color="Color.Success">Уведомления по email</ScarnaSwitch>
         <span class="text-sm text-foreground/60">Значение: @_notify</span>
 
         @code {
@@ -42,12 +42,12 @@
 
     private const string ColorsCode =
         """
-        <ScarnaSwitch Value="true" Color="ScarnaColor.Default">Default</ScarnaSwitch>
-        <ScarnaSwitch Value="true" Color="ScarnaColor.Primary">Primary</ScarnaSwitch>
-        <ScarnaSwitch Value="true" Color="ScarnaColor.Secondary">Secondary</ScarnaSwitch>
-        <ScarnaSwitch Value="true" Color="ScarnaColor.Success">Success</ScarnaSwitch>
-        <ScarnaSwitch Value="true" Color="ScarnaColor.Warning">Warning</ScarnaSwitch>
-        <ScarnaSwitch Value="true" Color="ScarnaColor.Danger">Danger</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="Color.Default">Default</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="Color.Primary">Primary</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="Color.Secondary">Secondary</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="Color.Success">Success</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="Color.Warning">Warning</ScarnaSwitch>
+        <ScarnaSwitch Value="true" Color="Color.Danger">Danger</ScarnaSwitch>
         """;
 
     private const string StatesCode =
@@ -62,7 +62,7 @@
         new("Value / ValueChanged / ValueExpression", "bool", "—", "Механика @bind-Value"),
         new("Disabled", "bool", "false", "—"),
         new("ReadOnly", "bool", "false", "Запрещает переключение, но не тускнеет (в отличие от Disabled)"),
-        new("Color", "ScarnaColor", "Primary", "Цвет дорожки во включённом состоянии"),
+        new("Color", "Color", "Primary", "Цвет дорожки во включённом состоянии"),
         new("Density", "ScarnaDensity", "Normal", "Dense — уменьшенная дорожка для плотных списков"),
         new("ChildContent", "RenderFragment?", "—", "Подпись рядом с переключателем"),
     };

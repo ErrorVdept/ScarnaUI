@@ -16,7 +16,7 @@
     <ScarnaAvatar Initials="ИИ" />
 </ScarnaBadge>
 
-<ScarnaBadge Dot="true" Color="ScarnaColor.Success">
+<ScarnaBadge Dot="true" Color="Color.Success">
     <ScarnaAvatar Src="/img/user.jpg" />
 </ScarnaBadge>
 ```
@@ -25,7 +25,7 @@
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
-| `Color` | `ScarnaColor` | `Danger` | Цвет заливки значка |
+| `Color` | `Color` | `Danger` | Цвет заливки значка |
 | `Content` | `string?` | — | Текст/число внутри значка (игнорируется при `Dot`) |
 | `Dot` | `bool` | `false` | Показать маленькую точку вместо текста |
 | `Visible` | `bool` | `true` | Управляет видимостью значка целиком |

@@ -1,0 +1,25 @@
+@*
+    Вертикальное меню навигации — контейнер для ScarnaNavLink (обычно внутри
+    ScarnaDrawer). Сама по себе не хранит состояние — активный пункт каждый
+    ScarnaNavLink определяет самостоятельно по текущему URL (через INavigator).
+
+    <ScarnaNavMenu>
+        <ScarnaNavLink Href="/"><HomeIcon />Главная</ScarnaNavLink>
+        <ScarnaNavLink Href="/orders"><OrdersIcon />Заказы</ScarnaNavLink>
+        <ScarnaNavLink Href="/settings" Exact="true"><SettingsIcon />Настройки</ScarnaNavLink>
+    </ScarnaNavMenu>
+*@
+@namespace ScarnaUI.Components.Layout
+@inherits ScarnaComponentBase
+
+<nav class="@Classes" style="@Style" @attributes="UserAttributes">
+    @ChildContent
+</nav>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string Classes => CssBuilder.Default("scarna-nav-menu flex flex-col gap-1")
+        .AddClass(Class)
+        .ToString();
+}

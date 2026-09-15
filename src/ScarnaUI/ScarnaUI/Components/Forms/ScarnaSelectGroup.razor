@@ -44,7 +44,7 @@
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
     /// <summary>К какому краю прижимать кнопки вдоль дорожки — как AlignItems в MudBlazor (здесь это justify-content, т.к. поперечная ось и так центрирована). Заметно, только если FullWidth="false".</summary>
-    [Parameter] public ScarnaJustify Justify { get; set; } = ScarnaJustify.Start;
+    [Parameter] public Justify Justify { get; set; } = Justify.Start;
 
     /// <summary>Растянуть кнопки на всю ширину родителя поровну, вместо ширины по содержимому.</summary>
     [Parameter] public bool FullWidth { get; set; }
@@ -96,11 +96,11 @@
 
     private string JustifyClass => Justify switch
     {
-        ScarnaJustify.End => "justify-end",
-        ScarnaJustify.Center => "justify-center",
-        ScarnaJustify.SpaceBetween => "justify-between",
-        ScarnaJustify.SpaceAround => "justify-around",
-        ScarnaJustify.SpaceEvenly => "justify-evenly",
+        Justify.End => "justify-end",
+        Justify.Center => "justify-center",
+        Justify.SpaceBetween => "justify-between",
+        Justify.SpaceAround => "justify-around",
+        Justify.SpaceEvenly => "justify-evenly",
         _ => "justify-start",
     };
 

@@ -24,8 +24,8 @@ Bootstrap-grid). `ScarnaGrid` — контейнер (`grid-template-columns: re
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
 | `Spacing` | `int` | `4` | Отступ между ячейками в шагах по 0.25rem |
-| `Justify` | `ScarnaJustify` | `Start` | `justify-content` сетки (заметно, только если ячейки не заполняют всю ширину) — как Justify в MudBlazor |
-| `Align` | `ScarnaAlign` | `Stretch` | `align-items` — вертикальное выравнивание содержимого ячеек — как AlignItems в MudBlazor |
+| `Justify` | `Justify` | `Start` | `justify-content` сетки (заметно, только если ячейки не заполняют всю ширину) — как Justify в MudBlazor |
+| `Align` | `Align` | `Stretch` | `align-items` — вертикальное выравнивание содержимого ячеек — как AlignItems в MudBlazor |
 
 ## Параметры ScarnaItem
 

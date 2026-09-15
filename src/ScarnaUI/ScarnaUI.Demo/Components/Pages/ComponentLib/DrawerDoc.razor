@@ -4,11 +4,11 @@
          Files="@(new[] { "Components/Layout/ScarnaDrawer.razor" })">
 
     <DocSection Title="Anchor=Left" Description="Открывается кнопкой, закрывается по клику на подложку или крестик." Code="@LeftCode" Row="false">
-        <ScarnaButton Variant="ScarnaVariant.Bordered" OnClick="() => _leftOpen = true">Открыть слева</ScarnaButton>
+        <ScarnaButton Variant="Variant.Bordered" OnClick="() => _leftOpen = true">Открыть слева</ScarnaButton>
         <ScarnaDrawer @bind-Open="_leftOpen" Anchor="ScarnaDrawerAnchor.Left">
             <div class="flex items-center justify-between border-b border-divider px-4 py-3">
                 <span class="font-semibold">Меню</span>
-                <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _leftOpen = false">✕</ScarnaButton>
+                <ScarnaButton Size="Size.Small" Variant="Variant.Light" OnClick="() => _leftOpen = false">✕</ScarnaButton>
             </div>
             <ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None" Class="p-3">
                 <ScarnaListItem Value="@("home")">Главная</ScarnaListItem>
@@ -19,11 +19,11 @@
     </DocSection>
 
     <DocSection Title="Anchor=Bottom" Description="Height задаёт высоту панели для Top/Bottom." Code="@BottomCode" Row="false">
-        <ScarnaButton Variant="ScarnaVariant.Bordered" OnClick="() => _bottomOpen = true">Открыть снизу</ScarnaButton>
+        <ScarnaButton Variant="Variant.Bordered" OnClick="() => _bottomOpen = true">Открыть снизу</ScarnaButton>
         <ScarnaDrawer @bind-Open="_bottomOpen" Anchor="ScarnaDrawerAnchor.Bottom" Height="200px">
             <div class="flex items-center justify-between border-b border-divider px-4 py-3">
                 <span class="font-semibold">Панель снизу</span>
-                <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _bottomOpen = false">✕</ScarnaButton>
+                <ScarnaButton Size="Size.Small" Variant="Variant.Light" OnClick="() => _bottomOpen = false">✕</ScarnaButton>
             </div>
             <p class="p-4 text-sm text-foreground/70">Произвольное содержимое.</p>
         </ScarnaDrawer>
@@ -41,7 +41,7 @@
                 </ScarnaList>
             </ScarnaDrawer>
             <div class="flex-1 p-4">
-                <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Bordered" OnClick="() => _persistentOpen = !_persistentOpen">Переключить</ScarnaButton>
+                <ScarnaButton Size="Size.Small" Variant="Variant.Bordered" OnClick="() => _persistentOpen = !_persistentOpen">Переключить</ScarnaButton>
             </div>
         </div>
     </DocSection>
@@ -57,7 +57,7 @@
                 </ScarnaStack>
             </ScarnaDrawer>
             <div class="flex-1 p-4">
-                <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Bordered" OnClick="() => _miniOpen = !_miniOpen">Переключить</ScarnaButton>
+                <ScarnaButton Size="Size.Small" Variant="Variant.Bordered" OnClick="() => _miniOpen = !_miniOpen">Переключить</ScarnaButton>
             </div>
         </div>
     </DocSection>
@@ -79,7 +79,7 @@
         <ScarnaDrawer @bind-Open="_open" Anchor="ScarnaDrawerAnchor.Left">
             <div class="flex items-center justify-between border-b border-divider px-4 py-3">
                 <span class="font-semibold">Меню</span>
-                <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _open = false">✕</ScarnaButton>
+                <ScarnaButton Size="Size.Small" Variant="Variant.Light" OnClick="() => _open = false">✕</ScarnaButton>
             </div>
             <ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None" Class="p-3">
                 <ScarnaListItem Value="@("home")">Главная</ScarnaListItem>

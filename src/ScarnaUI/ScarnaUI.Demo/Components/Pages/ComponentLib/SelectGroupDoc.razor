@@ -21,7 +21,7 @@
     </DocSection>
 
     <DocSection Title="Justify" Description='Заметно только при FullWidth="false".' Code="@JustifyCode" Row="false">
-        <ScarnaSelectGroup Label="Justify.Center" Value="@("week")" Justify="ScarnaJustify.Center">
+        <ScarnaSelectGroup Label="Justify.Center" Value="@("week")" Justify="Justify.Center">
             <ScarnaSelectGroupItem Value="@("day")" Text="День" />
             <ScarnaSelectGroupItem Value="@("week")" Text="Неделя" />
             <ScarnaSelectGroupItem Value="@("month")" Text="Месяц" />
@@ -61,7 +61,7 @@
 
     private const string JustifyCode =
         """
-        <ScarnaSelectGroup Label="Justify.Center" @bind-Value="_period" Justify="ScarnaJustify.Center">
+        <ScarnaSelectGroup Label="Justify.Center" @bind-Value="_period" Justify="Justify.Center">
             <ScarnaSelectGroupItem Value="@("day")" Text="День" />
             <ScarnaSelectGroupItem Value="@("week")" Text="Неделя" />
             <ScarnaSelectGroupItem Value="@("month")" Text="Месяц" />
@@ -72,7 +72,7 @@
     {
         new("Value / ValueChanged / ValueExpression", "TValue?", "—", "Механика @bind-Value"),
         new("Label", "string?", "—", "Подпись над группой"),
-        new("Justify", "ScarnaJustify", "Start", "К какому краю прижимать кнопки (заметно, только если FullWidth=\"false\")"),
+        new("Justify", "Justify", "Start", "К какому краю прижимать кнопки (заметно, только если FullWidth=\"false\")"),
         new("FullWidth", "bool", "false", "Растянуть кнопки на всю ширину родителя поровну"),
         new("ChildContent", "RenderFragment?", "—", "Набор ScarnaSelectGroupItem"),
     };

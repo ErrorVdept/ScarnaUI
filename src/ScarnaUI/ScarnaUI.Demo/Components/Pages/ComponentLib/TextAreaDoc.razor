@@ -13,7 +13,7 @@
     </DocSection>
 
     <DocSection Title="Варианты и состояния" Code="@StatesCode">
-        <ScarnaTextArea Placeholder="Flat" Variant="ScarnaVariant.Flat" Class="w-56" />
+        <ScarnaTextArea Placeholder="Flat" Variant="Variant.Flat" Class="w-56" />
         <ScarnaTextArea Value="Только чтение" ReadOnly="true" Class="w-56" />
         <ScarnaTextArea Placeholder="Отключено" Disabled="true" Class="w-56" />
     </DocSection>
@@ -47,7 +47,7 @@
 
     private const string StatesCode =
         """
-        <ScarnaTextArea Placeholder="Flat" Variant="ScarnaVariant.Flat" />
+        <ScarnaTextArea Placeholder="Flat" Variant="Variant.Flat" />
         <ScarnaTextArea Value="Только чтение" ReadOnly="true" />
         <ScarnaTextArea Placeholder="Отключено" Disabled="true" />
         """;
@@ -62,8 +62,8 @@
         new("AutoResize", "bool", "false", "Расти по высоте вслед за содержимым (field-sizing: content)"),
         new("Disabled", "bool", "false", "—"),
         new("ReadOnly", "bool", "false", "—"),
-        new("Variant", "ScarnaVariant", "Bordered", "Bordered/Flat"),
+        new("Variant", "Variant", "Bordered", "Bordered/Flat"),
         new("Bordered", "bool", "true", "Показывать ли контур поля"),
-        new("Radius", "ScarnaRadius", "Medium", "Радиус поля"),
+        new("Radius", "Radius", "Medium", "Радиус поля"),
     };
 }

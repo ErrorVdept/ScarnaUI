@@ -13,14 +13,14 @@
 
 ```razor
 <ScarnaTag>новое</ScarnaTag>
-<ScarnaTag Color="ScarnaColor.Success">активен</ScarnaTag>
+<ScarnaTag Color="Color.Success">активен</ScarnaTag>
 ```
 
 ## Параметры
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
-| `Color` | `ScarnaColor` | `Default` | Цвет заливки |
-| `Variant` | `ScarnaVariant` | `Flat` | Вариант заливки (см. [ScarnaColor/ScarnaVariant](getting-started.md)) |
+| `Color` | `Color` | `Default` | Цвет заливки |
+| `Variant` | `Variant` | `Flat` | Вариант заливки (см. [Color/Variant](getting-started.md)) |
 | `ChildContent` | `RenderFragment?` | — | Текст метки |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

@@ -36,8 +36,8 @@
 <ScarnaDialog Title="Удалить файл?">
     <DialogContent>Это действие необратимо.</DialogContent>
     <DialogActions>
-        <ScarnaButton Variant="ScarnaVariant.Light" OnClick="Cancel">Отмена</ScarnaButton>
-        <ScarnaButton Color="ScarnaColor.Danger" OnClick="Confirm">Удалить</ScarnaButton>
+        <ScarnaButton Variant="Variant.Light" OnClick="Cancel">Отмена</ScarnaButton>
+        <ScarnaButton Color="Color.Danger" OnClick="Confirm">Удалить</ScarnaButton>
     </DialogActions>
 </ScarnaDialog>
 
@@ -53,7 +53,7 @@
 ```razor
 @inject IScarnaDialogService DialogService
 
-<ScarnaButton Color="ScarnaColor.Danger" OnClick="DeleteAsync">Удалить</ScarnaButton>
+<ScarnaButton Color="Color.Danger" OnClick="DeleteAsync">Удалить</ScarnaButton>
 
 @code {
     private async Task DeleteAsync()

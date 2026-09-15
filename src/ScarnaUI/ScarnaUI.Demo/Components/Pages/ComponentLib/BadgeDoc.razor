@@ -7,16 +7,16 @@
         <ScarnaBadge Content="5">
             <ScarnaAvatar Initials="ВГ" />
         </ScarnaBadge>
-        <ScarnaBadge Dot="true" Color="ScarnaColor.Success">
+        <ScarnaBadge Dot="true" Color="Color.Success">
             <ScarnaAvatar Initials="ОК" />
         </ScarnaBadge>
-        <ScarnaBadge Content="99+" Color="ScarnaColor.Primary">
+        <ScarnaBadge Content="99+" Color="Color.Primary">
             <ScarnaAvatar Initials="АБ" />
         </ScarnaBadge>
     </DocSection>
 
     <DocSection Title="Visible" Description="Управляет видимостью значка целиком, без изменения разметки." Code="@VisibleCode">
-        <ScarnaButton Size="ScarnaSize.Small" Variant="ScarnaVariant.Light" OnClick="() => _hasUnread = !_hasUnread">
+        <ScarnaButton Size="Size.Small" Variant="Variant.Light" OnClick="() => _hasUnread = !_hasUnread">
             @(_hasUnread ? "Отметить прочитанным" : "Показать непрочитанные")
         </ScarnaButton>
         <ScarnaBadge Content="3" Visible="@_hasUnread">
@@ -25,10 +25,10 @@
     </DocSection>
 
     <DocSection Title="Bordered" Code="@BorderedCode">
-        <ScarnaBadge Dot="true" Color="ScarnaColor.Danger" Bordered="true">
+        <ScarnaBadge Dot="true" Color="Color.Danger" Bordered="true">
             <ScarnaAvatar Initials="НБ" />
         </ScarnaBadge>
-        <ScarnaBadge Dot="true" Color="ScarnaColor.Danger" Bordered="false">
+        <ScarnaBadge Dot="true" Color="Color.Danger" Bordered="false">
             <ScarnaAvatar Initials="НБ" />
         </ScarnaBadge>
     </DocSection>
@@ -45,10 +45,10 @@
         <ScarnaBadge Content="5">
             <ScarnaAvatar Initials="ВГ" />
         </ScarnaBadge>
-        <ScarnaBadge Dot="true" Color="ScarnaColor.Success">
+        <ScarnaBadge Dot="true" Color="Color.Success">
             <ScarnaAvatar Initials="ОК" />
         </ScarnaBadge>
-        <ScarnaBadge Content="99+" Color="ScarnaColor.Primary">
+        <ScarnaBadge Content="99+" Color="Color.Primary">
             <ScarnaAvatar Initials="АБ" />
         </ScarnaBadge>
         """;
@@ -62,17 +62,17 @@
 
     private const string BorderedCode =
         """
-        <ScarnaBadge Dot="true" Color="ScarnaColor.Danger" Bordered="true">
+        <ScarnaBadge Dot="true" Color="Color.Danger" Bordered="true">
             <ScarnaAvatar Initials="НБ" />
         </ScarnaBadge>
-        <ScarnaBadge Dot="true" Color="ScarnaColor.Danger" Bordered="false">
+        <ScarnaBadge Dot="true" Color="Color.Danger" Bordered="false">
             <ScarnaAvatar Initials="НБ" />
         </ScarnaBadge>
         """;
 
     private readonly List<DocApiRow> _rows = new()
     {
-        new("Color", "ScarnaColor", "Danger", "Цвет заливки значка"),
+        new("Color", "Color", "Danger", "Цвет заливки значка"),
         new("Content", "string?", "—", "Текст/число внутри значка (игнорируется при Dot)"),
         new("Dot", "bool", "false", "Показать маленькую точку вместо текста"),
         new("Visible", "bool", "true", "Управляет видимостью значка целиком"),

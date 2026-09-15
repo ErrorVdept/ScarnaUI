@@ -31,7 +31,7 @@
 | `AutoResize` | `bool` | `false` | Расти по высоте вслед за содержимым (`field-sizing: content`) |
 | `Disabled` | `bool` | `false` | — |
 | `ReadOnly` | `bool` | `false` | — |
-| `Variant` | `ScarnaVariant` | `Bordered` | `Bordered`/`Flat` |
+| `Variant` | `Variant` | `Bordered` | `Bordered`/`Flat` |
 | `Bordered` | `bool` | `true` | Показывать ли контур поля |
-| `Radius` | `ScarnaRadius` | `Medium` | Радиус поля |
+| `Radius` | `Radius` | `Medium` | Радиус поля |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

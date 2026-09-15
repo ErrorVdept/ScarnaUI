@@ -14,14 +14,14 @@
 
 ```razor
 <ScarnaSpinner />
-<ScarnaSpinner Color="ScarnaColor.Success" Size="ScarnaSize.Large" />
+<ScarnaSpinner Color="Color.Success" Size="Size.Large" />
 ```
 
 ## Параметры
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
-| `Color` | `ScarnaColor` | `Primary` | Цвет кольца |
-| `Size` | `ScarnaSize` | `Medium` | `Small`/`Medium`/`Large` |
+| `Color` | `Color` | `Primary` | Цвет кольца |
+| `Size` | `Size` | `Medium` | `Small`/`Medium`/`Large` |
 | `Label` | `string` | `"Загрузка"` | Текст для скринридеров (`aria-label`), визуально не отображается |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |
