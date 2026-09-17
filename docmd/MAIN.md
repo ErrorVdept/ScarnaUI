@@ -129,7 +129,7 @@ FOUC-скрипт и регистрация DI — в [getting-started.md](getti
 </ScarnaNavBar>
 
 <ScarnaContainer Class="py-8">
-    <ScarnaText Typo="ScarnaTypo.H4">Заголовок страницы</ScarnaText>
+    <ScarnaText Typo="Typo.H4">Заголовок страницы</ScarnaText>
 
     <ScarnaStack Spacing="4" Class="mt-4">
         <ScarnaCard>

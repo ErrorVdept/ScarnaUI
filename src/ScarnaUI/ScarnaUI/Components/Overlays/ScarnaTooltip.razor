@@ -7,8 +7,9 @@
     </ScarnaTooltip>
 *@
 @namespace ScarnaUI.Components.Overlays
+@inherits ScarnaComponentBase
 
-<span @ref="_anchor" class="scarna-tooltip-anchor inline-flex" @onmouseenter="Show" @onmouseleave="Hide" @onfocusin="Show" @onfocusout="Hide">
+<span @ref="_anchor" class="@Classes" style="@RootStyle" @onmouseenter="Show" @onmouseleave="Hide" @onfocusin="Show" @onfocusout="Hide" @attributes="UserAttributes">
     @ChildContent
 </span>
 
@@ -34,4 +35,6 @@
     private void Show() => _open = true;
 
     private void Hide() => _open = false;
+
+    private string Classes => CssBuilder.Default("scarna-tooltip-anchor inline-flex").AddClass(Class).ToString();
 }

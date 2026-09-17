@@ -81,4 +81,5 @@
 | `Height` | `string` | `"280px"` | Высота панели (для `Top`/`Bottom`) |
 | `MiniWidth` | `string` | `"72px"` | Ширина/высота в закрытом состоянии у `Variant.Mini`. Не используется у `Temporary`/`Persistent` |
 | `CloseOnBackdropClick` | `bool` | `true` | Закрывать по клику на подложку (актуально только для `Temporary` — у остальных вариантов подложки нет) |
+| `Color` | `Color` | `Default` | Фон панели. `Default` — нейтральная поверхность темы (`bg-content1`); `Transparent` — без заливки; `Primary`/`Secondary`/`Success`/`Warning`/`Danger` — сплошная заливка цветом темы (например, тот же `Color`, что и у `ScarnaNavBar`, чтобы Drawer и AppBar были одного цвета) |
 | `ChildContent` | `RenderFragment?` | — | Содержимое панели |

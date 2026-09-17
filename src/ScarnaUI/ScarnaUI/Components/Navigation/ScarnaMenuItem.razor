@@ -2,8 +2,9 @@
     Один пункт меню ScarnaMenu. Клик вызывает OnClick и закрывает родительское меню.
 *@
 @namespace ScarnaUI.Components.Navigation
+@inherits ScarnaComponentBase
 
-<button type="button" class="@Classes" role="menuitem" disabled="@Disabled" @onclick="HandleClickAsync">
+<button type="button" class="@Classes" style="@RootStyle" role="menuitem" disabled="@Disabled" @onclick="HandleClickAsync" @attributes="UserAttributes">
     @StartContent
     <span class="flex-1 truncate">@ChildContent</span>
 </button>
@@ -44,6 +45,7 @@
     private string Classes => CssBuilder.Default("scarna-menu-item flex w-full items-center gap-2 rounded-scarna-sm px-3 py-2 text-left text-sm transition-colors")
         .AddClass(ColorClass)
         .AddClass("opacity-50 cursor-not-allowed", Disabled)
+        .AddClass(Class)
         .ToString();
 
     private string ColorClass => Color switch

@@ -9,7 +9,7 @@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
 
-<span class="@Classes" style="@Style" @attributes="UserAttributes">
+<span class="@Classes" style="@RootStyle" @attributes="UserAttributes">
     @if (!string.IsNullOrEmpty(Src) && !_imageFailed)
     {
         <img src="@Src" alt="@Alt" class="h-full w-full object-cover" @onerror="() => _imageFailed = true" />

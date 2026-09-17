@@ -19,7 +19,7 @@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
 
-<div class="@WrapperClasses" style="@Style" @attributes="UserAttributes">
+<div class="@WrapperClasses" style="@RootStyle" @attributes="UserAttributes">
     <table class="@TableClasses">
         @ChildContent
     </table>
@@ -35,6 +35,9 @@
     /// <summary>Обводка контейнера таблицы.</summary>
     [Parameter] public bool Bordered { get; set; } = true;
 
+    /// <summary>Фон таблицы. Default (по умолчанию) — нейтральная поверхность темы (bg-content1); Transparent — без заливки.</summary>
+    [Parameter] public Color Color { get; set; } = Color.Default;
+
     /// <summary>Вертикальные разделители между колонками (кроме последней — там и так край контейнера).</summary>
     [Parameter] public bool DividedColumns { get; set; }
 
@@ -43,7 +46,8 @@
 
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
-    private string WrapperClasses => CssBuilder.Default("scarna-table-wrapper w-full overflow-x-auto rounded-scarna-lg bg-content1")
+    private string WrapperClasses => CssBuilder.Default("scarna-table-wrapper w-full overflow-x-auto rounded-scarna-lg")
+        .AddClass(ScarnaColorVariantClasses.Surface(Color))
         .AddClass("border border-divider", Bordered)
         .AddClass(Class)
         .ToString();

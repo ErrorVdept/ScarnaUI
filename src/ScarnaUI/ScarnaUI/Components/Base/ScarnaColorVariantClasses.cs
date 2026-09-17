@@ -68,4 +68,23 @@ public static class ScarnaColorVariantClasses
         ScarnaUI.Components.Base.Radius.Full => "rounded-scarna-full",
         _ => "rounded-scarna-md",
     };
+
+    /// <summary>
+    /// Фон "поверхности" по цвету — для ScarnaList/ScarnaCard/ScarnaPaper/ScarnaBottomMenu/
+    /// ScarnaTable/ScarnaExpansionPanel и т.п. (не для Button/Chip — см. Get выше, у них
+    /// своя семантика "заливка × вариант"). В отличие от Get, Color.Default здесь — это
+    /// НЕЙТРАЛЬНАЯ ПОВЕРХНОСТЬ ТЕМЫ (<paramref name="defaultClass"/>, обычно "bg-content1"),
+    /// а не "bg-default" — так сохраняется исходный вид компонентов, у которых Color
+    /// добавился уже после того, как их фон был захардкожен как bg-content1.
+    /// </summary>
+    public static string Surface(Color color, string defaultClass = "bg-content1") => color switch
+    {
+        Color.Transparent => "bg-transparent",
+        Color.Primary => "bg-primary text-primary-foreground",
+        Color.Secondary => "bg-secondary text-secondary-foreground",
+        Color.Success => "bg-success text-success-foreground",
+        Color.Warning => "bg-warning text-warning-foreground",
+        Color.Danger => "bg-danger text-danger-foreground",
+        _ => defaultClass,
+    };
 }

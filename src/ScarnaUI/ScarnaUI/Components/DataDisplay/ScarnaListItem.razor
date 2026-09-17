@@ -3,8 +3,9 @@
 *@
 @namespace ScarnaUI.Components.DataDisplay
 @typeparam TValue
+@inherits ScarnaComponentBase
 
-<div class="@Classes" role="option" aria-selected="@IsSelected" @onclick="HandleClickAsync">
+<div class="@Classes" style="@RootStyle" role="option" aria-selected="@IsSelected" @onclick="HandleClickAsync" @attributes="UserAttributes">
     @if (Parent?.SelectionMode == ScarnaListSelectionMode.Multiple)
     {
         <span class="@CheckboxClasses" aria-hidden="true">
@@ -67,6 +68,7 @@
         .AddClass("bg-primary/10 text-primary", IsSelected)
         .AddClass("text-foreground hover:bg-content2", !IsSelected)
         .AddClass("pointer-events-none opacity-50", Disabled)
+        .AddClass(Class)
         .ToString();
 
     private string CheckboxClasses => CssBuilder.Default("flex items-center justify-center size-4 shrink-0 rounded border-2 text-white transition-colors")

@@ -42,6 +42,17 @@
         </ScarnaTable>
     </DocSection>
 
+    <DocSection Title="Color" Description="Фон контейнера таблицы — цвет темы." Row="false" Code="@ColorCode">
+        <ScarnaTable Color="Color.Primary">
+            <thead>
+                <tr><th>Товар</th><th>Цена</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Кроссовки</td><td>4 990 ₽</td></tr>
+            </tbody>
+        </ScarnaTable>
+    </DocSection>
+
     <DocApiTable Rows="@_rows" />
 
 </DocPage>
@@ -87,11 +98,20 @@
         </ScarnaTable>
         """;
 
+    private const string ColorCode =
+        """
+        <ScarnaTable Color="Color.Primary">
+            <thead>...</thead>
+            <tbody>...</tbody>
+        </ScarnaTable>
+        """;
+
     private readonly List<DocApiRow> _rows = new()
     {
         new("Hover", "bool", "true", "Подсветка строки <tbody> при наведении"),
         new("Striped", "bool", "false", "Зебра — чередующийся фон чётных строк"),
         new("Bordered", "bool", "true", "Обводка контейнера таблицы"),
+        new("Color", "Color", "Default", "Фон таблицы. Default — нейтральная поверхность темы; Transparent — без заливки; остальные — заливка цветом темы"),
         new("DividedColumns", "bool", "false", "Вертикальные разделители между колонками (кроме последней)"),
         new("Density", "ScarnaDensity", "Normal", "Dense — компактные отступы ячеек, для больших наборов данных"),
         new("ChildContent", "RenderFragment?", "—", "Произвольная разметка thead/tbody"),

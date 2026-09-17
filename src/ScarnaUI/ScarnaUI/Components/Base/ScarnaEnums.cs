@@ -15,6 +15,15 @@ public enum Color
     Success,
     Warning,
     Danger,
+
+    /// <summary>
+    /// Без заливки (bg-transparent) — для компонентов-"поверхностей" (ScarnaList,
+    /// ScarnaCard, ScarnaPaper, ScarnaBottomMenu, ScarnaTable, ScarnaExpansionPanel),
+    /// у которых Color меняет именно фон. Для Button/Chip/Badge и т.д. не поддерживается
+    /// таблицей ScarnaColorVariantClasses.Get — там смысла в "прозрачной кнопке" нет,
+    /// для этого уже есть Variant.Light/Bordered.
+    /// </summary>
+    Transparent,
 }
 
 /// <summary>Размер компонента. Влияет на паддинги, шрифт и высоту контрола.</summary>

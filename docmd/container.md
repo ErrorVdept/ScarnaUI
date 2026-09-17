@@ -12,7 +12,7 @@
 ## Пример использования
 
 ```razor
-<ScarnaContainer MaxWidth="ScarnaContainerMaxWidth.Large">
+<ScarnaContainer Breakpoint="ScarnaContainerMaxWidth.Large">
     <h1>Заголовок страницы</h1>
     ...
 </ScarnaContainer>
@@ -22,6 +22,6 @@
 
 | Параметр | Тип | По умолчанию | Назначение |
 |---|---|---|---|
-| `MaxWidth` | `ScarnaContainerMaxWidth` | `Large` | `Small` / `Medium` / `Large` / `ExtraLarge` |
-| `Fluid` | `bool` | `false` | `true` — растянуть на всю ширину, игнорируя `MaxWidth` |
-| `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |
+| `Breakpoint` | `ScarnaContainerMaxWidth` | `Large` | `Small` / `Medium` / `Large` / `ExtraLarge` — пресет максимальной ширины |
+| `Fluid` | `bool` | `false` | `true` — растянуть на всю ширину, игнорируя `Breakpoint` |
+| `Class`, `Style`, `UserAttributes`, `MaxWidth`, ... | — | — | см. [getting-started.md](getting-started.md) — `MaxWidth` здесь означает точное CSS-значение (унаследован из `ScarnaComponentBase`), не пресет |

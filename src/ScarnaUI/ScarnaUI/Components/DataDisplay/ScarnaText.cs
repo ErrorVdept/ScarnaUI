@@ -11,18 +11,18 @@ namespace ScarnaUI.Components.DataDisplay;
 /// в .razor-разметке имя тега всегда статическое, поэтому здесь используется
 /// <see cref="RenderTreeBuilder"/> напрямую.
 ///
-/// &lt;ScarnaText Typo="ScarnaTypo.H2"&gt;Заголовок раздела&lt;/ScarnaText&gt;
-/// &lt;ScarnaText Typo="ScarnaTypo.Body2" Color="Color.Danger"&gt;Ошибка сохранения&lt;/ScarnaText&gt;
+/// &lt;ScarnaText Typo="Typo.H2"&gt;Заголовок раздела&lt;/ScarnaText&gt;
+/// &lt;ScarnaText Typo="Typo.Body2" Color="Color.Danger"&gt;Ошибка сохранения&lt;/ScarnaText&gt;
 /// </summary>
 public sealed class ScarnaText : ScarnaComponentBase
 {
     /// <summary>Типографический стиль — определяет и HTML-тег по умолчанию, и размер/начертание шрифта.</summary>
-    [Parameter] public ScarnaTypo Typo { get; set; } = ScarnaTypo.Body1;
+    [Parameter] public Typo Typo { get; set; } = Typo.Body1;
 
     /// <summary>Цвет текста. Не задан (null) — обычный `text-foreground`.</summary>
     [Parameter] public Color? Color { get; set; }
 
-    [Parameter] public ScarnaTextAlign Align { get; set; } = ScarnaTextAlign.Inherit;
+    [Parameter] public TextAlign TextAlign { get; set; } = TextAlign.Inherit;
 
     /// <summary>Добавляет отступ снизу (для абзацев подряд) — как GutterBottom в MudBlazor.</summary>
     [Parameter] public bool GutterBottom { get; set; }
@@ -40,9 +40,10 @@ public sealed class ScarnaText : ScarnaComponentBase
         builder.OpenElement(0, As ?? DefaultTag(Typo));
         builder.AddAttribute(1, "class", Classes);
 
-        if (!string.IsNullOrEmpty(Style))
+        var style = RootStyle;
+        if (!string.IsNullOrEmpty(style))
         {
-            builder.AddAttribute(2, "style", Style);
+            builder.AddAttribute(2, "style", style);
         }
 
         if (UserAttributes is not null)
@@ -54,16 +55,16 @@ public sealed class ScarnaText : ScarnaComponentBase
         builder.CloseElement();
     }
 
-    private static string DefaultTag(ScarnaTypo typo) => typo switch
+    private static string DefaultTag(Typo typo) => typo switch
     {
-        ScarnaTypo.H1 => "h1",
-        ScarnaTypo.H2 => "h2",
-        ScarnaTypo.H3 => "h3",
-        ScarnaTypo.H4 => "h4",
-        ScarnaTypo.H5 => "h5",
-        ScarnaTypo.H6 => "h6",
-        ScarnaTypo.Subtitle1 or ScarnaTypo.Subtitle2 => "h6",
-        ScarnaTypo.Caption or ScarnaTypo.Overline or ScarnaTypo.Button => "span",
+        Typo.H1 => "h1",
+        Typo.H2 => "h2",
+        Typo.H3 => "h3",
+        Typo.H4 => "h4",
+        Typo.H5 => "h5",
+        Typo.H6 => "h6",
+        Typo.Subtitle1 or Typo.Subtitle2 => "h6",
+        Typo.Caption or Typo.Overline or Typo.Button => "span",
         _ => "p",
     };
 
@@ -78,18 +79,18 @@ public sealed class ScarnaText : ScarnaComponentBase
 
     private string TypoClasses => Typo switch
     {
-        ScarnaTypo.H1 => "text-4xl font-bold tracking-tight",
-        ScarnaTypo.H2 => "text-3xl font-bold tracking-tight",
-        ScarnaTypo.H3 => "text-2xl font-semibold tracking-tight",
-        ScarnaTypo.H4 => "text-xl font-semibold",
-        ScarnaTypo.H5 => "text-lg font-semibold",
-        ScarnaTypo.H6 => "text-base font-semibold",
-        ScarnaTypo.Subtitle1 => "text-base font-medium",
-        ScarnaTypo.Subtitle2 => "text-sm font-medium",
-        ScarnaTypo.Body2 => "text-sm",
-        ScarnaTypo.Caption => "text-xs",
-        ScarnaTypo.Overline => "text-xs uppercase tracking-wide",
-        ScarnaTypo.Button => "text-sm font-medium uppercase tracking-wide",
+        Typo.H1 => "text-4xl font-bold tracking-tight",
+        Typo.H2 => "text-3xl font-bold tracking-tight",
+        Typo.H3 => "text-2xl font-semibold tracking-tight",
+        Typo.H4 => "text-xl font-semibold",
+        Typo.H5 => "text-lg font-semibold",
+        Typo.H6 => "text-base font-semibold",
+        Typo.Subtitle1 => "text-base font-medium",
+        Typo.Subtitle2 => "text-sm font-medium",
+        Typo.Body2 => "text-sm",
+        Typo.Caption => "text-xs",
+        Typo.Overline => "text-xs uppercase tracking-wide",
+        Typo.Button => "text-sm font-medium uppercase tracking-wide",
         _ => "text-base",
     };
 
@@ -99,7 +100,7 @@ public sealed class ScarnaText : ScarnaComponentBase
     // бы от порядка правил в сгенерированном Tailwind-CSS, а не от того, что явно задал вызывающий.
     private string ColorClass => Color switch
     {
-        null when Typo is ScarnaTypo.Caption or ScarnaTypo.Overline => "text-foreground/60",
+        null when Typo is Typo.Caption or Typo.Overline => "text-foreground/60",
         null => "text-foreground",
         ScarnaUI.Components.Base.Color.Primary => "text-primary",
         ScarnaUI.Components.Base.Color.Secondary => "text-secondary",
@@ -110,12 +111,12 @@ public sealed class ScarnaText : ScarnaComponentBase
         _ => "text-foreground",
     };
 
-    private string AlignClass => Align switch
+    private string AlignClass => TextAlign switch
     {
-        ScarnaTextAlign.Start => "text-left",
-        ScarnaTextAlign.Center => "text-center",
-        ScarnaTextAlign.End => "text-right",
-        ScarnaTextAlign.Justify => "text-justify",
+        TextAlign.Start => "text-left",
+        TextAlign.Center => "text-center",
+        TextAlign.End => "text-right",
+        TextAlign.Justify => "text-justify",
         _ => string.Empty,
     };
 }

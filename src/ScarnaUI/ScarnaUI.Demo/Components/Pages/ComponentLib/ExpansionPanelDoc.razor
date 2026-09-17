@@ -23,6 +23,12 @@
         </ScarnaExpansionPanel>
     </DocSection>
 
+    <DocSection Title="Color" Description="Фон на цвет темы. Default — нейтральная поверхность (bg-content1), Transparent — без заливки." Row="false" Code="@ColorCode">
+        <ScarnaExpansionPanel Title="Color.Primary" Color="Color.Primary" Expanded="true">
+            Фон панели — заливка цветом темы.
+        </ScarnaExpansionPanel>
+    </DocSection>
+
     <DocApiTable Rows="@_rows" />
 
 </DocPage>
@@ -48,12 +54,20 @@
         </ScarnaExpansionPanel>
         """;
 
+    private const string ColorCode =
+        """
+        <ScarnaExpansionPanel Title="Color.Primary" Color="Color.Primary">
+            Фон панели — заливка цветом темы.
+        </ScarnaExpansionPanel>
+        """;
+
     private readonly List<DocApiRow> _rows = new()
     {
         new("Title", "string?", "—", "Текстовый заголовок"),
         new("TitleContent", "RenderFragment?", "—", "Заголовок сложной разметкой (вместо Title)"),
         new("Expanded", "bool", "false", "Развёрнута ли панель. Поддерживает @bind-Expanded"),
         new("Bordered", "bool", "true", "Обводка панели"),
+        new("Color", "Color", "Default", "Фон панели. Default — нейтральная поверхность темы; Transparent — без заливки; остальные — заливка цветом темы"),
         new("ChildContent", "RenderFragment?", "—", "Содержимое панели"),
     };
 }

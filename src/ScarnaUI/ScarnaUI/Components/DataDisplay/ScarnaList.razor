@@ -7,13 +7,16 @@
         <ScarnaListItem Value="@("inbox")">Входящие</ScarnaListItem>
         <ScarnaListItem Value="@("sent")">Отправленные</ScarnaListItem>
     </ScarnaList>
+
+    Color меняет фон (по умолчанию — нейтральная поверхность темы bg-content1):
+    <ScarnaList Color="Color.Transparent">...</ScarnaList>
 *@
 @namespace ScarnaUI.Components.DataDisplay
 @typeparam TValue
 @inherits ScarnaComponentBase
 @attribute [CascadingTypeParameter(nameof(TValue))]
 
-<div class="@Classes" style="@Style" @attributes="UserAttributes" role="listbox" aria-multiselectable="@(SelectionMode == ScarnaListSelectionMode.Multiple)">
+<div class="@Classes" style="@RootStyle" @attributes="UserAttributes" role="listbox" aria-multiselectable="@(SelectionMode == ScarnaListSelectionMode.Multiple)">
     <CascadingValue Value="this" IsFixed="false">
         @ChildContent
     </CascadingValue>
@@ -33,6 +36,9 @@
     [Parameter] public EventCallback<IReadOnlyCollection<TValue>> SelectedValuesChanged { get; set; }
 
     [Parameter] public bool Bordered { get; set; }
+
+    /// <summary>Фон списка. Default (по умолчанию) — нейтральная поверхность темы (bg-content1); Transparent — без заливки.</summary>
+    [Parameter] public Color Color { get; set; } = Color.Default;
 
     [Parameter] public ScarnaDensity Density { get; set; } = ScarnaDensity.Normal;
 
@@ -79,7 +85,8 @@
         await InvokeAsync(StateHasChanged);
     }
 
-    private string Classes => CssBuilder.Default("scarna-list flex flex-col gap-0.5 rounded-scarna-md bg-content1 p-1")
+    private string Classes => CssBuilder.Default("scarna-list flex flex-col gap-0.5 rounded-scarna-md p-1")
+        .AddClass(ScarnaColorVariantClasses.Surface(Color))
         .AddClass("border border-divider", Bordered)
         .AddClass(Class)
         .ToString();

@@ -21,8 +21,9 @@
 *@
 @namespace ScarnaUI.Components.Overlays
 @using ScarnaUI.Services
+@inherits ScarnaComponentBase
 
-<div class="scarna-dialog flex flex-col">
+<div class="@Classes" style="@RootStyle" @attributes="UserAttributes">
     @if (!string.IsNullOrEmpty(Title) || TitleContent is not null)
     {
         <div class="scarna-dialog__header flex items-center justify-between gap-4 px-6 py-4 border-b border-divider">
@@ -81,4 +82,6 @@
     [Parameter] public RenderFragment? DialogActions { get; set; }
 
     private void HandleCloseButtonClick() => DialogReference.Close(ScarnaDialogResult.Cancel());
+
+    private string Classes => CssBuilder.Default("scarna-dialog flex flex-col").AddClass(Class).ToString();
 }

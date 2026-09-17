@@ -17,7 +17,7 @@
 @inherits ScarnaFormComponentBase<TValue>
 @attribute [CascadingTypeParameter(nameof(TValue))]
 
-<div class="@WrapperOuterClasses" style="@Style" @attributes="UserAttributes">
+<div class="@WrapperOuterClasses" style="@RootStyle" @attributes="UserAttributes">
     @if (!string.IsNullOrEmpty(Label))
     {
         <label class="text-sm font-medium text-foreground/80">@Label</label>
@@ -51,6 +51,17 @@
         </CascadingValue>
     </div>
 </ScarnaPopover>
+
+@* Скрытая "теневая" копия пунктов — смонтирована всегда, а не только пока открыт
+   список (ScarnaPopover физически монтирует своё содержимое только при Open="true").
+   Нужна, чтобы Text выбранного пункта был известен сразу — иначе значение,
+   установленное через биндинг снаружи, не отображалось бы в закрытом поле до
+   первого клика (пункты просто ещё ни разу не успевали зарегистрироваться). *@
+<div style="display:none" aria-hidden="true">
+    <CascadingValue Value="this" IsFixed="false">
+        @ChildContent
+    </CascadingValue>
+</div>
 
 @code {
     private readonly List<ScarnaSelectItem<TValue>> _items = new();
@@ -86,26 +97,18 @@
     /// <summary>Набор `<ScarnaSelectItem>`.</summary>
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
-    // Текст выбранного пункта кэшируется отдельно, а не ищется каждый раз в _items:
-    // ScarnaPopover физически размонтирует своё содержимое (а значит и все ScarnaSelectItem)
-    // сразу после закрытия — к моменту, когда нужно отрисовать закрытое поле с подписью,
-    // _items уже пуст. Кэш обновляется и при явном выборе (SelectAsync), и при повторном
-    // открытии — Register сверяет уже установленный Value с только что смонтированными пунктами.
-    private string? _selectedLabel;
-
-    private string? SelectedLabel => _selectedLabel;
+    // Ищется каждый рендер среди зарегистрированных пунктов (включая теневую копию
+    // выше — она смонтирована всегда, поэтому хотя бы один экземпляр с нужным Value
+    // есть в _items даже пока список закрыт). Динамический поиск, а не кэш —
+    // единственный способ корректно отражать и внешние изменения Value (например,
+    // сброс формы кодом страницы, а не выбором в самом ScarnaSelect).
+    private string? SelectedLabel => _items.FirstOrDefault(i => EqualityComparer<TValue>.Default.Equals(i.Value, Value))?.Text;
 
     internal void Register(ScarnaSelectItem<TValue> item)
     {
         if (!_items.Contains(item))
         {
             _items.Add(item);
-
-            if (EqualityComparer<TValue>.Default.Equals(item.Value, Value))
-            {
-                _selectedLabel = item.Text;
-            }
-
             StateHasChanged();
         }
     }
@@ -118,9 +121,8 @@
         }
     }
 
-    internal async Task SelectAsync(TValue value, string text)
+    internal async Task SelectAsync(TValue value)
     {
-        _selectedLabel = text;
         await SetValueAsync(value);
         await CloseAsync();
     }

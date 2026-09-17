@@ -53,9 +53,9 @@
     {
         new("Sticky", "bool", "true", "Прилипает к верху при прокрутке"),
         new("Bordered", "bool", "true", "Граница снизу"),
-        new("Fluid", "bool", "true", "Растянуть содержимое на всю ширину (без ScarnaContainer.MaxWidth)"),
         new("Density", "ScarnaDensity", "Normal", "Normal — 56px высотой, Dense — 48px"),
-        new("Color", "Color", "Default", "Default — нейтральная подложка с блюром; любой другой — сплошная заливка цветом"),
+        new("Color", "Color", "Default", "Default — нейтральная подложка (см. GlassEffect); любой другой — сплошная заливка цветом"),
+        new("GlassEffect", "bool", "true", "Полупрозрачная подложка с блюром вместо сплошного bg-content1 (только при Color.Default). Выключите, чтобы AppBar был того же цвета, что Color.Default у ScarnaDrawer"),
         new("Justify", "Justify", "SpaceBetween", "Распределение содержимого по горизонтали"),
         new("ChildContent", "RenderFragment?", "—", "Содержимое панели"),
     };

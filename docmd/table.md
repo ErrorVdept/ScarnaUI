@@ -35,6 +35,7 @@
 | `Hover` | `bool` | `true` | Подсветка строки `<tbody>` при наведении |
 | `Striped` | `bool` | `false` | Зебра — чередующийся фон чётных строк |
 | `Bordered` | `bool` | `true` | Обводка контейнера таблицы |
+| `Color` | `Color` | `Default` | Фон таблицы. `Default` — нейтральная поверхность темы (`bg-content1`); `Transparent` — без заливки; остальные — заливка цветом темы |
 | `DividedColumns` | `bool` | `false` | Вертикальные разделители между колонками (кроме последней) |
 | `Density` | `ScarnaDensity` | `Normal` | `Dense` — компактные отступы ячеек, для больших наборов данных |
 | `ChildContent` | `RenderFragment?` | — | Произвольная разметка `<thead>`/`<tbody>` |

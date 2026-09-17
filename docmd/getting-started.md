@@ -100,14 +100,66 @@ builder.Services.AddScarnaUI(); // диалоги + тосты
 
 ## ScarnaComponentBase
 
-Базовый класс **всех** компонентов библиотеки. Даёт три параметра, которые Blazor-
+Базовый класс **всех** компонентов библиотеки. Даёт параметры, которые Blazor-
 разработчик ожидает от любого UI-компонента (как в MudBlazor):
 
 | Параметр | Тип | Назначение |
 |---|---|---|
 | `Class` | `string?` | Дополнительные CSS-классы, добавляются к классам компонента |
-| `Style` | `string?` | Инлайн-стили на корневой элемент |
+| `Style` | `string?` | Инлайн-стили на корневой элемент (добавляются последними — переопределяют всё остальное из этой таблицы) |
+| `Width` / `Height` | `string?` | CSS width/height корневого элемента ("240px", "50%", "20rem", просто "240"...) |
+| `MinWidth` / `MinHeight` | `string?` | CSS min-width/min-height |
+| `MaxWidth` / `MaxHeight` | `string?` | CSS max-width/max-height |
 | `UserAttributes` | `IReadOnlyDictionary<string, object>?` | Любые непойманные атрибуты (`data-*`, `id`, `onclick`...) прозрачно летят на корневой HTML-элемент |
+
+Отступов (`Padding`/`Margin`) среди этих параметров намеренно нет — регулируются
+CSS-классами через `Class`, а не inline style: `px-*`/`py-*`/`mx-*`/`my-*` — обычные
+Tailwind-утилиты, плюс фирменные `pa-*`/`ma-*` (и отрицательные `ma-nN`/`mx-nN`/`my-nN`)
+в стиле MudBlazor — см. [custom-classes.md](custom-classes.md#отступы-pa--ma--mud-стиль).
+Классы, в отличие от inline style, можно комбинировать с вариантами (`sm:pa-6`, `hover:ma-2`).
+
+Голое число без единицы (`Width="240"`) автоматически получает `px` — это не
+мелочь: `width: 240;` (без единицы) невалиден как CSS, и браузер **тихо** отбрасывает
+всю декларацию целиком, а не только её. Значения уже с единицей (`"50%"`, `"20rem"`)
+или CSS-функцией (`calc(...)`) не трогаются.
+
+Наследник рендерит `style="@RootStyle"` (не `@Style` напрямую) — `RootStyle` уже
+собирает Width/Height/Min\*/Max\*/Style в одну строку:
+
+```razor
+<div class="@Classes" style="@RootStyle" @attributes="UserAttributes">...</div>
+```
+
+Если у компонента уже есть свой вычисляемый inline style (градиент заливки у
+`ScarnaSlider`, анимируемая ширина у `ScarnaDrawer` и т.п.), используйте `BuildStyle(ownStyle)`
+вместо `RootStyle` — он подмешает Width/Height/Min\*/Max\*/Style вокруг переданной строки:
+
+```csharp
+private string? CombinedStyle => BuildStyle($"background: {myGradient};");
+```
+
+Если наследник вдобавок **override'ит** сами Width/Height под свою логику (как
+`ScarnaDrawer` — там это размер раскрытой панели, а не "просто ширина/высота
+корня", и относится то к width, то к height в зависимости от `Anchor`) — передайте
+`includeWidthHeight: false`, иначе `BuildStyle` добавит ещё и "сырые" Width/Height
+по обеим осям поверх уже посчитанного `ownStyle`, задвоив их и наложив лишнее
+ограничение на ось, которую компонент не использует:
+
+```csharp
+private string? CombinedStyle => BuildStyle(sizeStyle, includeWidthHeight: false);
+```
+
+> Blazor не поддерживает скрытие параметров через `new` (в отличие от обычных
+> C#-членов) — рантайм требует ровно один параметр с данным именем на весь
+> наследственный путь компонента, иначе падает с ошибкой
+> `declares more than one parameter matching the name ...`. Поэтому у пары
+> компонентов с более узким/другим смыслом того же названия параметр не скрыт,
+> а по-настоящему **переопределён** (`override`, тот же тип, другое значение по
+> умолчанию) — `ScarnaDrawer.Width`/`Height` (размер раскрытой панели, участвует
+> в анимации) и `ScarnaLayout.MinHeight` (по умолчанию `"100vh"`, а не `null`).
+> Там, где тип другой и override физически невозможен — `ScarnaContainer` — общий
+> параметр называется иначе: пресет брейкпоинтов называется `Breakpoint`, а не
+> `MaxWidth` (тот остался за унаследованным произвольным CSS-значением).
 
 Компонент-наследник собирает свои классы через `CssBuilder`:
 
@@ -165,8 +217,19 @@ SignalR round-trip) анимация может "проиграться" ещё 
 
 ## ScarnaColorVariantClasses
 
-Общая таблица "цвет × вариант заливки" (`Color` × `Variant`), которой
-пользуются `ScarnaButton`, `ScarnaChip`, `ScarnaBadge`, `ScarnaAvatar`. Классы в ней
-записаны **буквально** (не через `$"bg-{color}"`) — так их видит статический
+Общая таблица "цвет × вариант заливки" (`Color` × `Variant`) — `Get(color, variant)` —
+которой пользуются `ScarnaButton`, `ScarnaChip`, `ScarnaBadge`, `ScarnaAvatar`. Классы в
+ней записаны **буквально** (не через `$"bg-{color}"`) — так их видит статический
 анализатор Tailwind при сборке CSS. Подробнее про этот нюанс — в
 [theme-provider.md](theme-provider.md#почему-классы-написаны-буквально).
+
+Для компонентов-"поверхностей" без варианта заливки (`ScarnaList`, `ScarnaCard`,
+`ScarnaPaper`, `ScarnaBottomMenu`, `ScarnaTable`, `ScarnaExpansionPanel`) — отдельный
+`Surface(color, defaultClass = "bg-content1")`: `Color.Default` даёт `defaultClass`
+(нейтральную поверхность темы — обычно `bg-content1`, а не `bg-default`, как у `Get`),
+`Color.Transparent` — `bg-transparent`, остальные — сплошную заливку цветом
+(`bg-primary text-primary-foreground` и т.п.).
+
+`Color.Transparent` существует только для `Surface` — в таблице `Get` (Button/Chip/
+Badge/...) он не поддерживается: там для "невидимого" фона уже есть `Variant.Light`/
+`Variant.Bordered`.

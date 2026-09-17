@@ -28,4 +28,5 @@
 | `TitleContent` | `RenderFragment?` | — | Заголовок сложной разметкой (вместо `Title`) |
 | `Expanded` | `bool` | `false` | Развёрнута ли панель. Поддерживает `@bind-Expanded` |
 | `Bordered` | `bool` | `true` | Обводка панели |
+| `Color` | `Color` | `Default` | Фон панели. `Default` — нейтральная поверхность темы (`bg-content1`); `Transparent` — без заливки; остальные — заливка цветом темы |
 | `ChildContent` | `RenderFragment?` | — | Содержимое панели |

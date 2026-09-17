@@ -1,0 +1,62 @@
+@*
+    Пункт навигации с эмодзи вместо SVG-иконки под верстку Mini Drawer — иконка
+    сидит в колонке ФИКСИРОВАННОЙ ширины (не зависящей от Expanded), поэтому не
+    двигается при сворачивании/разворачивании панели; анимируется (max-width/opacity)
+    только подпись рядом, синхронно с шириной ScarnaDrawer. Обёртка над ScarnaNavLink —
+    см. её же для ссылок с обычной SVG-иконкой (ScarnaNavLink.StartContent).
+
+    <ScarnaNavMenu>
+        <ScarnaEmojiNavLink Href="/dashboard" Emoji="📊" Text="Dashboard" Expanded="_open" />
+        <ScarnaEmojiNavLink Href="/orders" Emoji="🛒" Text="Orders" Expanded="_open" />
+    </ScarnaNavMenu>
+*@
+@namespace ScarnaUI.Components.Layout
+@inherits ScarnaComponentBase
+
+<ScarnaNavLink Href="@Href" Exact="Exact" Target="@Target" Disabled="Disabled" OnClick="OnClick"
+               Class="@LinkClass" Style="@Style" Width="@Width" Height="@Height"
+               MinWidth="@MinWidth" MinHeight="@MinHeight" MaxWidth="@MaxWidth" MaxHeight="@MaxHeight"
+               UserAttributes="@UserAttributes">
+    <ChildContent>
+        <span class="flex w-full items-center gap-2">
+            <span class="flex shrink-0 items-center justify-center" style="width: @IconWidth">@Emoji</span>
+            <span class="@(Expanded ? "max-w-40 opacity-100" : "max-w-0 opacity-0") overflow-hidden whitespace-nowrap transition-all duration-200">
+                @Text
+            </span>
+        </span>
+    </ChildContent>
+</ScarnaNavLink>
+
+@code {
+    /// <summary>Адрес перехода — то же, что Href у ScarnaNavLink.</summary>
+    [Parameter, EditorRequired] public string Href { get; set; } = string.Empty;
+
+    /// <summary>Эмодзи (или любой короткий текст-иконка) — центрируется в колонке шириной IconWidth.</summary>
+    [Parameter, EditorRequired] public string Emoji { get; set; } = string.Empty;
+
+    /// <summary>Подпись пункта.</summary>
+    [Parameter, EditorRequired] public string Text { get; set; } = string.Empty;
+
+    /// <summary>Показывать ли подпись (обычно = состоянию "открыт ли" родительского Mini ScarnaDrawer). По умолчанию — всегда видна.</summary>
+    [Parameter] public bool Expanded { get; set; } = true;
+
+    /// <summary>Ширина колонки под эмодзи — подберите равной MiniWidth панели минус паддинг ScarnaNavMenu, чтобы эмодзи было по центру в свёрнутом состоянии.</summary>
+    [Parameter] public string IconWidth { get; set; } = "40px";
+
+    /// <summary>См. ScarnaNavLink.Exact.</summary>
+    [Parameter] public bool Exact { get; set; }
+
+    [Parameter] public string? Target { get; set; }
+
+    [Parameter] public bool Disabled { get; set; }
+
+    /// <summary>Доп. обработчик клика — вызывается в дополнение к переходу (см. ScarnaNavLink.OnClick).</summary>
+    [Parameter] public EventCallback OnClick { get; set; }
+
+    // px-0! убирает встроенный px-3 у ScarnaNavLink (сам он остаётся в scarna.css как
+    // force-included "!"-класс — см. docmd/custom-classes.md) — без него у эмодзи-колонки
+    // не получилось бы точное центрирование при свёрнутой панели: см. MainLayoutShowcase.razor.
+    private string LinkClass => CssBuilder.Default("px-0!")
+        .AddClass(Class)
+        .ToString();
+}

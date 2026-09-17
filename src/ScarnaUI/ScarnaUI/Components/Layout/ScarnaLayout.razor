@@ -11,13 +11,18 @@
 @namespace ScarnaUI.Components.Layout
 @inherits ScarnaComponentBase
 
-<div class="@Classes" style="@CombinedStyle" @attributes="UserAttributes">
+<div class="@Classes" style="@RootStyle" @attributes="UserAttributes">
     @ChildContent
 </div>
 
 @code {
-    /// <summary>CSS min-height корневого элемента. Пусто/null — без min-height (например, вложенный layout внутри модалки).</summary>
-    [Parameter] public string? MinHeight { get; set; } = "100vh";
+    /// <summary>
+    /// CSS min-height корневого элемента. Пусто/null — без min-height (например, вложенный
+    /// layout внутри модалки). Переопределяет (override, не new — Blazor не поддерживает
+    /// скрытие параметров) одноимённый параметр ScarnaComponentBase — там по умолчанию
+    /// null, здесь по умолчанию "100vh" (в этом весь смысл компонента).
+    /// </summary>
+    [Parameter] public override string? MinHeight { get; set; } = "100vh";
 
     /// <summary>Рендерить как flex flex-col — даёт "бесплатный" sticky footer (footer после main class="flex-1" прижимается к низу).</summary>
     [Parameter] public bool Flex { get; set; } = true;
@@ -28,13 +33,4 @@
         .AddClass("flex flex-col", Flex)
         .AddClass(Class)
         .ToString();
-
-    private string CombinedStyle
-    {
-        get
-        {
-            var minHeightStyle = string.IsNullOrWhiteSpace(MinHeight) ? "" : $"min-height: {MinHeight};";
-            return string.IsNullOrWhiteSpace(Style) ? minHeightStyle : $"{minHeightStyle} {Style}";
-        }
-    }
 }

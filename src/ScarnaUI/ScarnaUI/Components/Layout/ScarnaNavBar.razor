@@ -1,22 +1,33 @@
 @*
     Верхняя панель приложения (аналог MudAppBar/шапки сайта). Формализует то, что
-    в демо раньше собиралось вручную из <header>+ScarnaContainer+ScarnaStack —
-    задаёт высоту, подложку с блюром и границу снизу, содержимое — произвольное.
+    в демо раньше собиралось вручную из <header>+ScarnaStack — задаёт высоту,
+    подложку с блюром и границу снизу, содержимое — произвольное.
 
     <ScarnaNavBar Density="ScarnaDensity.Dense" Justify="Justify.SpaceBetween">
         <a href="/" class="font-semibold">Logo</a>
         <ScarnaStack Row="true" Spacing="4"><NavLink href="/">Главная</NavLink></ScarnaStack>
     </ScarnaNavBar>
+
+    По умолчанию (Color.Default) — полупрозрачная подложка с блюром (GlassEffect="true").
+    Чтобы AppBar был того же сплошного цвета, что и Color.Default у ScarnaDrawer
+    (bg-content1), отключите блюр:
+
+    <ScarnaNavBar GlassEffect="false">...</ScarnaNavBar>
+    <ScarnaDrawer>...</ScarnaDrawer>
+
+    Боковой паддинг (px-4 sm:px-6 lg:px-8) — часть Classes корневого <header>, а не
+    вложенного элемента (раньше был на ScarnaContainer внутри — Class снаружи его не
+    доставал), поэтому переопределяется как у любого другого компонента:
+
+    <ScarnaNavBar Class="px-0!">...</ScarnaNavBar>
 *@
 @namespace ScarnaUI.Components.Layout
 @inherits ScarnaComponentBase
 
-<header class="@Classes" style="@Style" @attributes="UserAttributes">
-    <ScarnaContainer Fluid="Fluid">
-        <div class="@RowClasses">
-            @ChildContent
-        </div>
-    </ScarnaContainer>
+<header class="@Classes" style="@RootStyle" @attributes="UserAttributes">
+    <div class="@RowClasses">
+        @ChildContent
+    </div>
 </header>
 
 @code {
@@ -25,36 +36,36 @@
 
     [Parameter] public bool Bordered { get; set; } = true;
 
-    /// <summary>Растянуть содержимое на всю ширину (без ограничения ScarnaContainer.MaxWidth).</summary>
-    [Parameter] public bool Fluid { get; set; } = true;
-
     /// <summary>Normal (по умолчанию, 56px) — обычная высота. Dense — компактная (48px).</summary>
     [Parameter] public ScarnaDensity Density { get; set; } = ScarnaDensity.Normal;
 
-    /// <summary>Цвет фона панели. Default (по умолчанию) — нейтральная подложка с блюром; любой другой — сплошная заливка цветом.</summary>
+    /// <summary>Цвет фона панели. Default (по умолчанию) — нейтральная подложка (см. GlassEffect); любой другой — сплошная заливка цветом.</summary>
     [Parameter] public Color Color { get; set; } = Color.Default;
+
+    /// <summary>
+    /// Полупрозрачная подложка с блюром вместо сплошного bg-content1 — как одноимённый
+    /// параметр у ScarnaPaper, но включён по умолчанию (исторический вид AppBar, чтобы
+    /// не ломать внешний вид у всех существующих потребителей). Действует только при
+    /// Color="Color.Default" — у цветных вариантов заливка всегда сплошная. Выключите,
+    /// чтобы AppBar получил тот же сплошной bg-content1, что и Color.Default у ScarnaDrawer.
+    /// </summary>
+    [Parameter] public bool GlassEffect { get; set; } = true;
 
     /// <summary>Распределение содержимого по горизонтали — как AlignItems в MudBlazor (justify-content внутренней строки).</summary>
     [Parameter] public Justify Justify { get; set; } = Justify.SpaceBetween;
 
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
-    private string Classes => CssBuilder.Default("scarna-navbar z-30")
+    private string Classes => CssBuilder.Default("scarna-navbar z-30 px-4 sm:px-6 lg:px-8")
         .AddClass(ColorClass)
         .AddClass("sticky top-0", Sticky)
         .AddClass("border-b border-divider", Bordered)
         .AddClass(Class)
         .ToString();
 
-    private string ColorClass => Color switch
-    {
-        Color.Primary => "bg-primary text-primary-foreground",
-        Color.Secondary => "bg-secondary text-secondary-foreground",
-        Color.Success => "bg-success text-success-foreground",
-        Color.Warning => "bg-warning text-warning-foreground",
-        Color.Danger => "bg-danger text-danger-foreground",
-        _ => "bg-background/80 backdrop-blur text-foreground",
-    };
+    private string ColorClass => CssBuilder.Default(ScarnaColorVariantClasses.Surface(Color, GlassEffect ? "bg-background/80 backdrop-blur" : "bg-content1"))
+        .AddClass("text-foreground", Color is Color.Default or Color.Transparent)
+        .ToString();
 
     private string RowClasses => CssBuilder.Default("flex items-center gap-4")
         .AddClass(Density == ScarnaDensity.Dense ? "h-12" : "h-14")

@@ -6,7 +6,7 @@
 @namespace ScarnaUI.Components.Forms
 @inherits ScarnaFormComponentBase<bool>
 
-<label class="@WrapperClasses" style="@Style" @attributes="UserAttributes">
+<label class="@WrapperClasses" style="@RootStyle" @attributes="UserAttributes">
     <input type="checkbox" class="sr-only peer" checked="@Value" disabled="@Disabled" aria-readonly="@ReadOnly" @onclick:preventDefault="ReadOnly" @onchange="HandleChangeAsync" />
     <span class="@BoxClasses" aria-hidden="true">
         @* Иконка рендерится всегда (а не через @if) и анимируется классом — так браузер

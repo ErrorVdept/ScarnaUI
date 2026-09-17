@@ -2,9 +2,10 @@
     Один пункт ScarnaBottomMenu — иконка сверху, подпись снизу, как в мобильных tab bar.
 *@
 @namespace ScarnaUI.Components.Layout
+@inherits ScarnaComponentBase
 @implements IDisposable
 
-<button type="button" class="@Classes" @onclick="HandleClickAsync" aria-current="@(IsActive ? "page" : null)">
+<button type="button" class="@Classes" style="@RootStyle" @onclick="HandleClickAsync" aria-current="@(IsActive ? "page" : null)" @attributes="UserAttributes">
     <span class="@IconClasses">@ChildContent</span>
     @if (!string.IsNullOrEmpty(Text))
     {
@@ -51,6 +52,7 @@
 
     private string Classes => CssBuilder.Default("scarna-bottom-menu-item flex flex-1 flex-col items-center justify-center gap-1 py-2 transition-colors")
         .AddClass(IsActive ? "text-primary" : "text-foreground/50 hover:text-foreground/80")
+        .AddClass(Class)
         .ToString();
 
     private string IconClasses => CssBuilder.Default("flex items-center justify-center [&_svg]:size-5")

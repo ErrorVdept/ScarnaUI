@@ -26,6 +26,26 @@
 
     private const string ExampleCode =
         """
+        @* Components/Dialogs/DemoConfirmDialog.razor — содержимое диалога *@
+        <ScarnaDialog Title="Удалить элемент?">
+            <DialogContent>
+                Это действие необратимо. Элемент будет удалён без возможности восстановления.
+            </DialogContent>
+            <DialogActions>
+                <ScarnaButton Variant="Variant.Light" OnClick="Cancel">Отмена</ScarnaButton>
+                <ScarnaButton Color="Color.Danger" OnClick="Confirm">Удалить</ScarnaButton>
+            </DialogActions>
+        </ScarnaDialog>
+
+        @code {
+            [CascadingParameter] private ScarnaDialogReference DialogReference { get; set; } = default!;
+
+            private void Cancel() => DialogReference.Close(ScarnaDialogResult.Cancel());
+
+            private void Confirm() => DialogReference.Close(ScarnaDialogResult.Ok());
+        }
+
+        @* Вызывающий компонент *@
         @inject IScarnaDialogService DialogService
 
         <ScarnaButton Color="Color.Danger" OnClick="DeleteAsync">Удалить</ScarnaButton>

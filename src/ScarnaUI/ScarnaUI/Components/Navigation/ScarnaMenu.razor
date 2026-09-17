@@ -17,8 +17,9 @@
     Клик по пункту меню (ScarnaMenuItem) сам закрывает меню — отдельно это делать не нужно.
 *@
 @namespace ScarnaUI.Components.Navigation
+@inherits ScarnaComponentBase
 
-<span @ref="_anchor" @onclick="ToggleAsync" class="scarna-menu-trigger inline-flex cursor-pointer">
+<span @ref="_anchor" @onclick="ToggleAsync" class="@Classes" style="@RootStyle" @attributes="UserAttributes">
     @Trigger
 </span>
 
@@ -45,6 +46,10 @@
 
     /// <summary>Растянуть меню на ширину триггера (по умолчанию — нет, меню обычно уже/шире произвольной кнопки).</summary>
     [Parameter] public bool IsParentFullSize { get; set; }
+
+    private string Classes => CssBuilder.Default("scarna-menu-trigger inline-flex cursor-pointer")
+        .AddClass(Class)
+        .ToString();
 
     private Task ToggleAsync()
     {

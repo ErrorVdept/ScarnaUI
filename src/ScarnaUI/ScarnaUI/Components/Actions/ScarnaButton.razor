@@ -13,13 +13,13 @@
 
 @if (!string.IsNullOrEmpty(Href))
 {
-    <a href="@Href" target="@Target" class="@Classes" style="@Style" @attributes="UserAttributes">
+    <a href="@Href" target="@Target" class="@Classes" style="@RootStyle" @attributes="UserAttributes">
         @RenderInner()
     </a>
 }
 else
 {
-    <button type="@Type" class="@Classes" style="@Style" disabled="@(Disabled || Loading)" @onclick="HandleClickAsync" @attributes="UserAttributes">
+    <button type="@Type" class="@Classes" style="@RootStyle" disabled="@(Disabled || Loading)" @onclick="HandleClickAsync" @attributes="UserAttributes">
         @RenderInner()
     </button>
 }

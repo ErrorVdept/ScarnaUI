@@ -8,7 +8,7 @@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
 
-<div class="scarna-progress-wrapper flex flex-col gap-1.5" style="@Style" @attributes="UserAttributes">
+<div class="scarna-progress-wrapper flex flex-col gap-1.5" style="@RootStyle" @attributes="UserAttributes">
     @if (!string.IsNullOrEmpty(Label) || (ShowValue && !Indeterminate))
     {
         <div class="flex items-center justify-between text-sm">

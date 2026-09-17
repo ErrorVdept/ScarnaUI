@@ -56,7 +56,7 @@
                 <ScarnaStack Row="true" Justify="Justify.SpaceBetween" Align="Align.Center">
                     <ScarnaStack Row="true" Spacing="3" Align="Align.Center">
                         <span class="text-3xl leading-none">🍩</span>
-                        <ScarnaText Typo="ScarnaTypo.H3">Equler tasks</ScarnaText>
+                        <ScarnaText Typo="Typo.H3">Equler tasks</ScarnaText>
                         <ScarnaButton Variant="Variant.Light" Size="Size.Small">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
                         </ScarnaButton>
@@ -87,7 +87,7 @@
                                     <ScarnaStack Row="true" Justify="Justify.SpaceBetween" Align="Align.Center">
                                         <ScarnaStack Row="true" Spacing="2" Align="Align.Center">
                                             <span class="@($"size-2 rounded-full {column.DotClass}")"></span>
-                                            <ScarnaText Typo="ScarnaTypo.Subtitle2">@column.Title</ScarnaText>
+                                            <ScarnaText Typo="Typo.Subtitle2">@column.Title</ScarnaText>
                                             <ScarnaTag>@column.Tasks.Length</ScarnaTag>
                                         </ScarnaStack>
                                         <ScarnaButton Variant="Variant.Light" Size="Size.Small">
@@ -106,8 +106,8 @@
                                                     <ChildContent>@task.Priority</ChildContent>
                                                 </ScarnaChip>
 
-                                                <ScarnaText Typo="ScarnaTypo.Subtitle1" Class="mt-2">@task.Title</ScarnaText>
-                                                <ScarnaText Typo="ScarnaTypo.Body2" Class="mt-1 line-clamp-2 text-foreground/60">@task.Description</ScarnaText>
+                                                <ScarnaText Typo="Typo.Subtitle1" Class="mt-2">@task.Title</ScarnaText>
+                                                <ScarnaText Typo="Typo.Body2" Class="mt-1 line-clamp-2 text-foreground/60">@task.Description</ScarnaText>
 
                                                 @if (task.ImageUrl is not null)
                                                 {
@@ -122,7 +122,7 @@
                                                         }
                                                         @if (task.AssigneeInitials.Length == 1)
                                                         {
-                                                            <ScarnaText Typo="ScarnaTypo.Caption">@task.AssigneeName</ScarnaText>
+                                                            <ScarnaText Typo="Typo.Caption">@task.AssigneeName</ScarnaText>
                                                         }
                                                     </ScarnaStack>
                                                     <ScarnaStack Row="true" Spacing="3" Class="text-xs text-foreground/50">

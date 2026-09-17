@@ -3,7 +3,7 @@
 <DocPage Title="ScarnaSelect" Lead="Выпадающий список с одиночным выбором на базе ScarnaPopover, с поддержкой @@bind-Value."
          Files="@(new[] { "Components/Forms/ScarnaSelect.razor", "Components/Forms/ScarnaSelectItem.razor" })">
 
-    <DocSection Title="Интерактивный пример" Code="@InteractiveCode">
+    <DocSection Title="Интерактивный пример" Description="Значение предустановлено кодом страницы (не выбором в самом списке) — подпись в закрытом поле показывает его сразу, без необходимости сперва открыть список." Code="@InteractiveCode">
         <ScarnaSelect Label="Страна" @bind-Value="_country" Placeholder="Выберите страну">
             <ScarnaSelectItem Value="@("ru")" Text="Россия" />
             <ScarnaSelectItem Value="@("kz")" Text="Казахстан" />
@@ -36,7 +36,7 @@
 </DocPage>
 
 @code {
-    private string? _country;
+    private string? _country = "kz";
 
     private const string InteractiveCode =
         """
@@ -48,7 +48,7 @@
         <span class="text-sm text-foreground/60">Значение: @_country</span>
 
         @code {
-            private string? _country;
+            private string? _country = "kz";
         }
         """;
 

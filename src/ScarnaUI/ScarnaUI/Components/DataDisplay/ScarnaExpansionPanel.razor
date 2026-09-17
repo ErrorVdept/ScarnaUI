@@ -13,7 +13,7 @@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
 
-<div class="@WrapperClasses" style="@Style" @attributes="UserAttributes">
+<div class="@WrapperClasses" style="@RootStyle" @attributes="UserAttributes">
     <button type="button" class="flex w-full items-center justify-between gap-3 px-4 py-3 text-left" @onclick="ToggleAsync" aria-expanded="@Expanded">
         @if (TitleContent is not null)
         {
@@ -49,6 +49,9 @@
 
     [Parameter] public bool Bordered { get; set; } = true;
 
+    /// <summary>Фон панели. Default (по умолчанию) — нейтральная поверхность темы (bg-content1); Transparent — без заливки.</summary>
+    [Parameter] public Color Color { get; set; } = Color.Default;
+
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
     private async Task ToggleAsync()
@@ -61,7 +64,8 @@
         }
     }
 
-    private string WrapperClasses => CssBuilder.Default("scarna-expansion-panel overflow-hidden rounded-scarna-md bg-content1")
+    private string WrapperClasses => CssBuilder.Default("scarna-expansion-panel overflow-hidden rounded-scarna-md")
+        .AddClass(ScarnaColorVariantClasses.Surface(Color))
         .AddClass("border border-divider", Bordered)
         .AddClass(Class)
         .ToString();

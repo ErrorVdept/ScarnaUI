@@ -16,6 +16,7 @@
          C#-объектом (замыканием), Blazor корректно переиспользует его состояние и @ref.
 *@
 @namespace ScarnaUI.Components.Overlays
+@inherits ScarnaComponentBase
 
 <CascadingValue Value="this" IsFixed="true">
     @ChildContent

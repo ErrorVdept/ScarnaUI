@@ -32,6 +32,11 @@
         </div>
     </DocSection>
 
+    <DocSection Title="Color" Description="Фон на цвет темы. Default — нейтральная поверхность (bg-content1), Transparent — без заливки." Code="@ColorCode">
+        <ScarnaCard Color="Color.Primary">Color.Primary</ScarnaCard>
+        <ScarnaCard Color="Color.Transparent" Bordered="true">Color.Transparent</ScarnaCard>
+    </DocSection>
+
     <DocApiTable Rows="@_rows" />
 
 </DocPage>
@@ -70,12 +75,19 @@
         </div>
         """;
 
+    private const string ColorCode =
+        """
+        <ScarnaCard Color="Color.Primary">...</ScarnaCard>
+        <ScarnaCard Color="Color.Transparent" Bordered="true">...</ScarnaCard>
+        """;
+
     private readonly List<DocApiRow> _rows = new()
     {
         new("Bordered", "bool", "false", "Тонкая рамка в дополнение к тени"),
         new("Shadow", "bool", "true", "Тень под карточкой"),
         new("Radius", "Radius", "Large", "Радиус скругления"),
         new("GlassEffect", "bool", "false", "Полупрозрачный фон с блюром вместо сплошного bg-content1 — как у ScarnaNavBar"),
+        new("Color", "Color", "Default", "Фон карточки. Default — нейтральная поверхность темы; Transparent — без заливки; остальные — заливка цветом темы. Игнорируется при GlassEffect=\"true\""),
         new("HeaderContent", "RenderFragment?", "—", "Заголовок (с разделителем снизу)"),
         new("FooterContent", "RenderFragment?", "—", "Подвал (с разделителем сверху)"),
         new("ChildContent", "RenderFragment?", "—", "Основное содержимое"),

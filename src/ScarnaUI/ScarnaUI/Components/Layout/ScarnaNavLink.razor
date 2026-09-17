@@ -18,7 +18,7 @@
 @implements IDisposable
 @inject INavigator Navigator
 
-<a href="@Href" target="@Target" class="@Classes" style="@Style"
+<a href="@Href" target="@Target" class="@Classes" style="@RootStyle"
    aria-current="@(IsActive ? "page" : null)" aria-disabled="@(Disabled ? "true" : null)" tabindex="@(Disabled ? "-1" : null)"
    @onclick="HandleClickAsync" @onclick:preventDefault="Disabled"
    @attributes="UserAttributes">

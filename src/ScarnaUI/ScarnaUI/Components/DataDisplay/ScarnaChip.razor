@@ -7,7 +7,7 @@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
 
-<span class="@Classes" style="@Style" @attributes="UserAttributes">
+<span class="@Classes" style="@RootStyle" @attributes="UserAttributes">
     @StartContent
     <span class="truncate">@ChildContent</span>
     @if (OnClose.HasDelegate)

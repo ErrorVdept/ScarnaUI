@@ -4,9 +4,10 @@
 *@
 @namespace ScarnaUI.Components.Forms
 @typeparam TValue
+@inherits ScarnaComponentBase
 @implements IDisposable
 
-<button type="button" class="@Classes" role="option" aria-selected="@IsSelected" @onclick="SelectAsync">
+<button type="button" class="@Classes" style="@RootStyle" role="option" aria-selected="@IsSelected" @onclick="SelectAsync" @attributes="UserAttributes">
     <span class="flex-1 truncate">
         @if (ChildContent is not null)
         {
@@ -48,10 +49,11 @@
         Parent.Register(this);
     }
 
-    private Task SelectAsync() => Parent!.SelectAsync(Value, Text);
+    private Task SelectAsync() => Parent!.SelectAsync(Value);
 
     private string Classes => CssBuilder.Default("flex w-full items-center gap-2 rounded-scarna-sm px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-content2")
         .AddClass("bg-content2 font-medium", IsSelected)
+        .AddClass(Class)
         .ToString();
 
     public void Dispose() => Parent?.Unregister(this);

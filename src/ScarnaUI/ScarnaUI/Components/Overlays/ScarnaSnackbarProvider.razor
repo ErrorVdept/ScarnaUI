@@ -4,10 +4,11 @@
 *@
 @namespace ScarnaUI.Components.Overlays
 @using ScarnaUI.Services
+@inherits ScarnaComponentBase
 @inject ToastManager ToastManager
 @implements IDisposable
 
-<div class="scarna-snackbar-root fixed bottom-4 right-4 z-[1200] flex w-full max-w-sm flex-col gap-2">
+<div class="@Classes" style="@RootStyle" @attributes="UserAttributes">
     @foreach (var toast in ToastManager.Toasts)
     {
         <div @key="toast.Id"
@@ -29,6 +30,10 @@
 </div>
 
 @code {
+    private string Classes => CssBuilder.Default("scarna-snackbar-root fixed bottom-4 right-4 z-[1200] flex w-full max-w-sm flex-col gap-2")
+        .AddClass(Class)
+        .ToString();
+
     protected override void OnInitialized() => ToastManager.OnChange += HandleChange;
 
     private void HandleChange() => InvokeAsync(StateHasChanged);

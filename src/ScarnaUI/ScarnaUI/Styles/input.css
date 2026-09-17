@@ -35,6 +35,35 @@
  * в готовом scarna.css, если сама библиотека их нигде не использует.
  */
 @source inline("scarna-width-full scarna-height-full scrollable scrollable-h scrollable-v");
+@source inline("pa-{0..16} ma-{0..16} ma-n{1..16} mx-n{1..16} my-n{1..16}");
+@source inline("mt-n{1..16} mb-n{1..16} ml-n{1..16} mr-n{1..16}");
+/*
+ * px/py/pt/pb/pl/pr/mx/my/mt/mb/ml/mr — обычные Tailwind-утилиты, не фирменные, но тоже
+ * нужен форсированный инклюд: нативность не спасает от JIT-сканирования готовой
+ * библиотеки — если класса с конкретным значением нет буквально в исходниках ScarnaUI,
+ * его не будет в scarna.css, даже стандартного. Без этой строки, например, px-0/py-0/
+ * mx-0/my-0 из чужого проекта-потребителя молча ничего не делали (класс есть в
+ * разметке, правила для него — нет).
+ */
+@source inline("px-{0..16} py-{0..16} mx-{0..16} my-{0..16}");
+@source inline("pt-{0..16} pb-{0..16} pl-{0..16} pr-{0..16}");
+@source inline("mt-{0..16} mb-{0..16} ml-{0..16} mr-{0..16}");
+/*
+ * "!"-модификатор (important) — единственный надёжный способ переопределить отступ,
+ * захардкоженный внутри компонента (например, ScarnaListItem — px-3 py-2): Tailwind
+ * кладёт классы одного семейства в CSS по ВОЗРАСТАНИЮ числа, а не в порядке, в котором
+ * их написали в class="..." — порядок в HTML вообще не влияет, page-0 всегда физически
+ * ВЫШЕ pa-3/px-3 в файле и поэтому проигрывает каскад, даже если его написали позже.
+ * "!" обходит это через !important, а не порядок. Сам механизм в библиотеке уже
+ * применяется (см. mx-auto!/relative! в MainLayoutShowcase.razor) — тут форсируем его
+ * и для отступов, иначе pa-0!/px-0! молча не работали бы по той же причине, что раньше
+ * не работали pa-0/px-0 без "!" (правила просто нет в scarna.css).
+ */
+@source inline("pa-{0..16}! ma-{0..16}! px-{0..16}! py-{0..16}! mx-{0..16}! my-{0..16}!");
+@source inline("pt-{0..16}! pb-{0..16}! pl-{0..16}! pr-{0..16}!");
+@source inline("mt-{0..16}! mb-{0..16}! ml-{0..16}! mr-{0..16}!");
+@source inline("ma-n{1..16}! mx-n{1..16}! my-n{1..16}!");
+@source inline("mt-n{1..16}! mb-n{1..16}! ml-n{1..16}! mr-n{1..16}!");
 
 @theme inline {
   --font-sans: var(--scarna-font-sans);
@@ -158,6 +187,147 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+/*
+ * Фирменные отступы в стиле MudBlazor: pa/ma — заливка "все стороны сразу", число
+ * умножается на ту же шкалу, что использует стандартный Tailwind p и m: единица шкалы
+ * равна 0.25rem, то есть 4px. Стандартные Tailwind px, py, mx, my уже понимают эту
+ * шкалу из коробки, дублировать их не нужно. pa и ma — функциональные утилиты, работают
+ * для любого целого числа, не только 0-16; диапазон 0-16 в источнике сканирования выше
+ * это просто заранее просканированный набор для потребителей библиотеки, не потолок.
+ *
+ * ma-nN, mx-nN, my-nN — отрицательные варианты margin, перечислены статичным списком
+ * от 1 до 16, а не функциональной утилитой: синтаксис Tailwind требует, чтобы число шло
+ * сразу после дефиса, а не слитно после буквы-суффикса — иначе не получить ровно
+ * MudBlazor-нотацию без второго дефиса перед числом. У padding отрицательных значений
+ * не бывает, браузер их просто игнорирует, поэтому у pa негатива нет.
+ */
+@utility pa-* {
+  padding: --spacing(--value(integer));
+}
+
+@utility ma-* {
+  margin: --spacing(--value(integer));
+}
+
+@utility ma-n1 { margin: calc(--spacing(1) * -1); }
+@utility ma-n2 { margin: calc(--spacing(2) * -1); }
+@utility ma-n3 { margin: calc(--spacing(3) * -1); }
+@utility ma-n4 { margin: calc(--spacing(4) * -1); }
+@utility ma-n5 { margin: calc(--spacing(5) * -1); }
+@utility ma-n6 { margin: calc(--spacing(6) * -1); }
+@utility ma-n7 { margin: calc(--spacing(7) * -1); }
+@utility ma-n8 { margin: calc(--spacing(8) * -1); }
+@utility ma-n9 { margin: calc(--spacing(9) * -1); }
+@utility ma-n10 { margin: calc(--spacing(10) * -1); }
+@utility ma-n11 { margin: calc(--spacing(11) * -1); }
+@utility ma-n12 { margin: calc(--spacing(12) * -1); }
+@utility ma-n13 { margin: calc(--spacing(13) * -1); }
+@utility ma-n14 { margin: calc(--spacing(14) * -1); }
+@utility ma-n15 { margin: calc(--spacing(15) * -1); }
+@utility ma-n16 { margin: calc(--spacing(16) * -1); }
+
+@utility mx-n1 { margin-inline: calc(--spacing(1) * -1); }
+@utility mx-n2 { margin-inline: calc(--spacing(2) * -1); }
+@utility mx-n3 { margin-inline: calc(--spacing(3) * -1); }
+@utility mx-n4 { margin-inline: calc(--spacing(4) * -1); }
+@utility mx-n5 { margin-inline: calc(--spacing(5) * -1); }
+@utility mx-n6 { margin-inline: calc(--spacing(6) * -1); }
+@utility mx-n7 { margin-inline: calc(--spacing(7) * -1); }
+@utility mx-n8 { margin-inline: calc(--spacing(8) * -1); }
+@utility mx-n9 { margin-inline: calc(--spacing(9) * -1); }
+@utility mx-n10 { margin-inline: calc(--spacing(10) * -1); }
+@utility mx-n11 { margin-inline: calc(--spacing(11) * -1); }
+@utility mx-n12 { margin-inline: calc(--spacing(12) * -1); }
+@utility mx-n13 { margin-inline: calc(--spacing(13) * -1); }
+@utility mx-n14 { margin-inline: calc(--spacing(14) * -1); }
+@utility mx-n15 { margin-inline: calc(--spacing(15) * -1); }
+@utility mx-n16 { margin-inline: calc(--spacing(16) * -1); }
+
+@utility my-n1 { margin-block: calc(--spacing(1) * -1); }
+@utility my-n2 { margin-block: calc(--spacing(2) * -1); }
+@utility my-n3 { margin-block: calc(--spacing(3) * -1); }
+@utility my-n4 { margin-block: calc(--spacing(4) * -1); }
+@utility my-n5 { margin-block: calc(--spacing(5) * -1); }
+@utility my-n6 { margin-block: calc(--spacing(6) * -1); }
+@utility my-n7 { margin-block: calc(--spacing(7) * -1); }
+@utility my-n8 { margin-block: calc(--spacing(8) * -1); }
+@utility my-n9 { margin-block: calc(--spacing(9) * -1); }
+@utility my-n10 { margin-block: calc(--spacing(10) * -1); }
+@utility my-n11 { margin-block: calc(--spacing(11) * -1); }
+@utility my-n12 { margin-block: calc(--spacing(12) * -1); }
+@utility my-n13 { margin-block: calc(--spacing(13) * -1); }
+@utility my-n14 { margin-block: calc(--spacing(14) * -1); }
+@utility my-n15 { margin-block: calc(--spacing(15) * -1); }
+@utility my-n16 { margin-block: calc(--spacing(16) * -1); }
+
+@utility mt-n1 { margin-top: calc(--spacing(1) * -1); }
+@utility mt-n2 { margin-top: calc(--spacing(2) * -1); }
+@utility mt-n3 { margin-top: calc(--spacing(3) * -1); }
+@utility mt-n4 { margin-top: calc(--spacing(4) * -1); }
+@utility mt-n5 { margin-top: calc(--spacing(5) * -1); }
+@utility mt-n6 { margin-top: calc(--spacing(6) * -1); }
+@utility mt-n7 { margin-top: calc(--spacing(7) * -1); }
+@utility mt-n8 { margin-top: calc(--spacing(8) * -1); }
+@utility mt-n9 { margin-top: calc(--spacing(9) * -1); }
+@utility mt-n10 { margin-top: calc(--spacing(10) * -1); }
+@utility mt-n11 { margin-top: calc(--spacing(11) * -1); }
+@utility mt-n12 { margin-top: calc(--spacing(12) * -1); }
+@utility mt-n13 { margin-top: calc(--spacing(13) * -1); }
+@utility mt-n14 { margin-top: calc(--spacing(14) * -1); }
+@utility mt-n15 { margin-top: calc(--spacing(15) * -1); }
+@utility mt-n16 { margin-top: calc(--spacing(16) * -1); }
+
+@utility mb-n1 { margin-bottom: calc(--spacing(1) * -1); }
+@utility mb-n2 { margin-bottom: calc(--spacing(2) * -1); }
+@utility mb-n3 { margin-bottom: calc(--spacing(3) * -1); }
+@utility mb-n4 { margin-bottom: calc(--spacing(4) * -1); }
+@utility mb-n5 { margin-bottom: calc(--spacing(5) * -1); }
+@utility mb-n6 { margin-bottom: calc(--spacing(6) * -1); }
+@utility mb-n7 { margin-bottom: calc(--spacing(7) * -1); }
+@utility mb-n8 { margin-bottom: calc(--spacing(8) * -1); }
+@utility mb-n9 { margin-bottom: calc(--spacing(9) * -1); }
+@utility mb-n10 { margin-bottom: calc(--spacing(10) * -1); }
+@utility mb-n11 { margin-bottom: calc(--spacing(11) * -1); }
+@utility mb-n12 { margin-bottom: calc(--spacing(12) * -1); }
+@utility mb-n13 { margin-bottom: calc(--spacing(13) * -1); }
+@utility mb-n14 { margin-bottom: calc(--spacing(14) * -1); }
+@utility mb-n15 { margin-bottom: calc(--spacing(15) * -1); }
+@utility mb-n16 { margin-bottom: calc(--spacing(16) * -1); }
+
+@utility ml-n1 { margin-left: calc(--spacing(1) * -1); }
+@utility ml-n2 { margin-left: calc(--spacing(2) * -1); }
+@utility ml-n3 { margin-left: calc(--spacing(3) * -1); }
+@utility ml-n4 { margin-left: calc(--spacing(4) * -1); }
+@utility ml-n5 { margin-left: calc(--spacing(5) * -1); }
+@utility ml-n6 { margin-left: calc(--spacing(6) * -1); }
+@utility ml-n7 { margin-left: calc(--spacing(7) * -1); }
+@utility ml-n8 { margin-left: calc(--spacing(8) * -1); }
+@utility ml-n9 { margin-left: calc(--spacing(9) * -1); }
+@utility ml-n10 { margin-left: calc(--spacing(10) * -1); }
+@utility ml-n11 { margin-left: calc(--spacing(11) * -1); }
+@utility ml-n12 { margin-left: calc(--spacing(12) * -1); }
+@utility ml-n13 { margin-left: calc(--spacing(13) * -1); }
+@utility ml-n14 { margin-left: calc(--spacing(14) * -1); }
+@utility ml-n15 { margin-left: calc(--spacing(15) * -1); }
+@utility ml-n16 { margin-left: calc(--spacing(16) * -1); }
+
+@utility mr-n1 { margin-right: calc(--spacing(1) * -1); }
+@utility mr-n2 { margin-right: calc(--spacing(2) * -1); }
+@utility mr-n3 { margin-right: calc(--spacing(3) * -1); }
+@utility mr-n4 { margin-right: calc(--spacing(4) * -1); }
+@utility mr-n5 { margin-right: calc(--spacing(5) * -1); }
+@utility mr-n6 { margin-right: calc(--spacing(6) * -1); }
+@utility mr-n7 { margin-right: calc(--spacing(7) * -1); }
+@utility mr-n8 { margin-right: calc(--spacing(8) * -1); }
+@utility mr-n9 { margin-right: calc(--spacing(9) * -1); }
+@utility mr-n10 { margin-right: calc(--spacing(10) * -1); }
+@utility mr-n11 { margin-right: calc(--spacing(11) * -1); }
+@utility mr-n12 { margin-right: calc(--spacing(12) * -1); }
+@utility mr-n13 { margin-right: calc(--spacing(13) * -1); }
+@utility mr-n14 { margin-right: calc(--spacing(14) * -1); }
+@utility mr-n15 { margin-right: calc(--spacing(15) * -1); }
+@utility mr-n16 { margin-right: calc(--spacing(16) * -1); }
 
 @layer base {
   /* Тонкий скроллбар в цвет темы для .scrollable* — вместо системного по умолчанию */

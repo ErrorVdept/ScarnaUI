@@ -4,11 +4,12 @@
     когда вкладка активна.
 *@
 @namespace ScarnaUI.Components.Navigation
+@inherits ScarnaComponentBase
 @implements IDisposable
 
 @if (IsActive)
 {
-    <div class="scarna-tab-panel">
+    <div class="@Classes" style="@RootStyle" @attributes="UserAttributes">
         @ChildContent
     </div>
 }
@@ -22,6 +23,8 @@
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
     private bool IsActive => Parent?.IsSelected(this) ?? false;
+
+    private string Classes => CssBuilder.Default("scarna-tab-panel").AddClass(Class).ToString();
 
     protected override void OnInitialized()
     {

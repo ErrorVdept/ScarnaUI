@@ -26,6 +26,11 @@
         </div>
     </DocSection>
 
+    <DocSection Title="Color" Description="Фон на цвет темы. Default — нейтральная поверхность (bg-content1), Transparent — без заливки." Code="@ColorCode">
+        <ScarnaPaper Color="Color.Primary">Color.Primary</ScarnaPaper>
+        <ScarnaPaper Color="Color.Transparent" Bordered="true">Color.Transparent</ScarnaPaper>
+    </DocSection>
+
     <DocApiTable Rows="@_rows" />
 
 </DocPage>
@@ -66,6 +71,12 @@
         </div>
         """;
 
+    private const string ColorCode =
+        """
+        <ScarnaPaper Color="Color.Primary">...</ScarnaPaper>
+        <ScarnaPaper Color="Color.Transparent" Bordered="true">...</ScarnaPaper>
+        """;
+
     private readonly List<DocApiRow> _rows = new()
     {
         new("Bordered", "bool", "false", "Тонкая рамка в дополнение к тени"),
@@ -73,6 +84,7 @@
         new("Hovered", "bool", "false", "Смена фона (bg-content2) при наведении"),
         new("Radius", "Radius", "Medium", "Радиус скругления"),
         new("GlassEffect", "bool", "false", "Полупрозрачный фон с блюром вместо сплошного bg-content1 — как у ScarnaNavBar"),
+        new("Color", "Color", "Default", "Фон поверхности. Default — нейтральная поверхность темы; Transparent — без заливки; остальные — заливка цветом темы. Игнорируется при GlassEffect=\"true\""),
         new("OnClick", "EventCallback<MouseEventArgs>", "—", "Если задан — поверхность кликабельна (role=\"button\", Enter/Space). Не задан — обычный статичный контейнер"),
         new("ChildContent", "RenderFragment?", "—", "Содержимое"),
     };

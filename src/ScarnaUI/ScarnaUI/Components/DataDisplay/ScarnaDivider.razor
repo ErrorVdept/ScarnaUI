@@ -7,7 +7,7 @@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
 
-<div class="@Classes" style="@Style" role="separator" aria-orientation="@(Vertical ? "vertical" : "horizontal")" @attributes="UserAttributes"></div>
+<div class="@Classes" style="@RootStyle" role="separator" aria-orientation="@(Vertical ? "vertical" : "horizontal")" @attributes="UserAttributes"></div>
 
 @code {
     /// <summary>Вертикальная линия вместо горизонтальной (нужна явная высота через Class/Style у родителя).</summary>

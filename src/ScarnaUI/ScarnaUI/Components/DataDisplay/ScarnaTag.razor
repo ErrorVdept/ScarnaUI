@@ -9,7 +9,7 @@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
 
-<span class="@Classes" style="@Style" @attributes="UserAttributes">@ChildContent</span>
+<span class="@Classes" style="@RootStyle" @attributes="UserAttributes">@ChildContent</span>
 
 @code {
     [Parameter] public Color Color { get; set; } = Color.Default;

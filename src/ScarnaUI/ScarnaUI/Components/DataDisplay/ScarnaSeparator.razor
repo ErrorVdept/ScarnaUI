@@ -10,11 +10,11 @@
 
 @if (ChildContent is null)
 {
-    <div class="@LineClasses" style="@Style" role="separator" aria-orientation="@(Vertical ? "vertical" : "horizontal")" @attributes="UserAttributes"></div>
+    <div class="@LineClasses" style="@RootStyle" role="separator" aria-orientation="@(Vertical ? "vertical" : "horizontal")" @attributes="UserAttributes"></div>
 }
 else
 {
-    <div class="@WrapperClasses" style="@Style" role="separator" aria-orientation="horizontal" @attributes="UserAttributes">
+    <div class="@WrapperClasses" style="@RootStyle" role="separator" aria-orientation="horizontal" @attributes="UserAttributes">
         <span class="h-px flex-1 bg-divider"></span>
         <span class="shrink-0 text-xs text-foreground/50">@ChildContent</span>
         <span class="h-px flex-1 bg-divider"></span>

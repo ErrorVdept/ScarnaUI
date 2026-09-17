@@ -3,9 +3,10 @@
 *@
 @namespace ScarnaUI.Components.Forms
 @typeparam TValue
+@inherits ScarnaComponentBase
 @implements IDisposable
 
-<button type="button" class="@Classes" data-tab-active="@(IsSelected ? "true" : "false")" @onclick="() => Parent!.SelectAsync(Value)">
+<button type="button" class="@Classes" style="@RootStyle" data-tab-active="@(IsSelected ? "true" : "false")" @onclick="() => Parent!.SelectAsync(Value)" @attributes="UserAttributes">
     @Text
 </button>
 
@@ -31,6 +32,7 @@
     private string Classes => CssBuilder.Default("relative z-10 whitespace-nowrap rounded-scarna-full px-4 py-1.5 text-sm font-medium transition-colors")
         .AddClass("text-foreground", IsSelected)
         .AddClass("text-foreground/60 hover:text-foreground", !IsSelected)
+        .AddClass(Class)
         .ToString();
 
     public void Dispose() => Parent?.Unregister(this);

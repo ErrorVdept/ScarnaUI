@@ -15,6 +15,7 @@
     рендерится там, в конце документа.
 *@
 @namespace ScarnaUI.Components.Overlays
+@inherits ScarnaComponentBase
 @implements IDisposable
 @inject IJSRuntime JSRuntime
 
@@ -162,9 +163,15 @@
     /// visibility:hidden держится до тех пор, пока JS не вычислит и не проставит
     /// координаты — это убирает "мигание" поповера в углу экрана на первом кадре.
     /// </summary>
+    // Class/Style/Width/... сюда намеренно НЕ подмешиваются (в отличие от остальных
+    // компонентов через RootStyle) — position:fixed/top:0/left:0/visibility:hidden здесь
+    // критичны для корректного позиционирования (см. комментарий выше), и произвольный
+    // Style от вызывающего кода мог бы их случайно перебить. @inherits ScarnaComponentBase
+    // нужен только затем, чтобы у ScarnaPopover был catch-all для непойманных атрибутов —
+    // без него Blazor бросает исключение при любом незнакомом параметре в разметке.
     private RenderFragment Surface() =>
     @<div @ref="_surfaceElement"
-          class="@($"scarna-popover-surface pointer-events-auto {SurfaceClass}")"
+          class="@($"scarna-popover-surface pointer-events-auto {SurfaceClass} {Class}")"
           style="visibility:hidden; position:fixed; top:0; left:0;">
         @ChildContent
     </div>;

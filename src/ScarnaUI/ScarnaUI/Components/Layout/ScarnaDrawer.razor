@@ -43,16 +43,28 @@
     /// <summary>Temporary (по умолчанию) — overlay с подложкой. Persistent/Mini — занимает место в потоке, раздвигая соседние элементы.</summary>
     [Parameter] public ScarnaDrawerVariant Variant { get; set; } = ScarnaDrawerVariant.Temporary;
 
-    /// <summary>Ширина панели (для Left/Right) — любое CSS-значение, например "280px".</summary>
-    [Parameter] public string Width { get; set; } = "280px";
+    /// <summary>
+    /// Ширина панели (для Left/Right) — любое CSS-значение, например "280px".
+    /// Переопределяет (override, не new — Blazor не поддерживает скрытие параметров)
+    /// одноимённый параметр ScarnaComponentBase: там — просто произвольная ширина
+    /// корневого блока (string?), здесь — размер раскрытой панели, участвующий
+    /// в анимации Persistent/Mini, и всегда непустой (string с default) — отсюда
+    /// осознанное сужение nullability, подавляем предупреждение об этом ниже.
+    /// </summary>
+#pragma warning disable CS8765 // сужение nullability при override — см. комментарий выше
+    [Parameter] public override string Width { get; set; } = "280px";
 
-    /// <summary>Высота панели (для Top/Bottom) — любое CSS-значение.</summary>
-    [Parameter] public string Height { get; set; } = "280px";
+    /// <summary>Высота панели (для Top/Bottom) — любое CSS-значение. См. Width — та же причина override.</summary>
+    [Parameter] public override string Height { get; set; } = "280px";
+#pragma warning restore CS8765
 
     /// <summary>Ширина/высота в закрытом состоянии у Variant.Mini (обычно под одни иконки). Для Temporary/Persistent не используется — там закрытое состояние либо за экраном, либо нулевого размера.</summary>
     [Parameter] public string MiniWidth { get; set; } = "72px";
 
     [Parameter] public bool CloseOnBackdropClick { get; set; } = true;
+
+    /// <summary>Фон панели. Default (по умолчанию) — нейтральная поверхность темы (bg-content1); Transparent — без заливки; остальные — сплошная заливка цветом темы (например, тем же Color, что и у ScarnaNavBar, чтобы Drawer и AppBar были одного цвета).</summary>
+    [Parameter] public Color Color { get; set; } = Color.Default;
 
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
@@ -73,7 +85,8 @@
         }
     }
 
-    private string Classes => CssBuilder.Default("scarna-drawer bg-content1 overflow-y-auto overflow-x-hidden")
+    private string Classes => CssBuilder.Default("scarna-drawer overflow-y-auto overflow-x-hidden")
+        .AddClass(ScarnaColorVariantClasses.Surface(Color))
         .AddClass(TemporaryClasses, Variant == ScarnaDrawerVariant.Temporary)
         .AddClass(PersistentClasses, Variant != ScarnaDrawerVariant.Temporary)
         .AddClass(Class)
@@ -108,15 +121,22 @@
         _ => "border-r border-divider",
     };
 
-    private string CombinedStyle
+    // MinWidth/MinHeight/MaxWidth/MaxHeight из ScarnaComponentBase
+    // подмешиваются через BuildStyle — свои Width/Height (см. override string Width/Height
+    // выше) уже посчитаны в sizeStyle и передаются как ownStyle. includeWidthHeight:false —
+    // иначе BuildStyle сам добавил бы ещё и "чистые" Width/Height по обеим осям сразу
+    // (у него нет своей логики Anchor), задвоив уже посчитанный sizeStyle и заодно наложив
+    // лишнее ограничение на ось, которую Anchor не использует (например, height на
+    // Anchor=Left, где панель должна тянуться на всю доступную высоту).
+    private string? CombinedStyle
     {
         get
         {
             var sizeStyle = Variant == ScarnaDrawerVariant.Temporary
-                ? (IsHorizontal ? $"width: {Width};" : $"height: {Height};")
+                ? (IsHorizontal ? $"width: {NormalizeLength(Width)};" : $"height: {NormalizeLength(Height)};")
                 : PersistentSizeStyle;
 
-            return string.IsNullOrWhiteSpace(Style) ? sizeStyle : $"{sizeStyle} {Style}";
+            return BuildStyle(sizeStyle, includeWidthHeight: false);
         }
     }
 
@@ -125,7 +145,7 @@
         get
         {
             var collapsedSize = Variant == ScarnaDrawerVariant.Mini ? MiniWidth : "0px";
-            var size = Open ? (IsHorizontal ? Width : Height) : collapsedSize;
+            var size = NormalizeLength(Open ? (IsHorizontal ? Width : Height) : collapsedSize);
             return IsHorizontal ? $"width: {size};" : $"height: {size};";
         }
     }

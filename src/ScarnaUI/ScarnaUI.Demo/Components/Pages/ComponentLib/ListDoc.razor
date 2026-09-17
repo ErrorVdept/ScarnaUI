@@ -30,6 +30,17 @@
         <span class="text-sm text-foreground/60">Последний клик: @(_lastClicked ?? "—")</span>
     </DocSection>
 
+    <DocSection Title="Color" Description="Фон списка — цвет темы. Default — нейтральная поверхность (bg-content1), Transparent — без заливки." Code="@ColorCode">
+        <ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None" Color="Color.Primary" Class="w-48">
+            <ScarnaListItem Value="@("a")">Пункт A</ScarnaListItem>
+            <ScarnaListItem Value="@("b")">Пункт B</ScarnaListItem>
+        </ScarnaList>
+        <ScarnaList TValue="string" SelectionMode="ScarnaListSelectionMode.None" Color="Color.Transparent" Bordered="true" Class="w-48">
+            <ScarnaListItem Value="@("a")">Пункт A</ScarnaListItem>
+            <ScarnaListItem Value="@("b")">Пункт B</ScarnaListItem>
+        </ScarnaList>
+    </DocSection>
+
     <DocApiTable Rows="@_listRows" />
     <DocApiTable Title="Параметры ScarnaListItem" Rows="@_itemRows" />
 
@@ -63,12 +74,24 @@
         </ScarnaList>
         """;
 
+    private const string ColorCode =
+        """
+        <ScarnaList TValue="string" Color="Color.Primary">
+            <ScarnaListItem Value="@("a")">Пункт A</ScarnaListItem>
+        </ScarnaList>
+
+        <ScarnaList TValue="string" Color="Color.Transparent" Bordered="true">
+            <ScarnaListItem Value="@("a")">Пункт A</ScarnaListItem>
+        </ScarnaList>
+        """;
+
     private readonly List<DocApiRow> _listRows = new()
     {
         new("SelectionMode", "ScarnaListSelectionMode", "None", "None/Single/Multiple"),
         new("Value / ValueChanged", "TValue? / ...", "—", "Выбранное значение при Single"),
         new("SelectedValues / SelectedValuesChanged", "IReadOnlyCollection<TValue>? / ...", "—", "Выбранные значения при Multiple"),
         new("Bordered", "bool", "false", "Обводка списка"),
+        new("Color", "Color", "Default", "Фон списка. Default — нейтральная поверхность темы; Transparent — без заливки; остальные — заливка цветом темы"),
         new("Density", "ScarnaDensity", "Normal", "Зарезервировано для компактного режима"),
         new("ChildContent", "RenderFragment?", "—", "Набор ScarnaListItem"),
     };

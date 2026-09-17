@@ -40,7 +40,7 @@
                         @foreach (var q in _questions)
                         {
                             <ScarnaPaper Bordered="false" Shadow="false" Hovered="true" Radius="Radius.Medium" Class="p-3" OnClick="() => OpenQuestion(q.Title)">
-                                <ScarnaText Typo="ScarnaTypo.Subtitle1">@q.Title</ScarnaText>
+                                <ScarnaText Typo="Typo.Subtitle1">@q.Title</ScarnaText>
 
                                 <ScarnaStack Row="true" Wrap="true" Spacing="2" Align="Align.Center" Class="mt-1 text-xs text-foreground/50">
                                     @if (q.Answered)
@@ -63,7 +63,7 @@
                                     <span>@q.Views</span>
                                 </ScarnaStack>
 
-                                <ScarnaText Typo="ScarnaTypo.Body2" Class="mt-2 line-clamp-2 text-foreground/60">@q.Description</ScarnaText>
+                                <ScarnaText Typo="Typo.Body2" Class="mt-2 line-clamp-2 text-foreground/60">@q.Description</ScarnaText>
 
                                 <ScarnaStack Row="true" Justify="Justify.SpaceBetween" Align="Align.Center" Class="mt-3">
                                     <ScarnaStack Row="true" Wrap="true" Spacing="2">
@@ -95,8 +95,8 @@
                             <ScarnaStack Row="true" Spacing="3" Align="Align.Center">
                                 <ScarnaAvatar Initials="@user.Initials" Color="Color.Primary" />
                                 <ScarnaStack Spacing="0">
-                                    <ScarnaText Typo="ScarnaTypo.Subtitle2">@user.Name</ScarnaText>
-                                    <ScarnaText Typo="ScarnaTypo.Caption">@user.Reputation очков репутации</ScarnaText>
+                                    <ScarnaText Typo="Typo.Subtitle2">@user.Name</ScarnaText>
+                                    <ScarnaText Typo="Typo.Caption">@user.Reputation очков репутации</ScarnaText>
                                 </ScarnaStack>
                             </ScarnaStack>
                         }

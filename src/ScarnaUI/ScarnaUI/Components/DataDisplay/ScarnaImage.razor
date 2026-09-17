@@ -12,7 +12,7 @@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
 
-<div class="@WrapperClasses" style="@Style" @attributes="UserAttributes">
+<div class="@WrapperClasses" style="@RootStyle" @attributes="UserAttributes">
     @if (!_failed)
     {
         <img src="@ResolvedSrc" alt="@Alt" loading="@(Lazy ? "lazy" : "eager")"

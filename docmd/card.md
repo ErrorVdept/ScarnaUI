@@ -30,6 +30,13 @@ GlassEffect — полупрозрачный фон с блюром (тот же
 <ScarnaCard GlassEffect="true">...</ScarnaCard>
 ```
 
+Color меняет фон на цвет темы (`Default` — нейтральная поверхность `bg-content1`,
+`Transparent` — без заливки). Игнорируется, если `GlassEffect="true"`:
+
+```razor
+<ScarnaCard Color="Color.Primary">...</ScarnaCard>
+```
+
 ## Параметры
 
 | Параметр | Тип | По умолчанию | Назначение |
@@ -38,6 +45,7 @@ GlassEffect — полупрозрачный фон с блюром (тот же
 | `Shadow` | `bool` | `true` | Тень под карточкой |
 | `Radius` | `Radius` | `Large` | Радиус скругления |
 | `GlassEffect` | `bool` | `false` | Полупрозрачный фон с блюром (`backdrop-blur`) вместо сплошного `bg-content1` — как у `ScarnaNavBar` |
+| `Color` | `Color` | `Default` | Фон карточки. `Default` — нейтральная поверхность темы; `Transparent` — без заливки; остальные — заливка цветом темы. Игнорируется при `GlassEffect="true"` |
 | `HeaderContent` | `RenderFragment?` | — | Заголовок (с разделителем снизу) |
 | `FooterContent` | `RenderFragment?` | — | Подвал (с разделителем сверху) |
 | `ChildContent` | `RenderFragment?` | — | Основное содержимое |

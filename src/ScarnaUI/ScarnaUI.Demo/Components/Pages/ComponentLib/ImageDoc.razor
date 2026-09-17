@@ -7,6 +7,10 @@
         <ScarnaImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Alt="Пейзаж" Class="h-40 w-64" />
     </DocSection>
 
+    <DocSection Title="Width / Height" Description="Точный размер вместо Tailwind-классов в Class — унаследованы из ScarnaComponentBase (см. getting-started.md). Можно указывать число без единицы ('300') — px достроится сам." Code="@WidthHeightCode">
+        <ScarnaImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Width="300px" Height="150px" />
+    </DocSection>
+
     <DocSection Title="Radius и Bordered" Code="@VariantsCode">
         <ScarnaImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Radius="Radius.Small" Class="h-32 w-48" />
         <ScarnaImage Src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400" Radius="Radius.Full" Bordered="true" Class="h-32 w-32" />
@@ -28,6 +32,11 @@
     private const string BasicCode =
         """
         <ScarnaImage Src="/img/cover.jpg" Alt="Обложка" Class="h-40 w-64" />
+        """;
+
+    private const string WidthHeightCode =
+        """
+        <ScarnaImage Src="/img/cover.jpg" Width="300px" Height="150px" />
         """;
 
     private const string VariantsCode =

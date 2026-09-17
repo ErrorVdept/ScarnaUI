@@ -44,6 +44,7 @@
 | `Value` / `ValueChanged` | `TValue?` / ... | — | Выбранное значение при `Single` |
 | `SelectedValues` / `SelectedValuesChanged` | `IReadOnlyCollection<TValue>?` / ... | — | Выбранные значения при `Multiple` |
 | `Bordered` | `bool` | `false` | Обводка списка |
+| `Color` | `Color` | `Default` | Фон списка. `Default` — нейтральная поверхность темы (`bg-content1`); `Transparent` — без заливки; остальные — заливка цветом темы |
 | `Density` | `ScarnaDensity` | `Normal` | Зарезервировано для компактного режима |
 | `ChildContent` | `RenderFragment?` | — | Набор `ScarnaListItem` |
 

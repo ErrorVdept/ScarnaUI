@@ -21,6 +21,10 @@
 - **`GlassEffect`** — полупрозрачный фон с блюром (`backdrop-blur`) вместо сплошного
   `bg-content1` — тот же приём, что у `ScarnaNavBar`. Для поверхностей поверх фонового
   изображения/градиента.
+- **`Color`** — фон на цвет темы (`Default` — нейтральная поверхность `bg-content1`,
+  `Transparent` — без заливки). Игнорируется при `GlassEffect="true"`; при цветном фоне
+  (не `Default`/`Transparent`) `Hovered` тоже не действует — не затемняем цветную
+  поверхность нейтральным `bg-content2`.
 
 ## Пример использования
 
@@ -43,6 +47,7 @@
 | `Hovered` | `bool` | `false` | Смена фона (bg-content2) при наведении |
 | `Radius` | `Radius` | `Medium` | Радиус скругления |
 | `GlassEffect` | `bool` | `false` | Полупрозрачный фон с блюром вместо сплошного `bg-content1` — как у `ScarnaNavBar` |
+| `Color` | `Color` | `Default` | Фон поверхности. `Default` — нейтральная поверхность темы; `Transparent` — без заливки; остальные — заливка цветом темы. Игнорируется при `GlassEffect="true"` |
 | `OnClick` | `EventCallback<MouseEventArgs>` | — | Если задан — поверхность кликабельна (role="button", Enter/Space). Не задан — обычный статичный контейнер |
 | `ChildContent` | `RenderFragment?` | — | Содержимое |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |

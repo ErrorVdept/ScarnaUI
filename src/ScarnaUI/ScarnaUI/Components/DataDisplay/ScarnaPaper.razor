@@ -11,11 +11,12 @@
     <ScarnaPaper>Обычная поверхность</ScarnaPaper>
     <ScarnaPaper Hovered="true" OnClick="() => Selected = true">Кликабельная карточка</ScarnaPaper>
     <ScarnaPaper GlassEffect="true">Поверх фонового изображения/градиента</ScarnaPaper>
+    <ScarnaPaper Color="Color.Primary">Цветная поверхность</ScarnaPaper>
 *@
 @namespace ScarnaUI.Components.DataDisplay
 @inherits ScarnaComponentBase
 
-<div class="@Classes" style="@Style"
+<div class="@Classes" style="@RootStyle"
      role="@(IsClickable ? "button" : null)"
      tabindex="@(IsClickable ? "0" : null)"
      @onclick="HandleClickAsync"
@@ -38,6 +39,9 @@
 
     /// <summary>Полупрозрачный фон с блюром (backdrop-blur) вместо сплошного bg-content1 — как у ScarnaNavBar.</summary>
     [Parameter] public bool GlassEffect { get; set; }
+
+    /// <summary>Фон поверхности. Default (по умолчанию) — нейтральная поверхность темы (bg-content1); Transparent — без заливки. Игнорируется при GlassEffect="true".</summary>
+    [Parameter] public Color Color { get; set; } = Color.Default;
 
     /// <summary>Если задан — поверхность становится кликабельной (курсор, role="button", Enter/Space). Не задан — обычный статичный контейнер.</summary>
     [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
@@ -64,13 +68,18 @@
         }
     }
 
-    private string Classes => CssBuilder.Default("scarna-paper text-foreground p-5 transition-colors duration-150")
+    // См. такой же комментарий в ScarnaCard.Classes — не даём text-foreground конкурировать
+    // с text-* из Surface(Color) за одно и то же свойство.
+    private bool HasNeutralText => GlassEffect || Color is Color.Default or Color.Transparent;
+
+    private string Classes => CssBuilder.Default("scarna-paper p-5 transition-colors duration-150")
+        .AddClass("text-foreground", HasNeutralText)
         .AddClass("bg-content1/80 backdrop-blur-md", GlassEffect)
-        .AddClass("bg-content1", !GlassEffect)
+        .AddClass(ScarnaColorVariantClasses.Surface(Color), !GlassEffect)
         .AddClass(ScarnaColorVariantClasses.Radius(Radius))
         .AddClass("border border-divider", Bordered)
         .AddClass("shadow-md", Shadow)
-        .AddClass("hover:bg-content2", Hovered)
+        .AddClass("hover:bg-content2", Hovered && HasNeutralText)
         .AddClass("cursor-pointer select-none active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus", IsClickable)
         .AddClass(Class)
         .ToString();

@@ -8,7 +8,7 @@
 @namespace ScarnaUI.Components.Actions
 @inherits ScarnaFormComponentBase<bool>
 
-<button type="button" class="@Classes" disabled="@Disabled" aria-pressed="@Value" @onclick="ToggleAsync">
+<button type="button" class="@Classes" style="@RootStyle" disabled="@Disabled" aria-pressed="@Value" @onclick="ToggleAsync" @attributes="UserAttributes">
     @ChildContent
 </button>
 

@@ -15,7 +15,7 @@
 @implements IAsyncDisposable
 @inject IJSRuntime JSRuntime
 
-<div class="@Classes" style="@Style" @attributes="UserAttributes">
+<div class="@Classes" style="@RootStyle" @attributes="UserAttributes">
     <div @ref="_trackElement" class="@TrackClasses">
         <span class="scarna-tabs__indicator absolute inset-y-1 left-0 rounded-scarna-full bg-content1 shadow-md transition-[transform,width] duration-200 ease-out" style="width:0"></span>
         @foreach (var panel in _panels)

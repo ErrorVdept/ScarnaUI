@@ -34,9 +34,9 @@
 `OnClick='() => Navigator.NavigateTo("/search")'`).
 
 Фон настраивается так же, как у [ScarnaPaper](paper.md) (`Bordered`/`Shadow`/`Radius`/
-`GlassEffect`). `Floating` переключает вид на плавающую панель с отступом снизу и с
-боков (пилюля, а не полоса во всю ширину) — обычно вместе с `Radius="Radius.Full"` и
-`Shadow="true"`:
+`GlassEffect`/`Color`). `Floating` переключает вид на плавающую панель с отступом снизу
+и с боков (пилюля, а не полоса во всю ширину) — обычно вместе с `Radius="Radius.Full"`
+и `Shadow="true"`:
 
 ```razor
 <ScarnaBottomMenu Floating="true" Radius="Radius.Full" Shadow="true" @bind-SelectedIndex="_tab">
@@ -56,6 +56,7 @@
 | `Shadow` | `bool` | `false` | Тень под панелью |
 | `Radius` | `Radius` | `None` | Радиус скругления углов (для `Floating` обычно `Full`) |
 | `GlassEffect` | `bool` | `false` | Полупрозрачный фон с блюром вместо сплошного `bg-content1` — как у `ScarnaNavBar` |
+| `Color` | `Color` | `Default` | Фон панели. `Default` — нейтральная поверхность темы; `Transparent` — без заливки; остальные — заливка цветом темы. Игнорируется при `GlassEffect="true"` |
 | `ChildContent` | `RenderFragment?` | — | Набор `ScarnaBottomMenuItem` |
 | `Class`, `Style`, `UserAttributes` | — | — | см. [getting-started.md](getting-started.md) |
 

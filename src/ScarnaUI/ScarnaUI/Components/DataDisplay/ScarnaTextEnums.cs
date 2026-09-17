@@ -1,7 +1,7 @@
 namespace ScarnaUI.Components.DataDisplay;
 
 /// <summary>Типографический стиль <see cref="ScarnaText"/> — как Typo в MudBlazor.</summary>
-public enum ScarnaTypo
+public enum Typo
 {
     H1,
     H2,
@@ -19,7 +19,7 @@ public enum ScarnaTypo
 }
 
 /// <summary>Горизонтальное выравнивание текста.</summary>
-public enum ScarnaTextAlign
+public enum TextAlign
 {
     Inherit,
     Start,

@@ -2,20 +2,27 @@
     Центрирующий контейнер с максимальной шириной и боковыми отступами —
     типовая обёртка страницы (аналог MudContainer).
 
-    <ScarnaContainer MaxWidth="ScarnaContainerMaxWidth.Large">
+    <ScarnaContainer Breakpoint="ScarnaContainerMaxWidth.Large">
         ...содержимое страницы...
     </ScarnaContainer>
 *@
 @namespace ScarnaUI.Components.Layout
 @inherits ScarnaComponentBase
 
-<div class="@Classes" style="@Style" @attributes="UserAttributes">
+<div class="@Classes" style="@RootStyle" @attributes="UserAttributes">
     @ChildContent
 </div>
 
 @code {
-    /// <summary>Максимальная ширина контейнера.</summary>
-    [Parameter] public ScarnaContainerMaxWidth MaxWidth { get; set; } = ScarnaContainerMaxWidth.Large;
+    /// <summary>
+    /// Максимальная ширина контейнера — готовый пресет брейкпоинтов. Называется не
+    /// MaxWidth, потому что этот параметр уже занят в ScarnaComponentBase под произвольное
+    /// CSS-значение max-width (string?) — Blazor не поддерживает переопределение параметра
+    /// с другим типом (override, в отличие от обычного члена класса, требует точного
+    /// совпадения типа). Если нужен точный CSS max-width, а не пресет, используйте
+    /// унаследованный MaxWidth.
+    /// </summary>
+    [Parameter] public ScarnaContainerMaxWidth Breakpoint { get; set; } = ScarnaContainerMaxWidth.Large;
 
     /// <summary>Растянуть на всю ширину без ограничения (эквивалент MaxWidth.False в MudBlazor).</summary>
     [Parameter] public bool Fluid { get; set; }
@@ -27,7 +34,7 @@
         .AddClass(Class)
         .ToString();
 
-    private string MaxWidthClass => MaxWidth switch
+    private string MaxWidthClass => Breakpoint switch
     {
         ScarnaContainerMaxWidth.Small => "max-w-3xl",
         ScarnaContainerMaxWidth.Medium => "max-w-5xl",

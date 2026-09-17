@@ -18,7 +18,7 @@
 @implements IAsyncDisposable
 @inject IJSRuntime JSRuntime
 
-<div class="@WrapperClasses" style="@Style" @attributes="UserAttributes">
+<div class="@WrapperClasses" style="@RootStyle" @attributes="UserAttributes">
     @if (!string.IsNullOrEmpty(Label))
     {
         <label class="text-sm font-medium text-foreground/80">@Label</label>
