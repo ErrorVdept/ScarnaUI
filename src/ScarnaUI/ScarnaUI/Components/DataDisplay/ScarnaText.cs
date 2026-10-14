@@ -24,6 +24,9 @@ public sealed class ScarnaText : ScarnaComponentBase
 
     [Parameter] public TextAlign TextAlign { get; set; } = TextAlign.Inherit;
 
+    /// <summary>Приглушённый цвет как у Typo.Caption/Overline (text-foreground/60) для любого Typo. Игнорируется, если задан Color.</summary>
+    [Parameter] public bool UseCaptionColor { get; set; }
+
     /// <summary>Добавляет отступ снизу (для абзацев подряд) — как GutterBottom в MudBlazor.</summary>
     [Parameter] public bool GutterBottom { get; set; }
 
@@ -100,7 +103,7 @@ public sealed class ScarnaText : ScarnaComponentBase
     // бы от порядка правил в сгенерированном Tailwind-CSS, а не от того, что явно задал вызывающий.
     private string ColorClass => Color switch
     {
-        null when Typo is Typo.Caption or Typo.Overline => "text-foreground/60",
+        null when UseCaptionColor || Typo is Typo.Caption or Typo.Overline => "text-foreground/60",
         null => "text-foreground",
         ScarnaUI.Components.Base.Color.Primary => "text-primary",
         ScarnaUI.Components.Base.Color.Secondary => "text-secondary",

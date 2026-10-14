@@ -247,7 +247,7 @@
                    на корне MainLayout.razor: min-height:100vh, flex flex-col, цвета темы —
                    уже внутри, вручную дублировать не нужно. relative/overflow-hidden — свои,
                    под конкретную компоновку этого wireframe'а (Class добавляется к готовым). *@
-                <ScarnaLayout Class="relative overflow-hidden">
+                <ScarnaLayout Height="100vh" MinHeight="0" Class="relative overflow-hidden">
                     <ScarnaNavBar Color="Color.Primary">
                         <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
                         <span>My application</span>
@@ -267,7 +267,7 @@
                             </ScarnaNavMenu>
                         </ScarnaDrawer>
 
-                        <main class="flex-1 p-6">@Body</main>
+                        <main class="flex-1 overflow-y-auto p-6">@Body</main>
                     </div>
                 </ScarnaLayout>
             </ScarnaPopoverProvider>
@@ -290,7 +290,7 @@
                 @* Flex="false" — ScarnaLayout по умолчанию рендерит flex-col (см. TemporaryCode),
                    а тут Drawer и колонка AppBar+контент стоят В РЯД (flex-row), поэтому
                    собственное "flex" в Class задаём сами, без Layout-овского flex-col. *@
-                <ScarnaLayout Flex="false" Class="flex overflow-hidden">
+                <ScarnaLayout Height="100vh" MinHeight="0" Flex="false" Class="flex overflow-hidden">
                     <ScarnaDrawer @bind-Open="_open" Anchor="ScarnaDrawerAnchor.Left"
                                  Variant="ScarnaDrawerVariant.Persistent" Width="240px">
                         <ScarnaNavMenu Class="p-2">
@@ -311,7 +311,7 @@
                             <span>My application</span>
                         </ScarnaNavBar>
 
-                        <main class="flex-1 p-6">@Body</main>
+                        <main class="flex-1 overflow-y-auto p-6">@Body</main>
                     </div>
                 </ScarnaLayout>
             </ScarnaPopoverProvider>
@@ -331,7 +331,7 @@
 
         <ScarnaThemeProvider>
             <ScarnaPopoverProvider>
-                <ScarnaLayout Class="overflow-hidden">
+                <ScarnaLayout Height="100vh" MinHeight="0" Class="overflow-hidden">
                     <ScarnaNavBar Color="Color.Primary">
                         <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
                         <span>My application</span>
@@ -352,7 +352,7 @@
                             </ScarnaNavMenu>
                         </ScarnaDrawer>
 
-                        <main class="flex-1 p-6">@Body</main>
+                        <main class="flex-1 overflow-y-auto p-6">@Body</main>
                     </div>
                 </ScarnaLayout>
             </ScarnaPopoverProvider>
@@ -372,7 +372,7 @@
 
         <ScarnaThemeProvider>
             <ScarnaPopoverProvider>
-                <ScarnaLayout Flex="false" Class="flex overflow-hidden">
+                <ScarnaLayout Height="100vh" MinHeight="0" Flex="false" Class="flex overflow-hidden">
                     <ScarnaDrawer @bind-Open="_open" Anchor="ScarnaDrawerAnchor.Left"
                                  Variant="ScarnaDrawerVariant.Mini" Width="240px" MiniWidth="48px">
                         <ScarnaNavMenu Class="p-1">
@@ -394,7 +394,7 @@
                             <span>My application</span>
                         </ScarnaNavBar>
 
-                        <main class="flex-1 p-6">@Body</main>
+                        <main class="flex-1 overflow-y-auto p-6">@Body</main>
                     </div>
                 </ScarnaLayout>
             </ScarnaPopoverProvider>
@@ -417,7 +417,7 @@
 
         <ScarnaThemeProvider>
             <ScarnaPopoverProvider>
-                <ScarnaLayout Class="overflow-hidden">
+                <ScarnaLayout Height="100vh" MinHeight="0" Class="overflow-hidden">
                     <ScarnaNavBar Color="Color.Primary">
                         <ScarnaButton OnClick="() => _open = !_open"><!-- гамбургер --></ScarnaButton>
                         <span>My application</span>
@@ -434,7 +434,7 @@
                             </ScarnaNavMenu>
                         </ScarnaDrawer>
 
-                        <main class="flex-1 p-6">@Body</main>
+                        <main class="flex-1 overflow-y-auto p-6">@Body</main>
                     </div>
                 </ScarnaLayout>
             </ScarnaPopoverProvider>
@@ -457,13 +457,13 @@
 
         <ScarnaThemeProvider>
             <ScarnaPopoverProvider>
-                <ScarnaLayout>
+                <ScarnaLayout Height="100vh" MinHeight="0" Class="overflow-hidden">
                     <ScarnaNavBar Color="Color.Primary">
                         <span>My application</span>
                         <ScarnaButton><!-- kebab --></ScarnaButton>
                     </ScarnaNavBar>
 
-                    <main class="p-6">@Body</main>
+                    <main class="flex-1 overflow-y-auto p-6">@Body</main>
                 </ScarnaLayout>
             </ScarnaPopoverProvider>
 
