@@ -29,7 +29,9 @@
         </svg>
     </button>
     <div class="grid transition-[grid-template-rows] duration-200 ease-out" style="@($"grid-template-rows: {(Expanded ? "1fr" : "0fr")};")">
-        <div class="overflow-hidden">
+        @* inert: свёрнутое содержимое схлопнуто по высоте (0fr), но остаётся в DOM — без него
+           ссылки/кнопки внутри оставались бы в порядке Tab-навигации невидимыми. *@
+        <div class="overflow-hidden" inert="@(!Expanded)">
             <div class="px-4 pb-4 text-sm text-foreground/80">
                 @ChildContent
             </div>

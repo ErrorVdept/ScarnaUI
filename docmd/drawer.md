@@ -55,6 +55,18 @@
   </span>
   ```
 
+Закрытая панель (`Open="false"`) у `Temporary` и `Persistent` получает `inert` и
+`aria-hidden="true"` — её ссылки и кнопки не попадают в порядок Tab-навигации и не
+читаются скринридером, пока панель невидима (у `Mini` иконки остаются рабочими, поэтому
+`inert` не ставится). У схлопнутой `Persistent` пропадает и граница (`border`), иначе
+она оставалась бы тонкой линией шириной 1px.
+
+Готовый пример "боковое меню во всю высоту": страницы `/componentlib/*` демо-проекта
+([ComponentLibLayout](../src/ScarnaUI/ScarnaUI.Demo/Components/Layout/ComponentLibLayout.razor)) —
+на десктопе `Persistent`-панель, "прилипающая" под AppBar (`sticky! top-[57px]`,
+высота `calc(100vh - 57px)`, прокручивается отдельно от страницы), на мобильных —
+`Temporary`, открываемая кнопкой и закрывающаяся при навигации.
+
 Живые примеры всех трёх — на странице [`/showcase/main-layout`](../src/ScarnaUI/ScarnaUI.Demo/Components/Pages/Showcase/MainLayoutShowcase.razor)
 (воспроизводит "Main Layouts" с wireframe'ов MudBlazor + дополнительные комбинации).
 

@@ -1,0 +1,26 @@
+@*
+    Содержимое бокового меню документации — список всех компонентов/сервисов по
+    категориям (данные из ComponentLibNav, единые с карточками на Index.razor).
+    Рисуется внутри ScarnaDrawer (см. ComponentLibLayout) — и в постоянной панели на
+    десктопе, и во временной на мобильных. Активная страница подсвечивается через
+    ScarnaNavLink (Exact="true", т.к. маршруты не вложены друг в друга).
+*@
+@namespace ScarnaUI.Demo.Components.Pages.ComponentLib.Shared
+
+<nav class="p-3 pb-8">
+    <NavLink href="/componentlib" Match="NavLinkMatch.All" class="mb-4 block px-3 text-sm font-semibold text-foreground hover:text-primary">
+        ← Все компоненты
+    </NavLink>
+    @foreach (var group in ComponentLibNav.Groups)
+    {
+        <div class="mb-4">
+            <p class="mb-1.5 px-3 text-xs font-semibold uppercase tracking-wide text-foreground/40">@group.Title</p>
+            <ScarnaNavMenu Class="gap-0.5!">
+                @foreach (var item in group.Items)
+                {
+                    <ScarnaNavLink Href="@item.Href" Exact="true">@item.Name</ScarnaNavLink>
+                }
+            </ScarnaNavMenu>
+        </div>
+    }
+</nav>

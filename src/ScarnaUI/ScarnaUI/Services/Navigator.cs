@@ -34,8 +34,18 @@ internal sealed class Navigator : INavigator, IDisposable
 
     public bool IsActive(string uri, bool exact = false)
     {
-        var current = ToBaseRelativePath().TrimEnd('/');
-        var target = ToBaseRelativePath(_navigationManager.ToAbsoluteUri(uri).ToString()).TrimEnd('/');
+        var absoluteTarget = _navigationManager.ToAbsoluteUri(uri).ToString();
+
+        // Внешняя ссылка (другой хост) не принадлежит приложению — ToBaseRelativePath на ней
+        // бросил бы ArgumentException прямо из рендера ScarnaNavLink и уронил бы страницу.
+        if (!absoluteTarget.StartsWith(_navigationManager.BaseUri, StringComparison.OrdinalIgnoreCase)
+            && !string.Equals(absoluteTarget + "/", _navigationManager.BaseUri, StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        var current = StripQueryAndFragment(ToBaseRelativePath()).TrimEnd('/');
+        var target = StripQueryAndFragment(ToBaseRelativePath(absoluteTarget)).TrimEnd('/');
 
         if (exact)
         {
@@ -44,6 +54,14 @@ internal sealed class Navigator : INavigator, IDisposable
 
         return current.Equals(target, StringComparison.OrdinalIgnoreCase)
             || current.StartsWith(target + "/", StringComparison.OrdinalIgnoreCase);
+    }
+
+    // Без этого "/orders?tab=2" и "/orders#section" переставали считаться активными для
+    // Href="/orders" — строка запроса/якорь попадали в сравнение пути.
+    private static string StripQueryAndFragment(string relativePath)
+    {
+        var end = relativePath.IndexOfAny(['?', '#']);
+        return end < 0 ? relativePath : relativePath[..end];
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e) => LocationChanged?.Invoke(this, e);

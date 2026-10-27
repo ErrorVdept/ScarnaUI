@@ -37,6 +37,22 @@
 
 @code {
     private bool _failed;
+    private string? _lastSrc;
+    private string? _lastMimeType;
+
+    // См. такой же комментарий в ScarnaAvatar: после ошибки загрузки новый Src/MimeType
+    // должен снова пытаться загрузиться, а не оставаться на заглушке навсегда. Сравниваем
+    // исходные параметры, а не собранный ResolvedSrc — для base64 это мегабайты строки.
+    protected override void OnParametersSet()
+    {
+        if (!string.Equals(_lastSrc, Src, StringComparison.Ordinal)
+            || !string.Equals(_lastMimeType, MimeType, StringComparison.Ordinal))
+        {
+            _lastSrc = Src;
+            _lastMimeType = MimeType;
+            _failed = false;
+        }
+    }
 
     [Parameter, EditorRequired] public string Src { get; set; } = string.Empty;
 

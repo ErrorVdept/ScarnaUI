@@ -13,7 +13,10 @@
 
 @if (!string.IsNullOrEmpty(Href))
 {
-    <a href="@Href" target="@Target" class="@Classes" style="@RootStyle" @attributes="UserAttributes">
+    @* disabled:-вариант Tailwind к <a> не применяется (нет такого атрибута), поэтому
+       для ссылки блокировка — явными классами + aria-disabled/tabindex, а не как у <button>. *@
+    <a href="@(IsInactive ? null : Href)" target="@Target" class="@Classes" style="@RootStyle"
+       aria-disabled="@(IsInactive ? "true" : null)" tabindex="@(IsInactive ? "-1" : null)" @attributes="UserAttributes">
         @RenderInner()
     </a>
 }
@@ -96,7 +99,10 @@ else
         @EndIcon
     };
 
+    private bool IsInactive => Disabled || Loading;
+
     private string Classes => CssBuilder.Default("scarna-btn inline-flex items-center justify-center font-medium leading-none select-none transition-[background-color,border-color,color,box-shadow,transform] duration-150 active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none")
+        .AddClass("opacity-50 pointer-events-none", IsInactive && !string.IsNullOrEmpty(Href))
         .AddClass(SizeClass)
         .AddClass(ScarnaColorVariantClasses.Get(Color, Variant))
         .AddClass(ScarnaColorVariantClasses.Radius(Radius))

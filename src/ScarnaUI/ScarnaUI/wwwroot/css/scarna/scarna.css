@@ -248,6 +248,9 @@
   .sticky {
     position: sticky;
   }
+  .sticky\! {
+    position: sticky !important;
+  }
   .inset-0 {
     inset: 0px;
   }
@@ -275,8 +278,8 @@
   .top-2 {
     top: calc(var(--spacing) * 2);
   }
-  .top-20 {
-    top: calc(var(--spacing) * 20);
+  .top-\[57px\] {
+    top: 57px;
   }
   .-right-1 {
     right: calc(var(--spacing) * -1);
@@ -769,6 +772,9 @@
   }
   .mx-n16\! {
     margin-inline: calc(calc(var(--spacing) * 16) * -1) !important;
+  }
+  .-my-8 {
+    margin-block: calc(var(--spacing) * -8);
   }
   .my-0 {
     margin-block: 0px;
@@ -1910,6 +1916,9 @@
   .h-\[18px\] {
     height: 18px;
   }
+  .h-\[calc\(100vh-57px\)\] {
+    height: calc(100vh - 57px);
+  }
   .h-full {
     height: 100%;
   }
@@ -1928,11 +1937,11 @@
   .max-h-\[90vh\] {
     max-height: 90vh;
   }
-  .max-h-\[calc\(100vh-6rem\)\] {
-    max-height: calc(100vh - 6rem);
-  }
   .min-h-96 {
     min-height: calc(var(--spacing) * 96);
+  }
+  .min-h-\[calc\(100vh-57px\)\] {
+    min-height: calc(100vh - 57px);
   }
   .min-h-screen {
     min-height: 100vh;
@@ -2220,8 +2229,8 @@
   .gap-4 {
     gap: calc(var(--spacing) * 4);
   }
-  .gap-8 {
-    gap: calc(var(--spacing) * 8);
+  .self-start {
+    align-self: flex-start;
   }
   .truncate {
     overflow: hidden;
@@ -4101,9 +4110,6 @@
     }
     .lg\:col-span-12 {
       grid-column: span 12 / span 12;
-    }
-    .lg\:mt-0 {
-      margin-top: 0px;
     }
     .lg\:block {
       display: block;

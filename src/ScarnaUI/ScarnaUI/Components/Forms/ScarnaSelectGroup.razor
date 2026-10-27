@@ -87,8 +87,9 @@
 
     private string WrapperClasses => CssBuilder.Default("scarna-select-group flex flex-col gap-1").AddClass(Class).ToString();
 
-    private string TrackClasses => CssBuilder.Default("scarna-select-group__track relative flex items-center gap-1 rounded-scarna-full bg-content2 p-1")
-        .AddClass("w-full", FullWidth)
+    // Ровно один из flex/inline-flex — см. такой же комментарий в ScarnaTabs.TrackClasses.
+    private string TrackClasses => CssBuilder.Default("scarna-select-group__track relative items-center gap-1 rounded-scarna-full bg-content2 p-1")
+        .AddClass("flex w-full", FullWidth)
         .AddClass("inline-flex", !FullWidth)
         .AddClass("[&>button]:flex-1", FullWidth)
         .AddClass(JustifyClass)

@@ -14,16 +14,28 @@
 #   ./pack-local.ps1                     - собрать 1.0.0-local, зарегистрировать источник (один раз)
 #   ./pack-local.ps1 -Version 1.2.3      - собрать конкретную версию
 #   ./pack-local.ps1 -SkipCacheClear     - не трогать глобальный кэш NuGet
+#   ./pack-local.ps1 -SkipDemo           - только пакет, без сборки демо-проекта
+#   ./pack-local.ps1 -DemoRuntime linux-x64 - демо под другую платформу (по умолчанию win-x64)
+#
+# Демо-проект (ScarnaUI.Demo) собирается в папку buildDemo одним self-contained exe
+# (PublishSingleFile) — .NET на целевой машине ставить не нужно. Полностью "в один файл"
+# не получится: статика (wwwroot, _content/ScarnaUI) и манифест *.staticwebassets.endpoints.json
+# в ASP.NET Core лежат рядом с exe — переносите папку buildDemo целиком.
+# Запуск: buildDemo\ScarnaUI.Demo.exe (по умолчанию http://localhost:5000).
 
 param(
     [string]$Version = "1.0.0-local",
-    [switch]$SkipCacheClear
+    [switch]$SkipCacheClear,
+    [switch]$SkipDemo,
+    [string]$DemoRuntime = "win-x64"
 )
 
 $ErrorActionPreference = "Stop"
 
 $ProjectPath = Join-Path $PSScriptRoot "src/ScarnaUI/ScarnaUI/ScarnaUI.csproj"
+$DemoProjectPath = Join-Path $PSScriptRoot "src/ScarnaUI/ScarnaUI.Demo/ScarnaUI.Demo.csproj"
 $OutputDir = Join-Path $PSScriptRoot "nupkgs"
+$DemoOutputDir = Join-Path $PSScriptRoot "buildDemo"
 $SourceName = "ScarnaUILocal"
 
 if (-not (Test-Path $OutputDir)) {
@@ -66,8 +78,37 @@ else {
     Write-Host "Источник '$SourceName' уже зарегистрирован." -ForegroundColor DarkGray
 }
 
+# Демо собирается в чистую папку: иначе файлы прошлых сборок (например, хэшированные
+# имена статики вида app.<hash>.css) копились бы рядом с актуальными. Если демо сейчас
+# запущено из buildDemo, exe занят и папку не удалить — об этом и сообщаем.
+# Не используем IncludeAllContentForSelfExtract: с ним приложение распаковывается во
+# временную папку и не находит рядом манифест статики (падает на MapStaticAssets).
+if (-not $SkipDemo) {
+    if (Test-Path $DemoOutputDir) {
+        try {
+            Remove-Item -Recurse -Force $DemoOutputDir
+        }
+        catch {
+            throw "Не удалось очистить $DemoOutputDir — закройте запущенный ScarnaUI.Demo.exe и повторите. $($_.Exception.Message)"
+        }
+    }
+
+    Write-Host ""
+    Write-Host "Собираю демо ($DemoRuntime, один exe) в $DemoOutputDir..." -ForegroundColor Cyan
+    dotnet publish $DemoProjectPath -c Release -r $DemoRuntime --self-contained true `
+        -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=none `
+        -o $DemoOutputDir
+    if ($LASTEXITCODE -ne 0) {
+        throw "dotnet publish демо-проекта завершился с ошибкой (код $LASTEXITCODE)"
+    }
+}
+
 Write-Host ""
 Write-Host "Готово: $OutputDir\ScarnaUI.$Version.nupkg" -ForegroundColor Green
+if (-not $SkipDemo) {
+    $demoExe = if ($DemoRuntime -like "win-*") { "ScarnaUI.Demo.exe" } else { "ScarnaUI.Demo" }
+    Write-Host "Демо:   $DemoOutputDir\$demoExe" -ForegroundColor Green
+}
 Write-Host ""
 Write-Host "В проекте-потребителе:" -ForegroundColor Yellow
 Write-Host "  dotnet add package ScarnaUI --version $Version --source $SourceName"

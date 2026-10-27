@@ -11,13 +11,26 @@ namespace ScarnaUI.Services;
 /// </summary>
 internal sealed class ScarnaDialogService : IScarnaDialogService
 {
+    // Закрытие диалога обрабатывается в ContinueWith на потоке из пула (TaskScheduler.Default),
+    // а Add/чтение списка идут с потока рендера — без блокировки одновременное закрытие и
+    // открытие/перерисовка давали "Collection was modified" при enumerate в ScarnaDialogProvider.
+    private readonly object _gate = new();
     private readonly List<ScarnaDialogReference> _dialogs = new();
 
     /// <summary>Срабатывает при открытии/закрытии любого диалога.</summary>
     public event Action? OnChange;
 
-    /// <summary>Текущие открытые диалоги, в порядке открытия (последний — самый верхний).</summary>
-    public IReadOnlyList<ScarnaDialogReference> Dialogs => _dialogs;
+    /// <summary>Текущие открытые диалоги, в порядке открытия (последний — самый верхний). Возвращает снимок.</summary>
+    public IReadOnlyList<ScarnaDialogReference> Dialogs
+    {
+        get
+        {
+            lock (_gate)
+            {
+                return _dialogs.ToArray();
+            }
+        }
+    }
 
     public Task<ScarnaDialogResult> ShowAsync<TComponent>(ScarnaDialogOptions? options = null)
         where TComponent : IComponent
@@ -30,14 +43,22 @@ internal sealed class ScarnaDialogService : IScarnaDialogService
     public Task<ScarnaDialogResult> ShowAsync(Type componentType, IReadOnlyDictionary<string, object?>? parameters = null, ScarnaDialogOptions? options = null)
     {
         var reference = new ScarnaDialogReference(componentType, parameters ?? new Dictionary<string, object?>(), options ?? new ScarnaDialogOptions());
-        _dialogs.Add(reference);
+        lock (_gate)
+        {
+            _dialogs.Add(reference);
+        }
+
         OnChange?.Invoke();
 
         // Как только диалог закрылся (Reference.Close вызван из содержимого или из провайдера) —
         // убираем его из списка и снова уведомляем подписчиков, чтобы панель исчезла из DOM.
         _ = reference.Result.ContinueWith(_ =>
         {
-            _dialogs.Remove(reference);
+            lock (_gate)
+            {
+                _dialogs.Remove(reference);
+            }
+
             OnChange?.Invoke();
         }, TaskScheduler.Default);
 

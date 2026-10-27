@@ -1,42 +1,33 @@
 @*
     Каркас страницы интерактивной документации одного компонента/сервиса —
-    как страницы на mudblazor.com. Слева — ComponentLibSidebar (список всех
-    компонентов по категориям, во всю высоту страницы), справа — сама страница:
-    заголовок, хлебная крошка, вводное описание, список файлов исходников,
-    а дальше секции с живыми примерами (DocSection) и таблица API (DocApiTable)
-    как ChildContent.
+    как страницы на mudblazor.com: заголовок, вводное описание, список файлов
+    исходников, а дальше секции с живыми примерами (DocSection) и таблица API
+    (DocApiTable) как ChildContent. Боковое меню (ScarnaDrawer), контейнер и
+    отступы даёт вложенный ComponentLibLayout — подключается через @layout в
+    ComponentLib/_Imports.razor, поэтому здесь их нет.
 *@
 @namespace ScarnaUI.Demo.Components.Pages.ComponentLib.Shared
 
-<ScarnaContainer Breakpoint="ScarnaContainerMaxWidth.ExtraLarge">
-    <div class="flex items-start gap-8 pb-16">
-        <ComponentLibSidebar />
-
-        <div class="min-w-0 flex-1">
-            <ScarnaStack Spacing="6">
-                <div>
-                    <NavLink href="/componentlib" class="text-sm text-foreground/50 hover:text-foreground lg:hidden">← Библиотека компонентов</NavLink>
-                    <h1 class="mt-2 text-2xl font-semibold lg:mt-0">@Title</h1>
-                    @if (!string.IsNullOrEmpty(Lead))
-                    {
-                        <p class="mt-2 max-w-3xl text-sm text-foreground/70">@Lead</p>
-                    }
-                    @if (Files is { Count: > 0 })
-                    {
-                        <div class="mt-3 flex flex-wrap gap-2">
-                            @foreach (var file in Files)
-                            {
-                                <ScarnaTag>@file</ScarnaTag>
-                            }
-                        </div>
-                    }
-                </div>
-
-                @ChildContent
-            </ScarnaStack>
-        </div>
+<ScarnaStack Spacing="6">
+    <div>
+        <h1 class="text-2xl font-semibold">@Title</h1>
+        @if (!string.IsNullOrEmpty(Lead))
+        {
+            <p class="mt-2 max-w-3xl text-sm text-foreground/70">@Lead</p>
+        }
+        @if (Files is { Count: > 0 })
+        {
+            <div class="mt-3 flex flex-wrap gap-2">
+                @foreach (var file in Files)
+                {
+                    <ScarnaTag>@file</ScarnaTag>
+                }
+            </div>
+        }
     </div>
-</ScarnaContainer>
+
+    @ChildContent
+</ScarnaStack>
 
 @code {
     [Parameter, EditorRequired] public string Title { get; set; } = string.Empty;

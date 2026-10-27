@@ -149,12 +149,11 @@ public partial class ScarnaThemeProvider : IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        _selfReference?.Dispose();
-
         if (_module is not null)
         {
             try
             {
+                await _module.InvokeVoidAsync("unwatchSystemTheme");
                 await _module.DisposeAsync();
             }
             catch (JSDisconnectedException)
@@ -162,5 +161,9 @@ public partial class ScarnaThemeProvider : IAsyncDisposable
                 // circuit уже закрыт (например, обновление страницы) — освобождать нечего
             }
         }
+
+        // Ссылку освобождаем только после отписки в JS — иначе системная смена темы,
+        // пришедшая между Dispose() и отпиской, дёрнула бы уже освобождённый объект.
+        _selfReference?.Dispose();
     }
 }

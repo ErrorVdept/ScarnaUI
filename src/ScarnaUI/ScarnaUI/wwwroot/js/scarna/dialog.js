@@ -51,6 +51,13 @@ export function open(dialogId, dialogEl, dotNetRef) {
     setTimeout(focusFirst, 0);
 
     const onKeyDown = (event) => {
+        // При нескольких открытых диалогах клавиатуру обрабатывает только верхний (последний
+        // добавленный в state) — иначе один Escape закрывал бы сразу все диалоги стека, а
+        // фокус-ловушки нижних боролись бы с верхней.
+        if (Array.from(state.keys()).pop() !== dialogId) {
+            return;
+        }
+
         if (event.key === "Escape") {
             dotNetRef.invokeMethodAsync("OnEscapeAsync");
             return;

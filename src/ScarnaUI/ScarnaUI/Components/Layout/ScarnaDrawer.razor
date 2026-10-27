@@ -28,7 +28,7 @@
 {
     <div class="fixed inset-0 z-[1050] bg-overlay/50 animate-scarna-fade-in" @onclick="HandleBackdropClick"></div>
 }
-<aside class="@Classes" style="@CombinedStyle" @attributes="UserAttributes">
+<aside class="@Classes" style="@CombinedStyle" inert="@IsHidden" aria-hidden="@(IsHidden ? "true" : null)" @attributes="UserAttributes">
     @ChildContent
 </aside>
 
@@ -70,6 +70,12 @@
 
     private bool IsHorizontal => Anchor is ScarnaDrawerAnchor.Left or ScarnaDrawerAnchor.Right;
 
+    // Закрытая панель (кроме Mini — там иконки остаются видимыми и рабочими) физически
+    // всё ещё в DOM: Temporary уехал за экран через translate, Persistent схлопнулся по
+    // ширине и обрезан overflow-hidden. Без inert/aria-hidden её ссылки и кнопки оставались
+    // бы в порядке Tab-навигации (фокус "пропадал" в невидимом) и читались скринридером.
+    private bool IsHidden => !Open && Variant != ScarnaDrawerVariant.Mini;
+
     private async Task HandleBackdropClick()
     {
         if (!CloseOnBackdropClick)
@@ -109,8 +115,10 @@
     // Persistent/Mini: обычный flex-элемент (relative, shrink-0) — реальная ширина/высота
     // анимируется через CombinedStyle, поэтому соседи по флекс-контейнеру раздвигаются
     // сами, безо всякой ручной синхронизации отступов на стороне страницы.
+    // Граница — только пока панель видима: у схлопнутой Persistent (width: 0) 1px border
+    // всё равно остаётся (border не может быть уже своей толщины) и торчал бы тонкой линией.
     private string PersistentClasses => CssBuilder.Default("relative shrink-0 transition-[width,height] duration-200 ease-out")
-        .AddClass(PersistentBorderClass)
+        .AddClass(PersistentBorderClass, !IsHidden)
         .ToString();
 
     private string PersistentBorderClass => Anchor switch

@@ -33,6 +33,7 @@
         .AddClass(ScarnaColorVariantClasses.Radius(Radius))
         .AddClass(Value ? ScarnaColorVariantClasses.Get(Color, Variant.Solid) : "bg-transparent text-foreground/70 hover:bg-content2")
         .AddClass("border border-default", Bordered && !Value)
+        .AddClass(Class)
         .ToString();
 
     private string SizeClass => Size switch

@@ -431,3 +431,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Сборка демо-проекта из pack-local.ps1 (self-contained, ~100 МБ)
+buildDemo/

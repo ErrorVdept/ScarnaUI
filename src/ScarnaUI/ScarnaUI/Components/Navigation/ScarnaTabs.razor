@@ -104,8 +104,10 @@
 
     private string Classes => CssBuilder.Default("scarna-tabs").AddClass(Class).ToString();
 
-    private string TrackClasses => CssBuilder.Default("scarna-tabs__track relative flex items-center gap-1 rounded-scarna-full bg-content2 p-1")
-        .AddClass("w-full", FullWidth)
+    // Ровно один из flex/inline-flex: одновременно оба класса конкурируют за display, и
+    // победитель определяется порядком правил в сгенерированном CSS, а не нашим выбором.
+    private string TrackClasses => CssBuilder.Default("scarna-tabs__track relative items-center gap-1 rounded-scarna-full bg-content2 p-1")
+        .AddClass("flex w-full", FullWidth)
         .AddClass("inline-flex", !FullWidth)
         .AddClass("[&>button]:flex-1", FullWidth)
         .AddClass(JustifyClass)

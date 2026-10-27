@@ -180,9 +180,10 @@
     {
         Provider?.Unregister(_id);
         _selfRef?.Dispose();
-        if (_module is not null)
-        {
-            _ = _module.InvokeVoidAsync("close", _id.ToString());
-        }
+
+        // Через CloseInteropAsync, а не голый fire-and-forget InvokeVoidAsync: тот проглатывает
+        // JSDisconnectedException (circuit уже закрыт), иначе она всплывала бы
+        // необработанным исключением задачи при выгрузке страницы.
+        _ = CloseInteropAsync();
     }
 }

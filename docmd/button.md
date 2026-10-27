@@ -38,8 +38,8 @@
 | `Type` | `string` | `"button"` | HTML `type` для `<button>` |
 | `Href` | `string?` | — | Если задан — рендер как `<a href>` |
 | `Target` | `string?` | — | `target` для ссылки |
-| `Disabled` | `bool` | `false` | Блокирует клики, гасит непрозрачность |
-| `Loading` | `bool` | `false` | Показывает спиннер вместо `StartIcon`, блокирует клики |
+| `Disabled` | `bool` | `false` | Блокирует клики, гасит непрозрачность. В режиме `Href` ссылка теряет `href`, получает `aria-disabled` и `tabindex="-1"` (у `<a>` нет нативного `disabled`) |
+| `Loading` | `bool` | `false` | Показывает спиннер вместо `StartIcon`, блокирует клики (в режиме `Href` — так же, как `Disabled`) |
 | `FullWidth` | `bool` | `false` | Растянуть на всю ширину родителя |
 | `StartIcon` | `RenderFragment?` | — | Контент перед текстом |
 | `EndIcon` | `RenderFragment?` | — | Контент после текста |

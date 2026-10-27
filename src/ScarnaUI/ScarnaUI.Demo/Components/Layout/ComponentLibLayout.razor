@@ -1,0 +1,75 @@
+@*
+    Вложенный layout всех страниц документации /componentlib/* (подключается через
+    @layout в ComponentLib/_Imports.razor, поверх MainLayout). Боковое меню — это
+    ScarnaDrawer, а не самодельный <aside>:
+
+      - десктоп (lg+): Variant.Persistent, всегда открыт, "прилипает" под AppBar и
+        занимает высоту окна — скроллится только само содержимое страницы, а длинное меню
+        — своей прокруткой внутри панели (у ScarnaDrawer уже есть overflow-y-auto);
+      - мобильные (до lg): Variant.Temporary, выезжает по кнопке "Меню" с подложкой и
+        закрывается при любой навигации.
+
+    Раньше меню было sticky внутри flex-контейнера с items-start — а у такой обёртки
+    высота равна высоте самого меню, поэтому sticky было некуда "ехать" и меню
+    прокручивалось вместе со страницей.
+*@
+@inherits LayoutComponentBase
+@layout MainLayout
+@implements IDisposable
+@inject INavigator Navigator
+
+@* -my-8 гасит py-8 у <main> в MainLayout: иначе drawer начинался бы на 32px ниже AppBar и
+   верхняя часть панели вылезала бы за нижний край экрана. 57px = h-14 строки AppBar + 1px border-b.
+   sticky! — "!" нужен: у Persistent-панели уже есть собственный "relative", и без важности
+   победитель между ними определяется порядком правил в CSS, а не нашим выбором. *@
+<div class="-my-8 flex min-h-[calc(100vh-57px)]">
+    <ScarnaDrawer Open="true"
+                  Variant="ScarnaDrawerVariant.Persistent"
+                  Width="16rem"
+                  Class="sticky! top-[57px] hidden h-[calc(100vh-57px)] self-start lg:block">
+        <ComponentLibMenu />
+    </ScarnaDrawer>
+
+    <ScarnaDrawer @bind-Open="_mobileOpen"
+                  Variant="ScarnaDrawerVariant.Temporary"
+                  Width="18rem"
+                  Class="lg:hidden">
+        <ComponentLibMenu />
+    </ScarnaDrawer>
+
+    <div class="min-w-0 flex-1">
+        <div class="px-4 pt-4 sm:px-6 lg:hidden">
+            <ScarnaButton Variant="Variant.Bordered" Size="Size.Small" OnClick="() => _mobileOpen = true">
+                <StartIcon>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
+                </StartIcon>
+                <ChildContent>Меню документации</ChildContent>
+            </ScarnaButton>
+        </div>
+
+        <ScarnaContainer Breakpoint="ScarnaContainerMaxWidth.ExtraLarge">
+            <div class="pb-16 pt-8">
+                @Body
+            </div>
+        </ScarnaContainer>
+    </div>
+</div>
+
+@code {
+    private bool _mobileOpen;
+
+    protected override void OnInitialized() => Navigator.LocationChanged += HandleLocationChanged;
+
+    // Временная панель закрывается при любой навигации — и по клику на пункт, и по
+    // кнопкам браузера "назад"/"вперёд".
+    private void HandleLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        if (_mobileOpen)
+        {
+            _mobileOpen = false;
+            InvokeAsync(StateHasChanged);
+        }
+    }
+
+    public void Dispose() => Navigator.LocationChanged -= HandleLocationChanged;
+}

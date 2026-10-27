@@ -7,7 +7,7 @@ public sealed record ComponentLibNavItem(string Name, string Href, string Descri
 public sealed record ComponentLibNavGroup(string Title, ComponentLibNavItem[] Items);
 
 /// <summary>
-/// Единый источник списка страниц ComponentLib — и для левого меню (ComponentLibSidebar),
+/// Единый источник списка страниц ComponentLib — и для бокового меню (ComponentLibMenu внутри ScarnaDrawer в ComponentLibLayout),
 /// и для карточек на странице-оглавлении (Index.razor), чтобы список не расходился
 /// между двумя местами.
 /// </summary>

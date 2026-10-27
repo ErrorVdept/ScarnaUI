@@ -28,6 +28,18 @@
 
 @code {
     private bool _imageFailed;
+    private string? _lastSrc;
+
+    // Флаг "картинка не загрузилась" иначе оставался навсегда: после одной ошибки новый
+    // (корректный) Src по-прежнему показывал бы инициалы/заглушку.
+    protected override void OnParametersSet()
+    {
+        if (!string.Equals(_lastSrc, Src, StringComparison.Ordinal))
+        {
+            _lastSrc = Src;
+            _imageFailed = false;
+        }
+    }
 
     [Parameter] public string? Src { get; set; }
 

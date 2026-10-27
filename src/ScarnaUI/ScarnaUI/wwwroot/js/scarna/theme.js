@@ -38,14 +38,20 @@ export function systemPrefersDark() {
     return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
 }
 
+let unwatchCurrent = null;
+
 /**
  * Подписывается на смену системной темы ОС и вызывает .NET-колбэк,
- * пока активен режим Mode.System. Возвращает функцию отписки.
+ * пока активен режим Mode.System. Отписка — unwatchSystemTheme() (функцию из JS в .NET
+ * вернуть нельзя — interop сериализует её в null, поэтому раньше подписка не снималась
+ * никогда и после Dispose провайдера вызывала уже освобождённый DotNetObjectReference).
  * @param {import("@microsoft/dotnet-js-interop").DotNetObject} dotNetRef
  */
 export function watchSystemTheme(dotNetRef) {
+    unwatchSystemTheme();
+
     if (!window.matchMedia) {
-        return () => { };
+        return;
     }
 
     const media = window.matchMedia("(prefers-color-scheme: dark)");
@@ -54,5 +60,10 @@ export function watchSystemTheme(dotNetRef) {
     };
 
     media.addEventListener("change", listener);
-    return () => media.removeEventListener("change", listener);
+    unwatchCurrent = () => media.removeEventListener("change", listener);
+}
+
+export function unwatchSystemTheme() {
+    unwatchCurrent?.();
+    unwatchCurrent = null;
 }
