@@ -146,6 +146,11 @@ export function position(popoverId, anchorEl, popoverEl, side, align, offset, ma
 export function open(popoverId, anchorEl, popoverEl, side, align, offset, closeOnOutsideClick, dotNetRef, matchAnchorWidth) {
     close(popoverId);
 
+    // Поповер могли закрыть/удалить до прихода вызова (содержимое рендерится порталом,
+    // а open вызывается асинхронно) — тогда ссылка приходит null. Выходим ДО подписок:
+    // иначе падает classList.add/resizeObserver.observe, а обработчики висели бы вечно.
+    if (!anchorEl || !popoverEl) return;
+
     position(popoverId, anchorEl, popoverEl, side, align, offset, matchAnchorWidth);
 
     // Класс анимации добавляем здесь, а не в разметке .razor: анимация должна начать

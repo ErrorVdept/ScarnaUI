@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../ScarnaUI/Components/DataDisplay/LogViewer/LogSnapshot.cs" Link="LogSnapshot.cs" />
+    <Compile Include="../ScarnaUI/Components/DataDisplay/LogViewer/LogTextMap.cs" Link="LogTextMap.cs" />
+  </ItemGroup>
+</Project>

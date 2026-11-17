@@ -66,6 +66,7 @@
 - [ScarnaProgress](progress.md) — линейная полоса прогресса (determinate/indeterminate)
 - [ScarnaSpinner](spinner.md) — вращающийся индикатор загрузки (indeterminate)
 - [ScarnaCodeBlock](code-block.md) — блок кода с кнопкой копирования, авто/фиксированная высота
+- [ScarnaLogViewer](log-viewer.md) — просмотр журнала с поиском и фильтрами
 - [ScarnaText](text.md) — типографический текст (аналог MudText)
 
 ### Navigation

@@ -16,6 +16,8 @@
 @import "tailwindcss";
 @import "../wwwroot/css/scarna/variables.css";
 
+@import "../wwwroot/css/scarna/logviewer.css";
+
 /* Тёмная тема переключается атрибутом data-theme="dark" на <html> (см. theme.js),
    а не системным prefers-color-scheme — поэтому переопределяем dark-вариант Tailwind. */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));

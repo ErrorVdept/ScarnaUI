@@ -51,6 +51,7 @@ public static class ComponentLibNav
             new ComponentLibNavItem("ScarnaProgress", "/componentlib/progress", "Полоса прогресса"),
             new ComponentLibNavItem("ScarnaSpinner", "/componentlib/spinner", "Индикатор загрузки"),
             new ComponentLibNavItem("ScarnaCodeBlock", "/componentlib/code-block", "Блок кода с кнопкой копирования"),
+            new ComponentLibNavItem("ScarnaLogViewer", "/componentlib/log-viewer", "Просмотр журнала"),
             new ComponentLibNavItem("ScarnaText", "/componentlib/text", "Типографический текст"),
         }),
         new("Layout", new[]

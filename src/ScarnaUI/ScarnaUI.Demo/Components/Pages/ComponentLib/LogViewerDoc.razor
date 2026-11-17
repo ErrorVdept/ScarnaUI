@@ -1,0 +1,14 @@
+@page "/componentlib/log-viewer"
+
+<DocPage Title="ScarnaLogViewer" Lead="Просмотр журнала с поиском, фильтрацией и переходом к строке.">
+    <DocSection Title="Просмотр журнала" Row="false" Description="Поиск, перенос и контекстное меню доступны в панели просмотрщика.">
+        <ScarnaLogViewer Text="@_log" Height="400px" @ref="_viewer" />
+        <ScarnaButton OnClick="GoToLine">Перейти к строке 500</ScarnaButton>
+    </DocSection>
+</DocPage>
+
+@code {
+    private readonly string _log = string.Join('\n', Enumerable.Range(1, 1000).Select(i => $"2026-01-01 12:00:{i % 60:00} [{(i % 10 == 0 ? "WARN" : "INFO")}] Запись журнала {i}{(i == 1000 ? " " + string.Concat(Enumerable.Repeat("Длинная строка для проверки переноса. ", 60)) + " КОНЕЦ ЖУРНАЛА" : "")}"));
+    private ScarnaLogViewer? _viewer;
+    private async Task GoToLine() { if (_viewer is not null) await _viewer.GoToLineAsync(500); }
+}

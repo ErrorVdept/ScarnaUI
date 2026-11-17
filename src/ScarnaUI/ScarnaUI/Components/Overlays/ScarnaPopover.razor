@@ -85,38 +85,92 @@
         // и так увидит свежее содержимое.
         if (Open && !_wasOpen)
         {
+            // Ссылка от прошлого открытия указывает на уже удалённый из DOM элемент — без
+            // сброса JS получил бы "живую на вид" ссылку на несуществующий узел (null).
+            _surfaceElement = default;
+            _surfaceRetries = 0;
             Provider.Register(_id, Surface());
         }
         else if (!Open && _wasOpen)
         {
             Provider.Unregister(_id);
             _sessionActive = false;
+            _surfaceElement = default;
             _ = CloseInteropAsync();
         }
 
         _wasOpen = Open;
     }
 
+    private const int MaxSurfaceRetries = 10;
+    private bool _disposed;
+    private int _surfaceRetries;
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!Open)
+        if (!Open || _disposed)
         {
             return;
         }
 
-        _module ??= await JSRuntime.InvokeAsync<IJSObjectReference>("import", ModulePath);
+        // Содержимое рендерит ScarnaPopoverProvider (портал), а не сам поповер, и @ref
+        // заполняется только когда провайдер дорисовал фрагмент. Если наш after-render
+        // опередил его, элемента ещё нет (Id == null) — в JS ушёл бы null, и popover.js
+        // падал на popoverEl.classList. Ждём и перерисовываемся — это вызовет OnAfterRender снова.
+        if (_surfaceElement.Id is null)
+        {
+            if (_surfaceRetries++ < MaxSurfaceRetries)
+            {
+                await Task.Delay(16);
+                if (Open && !_disposed)
+                {
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
 
-        if (!_sessionActive)
-        {
-            _selfRef ??= DotNetObjectReference.Create(this);
-            await _module.InvokeVoidAsync(
-                "open", _id.ToString(), Anchor, _surfaceElement,
-                SideToken, AlignToken, OffsetPx, CloseOnOutsideClick, _selfRef, IsParentFullSize);
-            _sessionActive = true;
+            return;
         }
-        else
+
+        _surfaceRetries = 0;
+
+        try
         {
-            await _module.InvokeVoidAsync("position", _id.ToString(), Anchor, _surfaceElement, SideToken, AlignToken, OffsetPx, IsParentFullSize);
+            _module ??= await JSRuntime.InvokeAsync<IJSObjectReference>("import", ModulePath);
+
+            // Пока шёл await import, поповер могли закрыть/уничтожить: OnParametersSet уже
+            // снял сессию и удалил элемент, и открывать её теперь значило бы повесить
+            // обработчики на несуществующий узел (и никогда их не снять).
+            if (!Open || _disposed || _surfaceElement.Id is null)
+            {
+                return;
+            }
+
+            if (!_sessionActive)
+            {
+                _selfRef ??= DotNetObjectReference.Create(this);
+                await _module.InvokeVoidAsync(
+                    "open", _id.ToString(), Anchor, _surfaceElement,
+                    SideToken, AlignToken, OffsetPx, CloseOnOutsideClick, _selfRef, IsParentFullSize);
+                _sessionActive = true;
+            }
+            else
+            {
+                await _module.InvokeVoidAsync("position", _id.ToString(), Anchor, _surfaceElement, SideToken, AlignToken, OffsetPx, IsParentFullSize);
+            }
+        }
+        catch (JSDisconnectedException)
+        {
+            // circuit уже закрыт — позиционировать нечего
+        }
+        catch (JSException)
+        {
+            // Элемент или якорь исчезли между проверкой и вызовом (гонка с закрытием) —
+            // для декоративной подсказки это не повод ронять рендер: необработанное
+            // исключение из OnAfterRenderAsync Blazor считает ошибкой компонента.
+        }
+        catch (ObjectDisposedException)
+        {
+            // DotNetObjectReference уже освобождён вместе с компонентом
         }
     }
 
@@ -178,6 +232,7 @@
 
     public void Dispose()
     {
+        _disposed = true;
         Provider?.Unregister(_id);
         _selfRef?.Dispose();
 

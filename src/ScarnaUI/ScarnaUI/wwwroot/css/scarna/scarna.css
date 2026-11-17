@@ -4280,6 +4280,196 @@
   --scarna-divider: 180 1.5% 13.1%;
   --scarna-overlay: 0 0% 0%;
 }
+.scarna-logviewer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 28rem;
+  min-width: 0;
+  border: 1px solid hsl(var(--scarna-divider));
+  border-radius: .5rem;
+  background: hsl(var(--scarna-content1));
+  color: hsl(var(--scarna-foreground));
+}
+.scarna-logviewer__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem;
+  border-bottom: 1px solid hsl(var(--scarna-divider));
+}
+.scarna-logviewer__search-button {
+  margin-left: auto;
+}
+.scarna-logviewer__toolbar input:not([type=checkbox]) {
+  min-width: 8rem;
+  border: 1px solid hsl(var(--scarna-divider));
+  border-radius: .25rem;
+  padding: .2rem .4rem;
+}
+.scarna-logviewer__toolbar button, .scarna-logviewer__menu button {
+  padding: .2rem .4rem;
+  border-radius: .25rem;
+}
+.scarna-logviewer__toolbar button:hover, .scarna-logviewer__menu button:hover {
+  background: hsl(var(--scarna-content2));
+}
+.scarna-logviewer__find {
+  position: absolute;
+  z-index: 20;
+  right: .75rem;
+  top: 2.65rem;
+  display: flex;
+  align-items: center;
+  gap: .2rem;
+  padding: .35rem;
+  border: 1px solid hsl(var(--scarna-divider));
+  border-radius: .35rem;
+  background: hsl(var(--scarna-content1));
+  box-shadow: 0 4px 14px #0004;
+  font: 12px system-ui, sans-serif;
+}
+.scarna-logviewer__find-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid hsl(var(--scarna-divider));
+  border-radius: .2rem;
+  background: hsl(var(--scarna-content2));
+}
+.scarna-logviewer__find-input:focus-within {
+  outline: 1px solid hsl(var(--scarna-primary));
+}
+.scarna-logviewer__find input {
+  width: 12rem;
+  min-width: 3rem;
+  padding: .3rem .4rem;
+  outline: none;
+  background: transparent;
+}
+.scarna-logviewer__find button {
+  min-width: 1.55rem;
+  height: 1.6rem;
+  padding: 0 .2rem;
+  border-radius: .2rem;
+}
+.scarna-logviewer__find button:hover {
+  background: hsl(var(--scarna-content3));
+}
+.scarna-logviewer__find button.active {
+  background: hsl(var(--scarna-primary) / .25);
+  outline: 1px solid hsl(var(--scarna-primary) / .6);
+}
+.scarna-logviewer__find-count {
+  white-space: nowrap;
+  padding: 0 .35rem;
+  color: hsl(var(--scarna-foreground) / .65);
+}
+.scarna-logviewer__viewport {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overflow-anchor: none;
+  font: 13px/24px monospace;
+}
+.scarna-logviewer__line {
+  display: flex;
+  min-width: max-content;
+  min-height: 24px;
+}
+.scarna-logviewer__line--wrap {
+  min-width: 0;
+}
+.scarna-logviewer__gutter {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  flex: none;
+  display: flex;
+  width: 5.5rem;
+  background: hsl(var(--scarna-content1));
+  user-select: none;
+}
+.scarna-logviewer__marker {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex: none;
+  width: 1.5rem;
+  padding-top: 9px;
+  cursor: pointer;
+}
+.scarna-logviewer__marker span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: hsl(var(--scarna-foreground) / .22);
+}
+.scarna-logviewer__marker:hover span, .scarna-logviewer__marker:focus-visible span {
+  background: hsl(var(--scarna-foreground) / .6);
+}
+.scarna-logviewer__marker.selected span {
+  background: hsl(var(--scarna-primary));
+  box-shadow: 0 0 0 2px hsl(var(--scarna-primary) / .2);
+}
+.scarna-logviewer__number {
+  flex: 1;
+  padding-right: .75rem;
+  text-align: right;
+  color: hsl(var(--scarna-foreground) / .5);
+}
+.scarna-logviewer__text {
+  white-space: pre;
+}
+.scarna-logviewer__text mark {
+  color: inherit;
+  background: hsl(var(--scarna-warning) / .4);
+}
+.scarna-logviewer__line--wrap .scarna-logviewer__text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.scarna-logviewer__line--selected {
+  background: hsl(var(--scarna-primary) / .15);
+}
+.scarna-logviewer__line--selected .scarna-logviewer__gutter {
+  background: hsl(var(--scarna-primary) / .15);
+}
+.scarna-logviewer__line--current-match {
+  background: hsl(var(--scarna-warning) / .16);
+  box-shadow: inset 3px 0 hsl(var(--scarna-warning));
+}
+.scarna-logviewer__line--current-match .scarna-logviewer__gutter {
+  background: hsl(var(--scarna-content2));
+  box-shadow: inset 3px 0 hsl(var(--scarna-warning));
+}
+.scarna-logviewer__line--current-match .scarna-logviewer__number {
+  color: hsl(var(--scarna-foreground));
+}
+.scarna-logviewer__status {
+  padding: .2rem .5rem;
+  border-top: 1px solid hsl(var(--scarna-divider));
+  font-size: .75rem;
+}
+.scarna-logviewer__error {
+  color: hsl(var(--scarna-danger));
+  padding: .25rem .5rem;
+}
+.scarna-logviewer__menu {
+  position: fixed;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  padding: .25rem;
+  border: 1px solid hsl(var(--scarna-divider));
+  border-radius: .4rem;
+  background: hsl(var(--scarna-content1));
+  box-shadow: 0 4px 16px #0003;
+}
+.scarna-logviewer__menu button {
+  text-align: left;
+}
 @layer base {
   body {
     background-color: hsl(var(--scarna-background));
